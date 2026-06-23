@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modularer KI-Stack | Sicherheit · KI-Basis · Content · Channels — Netresearch</title>
-  <meta name="description" content="Der modulare KI-Stack von Netresearch: vom Sicherheits- und Identitätsfundament (nr-vault, nr-passkeys) über die governance-fähige KI-Basis (nr-llm) und die Content-Produktion (nr-repurpose, cowriter) bis zur Channel-Ausspielung. Interaktive Visualisierung als aufeinander aufbauender Wertstrom.">
+  <title>Modularer KI-Stack | Open-Source-TYPO3-Stack mit Datensouveränität — Netresearch</title>
+  <meta name="description" content="Der modulare KI-Stack von Netresearch: quelloffene TYPO3-Extensions vom Sicherheits- und Identitätsfundament (nr-vault, nr-passkeys) über die governance-fähige KI-Basis (nr-llm) und die Content-Produktion (nr-repurpose, cowriter) bis zur Channel-Ausspielung. Datensouverän durch Open Source und anbieterunabhängige, lokal oder self-hosted betreibbare LLMs.">
+  <meta name="keywords" content="KI-Stack, TYPO3, Open Source, Datensouveränität, nr-llm, lokales LLM, self-hosted, DSGVO, Netresearch">
   <meta name="author" content="Netresearch DTT GmbH">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#2F99A4">
@@ -54,7 +55,8 @@
         "name": "Modularer KI-Stack — Sicherheit, KI-Basis, Content & Channels",
         "isPartOf": { "@id": "https://netresearch.github.io/modularer-ki-stack-page/#website" },
         "inLanguage": "de",
-        "about": "Ein modularer KI-Stack, der von einem Sicherheits- und Identitätsfundament über eine governance-fähige KI-Basis und Content-Produktion bis zur Channel-Ausspielung aufeinander aufbaut."
+        "about": "Ein modularer, quelloffener KI-Stack auf Basis von TYPO3, der von einem Sicherheits- und Identitätsfundament über eine governance-fähige KI-Basis und Content-Produktion bis zur Channel-Ausspielung aufeinander aufbaut. Datensouverän durch Open Source und anbieterunabhängige, lokal oder self-hosted betreibbare LLMs.",
+        "keywords": "TYPO3, Open Source, Datensouveränität, KI-Stack, nr-llm, self-hosted LLM"
       },
       {
         "@type": "ItemList",
@@ -89,6 +91,16 @@
             "@type": "Question",
             "name": "Welche KI-Tools produzieren Inhalte (Ebene 2)?",
             "acceptedAnswer": { "@type": "Answer", "text": "Ebene 2 nutzt nr-repurpose zum Umwandeln von Wissen in CMS-fähige Formate, cowriter für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie nr-landingpage. Der MCP-Agent nr-mcp-agent gehört zur KI-Basis (Ebene 1)." }
+          },
+          {
+            "@type": "Question",
+            "name": "Ist der KI-Stack quelloffen und auf TYPO3 aufgebaut?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Ja. Alle Module sind quelloffene TYPO3-Extensions. TYPO3 ist ein Open-Source-Enterprise-CMS, das selbst gehostet werden kann. Dadurch gibt es vollen Einblick in den Code und kein Vendor-Lock-in." }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie sorgt der Stack für Datensouveränität?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Datensouveränität entsteht aus zwei Eigenschaften: Der gesamte Stack ist quelloffen und auf der selbst hostbaren TYPO3-Plattform aufgebaut, und nr-llm ist anbieterunabhängig — es spricht beliebige LLM-Anbieter und Hosting-Unternehmen an oder nutzt lokale bzw. selbst gehostete Modelle. So bleiben sensible Daten in der eigenen Umgebung und unterliegen der eigenen Kontrolle." }
           }
         ]
       }
@@ -1393,6 +1405,7 @@
         <nav class="nav-links" aria-label="Seitennavigation">
           <a href="#stack">Stack</a>
           <a href="#flow">Wertstrom</a>
+          <a href="#souveraenitaet">Souveränität</a>
           <a href="#module">Module</a>
           <a href="#faq">FAQ</a>
         </nav>
@@ -1403,9 +1416,9 @@
       <section class="hero">
         <div class="container hero-grid">
           <div>
-            <p class="eyebrow">Modularer KI-Stack</p>
+            <p class="eyebrow">Modularer KI-Stack · Open Source auf TYPO3</p>
             <h1>Vom sicheren Zugriff zur Channel-Ausspielung.</h1>
-            <p class="hero-lead">Der modulare KI-Stack von Netresearch ist kein Tool-Sammelsurium, sondern ein aufeinander aufbauender Wertstrom: Sicherheits- und Identitätsfundament, governance-fähige KI-Basis, Content-Produktion und Distribution.</p>
+            <p class="hero-lead">Der modulare KI-Stack von Netresearch ist kein Tool-Sammelsurium, sondern ein aufeinander aufbauender Wertstrom: Sicherheits- und Identitätsfundament, governance-fähige KI-Basis, Content-Produktion und Distribution. Aufgebaut aus quelloffenen TYPO3-Extensions — datensouverän durch frei wählbares Hosting und lokal oder self-hosted betreibbare Modelle.</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#stack">Interaktiven Stack ansehen</a>
               <a class="btn btn-outline" href="#module">Module &amp; Repositories</a>
@@ -1696,6 +1709,38 @@
         </div>
       </section>
 
+      <section class="module-section" id="souveraenitaet" aria-labelledby="sov-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="sov-heading">Open Source &amp; Datensouveränität</h2>
+            <p>Kontrolle über Code, Hosting und Modelle — by design, nicht als Add-on.</p>
+          </div>
+          <div class="module-grid">
+            <div class="module-card">
+              <span class="mod-name">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-6 6 6 6"></path><path d="m16 6 6 6-6 6"></path><path d="m14 4-4 16"></path></svg>
+                Open Source (TYPO3)
+              </span>
+              <p class="mod-desc">Alle Module sind quelloffene TYPO3-Extensions auf einem selbst hostbaren Open-Source-Enterprise-CMS. Voller Einblick in den Code, kein Vendor-Lock-in.</p>
+            </div>
+            <div class="module-card">
+              <span class="mod-name">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="8" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect><path d="M7 8h.01"></path><path d="M7 17h.01"></path></svg>
+                Frei wählbares Hosting
+              </span>
+              <p class="mod-desc"><code>nr-llm</code> ist anbieterunabhängig und spricht beliebige LLM-Anbieter und Hosting-Unternehmen an — vom EU-Cloud-Provider bis zur eigenen Infrastruktur.</p>
+            </div>
+            <div class="module-card">
+              <span class="mod-name">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
+                Lokal &amp; self-hosted
+              </span>
+              <p class="mod-desc">Sensible Szenarien laufen mit lokalen oder selbst gehosteten Modellen — Daten verlassen Ihre Umgebung nicht und unterliegen der eigenen Kontrolle.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="module-section" id="module" aria-labelledby="module-heading">
         <div class="container">
           <div class="section-header">
@@ -1822,6 +1867,14 @@
               <h3>Welche KI-Tools produzieren Inhalte?</h3>
               <p>Ebene 2 nutzt <code>nr-repurpose</code> zum Umwandeln von Wissen in CMS-fähige Formate, <code>cowriter</code> für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie <code>nr-landingpage</code>. Der MCP-Agent <code>nr-mcp-agent</code> gehört zur KI-Basis (Ebene 1).</p>
             </div>
+            <div class="faq-item">
+              <h3>Ist der Stack quelloffen und TYPO3-basiert?</h3>
+              <p>Ja. Alle Module sind quelloffene TYPO3-Extensions. TYPO3 ist ein Open-Source-Enterprise-CMS, das selbst gehostet werden kann — voller Einblick in den Code, kein Vendor-Lock-in.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Wie sorgt der Stack für Datensouveränität?</h3>
+              <p>Aus zwei Eigenschaften: Der gesamte Stack ist quelloffen und auf der selbst hostbaren TYPO3-Plattform aufgebaut, und <code>nr-llm</code> ist anbieterunabhängig — beliebige LLM-Anbieter und Hosting-Unternehmen oder lokale bzw. self-hosted Modelle. So bleiben sensible Daten in der eigenen Umgebung.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1868,10 +1921,10 @@
       "1": {
         kicker: "Ebene 1",
         title: "KI-Basis & Governance",
-        summary: "Auf dem Sicherheitsfundament wird KI kontrolliert nutzbar: ein zentraler, nachvollziehbarer LLM-Zugang mit Governance über Berechtigungen und Quellen.",
-        problem: "KI nutzbar machen, ohne Kontrolle und Nachvollziehbarkeit zu verlieren.",
+        summary: "Auf dem Sicherheitsfundament wird KI kontrolliert nutzbar: ein zentraler, nachvollziehbarer LLM-Zugang mit Governance über Berechtigungen und Quellen. nr-llm ist anbieterunabhängig — beliebige Hosting-Unternehmen oder lokale bzw. self-hosted Modelle.",
+        problem: "KI nutzbar machen, ohne Kontrolle, Nachvollziehbarkeit und Datensouveränität zu verlieren.",
         audience: "Controlling · Audit · Governance · Compliance",
-        result: "Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — inklusive MCP-Agent für KI-Werkzeuge im Backend und optional lokalem Modell für sensible Daten.",
+        result: "Ein kontrollierbarer, anbieterunabhängiger KI-Zugang auf Unternehmenswissen — frei wählbares Hosting, optional lokales oder self-hosted Modell für sensible Daten, plus MCP-Agent für KI-Werkzeuge im Backend.",
         stack: ["Ebene 0", "nr-llm", "nr-mcp-agent", "optional: lokales LLM"],
         takeawayTitle: "Nicht Demo, sondern Betriebsmodell.",
         takeaway: "Die KI-Basis macht aus abgesicherten Zugängen einen kontrollierten, auditierbaren KI-Betrieb."
