@@ -1,0 +1,1439 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modularer KI-Stack | nr-vault · nr-llm · nr-repurpose</title>
+  <meta name="description" content="Interaktive Visualisierung des modularen KI-Stacks von sicherer Wissensbasis über Content-Produktion bis zur Channel-Ausspielung.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --nr-primary: #2F99A4;
+      --nr-primary-dark: #247981;
+      --nr-primary-soft: #EAF6F7;
+      --nr-accent: #FF4D00;
+      --nr-text: #585961;
+      --nr-ink: #25272D;
+      --nr-muted: #73757D;
+      --nr-border: #CCCDCC;
+      --nr-bg: #FFFFFF;
+      --nr-bg-soft: #F6F8F8;
+      --nr-card: #FFFFFF;
+      --shadow-sm: 0 10px 30px rgba(37, 39, 45, 0.08);
+      --shadow-md: 0 18px 60px rgba(37, 39, 45, 0.14);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --duration: 220ms;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Open Sans", Arial, sans-serif;
+      color: var(--nr-text);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(47, 153, 164, 0.12), transparent 32%),
+        radial-gradient(circle at 88% 18%, rgba(255, 77, 0, 0.08), transparent 26%),
+        linear-gradient(180deg, #FFFFFF 0%, #F6F8F8 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--nr-primary);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(204, 205, 204, 0.7);
+    }
+
+    .header-inner {
+      width: min(1220px, calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--nr-ink);
+      text-decoration: none;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-link svg {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+    }
+
+    .brand-text {
+      display: grid;
+      gap: 0;
+      line-height: 1.1;
+    }
+
+    .brand-text span:first-child {
+      font-size: 16px;
+      color: var(--nr-ink);
+    }
+
+    .brand-text span:last-child {
+      font-family: "Open Sans", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--nr-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      color: var(--nr-text);
+      text-decoration: none;
+      padding: 8px 4px;
+      border-bottom: 2px solid transparent;
+      transition: color var(--duration) ease, border-color var(--duration) ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--nr-primary);
+      border-color: var(--nr-primary);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      width: min(1220px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 88px 0 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      margin: 0 0 20px;
+      border: 1px solid rgba(47, 153, 164, 0.35);
+      border-radius: 999px;
+      background: rgba(234, 246, 247, 0.78);
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--nr-accent);
+      box-shadow: 0 0 0 5px rgba(255, 77, 0, 0.12);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: "Raleway", Arial, sans-serif;
+      color: var(--nr-ink);
+      line-height: 1.08;
+      margin: 0;
+      letter-spacing: -0.035em;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 800;
+      max-width: 920px;
+    }
+
+    .hero-lead {
+      margin: 24px 0 0;
+      max-width: 760px;
+      font-size: clamp(18px, 2.2vw, 23px);
+      color: var(--nr-text);
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform var(--duration) ease, box-shadow var(--duration) ease, background var(--duration) ease, color var(--duration) ease, border-color var(--duration) ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(47, 153, 164, 0.24);
+    }
+
+    .btn-primary {
+      background: var(--nr-primary);
+      color: #fff;
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--nr-primary-dark);
+      border-color: rgba(47, 153, 164, 0.48);
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 28px;
+      border: 1px solid rgba(47, 153, 164, 0.25);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 8px;
+      background: linear-gradient(90deg, var(--nr-primary), var(--nr-accent));
+    }
+
+    .hero-card h2 {
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .principle-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .principle-list li {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .principle-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--nr-primary-soft);
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+    }
+
+    .principle-list strong {
+      display: block;
+      color: var(--nr-ink);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .section {
+      padding: 54px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 32px;
+      margin-bottom: 28px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      max-width: 780px;
+    }
+
+    .section-header p {
+      margin: 0;
+      max-width: 420px;
+      color: var(--nr-muted);
+    }
+
+    .stack-explorer {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1.18fr) minmax(340px, 0.82fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .value-rail {
+      position: relative;
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      min-height: 650px;
+      padding: 20px 0;
+    }
+
+    .value-rail::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 58px;
+      bottom: 58px;
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--nr-primary), rgba(47, 153, 164, 0.2));
+    }
+
+    .value-rail::after {
+      content: "↑";
+      position: absolute;
+      left: 8px;
+      top: 10px;
+      width: 24px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--nr-primary-dark);
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .rail-title {
+      position: absolute;
+      left: 45px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center;
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+    }
+
+    .rail-marker {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      align-self: center;
+      justify-self: start;
+      width: 100%;
+      padding-left: 0;
+      opacity: 0.72;
+      transition: opacity var(--duration) ease, transform var(--duration) ease;
+    }
+
+    .rail-marker[data-layer="3"] { grid-row: 1; }
+    .rail-marker[data-layer="2"] { grid-row: 2; }
+    .rail-marker[data-layer="1"] { grid-row: 3; }
+
+    .rail-dot {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid rgba(47, 153, 164, 0.35);
+      box-shadow: 0 8px 24px rgba(47, 153, 164, 0.15);
+    }
+
+    .rail-dot svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--nr-primary-dark);
+    }
+
+    .rail-marker span:last-child {
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      color: var(--nr-primary-dark);
+      font-size: 14px;
+      line-height: 1.1;
+    }
+
+    .rail-marker.is-active {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    .rail-marker.is-active .rail-dot {
+      border-color: var(--nr-accent);
+      box-shadow: 0 0 0 7px rgba(255, 77, 0, 0.12), 0 10px 26px rgba(47, 153, 164, 0.22);
+    }
+
+    .layer-diagram {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(190px, auto));
+      gap: 18px;
+    }
+
+    .layer-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: stretch;
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(204, 205, 204, 0.9);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.86);
+      padding: 22px;
+      box-shadow: 0 6px 24px rgba(37, 39, 45, 0.06);
+      cursor: pointer;
+      transition: transform var(--duration) ease, border-color var(--duration) ease, box-shadow var(--duration) ease, background var(--duration) ease;
+    }
+
+    .layer-card:hover,
+    .layer-card:focus-visible,
+    .layer-card.is-active {
+      transform: translateY(-3px);
+      border-color: var(--nr-primary);
+      box-shadow: var(--shadow-md);
+      background: #fff;
+      outline: none;
+    }
+
+    .layer-card.is-active::before {
+      content: "";
+      position: absolute;
+      inset: -1px auto -1px -1px;
+      width: 8px;
+      border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+      background: var(--nr-accent);
+    }
+
+    .layer-card[data-layer="3"] { grid-row: 1; }
+    .layer-card[data-layer="2"] { grid-row: 2; }
+    .layer-card[data-layer="1"] { grid-row: 3; }
+
+    .layer-main {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .layer-head {
+      display: flex;
+      align-items: start;
+      gap: 14px;
+    }
+
+    .layer-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--nr-primary);
+      color: #fff;
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .layer-card[data-layer="3"] .layer-number {
+      background: var(--nr-accent);
+    }
+
+    .layer-title-wrap {
+      display: grid;
+      gap: 5px;
+    }
+
+    .layer-title-wrap h3 {
+      font-size: clamp(22px, 2.3vw, 30px);
+      color: var(--nr-ink);
+    }
+
+    .layer-title-wrap p {
+      margin: 0;
+      color: var(--nr-muted);
+      font-size: 14px;
+    }
+
+    .component-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .component-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(47, 153, 164, 0.35);
+      background: var(--nr-primary-soft);
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .component-chip svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      flex: 0 0 auto;
+    }
+
+    .component-chip.optional {
+      border-style: dashed;
+      background: #fff;
+      color: var(--nr-muted);
+    }
+
+    .component-plus {
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .layer-inherits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: -4px;
+      color: var(--nr-muted);
+      font-size: 14px;
+    }
+
+    .inherit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border: 1px solid rgba(204, 205, 204, 0.8);
+      border-radius: 999px;
+      background: rgba(246, 248, 248, 0.9);
+      color: var(--nr-text);
+      font-weight: 700;
+    }
+
+    .inherit-badge::before {
+      content: "↳";
+      color: var(--nr-primary);
+      font-weight: 800;
+    }
+
+    .layer-outcome {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .outcome-pill {
+      padding: 12px 14px;
+      border: 1px solid rgba(204, 205, 204, 0.74);
+      border-radius: var(--radius-md);
+      background: rgba(246, 248, 248, 0.8);
+    }
+
+    .outcome-pill strong {
+      display: block;
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.2;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .outcome-pill span {
+      display: block;
+      color: var(--nr-text);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .layer-side {
+      width: 132px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 10px;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(47, 153, 164, 0.10), rgba(255, 255, 255, 0.55));
+      color: var(--nr-primary-dark);
+      text-align: center;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+    }
+
+    .layer-side svg {
+      width: 42px;
+      height: 42px;
+      stroke: currentColor;
+    }
+
+    .layer-side span {
+      display: block;
+      font-size: 14px;
+      line-height: 1.15;
+    }
+
+    .details-panel {
+      position: sticky;
+      top: 98px;
+      align-self: start;
+      min-height: 650px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+      padding: 26px;
+      border: 1px solid rgba(47, 153, 164, 0.28);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .detail-kicker {
+      display: inline-flex;
+      width: max-content;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--nr-primary-soft);
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--nr-accent);
+    }
+
+    .details-panel h3 {
+      font-size: clamp(28px, 3vw, 40px);
+      margin-top: -4px;
+    }
+
+    .details-panel p {
+      margin: 0;
+      color: var(--nr-text);
+    }
+
+    .detail-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-item {
+      padding: 16px;
+      border: 1px solid rgba(204, 205, 204, 0.8);
+      border-radius: var(--radius-md);
+      background: var(--nr-bg-soft);
+    }
+
+    .detail-item strong {
+      display: block;
+      color: var(--nr-ink);
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .detail-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .detail-stack-label {
+      margin: 0;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      color: var(--nr-ink);
+    }
+
+    .stack-path {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stack-path .path-chip {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(47, 153, 164, 0.32);
+      background: #fff;
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .stack-path .path-arrow {
+      color: var(--nr-muted);
+      font-weight: 800;
+    }
+
+    .takeaway {
+      position: relative;
+      padding: 18px 18px 18px 22px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(47, 153, 164, 0.12), rgba(255, 255, 255, 0.8));
+      border: 1px solid rgba(47, 153, 164, 0.24);
+      overflow: hidden;
+    }
+
+    .takeaway::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--nr-accent);
+    }
+
+    .takeaway strong {
+      display: block;
+      color: var(--nr-ink);
+      font-family: "Raleway", Arial, sans-serif;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .flow-section {
+      padding: 22px 0 76px;
+    }
+
+    .flow-card {
+      display: grid;
+      gap: 22px;
+      padding: 30px;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(204, 205, 204, 0.85);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .flow-card h2 {
+      font-size: clamp(28px, 3.2vw, 42px);
+    }
+
+    .flow-chain {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .flow-step {
+      min-height: 112px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 10px;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(47, 153, 164, 0.32);
+      background: var(--nr-primary-soft);
+      text-align: center;
+      color: var(--nr-primary-dark);
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+    }
+
+    .flow-step svg {
+      width: 34px;
+      height: 34px;
+      stroke: currentColor;
+    }
+
+    .flow-arrow {
+      color: var(--nr-primary-dark);
+      font-size: 28px;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+    }
+
+    .solution-note {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--nr-bg-soft);
+      border: 1px solid rgba(204, 205, 204, 0.82);
+    }
+
+    .solution-note-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--nr-primary);
+      color: #fff;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+    .solution-note p {
+      margin: 0;
+    }
+
+    .site-footer {
+      border-top: 1px solid rgba(204, 205, 204, 0.9);
+      background: #fff;
+    }
+
+    .footer-inner {
+      width: min(1220px, calc(100% - 40px));
+      margin: 0 auto;
+      min-height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--nr-muted);
+      font-size: 14px;
+    }
+
+    .footer-inner a {
+      font-weight: 700;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .stack-explorer {
+        grid-template-columns: 1fr;
+      }
+
+      .value-rail {
+        min-height: auto;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto;
+        gap: 10px;
+        padding: 0;
+      }
+
+      .value-rail::before,
+      .value-rail::after,
+      .rail-title {
+        display: none;
+      }
+
+      .rail-marker,
+      .rail-marker[data-layer="3"],
+      .rail-marker[data-layer="2"],
+      .rail-marker[data-layer="1"] {
+        grid-row: auto;
+        justify-content: center;
+        padding: 10px;
+        border: 1px solid rgba(204, 205, 204, 0.8);
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      .rail-marker.is-active {
+        transform: none;
+        border-color: var(--nr-primary);
+      }
+
+      .details-panel {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .header-inner,
+      .footer-inner,
+      .container {
+        width: min(100% - 28px, 1220px);
+      }
+
+      .site-header {
+        position: relative;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .hero {
+        padding-top: 54px;
+      }
+
+      .section-header {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .layer-card {
+        grid-template-columns: 1fr;
+        padding: 18px;
+      }
+
+      .layer-side {
+        width: 100%;
+        min-height: 76px;
+        grid-template-columns: auto minmax(0, 1fr);
+        justify-items: start;
+        text-align: left;
+      }
+
+      .layer-outcome {
+        grid-template-columns: 1fr;
+      }
+
+      .value-rail {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-chain {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-arrow {
+        text-align: center;
+        transform: rotate(90deg);
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 22px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand-link" href="https://www.netresearch.de/" aria-label="Netresearch DTT GmbH">
+          <svg viewBox="-75 -75 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Netresearch symbol logo">
+            <title>Netresearch DTT GmbH</title>
+            <g>
+              <path fill="#2F99A4" d="M209.6,0V31.62h32.77a26.38,26.38,0,0,1,26.44,26.43V242a26.38,26.38,0,0,1-26.44,26.44H209.6V300h47.93a42.77,42.77,0,0,0,42.86-42.86V42.89A42.76,42.76,0,0,0,257.53,0ZM43.25,0A42.76,42.76,0,0,0,.39,42.89V257.18A42.76,42.76,0,0,0,43.25,300H91.18V268.46H58.4A26.38,26.38,0,0,1,32,242v-184A26.37,26.37,0,0,1,58.4,31.62H91.18V0Z" transform="translate(-0.39 -0.04)" />
+              <path fill="#585961" d="M221.44,120.41c0-34.48-13.94-57.82-48.93-57.82-26.62,0-48.54,7.74-64.17,26.56l-.7-22.06-28.31.06V232.94h31.59V124.69c7.14-18.38,32.14-34.8,53-34.5,27.38.4,25.2,26.24,26,45.81v96.94h31.58" transform="translate(-0.39 -0.04)" />
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span>Netresearch</span>
+            <span>AI Stack</span>
+          </span>
+        </a>
+        <nav class="nav-links" aria-label="Seitennavigation">
+          <a href="#stack">Stack</a>
+          <a href="#details">Use Cases</a>
+          <a href="#flow">Wertstrom</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Modularer KI-Stack</p>
+            <h1>Vom sicheren Wissen zur Channel-Ausspielung.</h1>
+            <p class="hero-lead">Ein Stack, der nicht als Tool-Sammlung erklärt wird, sondern als aufeinander aufbauender Wertstrom: Governance-Basis, Content-Produktion und Distribution.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#stack">Interaktiven Stack ansehen</a>
+              <a class="btn btn-outline" href="#details">Use Cases vergleichen</a>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Stack-Prinzip">
+            <h2>Prinzip der Visualisierung</h2>
+            <ol class="principle-list">
+              <li>
+                <span class="principle-index">1</span>
+                <span><strong>Basis wird einmal gezeigt.</strong> `nr-vault` und `nr-llm` sind das Fundament.</span>
+              </li>
+              <li>
+                <span class="principle-index">2</span>
+                <span><strong>Neue Ebene ergänzt.</strong> `nr-repurpose` kommt als Content-Schicht oben drauf.</span>
+              </li>
+              <li>
+                <span class="principle-index">3</span>
+                <span><strong>Distribution erweitert.</strong> `typo3-ext-linked-poster` macht aus Content Channel-Bespielung.</span>
+              </li>
+            </ol>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="stack">
+        <div class="container">
+          <div class="section-header">
+            <h2>Der Stack wächst mit dem Problem.</h2>
+            <p>Wähle eine Ebene aus. Die Visualisierung zeigt nur die neu hinzukommenden Komponenten; der Unterbau wird vererbt.</p>
+          </div>
+
+          <div class="stack-explorer" id="details">
+            <div class="value-rail" aria-label="Wertschöpfungsebenen">
+              <span class="rail-title">Wertschöpfung</span>
+              <div class="rail-marker" data-layer="3">
+                <span class="rail-dot" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-2l12-5v12L4 13Z"></path><path d="M6 13l2 6"></path><path d="M16 8l4-2v12l-4-2"></path></svg>
+                </span>
+                <span>Distribution</span>
+              </div>
+              <div class="rail-marker" data-layer="2">
+                <span class="rail-dot" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"></path><path d="M14 2v5h5"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
+                </span>
+                <span>Content</span>
+              </div>
+              <div class="rail-marker is-active" data-layer="1">
+                <span class="rail-dot" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
+                </span>
+                <span>KI-Basis</span>
+              </div>
+            </div>
+
+            <div class="layer-diagram" role="tablist" aria-label="Interaktive Stack-Ebenen">
+              <button class="layer-card" type="button" data-layer="3" role="tab" aria-selected="false" aria-controls="detail-title">
+                <span class="layer-main">
+                  <span class="layer-head">
+                    <span class="layer-number">3</span>
+                    <span class="layer-title-wrap">
+                      <h3>Channels bedienen</h3>
+                      <p>Neue Schicht für Distribution und Veröffentlichung.</p>
+                    </span>
+                  </span>
+                  <span class="component-row" aria-label="Neue Komponente der Ebene 3">
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path></svg>
+                      typo3-ext-linked-poster
+                    </span>
+                  </span>
+                  <span class="layer-inherits">
+                    <span class="inherit-badge">setzt auf Ebene 2 auf</span>
+                    <span>Content wird publikationsfähig und kanalorientiert.</span>
+                  </span>
+                  <span class="layer-outcome">
+                    <span class="outcome-pill"><strong>Problem</strong><span>Kanäle konsistent bedienen.</span></span>
+                    <span class="outcome-pill"><strong>Zielgruppen</strong><span>Social Media, Communications, TYPO3-Teams.</span></span>
+                  </span>
+                </span>
+                <span class="layer-side" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-2l12-5v12L4 13Z"></path><path d="M6 13l2 6"></path><path d="M16 8l4-2v12l-4-2"></path></svg>
+                  <span>Publizieren · verteilen · automatisieren</span>
+                </span>
+              </button>
+
+              <button class="layer-card" type="button" data-layer="2" role="tab" aria-selected="false" aria-controls="detail-title">
+                <span class="layer-main">
+                  <span class="layer-head">
+                    <span class="layer-number">2</span>
+                    <span class="layer-title-wrap">
+                      <h3>Inhalte produzieren / umwandeln</h3>
+                      <p>Neue Schicht für Repurposing und CMS-Arbeit.</p>
+                    </span>
+                  </span>
+                  <span class="component-row" aria-label="Neue Komponente der Ebene 2">
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h7a4 4 0 0 1 0 8H5"></path><path d="m8 4-4 3 4 3"></path><path d="M17 17h-7a4 4 0 0 1 0-8h9"></path><path d="m16 20 4-3-4-3"></path></svg>
+                      nr-repurpose
+                    </span>
+                  </span>
+                  <span class="layer-inherits">
+                    <span class="inherit-badge">setzt auf Ebene 1 auf</span>
+                    <span>Die sichere KI-Basis wird zur Content-Maschine.</span>
+                  </span>
+                  <span class="layer-outcome">
+                    <span class="outcome-pill"><strong>Problem</strong><span>Wissen in CMS-fähigen Content verwandeln.</span></span>
+                    <span class="outcome-pill"><strong>Zielgruppen</strong><span>Redaktion, Marketing, CMS-Teams.</span></span>
+                  </span>
+                </span>
+                <span class="layer-side" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"></path><path d="M14 2v5h5"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
+                  <span>Erzeugen · strukturieren · variieren</span>
+                </span>
+              </button>
+
+              <button class="layer-card is-active" type="button" data-layer="1" role="tab" aria-selected="true" aria-controls="detail-title">
+                <span class="layer-main">
+                  <span class="layer-head">
+                    <span class="layer-number">1</span>
+                    <span class="layer-title-wrap">
+                      <h3>KI-Basis & Governance</h3>
+                      <p>Fundament für kontrollierte, nachvollziehbare KI-Nutzung.</p>
+                    </span>
+                  </span>
+                  <span class="component-row" aria-label="Basis-Komponenten der Ebene 1">
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M12 9V7"></path><path d="M12 17v-2"></path></svg>
+                      nr-vault
+                    </span>
+                    <span class="component-plus">+</span>
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M9 8H6"></path><path d="M18 8h-3"></path><path d="M9 16H6"></path><path d="M18 16h-3"></path></svg>
+                      nr-llm
+                    </span>
+                    <span class="component-plus">+</span>
+                    <span class="component-chip optional">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 1v4"></path><path d="M15 1v4"></path><path d="M9 19v4"></path><path d="M15 19v4"></path><path d="M1 9h4"></path><path d="M1 15h4"></path><path d="M19 9h4"></path><path d="M19 15h4"></path></svg>
+                      optional: lokales LLM
+                    </span>
+                  </span>
+                  <span class="layer-inherits">
+                    <span class="inherit-badge">Fundament</span>
+                    <span>Wissen wird abgesichert und KI kontrolliert nutzbar.</span>
+                  </span>
+                  <span class="layer-outcome">
+                    <span class="outcome-pill"><strong>Problem</strong><span>KI nutzbar machen, ohne Kontrolle zu verlieren.</span></span>
+                    <span class="outcome-pill"><strong>Zielgruppen</strong><span>Controlling, Audit, Governance, Compliance.</span></span>
+                  </span>
+                </span>
+                <span class="layer-side" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
+                  <span>Wissen sichern · KI kontrolliert nutzen</span>
+                </span>
+              </button>
+            </div>
+
+            <aside class="details-panel" aria-live="polite" aria-labelledby="detail-title">
+              <span class="detail-kicker" id="detail-kicker">Ebene 1</span>
+              <h3 id="detail-title">KI-Basis & Governance</h3>
+              <p id="detail-summary">Die Grundlage für kontrollierte KI-Nutzung: Wissen wird zentral verfügbar, Berechtigungen und Quellen bleiben nachvollziehbar, ein lokales LLM kann sensible Szenarien absichern.</p>
+
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <strong>Problemlösung</strong>
+                  <span id="detail-problem">Sichere KI-Basis für Controlling, Auditing und Governance.</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Zielgruppen</strong>
+                  <span id="detail-audience">Controlling · Audit · Governance · Compliance</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Ergebnis</strong>
+                  <span id="detail-result">Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — mit optional lokalem Modell für sensible Daten.</span>
+                </div>
+              </div>
+
+              <div class="detail-stack" aria-label="Aktiver Gesamtstack">
+                <p class="detail-stack-label">Aktiver Gesamtstack</p>
+                <div class="stack-path" id="stack-path"></div>
+              </div>
+
+              <div class="takeaway">
+                <strong id="detail-takeaway-title">Nicht Demo, sondern Betriebsmodell.</strong>
+                <p id="detail-takeaway">Die KI-Basis ist der Pflichtteil. Ohne diese Ebene wird Content-Automatisierung schnell unkontrollierbar.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="flow-section" id="flow">
+        <div class="container">
+          <div class="flow-card">
+            <h2>Wertstrom: von Wissen zu Kanälen</h2>
+            <div class="flow-chain" aria-label="Prozesskette">
+              <div class="flow-step">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path></svg>
+                <span>Wissen</span>
+              </div>
+              <div class="flow-arrow" aria-hidden="true">→</div>
+              <div class="flow-step">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+                <span>KI</span>
+              </div>
+              <div class="flow-arrow" aria-hidden="true">→</div>
+              <div class="flow-step">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"></path><path d="M14 2v5h5"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
+                <span>Content</span>
+              </div>
+              <div class="flow-arrow" aria-hidden="true">→</div>
+              <div class="flow-step">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-2l12-5v12L4 13Z"></path><path d="M6 13l2 6"></path><path d="M16 8l4-2v12l-4-2"></path></svg>
+                <span>Channels</span>
+              </div>
+            </div>
+            <div class="solution-note">
+              <span class="solution-note-icon" aria-hidden="true">!</span>
+              <p><strong>Wichtig:</strong> Die Darstellung vermeidet absichtlich redundante Modulreihen. Ebene 2 und 3 zeigen jeweils nur, was neu hinzukommt. Der vollständige Stack steht im Detailpanel.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Netresearch DTT GmbH · Modularer KI-Stack</span>
+        <a href="https://www.netresearch.de/">netresearch.de</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const layers = {
+      "1": {
+        kicker: "Ebene 1",
+        title: "KI-Basis & Governance",
+        summary: "Die Grundlage für kontrollierte KI-Nutzung: Wissen wird zentral verfügbar, Berechtigungen und Quellen bleiben nachvollziehbar, ein lokales LLM kann sensible Szenarien absichern.",
+        problem: "Sichere KI-Basis für Controlling, Auditing und Governance.",
+        audience: "Controlling · Audit · Governance · Compliance",
+        result: "Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — mit optional lokalem Modell für sensible Daten.",
+        stack: ["nr-vault", "nr-llm", "optional: lokales LLM"],
+        takeawayTitle: "Nicht Demo, sondern Betriebsmodell.",
+        takeaway: "Die KI-Basis ist der Pflichtteil. Ohne diese Ebene wird Content-Automatisierung schnell unkontrollierbar."
+      },
+      "2": {
+        kicker: "Ebene 2",
+        title: "Inhalte produzieren / umwandeln",
+        summary: "Auf der Governance-Basis entsteht die Content-Schicht. Bestehendes Wissen wird in redaktionelle Formate, Varianten, CMS-Strukturen und wiederverwendbare Textbausteine überführt.",
+        problem: "Inhalte aus Wissen erzeugen, umwandeln und CMS-fähig aufbereiten.",
+        audience: "Redaktion · Marketing · CMS-Teams · Knowledge Management",
+        result: "Schnellere CMS-Tätigkeit: Artikel, Teaser, FAQ, Produkttexte, Landingpage-Bausteine und Social Snippets entstehen aus vorhandenen Quellen.",
+        stack: ["Ebene 1", "nr-repurpose"],
+        takeawayTitle: "Repurposing ist die operative Hebelwirkung.",
+        takeaway: "Die KI wird produktiv, weil sie nicht nur antwortet, sondern Inhalte in nutzbare Formate transformiert."
+      },
+      "3": {
+        kicker: "Ebene 3",
+        title: "Channels bedienen",
+        summary: "Die Content-Schicht wird zur Distribution-Schicht. Inhalte werden kanalübergreifend vorbereitet, ausgespielt und in TYPO3-gestützte Publishing-Prozesse integriert.",
+        problem: "Inhalte kanalübergreifend ausspielen und veröffentlichen.",
+        audience: "Social Media · Communications · Content Operations · TYPO3-Teams",
+        result: "Ein durchgängiger Workflow von Wissensbasis über Content-Erstellung bis zur kanalorientierten Veröffentlichung, zum Beispiel Richtung LinkedIn.",
+        stack: ["Ebene 1", "Ebene 2", "typo3-ext-linked-poster"],
+        takeawayTitle: "Distribution ist kein Nachsatz.",
+        takeaway: "Der Wert entsteht erst vollständig, wenn erzeugter Content kontrolliert in relevante Kanäle kommt."
+      }
+    };
+
+    const cards = Array.from(document.querySelectorAll(".layer-card"));
+    const markers = Array.from(document.querySelectorAll(".rail-marker"));
+    const fields = {
+      kicker: document.getElementById("detail-kicker"),
+      title: document.getElementById("detail-title"),
+      summary: document.getElementById("detail-summary"),
+      problem: document.getElementById("detail-problem"),
+      audience: document.getElementById("detail-audience"),
+      result: document.getElementById("detail-result"),
+      stackPath: document.getElementById("stack-path"),
+      takeawayTitle: document.getElementById("detail-takeaway-title"),
+      takeaway: document.getElementById("detail-takeaway")
+    };
+
+    function renderStackPath(stack) {
+      fields.stackPath.innerHTML = "";
+      stack.forEach((item, index) => {
+        const chip = document.createElement("span");
+        chip.className = "path-chip";
+        chip.textContent = item;
+        fields.stackPath.appendChild(chip);
+
+        if (index < stack.length - 1) {
+          const arrow = document.createElement("span");
+          arrow.className = "path-arrow";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.textContent = "→";
+          fields.stackPath.appendChild(arrow);
+        }
+      });
+    }
+
+    function setActiveLayer(layerId) {
+      const data = layers[layerId];
+      if (!data) return;
+
+      cards.forEach((card) => {
+        const active = card.dataset.layer === layerId;
+        card.classList.toggle("is-active", active);
+        card.setAttribute("aria-selected", active ? "true" : "false");
+      });
+
+      markers.forEach((marker) => {
+        marker.classList.toggle("is-active", marker.dataset.layer === layerId);
+      });
+
+      fields.kicker.textContent = data.kicker;
+      fields.title.textContent = data.title;
+      fields.summary.textContent = data.summary;
+      fields.problem.textContent = data.problem;
+      fields.audience.textContent = data.audience;
+      fields.result.textContent = data.result;
+      fields.takeawayTitle.textContent = data.takeawayTitle;
+      fields.takeaway.textContent = data.takeaway;
+      renderStackPath(data.stack);
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => setActiveLayer(card.dataset.layer));
+      card.addEventListener("keydown", (event) => {
+        const currentIndex = cards.findIndex((item) => item.dataset.layer === card.dataset.layer);
+        let nextIndex = currentIndex;
+
+        if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+          nextIndex = Math.min(cards.length - 1, currentIndex + 1);
+        }
+        if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+          nextIndex = Math.max(0, currentIndex - 1);
+        }
+        if (event.key === "Home") {
+          nextIndex = 0;
+        }
+        if (event.key === "End") {
+          nextIndex = cards.length - 1;
+        }
+
+        if (nextIndex !== currentIndex) {
+          event.preventDefault();
+          const nextCard = cards[nextIndex];
+          nextCard.focus();
+          setActiveLayer(nextCard.dataset.layer);
+        }
+      });
+    });
+
+    renderStackPath(layers["1"].stack);
+  </script>
+</body>
+</html>
