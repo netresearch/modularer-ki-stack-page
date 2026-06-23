@@ -111,12 +111,14 @@
       --nr-bg: #FFFFFF;
       --nr-bg-soft: #F6F8F8;
       --nr-card: #FFFFFF;
-      --shadow-sm: 0 10px 30px rgba(37, 39, 45, 0.08);
-      --shadow-md: 0 18px 60px rgba(37, 39, 45, 0.14);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 14px;
-      --radius-sm: 10px;
+      --nr-page: #EEEEEE;
+      --nr-footer: #4D4F57;
+      --shadow-sm: 0 3px 3px rgba(22, 28, 45, 0.10), 0 8px 8px -4px rgba(22, 28, 45, 0.10);
+      --shadow-md: 0 6px 10px rgba(22, 28, 45, 0.12), 0 16px 22px -8px rgba(22, 28, 45, 0.12);
+      --radius-xl: 10px;
+      --radius-lg: 8px;
+      --radius-md: 6px;
+      --radius-sm: 5px;
       --duration: 220ms;
     }
 
@@ -132,10 +134,7 @@
       margin: 0;
       font-family: "Open Sans", Arial, sans-serif;
       color: var(--nr-text);
-      background:
-        radial-gradient(circle at 12% 10%, rgba(47, 153, 164, 0.12), transparent 32%),
-        radial-gradient(circle at 88% 18%, rgba(255, 77, 0, 0.08), transparent 26%),
-        linear-gradient(180deg, #FFFFFF 0%, #F6F8F8 100%);
+      background: var(--nr-page);
       line-height: 1.6;
     }
 
@@ -197,9 +196,8 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      backdrop-filter: blur(16px);
-      background: rgba(255, 255, 255, 0.92);
-      border-bottom: 1px solid rgba(204, 205, 204, 0.7);
+      background: var(--nr-card);
+      border-bottom: 1px solid var(--nr-border);
     }
 
     .header-inner {
@@ -304,8 +302,8 @@
       padding: 8px 14px;
       margin: 0 0 20px;
       border: 1px solid rgba(47, 153, 164, 0.35);
-      border-radius: 999px;
-      background: rgba(234, 246, 247, 0.78);
+      border-radius: var(--radius-sm);
+      background: var(--nr-primary-soft);
       color: var(--nr-primary-dark);
       font-family: "Raleway", Arial, sans-serif;
       font-weight: 800;
@@ -335,8 +333,8 @@
     }
 
     h1 {
-      font-size: clamp(42px, 6vw, 76px);
-      font-weight: 800;
+      font-size: clamp(40px, 5.2vw, 64px);
+      font-weight: 700;
       max-width: 920px;
     }
 
@@ -361,7 +359,7 @@
       gap: 10px;
       min-height: 48px;
       padding: 13px 24px;
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       border: 2px solid transparent;
       font-family: "Raleway", Arial, sans-serif;
       font-weight: 800;
@@ -388,7 +386,7 @@
     }
 
     .btn-outline {
-      background: rgba(255, 255, 255, 0.85);
+      background: var(--nr-card);
       color: var(--nr-link);
       border-color: var(--nr-primary);
     }
@@ -405,7 +403,7 @@
       padding: 28px;
       border: 1px solid rgba(47, 153, 164, 0.25);
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--nr-card);
       box-shadow: var(--shadow-sm);
       overflow: hidden;
     }
@@ -414,8 +412,8 @@
       content: "";
       position: absolute;
       inset: 0 0 auto;
-      height: 8px;
-      background: linear-gradient(90deg, var(--nr-primary), var(--nr-accent));
+      height: 6px;
+      background: var(--nr-primary);
     }
 
     .hero-card h2 {
@@ -513,8 +511,8 @@
       top: 58px;
       bottom: 58px;
       width: 3px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, var(--nr-primary), rgba(47, 153, 164, 0.2));
+      border-radius: var(--radius-sm);
+      background: var(--nr-primary);
     }
 
     .value-rail::after {
@@ -620,7 +618,7 @@
       text-align: left;
       border: 1px solid rgba(204, 205, 204, 0.9);
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--nr-card);
       padding: 22px;
       box-shadow: 0 6px 24px rgba(37, 39, 45, 0.06);
       cursor: pointer;
@@ -714,7 +712,7 @@
       gap: 10px;
       min-height: 48px;
       padding: 10px 14px;
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       border: 1px solid rgba(47, 153, 164, 0.35);
       background: var(--nr-primary-soft);
       color: var(--nr-primary-dark);
@@ -761,8 +759,8 @@
       gap: 7px;
       padding: 6px 10px;
       border: 1px solid rgba(204, 205, 204, 0.8);
-      border-radius: 999px;
-      background: rgba(246, 248, 248, 0.9);
+      border-radius: var(--radius-sm);
+      background: var(--nr-bg-soft);
       color: var(--nr-text);
       font-weight: 700;
     }
@@ -783,7 +781,7 @@
       padding: 12px 14px;
       border: 1px solid rgba(204, 205, 204, 0.74);
       border-radius: var(--radius-md);
-      background: rgba(246, 248, 248, 0.8);
+      background: var(--nr-bg-soft);
     }
 
     .outcome-pill strong {
@@ -812,7 +810,7 @@
       gap: 10px;
       padding: 14px;
       border-radius: var(--radius-lg);
-      background: linear-gradient(180deg, rgba(47, 153, 164, 0.10), rgba(255, 255, 255, 0.55));
+      background: var(--nr-primary-soft);
       color: var(--nr-primary-dark);
       text-align: center;
       font-family: "Raleway", Arial, sans-serif;
@@ -842,7 +840,7 @@
       padding: 26px;
       border: 1px solid rgba(47, 153, 164, 0.28);
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--nr-card);
       box-shadow: var(--shadow-sm);
     }
 
@@ -852,7 +850,7 @@
       align-items: center;
       gap: 8px;
       padding: 7px 12px;
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       background: var(--nr-primary-soft);
       color: var(--nr-primary-dark);
       font-family: "Raleway", Arial, sans-serif;
@@ -923,7 +921,7 @@
       display: inline-flex;
       align-items: center;
       padding: 8px 10px;
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       border: 1px solid rgba(47, 153, 164, 0.32);
       background: #fff;
       color: var(--nr-primary-dark);
@@ -949,7 +947,7 @@
       position: relative;
       padding: 18px 18px 18px 22px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, rgba(47, 153, 164, 0.12), rgba(255, 255, 255, 0.8));
+      background: var(--nr-primary-soft);
       border: 1px solid rgba(47, 153, 164, 0.24);
       overflow: hidden;
     }
@@ -979,7 +977,7 @@
       gap: 22px;
       padding: 30px;
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.92);
+      background: var(--nr-card);
       border: 1px solid rgba(204, 205, 204, 0.85);
       box-shadow: var(--shadow-sm);
     }
@@ -1083,7 +1081,7 @@
       text-transform: uppercase;
       color: var(--nr-primary-dark);
       background: var(--nr-primary-soft);
-      border-radius: 999px;
+      border-radius: var(--radius-sm);
       padding: 5px 11px;
     }
 
@@ -1194,8 +1192,8 @@
     }
 
     .site-footer {
-      border-top: 1px solid rgba(204, 205, 204, 0.9);
-      background: #fff;
+      border-top: 4px solid var(--nr-primary);
+      background: var(--nr-footer);
     }
 
     .footer-inner {
@@ -1207,7 +1205,7 @@
       justify-content: space-between;
       gap: 20px;
       padding: 22px 0;
-      color: var(--nr-muted);
+      color: #FFFFFF;
       font-size: 14px;
       flex-wrap: wrap;
     }
@@ -1224,6 +1222,13 @@
       align-items: center;
       min-height: 44px;
       font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .footer-inner a:hover,
+    .footer-inner a:focus-visible {
+      color: #FFFFFF;
+      text-decoration-thickness: 3px;
     }
 
     .visually-hidden {
@@ -1268,7 +1273,7 @@
         padding: 10px;
         border: 1px solid rgba(204, 205, 204, 0.8);
         border-radius: var(--radius-md);
-        background: rgba(255, 255, 255, 0.85);
+        background: var(--nr-card);
       }
 
       .rail-marker.is-active {
@@ -1827,8 +1832,10 @@
         <span>Netresearch DTT GmbH · Modularer KI-Stack</span>
         <nav class="footer-nav" aria-label="Footer-Navigation">
           <a href="https://www.netresearch.de/">netresearch.de</a>
+          <a href="https://www.netresearch.de/impressum/">Impressum</a>
+          <a href="https://www.netresearch.de/datenschutz/">Datenschutz</a>
+          <a href="https://www.netresearch.de/kontakt/">Kontakt</a>
           <a href="https://github.com/netresearch/modularer-ki-stack-page">Quellcode</a>
-          <a href="mailto:typo3@netresearch.de">typo3@netresearch.de</a>
         </nav>
       </div>
     </footer>
