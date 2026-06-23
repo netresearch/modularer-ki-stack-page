@@ -3,20 +3,110 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modularer KI-Stack | nr-vault · nr-llm · nr-repurpose</title>
-  <meta name="description" content="Interaktive Visualisierung des modularen KI-Stacks von sicherer Wissensbasis über Content-Produktion bis zur Channel-Ausspielung.">
+  <title>Modularer KI-Stack | Sicherheit · KI-Basis · Content · Channels — Netresearch</title>
+  <meta name="description" content="Der modulare KI-Stack von Netresearch: vom Sicherheits- und Identitätsfundament (nr-vault, nr-passkeys) über die governance-fähige KI-Basis (nr-llm) und die Content-Produktion (nr-repurpose, cowriter) bis zur Channel-Ausspielung. Interaktive Visualisierung als aufeinander aufbauender Wertstrom.">
+  <meta name="author" content="Netresearch DTT GmbH">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#2F99A4">
+  <link rel="canonical" href="https://netresearch.github.io/modularer-ki-stack-page/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Netresearch DTT GmbH">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Modularer KI-Stack — Sicherheit, KI-Basis, Content & Channels">
+  <meta property="og:description" content="Ein modularer KI-Stack als Wertstrom: vom Sicherheits- und Identitätsfundament über die governance-fähige KI-Basis bis zur kanalorientierten Veröffentlichung.">
+  <meta property="og:url" content="https://netresearch.github.io/modularer-ki-stack-page/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Modularer KI-Stack — Netresearch">
+  <meta name="twitter:description" content="Sicherheit (nr-vault, nr-passkeys) → KI-Basis (nr-llm) → Content (nr-repurpose, cowriter) → Channels. Ein modularer KI-Stack als Wertstrom.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.netresearch.de/#organization",
+        "name": "Netresearch DTT GmbH",
+        "url": "https://www.netresearch.de/",
+        "email": "typo3@netresearch.de",
+        "logo": "https://www.netresearch.de/typo3conf/ext/nr_template/Resources/Public/Images/logo.svg"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://netresearch.github.io/modularer-ki-stack-page/#website",
+        "url": "https://netresearch.github.io/modularer-ki-stack-page/",
+        "name": "Modularer KI-Stack",
+        "inLanguage": "de",
+        "publisher": { "@id": "https://www.netresearch.de/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://netresearch.github.io/modularer-ki-stack-page/#webpage",
+        "url": "https://netresearch.github.io/modularer-ki-stack-page/",
+        "name": "Modularer KI-Stack — Sicherheit, KI-Basis, Content & Channels",
+        "isPartOf": { "@id": "https://netresearch.github.io/modularer-ki-stack-page/#website" },
+        "inLanguage": "de",
+        "about": "Ein modularer KI-Stack, der von einem Sicherheits- und Identitätsfundament über eine governance-fähige KI-Basis und Content-Produktion bis zur Channel-Ausspielung aufeinander aufbaut."
+      },
+      {
+        "@type": "ItemList",
+        "name": "Ebenen des modularen KI-Stacks",
+        "itemListOrder": "https://schema.org/ItemListOrderAscending",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 0, "name": "Ebene 0 — Sicherheit & Identität", "description": "Zugriffs- und Identitätsfundament mit nr-vault sowie nr-passkeys-be und nr-passkeys-fe." },
+          { "@type": "ListItem", "position": 1, "name": "Ebene 1 — KI-Basis & Governance", "description": "Kontrollierter, nachvollziehbarer LLM-Zugang mit nr-llm." },
+          { "@type": "ListItem", "position": 2, "name": "Ebene 2 — Inhalte produzieren / umwandeln", "description": "Content-Produktion mit nr-repurpose, cowriter und weiteren KI-Tools." },
+          { "@type": "ListItem", "position": 3, "name": "Ebene 3 — Channels bedienen", "description": "Kanalorientierte Veröffentlichung der erzeugten Inhalte." }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Was ist der modulare KI-Stack von Netresearch?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Der modulare KI-Stack ist ein aufeinander aufbauender Wertstrom aus vier Ebenen: einem Sicherheits- und Identitätsfundament (Ebene 0), einer governance-fähigen KI-Basis (Ebene 1), der Content-Produktion (Ebene 2) und der Channel-Ausspielung (Ebene 3). Jede Ebene erbt den Unterbau der darunterliegenden Ebenen." }
+          },
+          {
+            "@type": "Question",
+            "name": "Welche Module gehören zur Sicherheits-Ebene (Ebene 0)?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Ebene 0 umfasst nr-vault für eine sichere, auditierbare Secret- und Wissensbasis sowie nr-passkeys-be und nr-passkeys-fe für passwortlose Passkey-Anmeldung im TYPO3-Backend und -Frontend." }
+          },
+          {
+            "@type": "Question",
+            "name": "Warum ist die KI-Basis von der Sicherheits-Ebene getrennt?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Zugriffe, Secrets und Identitäten werden zuerst abgesichert (Ebene 0), bevor mit nr-llm ein kontrollierter, nachvollziehbarer KI-Zugang aufgebaut wird (Ebene 1). So bleibt KI-Nutzung von Anfang an governance- und auditierbar." }
+          },
+          {
+            "@type": "Question",
+            "name": "Welche KI-Tools produzieren Inhalte (Ebene 2)?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Ebene 2 nutzt nr-repurpose zum Umwandeln von Wissen in CMS-fähige Formate, cowriter für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie nr-landingpage und nr-mcp-agent." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <style>
     :root {
       --nr-primary: #2F99A4;
-      --nr-primary-dark: #247981;
+      --nr-primary-dark: #15585E;
       --nr-primary-soft: #EAF6F7;
       --nr-accent: #FF4D00;
-      --nr-text: #585961;
+      --nr-accent-dark: #9A2E00;
+      --nr-text: #4D4F57;
       --nr-ink: #25272D;
-      --nr-muted: #73757D;
+      --nr-muted: #50525A;
+      --nr-link: #15585E;
       --nr-border: #CCCDCC;
       --nr-bg: #FFFFFF;
       --nr-bg-soft: #F6F8F8;
@@ -50,9 +140,13 @@
     }
 
     a {
-      color: var(--nr-primary);
+      color: var(--nr-link);
       text-decoration-thickness: 2px;
       text-underline-offset: 3px;
+    }
+
+    a:hover {
+      color: var(--nr-accent-dark);
     }
 
     button,
@@ -60,6 +154,37 @@
     textarea,
     select {
       font: inherit;
+    }
+
+    /* AAA-friendly, always-visible keyboard focus indicator (2.4.7 / 2.4.13) */
+    :focus-visible {
+      outline: 3px solid var(--nr-accent);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    [id] {
+      scroll-margin-top: 96px;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -72px;
+      z-index: 60;
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: var(--nr-primary-dark);
+      color: #fff;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      text-decoration: none;
+      transition: top var(--duration) ease;
+    }
+
+    .skip-link:focus {
+      top: 16px;
+      color: #fff;
     }
 
     .page-shell {
@@ -73,7 +198,7 @@
       top: 0;
       z-index: 30;
       backdrop-filter: blur(16px);
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.92);
       border-bottom: 1px solid rgba(204, 205, 204, 0.7);
     }
 
@@ -119,7 +244,7 @@
       font-family: "Open Sans", Arial, sans-serif;
       font-size: 12px;
       font-weight: 700;
-      color: var(--nr-primary);
+      color: var(--nr-primary-dark);
       text-transform: uppercase;
       letter-spacing: 0.12em;
     }
@@ -127,24 +252,29 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 8px;
       font-family: "Raleway", Arial, sans-serif;
       font-size: 14px;
       font-weight: 700;
     }
 
     .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
       color: var(--nr-text);
       text-decoration: none;
-      padding: 8px 4px;
+      padding: 8px 12px;
+      border-radius: 8px;
       border-bottom: 2px solid transparent;
-      transition: color var(--duration) ease, border-color var(--duration) ease;
+      transition: color var(--duration) ease, border-color var(--duration) ease, background var(--duration) ease;
     }
 
     .nav-links a:hover,
     .nav-links a:focus-visible {
-      color: var(--nr-primary);
+      color: var(--nr-link);
       border-color: var(--nr-primary);
+      background: rgba(234, 246, 247, 0.6);
     }
 
     main {
@@ -247,14 +377,27 @@
     }
 
     .btn-primary {
-      background: var(--nr-primary);
+      background: var(--nr-primary-dark);
+      color: #fff;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      background: #0E4A4E;
       color: #fff;
     }
 
     .btn-outline {
-      background: rgba(255, 255, 255, 0.72);
-      color: var(--nr-primary-dark);
-      border-color: rgba(47, 153, 164, 0.48);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--nr-link);
+      border-color: var(--nr-primary);
+    }
+
+    .btn-outline:hover,
+    .btn-outline:focus-visible {
+      color: #fff;
+      background: var(--nr-primary-dark);
+      border-color: var(--nr-primary-dark);
     }
 
     .hero-card {
@@ -262,7 +405,7 @@
       padding: 28px;
       border: 1px solid rgba(47, 153, 164, 0.25);
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.9);
       box-shadow: var(--shadow-sm);
       overflow: hidden;
     }
@@ -316,6 +459,15 @@
       margin-bottom: 2px;
     }
 
+    code {
+      font-family: "SFMono-Regular", "JetBrains Mono", "Consolas", monospace;
+      font-size: 0.92em;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: var(--nr-primary-soft);
+      color: var(--nr-primary-dark);
+    }
+
     .section {
       padding: 54px 0;
     }
@@ -349,8 +501,8 @@
     .value-rail {
       position: relative;
       display: grid;
-      grid-template-rows: repeat(3, 1fr);
-      min-height: 650px;
+      grid-template-rows: repeat(4, 1fr);
+      min-height: 880px;
       padding: 20px 0;
     }
 
@@ -412,6 +564,7 @@
     .rail-marker[data-layer="3"] { grid-row: 1; }
     .rail-marker[data-layer="2"] { grid-row: 2; }
     .rail-marker[data-layer="1"] { grid-row: 3; }
+    .rail-marker[data-layer="0"] { grid-row: 4; }
 
     .rail-dot {
       position: relative;
@@ -453,7 +606,7 @@
 
     .layer-diagram {
       display: grid;
-      grid-template-rows: repeat(3, minmax(190px, auto));
+      grid-template-rows: repeat(4, minmax(190px, auto));
       gap: 18px;
     }
 
@@ -467,7 +620,7 @@
       text-align: left;
       border: 1px solid rgba(204, 205, 204, 0.9);
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.9);
       padding: 22px;
       box-shadow: 0 6px 24px rgba(37, 39, 45, 0.06);
       cursor: pointer;
@@ -475,13 +628,16 @@
     }
 
     .layer-card:hover,
-    .layer-card:focus-visible,
     .layer-card.is-active {
       transform: translateY(-3px);
       border-color: var(--nr-primary);
       box-shadow: var(--shadow-md);
       background: #fff;
-      outline: none;
+    }
+
+    .layer-card:focus-visible {
+      outline: 3px solid var(--nr-accent);
+      outline-offset: 3px;
     }
 
     .layer-card.is-active::before {
@@ -496,6 +652,7 @@
     .layer-card[data-layer="3"] { grid-row: 1; }
     .layer-card[data-layer="2"] { grid-row: 2; }
     .layer-card[data-layer="1"] { grid-row: 3; }
+    .layer-card[data-layer="0"] { grid-row: 4; }
 
     .layer-main {
       display: grid;
@@ -516,7 +673,7 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: var(--nr-primary);
+      background: var(--nr-primary-dark);
       color: #fff;
       font-family: "Raleway", Arial, sans-serif;
       font-size: 20px;
@@ -525,7 +682,7 @@
     }
 
     .layer-card[data-layer="3"] .layer-number {
-      background: var(--nr-accent);
+      box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.30);
     }
 
     .layer-title-wrap {
@@ -612,7 +769,7 @@
 
     .inherit-badge::before {
       content: "↳";
-      color: var(--nr-primary);
+      color: var(--nr-primary-dark);
       font-weight: 800;
     }
 
@@ -685,7 +842,7 @@
       padding: 26px;
       border: 1px solid rgba(47, 153, 164, 0.28);
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.95);
       box-shadow: var(--shadow-sm);
     }
 
@@ -763,6 +920,8 @@
     }
 
     .stack-path .path-chip {
+      display: inline-flex;
+      align-items: center;
       padding: 8px 10px;
       border-radius: 999px;
       border: 1px solid rgba(47, 153, 164, 0.32);
@@ -771,6 +930,14 @@
       font-family: "Raleway", Arial, sans-serif;
       font-size: 13px;
       font-weight: 800;
+      text-decoration: none;
+    }
+
+    a.path-chip:hover,
+    a.path-chip:focus-visible {
+      border-color: var(--nr-primary);
+      background: var(--nr-primary-soft);
+      color: var(--nr-primary-dark);
     }
 
     .stack-path .path-arrow {
@@ -804,7 +971,7 @@
     }
 
     .flow-section {
-      padding: 22px 0 76px;
+      padding: 22px 0 54px;
     }
 
     .flow-card {
@@ -812,7 +979,7 @@
       gap: 22px;
       padding: 30px;
       border-radius: var(--radius-xl);
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid rgba(204, 205, 204, 0.85);
       box-shadow: var(--shadow-sm);
     }
@@ -823,7 +990,7 @@
 
     .flow-chain {
       display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
       gap: 14px;
       align-items: center;
     }
@@ -875,7 +1042,7 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: var(--nr-primary);
+      background: var(--nr-primary-dark);
       color: #fff;
       font-family: "Raleway", Arial, sans-serif;
       font-weight: 800;
@@ -884,6 +1051,146 @@
 
     .solution-note p {
       margin: 0;
+    }
+
+    /* Module / Repositories section */
+    .module-section {
+      padding: 32px 0 54px;
+    }
+
+    .module-groups {
+      display: grid;
+      gap: 28px;
+    }
+
+    .module-group-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .module-group-head h3 {
+      font-size: clamp(20px, 2.4vw, 26px);
+    }
+
+    .module-ebene {
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--nr-primary-dark);
+      background: var(--nr-primary-soft);
+      border-radius: 999px;
+      padding: 5px 11px;
+    }
+
+    .module-group-note {
+      margin: -2px 0 14px;
+      max-width: 760px;
+      color: var(--nr-muted);
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+      gap: 16px;
+    }
+
+    .module-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 20px;
+      border: 1px solid var(--nr-border);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(37, 39, 45, 0.06);
+      text-decoration: none;
+      color: var(--nr-text);
+      transition: transform var(--duration) ease, border-color var(--duration) ease, box-shadow var(--duration) ease;
+    }
+
+    a.module-card:hover,
+    a.module-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--nr-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .module-card .mod-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--nr-link);
+    }
+
+    a.module-card .mod-name::after {
+      content: "↗";
+      font-size: 0.82em;
+      color: var(--nr-primary-dark);
+    }
+
+    .module-card .mod-name svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--nr-primary-dark);
+      flex: 0 0 auto;
+    }
+
+    .module-card .mod-desc {
+      margin: 0;
+      color: var(--nr-text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .module-card .mod-repo {
+      font-family: "Raleway", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--nr-muted);
+      word-break: break-word;
+    }
+
+    .module-card.is-static {
+      cursor: default;
+      background: var(--nr-bg-soft);
+      border-style: dashed;
+    }
+
+    .module-card.is-static .mod-name {
+      color: var(--nr-text);
+    }
+
+    /* FAQ section */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .faq-item {
+      padding: 22px 24px;
+      border: 1px solid rgba(204, 205, 204, 0.85);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(37, 39, 45, 0.05);
+    }
+
+    .faq-item h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      margin: 0;
+      color: var(--nr-text);
     }
 
     .site-footer {
@@ -899,11 +1206,23 @@
       align-items: center;
       justify-content: space-between;
       gap: 20px;
+      padding: 22px 0;
       color: var(--nr-muted);
       font-size: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     .footer-inner a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
       font-weight: 700;
     }
 
@@ -927,7 +1246,7 @@
 
       .value-rail {
         min-height: auto;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         grid-template-rows: auto;
         gap: 10px;
         padding: 0;
@@ -942,13 +1261,14 @@
       .rail-marker,
       .rail-marker[data-layer="3"],
       .rail-marker[data-layer="2"],
-      .rail-marker[data-layer="1"] {
+      .rail-marker[data-layer="1"],
+      .rail-marker[data-layer="0"] {
         grid-row: auto;
         justify-content: center;
         padding: 10px;
         border: 1px solid rgba(204, 205, 204, 0.8);
         border-radius: var(--radius-md);
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.85);
       }
 
       .rail-marker.is-active {
@@ -1013,7 +1333,7 @@
       }
 
       .value-rail {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
 
       .flow-chain {
@@ -1029,15 +1349,17 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 22px 0;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
       *,
       *::before,
       *::after {
-        scroll-behavior: auto !important;
         transition-duration: 0.001ms !important;
         animation-duration: 0.001ms !important;
         animation-iteration-count: 1 !important;
@@ -1046,11 +1368,12 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
   <div class="page-shell">
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand-link" href="https://www.netresearch.de/" aria-label="Netresearch DTT GmbH">
-          <svg viewBox="-75 -75 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Netresearch symbol logo">
+        <a class="brand-link" href="https://www.netresearch.de/" aria-label="Netresearch DTT GmbH — Startseite">
+          <svg viewBox="-75 -75 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Netresearch Logo">
             <title>Netresearch DTT GmbH</title>
             <g>
               <path fill="#2F99A4" d="M209.6,0V31.62h32.77a26.38,26.38,0,0,1,26.44,26.43V242a26.38,26.38,0,0,1-26.44,26.44H209.6V300h47.93a42.77,42.77,0,0,0,42.86-42.86V42.89A42.76,42.76,0,0,0,257.53,0ZM43.25,0A42.76,42.76,0,0,0,.39,42.89V257.18A42.76,42.76,0,0,0,43.25,300H91.18V268.46H58.4A26.38,26.38,0,0,1,32,242v-184A26.37,26.37,0,0,1,58.4,31.62H91.18V0Z" transform="translate(-0.39 -0.04)" />
@@ -1064,77 +1387,88 @@
         </a>
         <nav class="nav-links" aria-label="Seitennavigation">
           <a href="#stack">Stack</a>
-          <a href="#details">Use Cases</a>
           <a href="#flow">Wertstrom</a>
+          <a href="#module">Module</a>
+          <a href="#faq">FAQ</a>
         </nav>
       </div>
     </header>
 
-    <main>
+    <main id="main">
       <section class="hero">
         <div class="container hero-grid">
           <div>
             <p class="eyebrow">Modularer KI-Stack</p>
-            <h1>Vom sicheren Wissen zur Channel-Ausspielung.</h1>
-            <p class="hero-lead">Ein Stack, der nicht als Tool-Sammlung erklärt wird, sondern als aufeinander aufbauender Wertstrom: Governance-Basis, Content-Produktion und Distribution.</p>
+            <h1>Vom sicheren Zugriff zur Channel-Ausspielung.</h1>
+            <p class="hero-lead">Der modulare KI-Stack von Netresearch ist kein Tool-Sammelsurium, sondern ein aufeinander aufbauender Wertstrom: Sicherheits- und Identitätsfundament, governance-fähige KI-Basis, Content-Produktion und Distribution.</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#stack">Interaktiven Stack ansehen</a>
-              <a class="btn btn-outline" href="#details">Use Cases vergleichen</a>
+              <a class="btn btn-outline" href="#module">Module &amp; Repositories</a>
             </div>
           </div>
 
-          <aside class="hero-card" aria-label="Stack-Prinzip">
+          <aside class="hero-card" aria-label="Prinzip der Visualisierung">
             <h2>Prinzip der Visualisierung</h2>
             <ol class="principle-list">
               <li>
+                <span class="principle-index">0</span>
+                <span><strong>Sicherheit zuerst.</strong> <code>nr-vault</code> und <code>nr-passkeys</code> bilden das Zugriffs- und Identitätsfundament.</span>
+              </li>
+              <li>
                 <span class="principle-index">1</span>
-                <span><strong>Basis wird einmal gezeigt.</strong> `nr-vault` und `nr-llm` sind das Fundament.</span>
+                <span><strong>KI kontrolliert nutzbar.</strong> <code>nr-llm</code> macht KI als governance-fähige Basis verfügbar.</span>
               </li>
               <li>
                 <span class="principle-index">2</span>
-                <span><strong>Neue Ebene ergänzt.</strong> `nr-repurpose` kommt als Content-Schicht oben drauf.</span>
+                <span><strong>Inhalte erzeugen.</strong> <code>nr-repurpose</code>, <code>cowriter</code> und weitere KI-Tools kommen als Content-Schicht oben drauf.</span>
               </li>
               <li>
                 <span class="principle-index">3</span>
-                <span><strong>Distribution erweitert.</strong> `typo3-ext-linked-poster` macht aus Content Channel-Bespielung.</span>
+                <span><strong>Distribution erweitert.</strong> Eine Channel-Schicht macht aus Content kanalorientierte Veröffentlichung.</span>
               </li>
             </ol>
           </aside>
         </div>
       </section>
 
-      <section class="section" id="stack">
+      <section class="section" id="stack" aria-labelledby="stack-heading">
         <div class="container">
           <div class="section-header">
-            <h2>Der Stack wächst mit dem Problem.</h2>
+            <h2 id="stack-heading">Der Stack wächst mit dem Problem.</h2>
             <p>Wähle eine Ebene aus. Die Visualisierung zeigt nur die neu hinzukommenden Komponenten; der Unterbau wird vererbt.</p>
           </div>
 
-          <div class="stack-explorer" id="details">
-            <div class="value-rail" aria-label="Wertschöpfungsebenen">
+          <div class="stack-explorer">
+            <div class="value-rail" aria-hidden="true">
               <span class="rail-title">Wertschöpfung</span>
               <div class="rail-marker" data-layer="3">
-                <span class="rail-dot" aria-hidden="true">
+                <span class="rail-dot">
                   <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-2l12-5v12L4 13Z"></path><path d="M6 13l2 6"></path><path d="M16 8l4-2v12l-4-2"></path></svg>
                 </span>
                 <span>Distribution</span>
               </div>
               <div class="rail-marker" data-layer="2">
-                <span class="rail-dot" aria-hidden="true">
+                <span class="rail-dot">
                   <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"></path><path d="M14 2v5h5"></path><path d="M8 13h8"></path><path d="M8 17h5"></path></svg>
                 </span>
                 <span>Content</span>
               </div>
-              <div class="rail-marker is-active" data-layer="1">
-                <span class="rail-dot" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
+              <div class="rail-marker" data-layer="1">
+                <span class="rail-dot">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
                 </span>
                 <span>KI-Basis</span>
               </div>
+              <div class="rail-marker is-active" data-layer="0">
+                <span class="rail-dot">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="M9 12a3 3 0 1 1 6 0c0 1.5-1.5 2-3 3"></path></svg>
+                </span>
+                <span>Sicherheit</span>
+              </div>
             </div>
 
-            <div class="layer-diagram" role="tablist" aria-label="Interaktive Stack-Ebenen">
-              <button class="layer-card" type="button" data-layer="3" role="tab" aria-selected="false" aria-controls="detail-title">
+            <div class="layer-diagram" role="tablist" aria-label="Interaktive Stack-Ebenen" aria-orientation="vertical">
+              <button class="layer-card" type="button" data-layer="3" id="tab-3" role="tab" aria-selected="false" aria-controls="layer-panel">
                 <span class="layer-main">
                   <span class="layer-head">
                     <span class="layer-number">3</span>
@@ -1143,10 +1477,10 @@
                       <p>Neue Schicht für Distribution und Veröffentlichung.</p>
                     </span>
                   </span>
-                  <span class="component-row" aria-label="Neue Komponente der Ebene 3">
-                    <span class="component-chip">
+                  <span class="component-row" aria-label="Beispielkomponenten der Ebene 3">
+                    <span class="component-chip optional">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path></svg>
-                      typo3-ext-linked-poster
+                      Community Social-Extensions
                     </span>
                   </span>
                   <span class="layer-inherits">
@@ -1164,7 +1498,7 @@
                 </span>
               </button>
 
-              <button class="layer-card" type="button" data-layer="2" role="tab" aria-selected="false" aria-controls="detail-title">
+              <button class="layer-card" type="button" data-layer="2" id="tab-2" role="tab" aria-selected="false" aria-controls="layer-panel">
                 <span class="layer-main">
                   <span class="layer-head">
                     <span class="layer-number">2</span>
@@ -1173,10 +1507,20 @@
                       <p>Neue Schicht für Repurposing und CMS-Arbeit.</p>
                     </span>
                   </span>
-                  <span class="component-row" aria-label="Neue Komponente der Ebene 2">
+                  <span class="component-row" aria-label="Neue Komponenten der Ebene 2">
                     <span class="component-chip">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h7a4 4 0 0 1 0 8H5"></path><path d="m8 4-4 3 4 3"></path><path d="M17 17h-7a4 4 0 0 1 0-8h9"></path><path d="m16 20 4-3-4-3"></path></svg>
                       nr-repurpose
+                    </span>
+                    <span class="component-plus" aria-hidden="true">+</span>
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+                      cowriter
+                    </span>
+                    <span class="component-plus" aria-hidden="true">+</span>
+                    <span class="component-chip optional">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 1v4"></path><path d="M15 1v4"></path><path d="M9 19v4"></path><path d="M15 19v4"></path><path d="M1 9h4"></path><path d="M1 15h4"></path><path d="M19 9h4"></path><path d="M19 15h4"></path></svg>
+                      weitere KI-Tools
                     </span>
                   </span>
                   <span class="layer-inherits">
@@ -1194,34 +1538,29 @@
                 </span>
               </button>
 
-              <button class="layer-card is-active" type="button" data-layer="1" role="tab" aria-selected="true" aria-controls="detail-title">
+              <button class="layer-card" type="button" data-layer="1" id="tab-1" role="tab" aria-selected="false" aria-controls="layer-panel">
                 <span class="layer-main">
                   <span class="layer-head">
                     <span class="layer-number">1</span>
                     <span class="layer-title-wrap">
-                      <h3>KI-Basis & Governance</h3>
-                      <p>Fundament für kontrollierte, nachvollziehbare KI-Nutzung.</p>
+                      <h3>KI-Basis &amp; Governance</h3>
+                      <p>Kontrollierter, nachvollziehbarer LLM-Zugang.</p>
                     </span>
                   </span>
-                  <span class="component-row" aria-label="Basis-Komponenten der Ebene 1">
-                    <span class="component-chip">
-                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M12 9V7"></path><path d="M12 17v-2"></path></svg>
-                      nr-vault
-                    </span>
-                    <span class="component-plus">+</span>
+                  <span class="component-row" aria-label="Komponenten der Ebene 1">
                     <span class="component-chip">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M9 8H6"></path><path d="M18 8h-3"></path><path d="M9 16H6"></path><path d="M18 16h-3"></path></svg>
                       nr-llm
                     </span>
-                    <span class="component-plus">+</span>
+                    <span class="component-plus" aria-hidden="true">+</span>
                     <span class="component-chip optional">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 1v4"></path><path d="M15 1v4"></path><path d="M9 19v4"></path><path d="M15 19v4"></path><path d="M1 9h4"></path><path d="M1 15h4"></path><path d="M19 9h4"></path><path d="M19 15h4"></path></svg>
                       optional: lokales LLM
                     </span>
                   </span>
                   <span class="layer-inherits">
-                    <span class="inherit-badge">Fundament</span>
-                    <span>Wissen wird abgesichert und KI kontrolliert nutzbar.</span>
+                    <span class="inherit-badge">setzt auf Ebene 0 auf</span>
+                    <span>Abgesicherte Zugänge werden zur kontrollierten KI.</span>
                   </span>
                   <span class="layer-outcome">
                     <span class="outcome-pill"><strong>Problem</strong><span>KI nutzbar machen, ohne Kontrolle zu verlieren.</span></span>
@@ -1229,29 +1568,69 @@
                   </span>
                 </span>
                 <span class="layer-side" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path></svg>
-                  <span>Wissen sichern · KI kontrolliert nutzen</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>
+                  <span>KI kontrolliert &amp; nachvollziehbar nutzen</span>
+                </span>
+              </button>
+
+              <button class="layer-card is-active" type="button" data-layer="0" id="tab-0" role="tab" aria-selected="true" aria-controls="layer-panel">
+                <span class="layer-main">
+                  <span class="layer-head">
+                    <span class="layer-number">0</span>
+                    <span class="layer-title-wrap">
+                      <h3>Sicherheit &amp; Identität</h3>
+                      <p>Fundament für kontrollierte Zugriffe und Identitäten.</p>
+                    </span>
+                  </span>
+                  <span class="component-row" aria-label="Basis-Komponenten der Ebene 0">
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M12 9V7"></path><path d="M12 17v-2"></path></svg>
+                      nr-vault
+                    </span>
+                    <span class="component-plus" aria-hidden="true">+</span>
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="4"></circle><path d="M11 12h11"></path><path d="M19 12v3"></path><path d="M16 12v2"></path></svg>
+                      nr-passkeys-be
+                    </span>
+                    <span class="component-plus" aria-hidden="true">+</span>
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="12" r="4"></circle><path d="M11 12h11"></path><path d="M19 12v3"></path><path d="M16 12v2"></path></svg>
+                      nr-passkeys-fe
+                    </span>
+                  </span>
+                  <span class="layer-inherits">
+                    <span class="inherit-badge">Fundament</span>
+                    <span>Zugriffe, Secrets und Identitäten werden abgesichert.</span>
+                  </span>
+                  <span class="layer-outcome">
+                    <span class="outcome-pill"><strong>Problem</strong><span>Zugänge und Identitäten kontrollieren, bevor KI startet.</span></span>
+                    <span class="outcome-pill"><strong>Zielgruppen</strong><span>IT-Security, Identity Management, Administration.</span></span>
+                  </span>
+                </span>
+                <span class="layer-side" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="M9 12a3 3 0 1 1 6 0c0 1.5-1.5 2-3 3"></path></svg>
+                  <span>Zugriff sichern · Identität schützen</span>
                 </span>
               </button>
             </div>
 
-            <aside class="details-panel" aria-live="polite" aria-labelledby="detail-title">
-              <span class="detail-kicker" id="detail-kicker">Ebene 1</span>
-              <h3 id="detail-title">KI-Basis & Governance</h3>
-              <p id="detail-summary">Die Grundlage für kontrollierte KI-Nutzung: Wissen wird zentral verfügbar, Berechtigungen und Quellen bleiben nachvollziehbar, ein lokales LLM kann sensible Szenarien absichern.</p>
+            <aside class="details-panel" id="layer-panel" role="region" aria-live="polite" aria-labelledby="detail-title" tabindex="0">
+              <span class="detail-kicker" id="detail-kicker">Ebene 0</span>
+              <h3 id="detail-title">Sicherheit &amp; Identität</h3>
+              <p id="detail-summary">Das Zugriffs- und Identitätsfundament: Secrets, Wissensquellen und Authentifizierung werden abgesichert, bevor KI überhaupt ins Spiel kommt — mit Vault-gestützter Geheimnisverwaltung und passwortloser Passkey-Anmeldung.</p>
 
               <div class="detail-grid">
                 <div class="detail-item">
                   <strong>Problemlösung</strong>
-                  <span id="detail-problem">Sichere KI-Basis für Controlling, Auditing und Governance.</span>
+                  <span id="detail-problem">Zugänge, Secrets und Identitäten kontrollieren, bevor KI auf Unternehmenswissen zugreift.</span>
                 </div>
                 <div class="detail-item">
                   <strong>Zielgruppen</strong>
-                  <span id="detail-audience">Controlling · Audit · Governance · Compliance</span>
+                  <span id="detail-audience">IT-Security · Identity Management · Compliance · Administration</span>
                 </div>
                 <div class="detail-item">
                   <strong>Ergebnis</strong>
-                  <span id="detail-result">Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — mit optional lokalem Modell für sensible Daten.</span>
+                  <span id="detail-result">Eine abgesicherte Basis mit Vault-gestützter Geheimnisverwaltung und Passkey-Anmeldung für Backend und Frontend.</span>
                 </div>
               </div>
 
@@ -1261,19 +1640,24 @@
               </div>
 
               <div class="takeaway">
-                <strong id="detail-takeaway-title">Nicht Demo, sondern Betriebsmodell.</strong>
-                <p id="detail-takeaway">Die KI-Basis ist der Pflichtteil. Ohne diese Ebene wird Content-Automatisierung schnell unkontrollierbar.</p>
+                <strong id="detail-takeaway-title">Sicherheit ist die Ebene 0.</strong>
+                <p id="detail-takeaway">Ohne kontrollierte Zugriffe und Identitäten bleibt jede KI-Nutzung ein Governance-Risiko.</p>
               </div>
             </aside>
           </div>
         </div>
       </section>
 
-      <section class="flow-section" id="flow">
+      <section class="flow-section" id="flow" aria-labelledby="flow-heading">
         <div class="container">
           <div class="flow-card">
-            <h2>Wertstrom: von Wissen zu Kanälen</h2>
-            <div class="flow-chain" aria-label="Prozesskette">
+            <h2 id="flow-heading">Wertstrom: von sicherem Zugriff zu Kanälen</h2>
+            <div class="flow-chain" aria-label="Prozesskette: Zugriff, Wissen, KI, Content, Channels">
+              <div class="flow-step">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Zugriff</span>
+              </div>
+              <div class="flow-arrow" aria-hidden="true">→</div>
               <div class="flow-step">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path></svg>
                 <span>Wissen</span>
@@ -1296,7 +1680,137 @@
             </div>
             <div class="solution-note">
               <span class="solution-note-icon" aria-hidden="true">!</span>
-              <p><strong>Wichtig:</strong> Die Darstellung vermeidet absichtlich redundante Modulreihen. Ebene 2 und 3 zeigen jeweils nur, was neu hinzukommt. Der vollständige Stack steht im Detailpanel.</p>
+              <p><strong>Wichtig:</strong> Die Darstellung vermeidet absichtlich redundante Modulreihen. Jede Ebene zeigt nur, was neu hinzukommt — der vollständige Stack steht im Detailpanel. Die Sicherheits-Ebene 0 ist das Fundament, auf dem KI, Content und Distribution aufbauen.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section" id="module" aria-labelledby="module-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="module-heading">Module &amp; Repositories</h2>
+            <p>Die Komponenten je Ebene — mit direktem Link zum öffentlichen Repository.</p>
+          </div>
+
+          <div class="module-groups">
+            <div class="module-group">
+              <div class="module-group-head">
+                <span class="module-ebene">Ebene 0</span>
+                <h3>Sicherheit &amp; Identität</h3>
+              </div>
+              <div class="module-grid">
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-vault">
+                  <span class="mod-name">nr-vault</span>
+                  <p class="mod-desc">Sichere, auditierbare Secret- und Wissensbasis als Fundament des Stacks.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-vault</span>
+                </a>
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-passkeys-be">
+                  <span class="mod-name">nr-passkeys-be</span>
+                  <p class="mod-desc">Passwortlose Passkey-Authentifizierung im TYPO3-Backend.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-passkeys-be</span>
+                </a>
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-passkeys-fe">
+                  <span class="mod-name">nr-passkeys-fe</span>
+                  <p class="mod-desc">Passwortlose Passkey-Anmeldung im Frontend.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-passkeys-fe</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="module-group">
+              <div class="module-group-head">
+                <span class="module-ebene">Ebene 1</span>
+                <h3>KI-Basis &amp; Governance</h3>
+              </div>
+              <div class="module-grid">
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-llm">
+                  <span class="mod-name">nr-llm</span>
+                  <p class="mod-desc">Kontrollierter, nachvollziehbarer LLM-Zugang mit Governance über Berechtigungen und Quellen.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-llm</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="module-group">
+              <div class="module-group-head">
+                <span class="module-ebene">Ebene 2</span>
+                <h3>Inhalte produzieren / umwandeln</h3>
+              </div>
+              <div class="module-grid">
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-repurpose">
+                  <span class="mod-name">nr-repurpose</span>
+                  <p class="mod-desc">Wandelt vorhandenes Wissen in CMS-fähige Formate, Varianten und Textbausteine um.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-repurpose</span>
+                </a>
+                <a class="module-card" href="https://github.com/netresearch/t3x-cowriter">
+                  <span class="mod-name">cowriter</span>
+                  <p class="mod-desc">KI-gestütztes Schreiben direkt im Editor (TYPO3 / CKEditor).</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-cowriter</span>
+                </a>
+                <a class="module-card" href="https://github.com/netresearch/nr-landingpage">
+                  <span class="mod-name">nr-landingpage</span>
+                  <p class="mod-desc">LLM-gestützter Generator für TYPO3-Landingpages.</p>
+                  <span class="mod-repo">github.com/netresearch/nr-landingpage</span>
+                </a>
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-mcp-agent">
+                  <span class="mod-name">nr-mcp-agent</span>
+                  <p class="mod-desc">KI-Backend-Assistent mit MCP-Tool-Calling auf Basis von nr-llm.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-mcp-agent</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="module-group">
+              <div class="module-group-head">
+                <span class="module-ebene">Ebene 3</span>
+                <h3>Channels bedienen</h3>
+              </div>
+              <p class="module-group-note">Für die Distribution lassen sich bestehende TYPO3-Community-Extensions einsetzen, die eine Integration mit sozialen Netzwerken versprechen — hier einige Beispiele:</p>
+              <div class="module-grid">
+                <a class="module-card" href="https://extensions.typo3.org/extension/rx_scheduled_social">
+                  <span class="mod-name">Scheduled Social</span>
+                  <p class="mod-desc">Veröffentlicht News-Artikel automatisiert auf Social-Media-Kanälen.</p>
+                  <span class="mod-repo">TER · reelworx/rx-scheduled-social</span>
+                </a>
+                <a class="module-card" href="https://extensions.typo3.org/extension/t3socials">
+                  <span class="mod-name">T3 Socials</span>
+                  <p class="mod-desc">API postet neue Inhalte direkt in soziale Netzwerke.</p>
+                  <span class="mod-repo">TER · dmk/t3socials</span>
+                </a>
+                <a class="module-card" href="https://extensions.typo3.org/extension/pb_social">
+                  <span class="mod-name">Social Media Streams</span>
+                  <p class="mod-desc">Bindet Feeds aus Facebook, Instagram, LinkedIn und Co. ein.</p>
+                  <span class="mod-repo">TER · plusb/pb_social</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq" aria-labelledby="faq-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="faq-heading">Häufige Fragen</h2>
+            <p>Kurz erklärt: Aufbau und Zusammenspiel der vier Ebenen.</p>
+          </div>
+          <div class="faq-grid">
+            <div class="faq-item">
+              <h3>Was ist der modulare KI-Stack?</h3>
+              <p>Ein aufeinander aufbauender Wertstrom aus vier Ebenen: Sicherheits- und Identitätsfundament (Ebene 0), governance-fähige KI-Basis (Ebene 1), Content-Produktion (Ebene 2) und Channel-Ausspielung (Ebene 3). Jede Ebene erbt den Unterbau der darunterliegenden Ebenen.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Welche Module gehören zur Sicherheits-Ebene?</h3>
+              <p>Ebene 0 umfasst <code>nr-vault</code> für eine sichere, auditierbare Secret- und Wissensbasis sowie <code>nr-passkeys-be</code> und <code>nr-passkeys-fe</code> für passwortlose Passkey-Anmeldung im TYPO3-Backend und -Frontend.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Warum ist die KI-Basis von der Sicherheit getrennt?</h3>
+              <p>Zugriffe, Secrets und Identitäten werden zuerst abgesichert (Ebene 0), bevor mit <code>nr-llm</code> ein kontrollierter, nachvollziehbarer KI-Zugang aufgebaut wird (Ebene 1). So bleibt KI-Nutzung von Anfang an governance- und auditierbar.</p>
+            </div>
+            <div class="faq-item">
+              <h3>Welche KI-Tools produzieren Inhalte?</h3>
+              <p>Ebene 2 nutzt <code>nr-repurpose</code> zum Umwandeln von Wissen in CMS-fähige Formate, <code>cowriter</code> für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie <code>nr-landingpage</code> und <code>nr-mcp-agent</code>.</p>
             </div>
           </div>
         </div>
@@ -1306,32 +1820,58 @@
     <footer class="site-footer">
       <div class="footer-inner">
         <span>Netresearch DTT GmbH · Modularer KI-Stack</span>
-        <a href="https://www.netresearch.de/">netresearch.de</a>
+        <nav class="footer-nav" aria-label="Footer-Navigation">
+          <a href="https://www.netresearch.de/">netresearch.de</a>
+          <a href="https://github.com/netresearch/modularer-ki-stack-page">Quellcode</a>
+          <a href="mailto:typo3@netresearch.de">typo3@netresearch.de</a>
+        </nav>
       </div>
     </footer>
   </div>
 
   <script>
+    const repos = {
+      "nr-vault": "https://github.com/netresearch/t3x-nr-vault",
+      "nr-passkeys-be": "https://github.com/netresearch/t3x-nr-passkeys-be",
+      "nr-passkeys-fe": "https://github.com/netresearch/t3x-nr-passkeys-fe",
+      "nr-llm": "https://github.com/netresearch/t3x-nr-llm",
+      "nr-repurpose": "https://github.com/netresearch/t3x-nr-repurpose",
+      "cowriter": "https://github.com/netresearch/t3x-cowriter",
+      "nr-landingpage": "https://github.com/netresearch/nr-landingpage",
+      "nr-mcp-agent": "https://github.com/netresearch/t3x-nr-mcp-agent"
+    };
+
     const layers = {
+      "0": {
+        kicker: "Ebene 0",
+        title: "Sicherheit & Identität",
+        summary: "Das Zugriffs- und Identitätsfundament: Secrets, Wissensquellen und Authentifizierung werden abgesichert, bevor KI überhaupt ins Spiel kommt — mit Vault-gestützter Geheimnisverwaltung und passwortloser Passkey-Anmeldung.",
+        problem: "Zugänge, Secrets und Identitäten kontrollieren, bevor KI auf Unternehmenswissen zugreift.",
+        audience: "IT-Security · Identity Management · Compliance · Administration",
+        result: "Eine abgesicherte Basis mit Vault-gestützter Geheimnisverwaltung und Passkey-Anmeldung für Backend und Frontend.",
+        stack: ["nr-vault", "nr-passkeys-be", "nr-passkeys-fe"],
+        takeawayTitle: "Sicherheit ist die Ebene 0.",
+        takeaway: "Ohne kontrollierte Zugriffe und Identitäten bleibt jede KI-Nutzung ein Governance-Risiko."
+      },
       "1": {
         kicker: "Ebene 1",
         title: "KI-Basis & Governance",
-        summary: "Die Grundlage für kontrollierte KI-Nutzung: Wissen wird zentral verfügbar, Berechtigungen und Quellen bleiben nachvollziehbar, ein lokales LLM kann sensible Szenarien absichern.",
-        problem: "Sichere KI-Basis für Controlling, Auditing und Governance.",
+        summary: "Auf dem Sicherheitsfundament wird KI kontrolliert nutzbar: ein zentraler, nachvollziehbarer LLM-Zugang mit Governance über Berechtigungen und Quellen.",
+        problem: "KI nutzbar machen, ohne Kontrolle und Nachvollziehbarkeit zu verlieren.",
         audience: "Controlling · Audit · Governance · Compliance",
-        result: "Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — mit optional lokalem Modell für sensible Daten.",
-        stack: ["nr-vault", "nr-llm", "optional: lokales LLM"],
+        result: "Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — optional mit lokalem Modell für sensible Daten.",
+        stack: ["Ebene 0", "nr-llm", "optional: lokales LLM"],
         takeawayTitle: "Nicht Demo, sondern Betriebsmodell.",
-        takeaway: "Die KI-Basis ist der Pflichtteil. Ohne diese Ebene wird Content-Automatisierung schnell unkontrollierbar."
+        takeaway: "Die KI-Basis macht aus abgesicherten Zugängen einen kontrollierten, auditierbaren KI-Betrieb."
       },
       "2": {
         kicker: "Ebene 2",
         title: "Inhalte produzieren / umwandeln",
-        summary: "Auf der Governance-Basis entsteht die Content-Schicht. Bestehendes Wissen wird in redaktionelle Formate, Varianten, CMS-Strukturen und wiederverwendbare Textbausteine überführt.",
+        summary: "Aus der KI-Basis entsteht die Content-Schicht. Bestehendes Wissen wird in redaktionelle Formate, Varianten, CMS-Strukturen und wiederverwendbare Textbausteine überführt — mit nr-repurpose, cowriter und weiteren KI-Werkzeugen.",
         problem: "Inhalte aus Wissen erzeugen, umwandeln und CMS-fähig aufbereiten.",
         audience: "Redaktion · Marketing · CMS-Teams · Knowledge Management",
-        result: "Schnellere CMS-Tätigkeit: Artikel, Teaser, FAQ, Produkttexte, Landingpage-Bausteine und Social Snippets entstehen aus vorhandenen Quellen.",
-        stack: ["Ebene 1", "nr-repurpose"],
+        result: "Artikel, Teaser, FAQ, Produkttexte, Landingpages und Social Snippets entstehen aus vorhandenen Quellen — direkt im Editor und im CMS.",
+        stack: ["Ebene 1", "nr-repurpose", "cowriter", "weitere KI-Tools"],
         takeawayTitle: "Repurposing ist die operative Hebelwirkung.",
         takeaway: "Die KI wird produktiv, weil sie nicht nur antwortet, sondern Inhalte in nutzbare Formate transformiert."
       },
@@ -1341,8 +1881,8 @@
         summary: "Die Content-Schicht wird zur Distribution-Schicht. Inhalte werden kanalübergreifend vorbereitet, ausgespielt und in TYPO3-gestützte Publishing-Prozesse integriert.",
         problem: "Inhalte kanalübergreifend ausspielen und veröffentlichen.",
         audience: "Social Media · Communications · Content Operations · TYPO3-Teams",
-        result: "Ein durchgängiger Workflow von Wissensbasis über Content-Erstellung bis zur kanalorientierten Veröffentlichung, zum Beispiel Richtung LinkedIn.",
-        stack: ["Ebene 1", "Ebene 2", "typo3-ext-linked-poster"],
+        result: "Ein durchgängiger Workflow von der Wissensbasis über Content-Erstellung bis zur kanalorientierten Veröffentlichung, zum Beispiel Richtung LinkedIn.",
+        stack: ["Ebene 2", "Community Social-Extension"],
         takeawayTitle: "Distribution ist kein Nachsatz.",
         takeaway: "Der Wert entsteht erst vollständig, wenn erzeugter Content kontrolliert in relevante Kanäle kommt."
       }
@@ -1365,9 +1905,14 @@
     function renderStackPath(stack) {
       fields.stackPath.innerHTML = "";
       stack.forEach((item, index) => {
-        const chip = document.createElement("span");
+        const url = repos[item];
+        const chip = document.createElement(url ? "a" : "span");
         chip.className = "path-chip";
         chip.textContent = item;
+        if (url) {
+          chip.href = url;
+          chip.setAttribute("aria-label", item + " — Repository öffnen");
+        }
         fields.stackPath.appendChild(chip);
 
         if (index < stack.length - 1) {
@@ -1388,6 +1933,7 @@
         const active = card.dataset.layer === layerId;
         card.classList.toggle("is-active", active);
         card.setAttribute("aria-selected", active ? "true" : "false");
+        card.tabIndex = active ? 0 : -1;
       });
 
       markers.forEach((marker) => {
@@ -1406,6 +1952,7 @@
     }
 
     cards.forEach((card) => {
+      card.tabIndex = card.classList.contains("is-active") ? 0 : -1;
       card.addEventListener("click", () => setActiveLayer(card.dataset.layer));
       card.addEventListener("keydown", (event) => {
         const currentIndex = cards.findIndex((item) => item.dataset.layer === card.dataset.layer);
@@ -1427,13 +1974,13 @@
         if (nextIndex !== currentIndex) {
           event.preventDefault();
           const nextCard = cards[nextIndex];
-          nextCard.focus();
           setActiveLayer(nextCard.dataset.layer);
+          nextCard.focus();
         }
       });
     });
 
-    renderStackPath(layers["1"].stack);
+    renderStackPath(layers["0"].stack);
   </script>
 </body>
 </html>
