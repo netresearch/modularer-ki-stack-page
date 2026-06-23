@@ -62,7 +62,7 @@
         "itemListOrder": "https://schema.org/ItemListOrderAscending",
         "itemListElement": [
           { "@type": "ListItem", "position": 0, "name": "Ebene 0 — Sicherheit & Identität", "description": "Zugriffs- und Identitätsfundament mit nr-vault sowie nr-passkeys-be und nr-passkeys-fe." },
-          { "@type": "ListItem", "position": 1, "name": "Ebene 1 — KI-Basis & Governance", "description": "Kontrollierter, nachvollziehbarer LLM-Zugang mit nr-llm." },
+          { "@type": "ListItem", "position": 1, "name": "Ebene 1 — KI-Basis & Governance", "description": "Kontrollierter, nachvollziehbarer LLM-Zugang mit nr-llm und MCP-Agent nr-mcp-agent." },
           { "@type": "ListItem", "position": 2, "name": "Ebene 2 — Inhalte produzieren / umwandeln", "description": "Content-Produktion mit nr-repurpose, cowriter und weiteren KI-Tools." },
           { "@type": "ListItem", "position": 3, "name": "Ebene 3 — Channels bedienen", "description": "Kanalorientierte Veröffentlichung der erzeugten Inhalte." }
         ]
@@ -88,7 +88,7 @@
           {
             "@type": "Question",
             "name": "Welche KI-Tools produzieren Inhalte (Ebene 2)?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Ebene 2 nutzt nr-repurpose zum Umwandeln von Wissen in CMS-fähige Formate, cowriter für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie nr-landingpage und nr-mcp-agent." }
+            "acceptedAnswer": { "@type": "Answer", "text": "Ebene 2 nutzt nr-repurpose zum Umwandeln von Wissen in CMS-fähige Formate, cowriter für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie nr-landingpage. Der MCP-Agent nr-mcp-agent gehört zur KI-Basis (Ebene 1)." }
           }
         ]
       }
@@ -1553,6 +1553,11 @@
                       nr-llm
                     </span>
                     <span class="component-plus" aria-hidden="true">+</span>
+                    <span class="component-chip">
+                      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="2"></rect><path d="M12 8V4"></path><circle cx="9" cy="13" r="1"></circle><circle cx="15" cy="13" r="1"></circle><path d="M2 14v2"></path><path d="M22 14v2"></path></svg>
+                      nr-mcp-agent
+                    </span>
+                    <span class="component-plus" aria-hidden="true">+</span>
                     <span class="component-chip optional">
                       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 1v4"></path><path d="M15 1v4"></path><path d="M9 19v4"></path><path d="M15 19v4"></path><path d="M1 9h4"></path><path d="M1 15h4"></path><path d="M19 9h4"></path><path d="M19 15h4"></path></svg>
                       optional: lokales LLM
@@ -1729,6 +1734,11 @@
                   <p class="mod-desc">Kontrollierter, nachvollziehbarer LLM-Zugang mit Governance über Berechtigungen und Quellen.</p>
                   <span class="mod-repo">github.com/netresearch/t3x-nr-llm</span>
                 </a>
+                <a class="module-card" href="https://github.com/netresearch/t3x-nr-mcp-agent">
+                  <span class="mod-name">nr-mcp-agent</span>
+                  <p class="mod-desc">KI-Backend-Assistent mit MCP-Tool-Calling auf Basis von nr-llm.</p>
+                  <span class="mod-repo">github.com/netresearch/t3x-nr-mcp-agent</span>
+                </a>
               </div>
             </div>
 
@@ -1752,11 +1762,6 @@
                   <span class="mod-name">nr-landingpage</span>
                   <p class="mod-desc">LLM-gestützter Generator für TYPO3-Landingpages.</p>
                   <span class="mod-repo">github.com/netresearch/nr-landingpage</span>
-                </a>
-                <a class="module-card" href="https://github.com/netresearch/t3x-nr-mcp-agent">
-                  <span class="mod-name">nr-mcp-agent</span>
-                  <p class="mod-desc">KI-Backend-Assistent mit MCP-Tool-Calling auf Basis von nr-llm.</p>
-                  <span class="mod-repo">github.com/netresearch/t3x-nr-mcp-agent</span>
                 </a>
               </div>
             </div>
@@ -1810,7 +1815,7 @@
             </div>
             <div class="faq-item">
               <h3>Welche KI-Tools produzieren Inhalte?</h3>
-              <p>Ebene 2 nutzt <code>nr-repurpose</code> zum Umwandeln von Wissen in CMS-fähige Formate, <code>cowriter</code> für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie <code>nr-landingpage</code> und <code>nr-mcp-agent</code>.</p>
+              <p>Ebene 2 nutzt <code>nr-repurpose</code> zum Umwandeln von Wissen in CMS-fähige Formate, <code>cowriter</code> für KI-gestütztes Schreiben im Editor sowie weitere KI-Werkzeuge wie <code>nr-landingpage</code>. Der MCP-Agent <code>nr-mcp-agent</code> gehört zur KI-Basis (Ebene 1).</p>
             </div>
           </div>
         </div>
@@ -1859,8 +1864,8 @@
         summary: "Auf dem Sicherheitsfundament wird KI kontrolliert nutzbar: ein zentraler, nachvollziehbarer LLM-Zugang mit Governance über Berechtigungen und Quellen.",
         problem: "KI nutzbar machen, ohne Kontrolle und Nachvollziehbarkeit zu verlieren.",
         audience: "Controlling · Audit · Governance · Compliance",
-        result: "Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — optional mit lokalem Modell für sensible Daten.",
-        stack: ["Ebene 0", "nr-llm", "optional: lokales LLM"],
+        result: "Ein kontrollierbarer KI-Zugang auf Unternehmenswissen — inklusive MCP-Agent für KI-Werkzeuge im Backend und optional lokalem Modell für sensible Daten.",
+        stack: ["Ebene 0", "nr-llm", "nr-mcp-agent", "optional: lokales LLM"],
         takeawayTitle: "Nicht Demo, sondern Betriebsmodell.",
         takeaway: "Die KI-Basis macht aus abgesicherten Zugängen einen kontrollierten, auditierbaren KI-Betrieb."
       },
