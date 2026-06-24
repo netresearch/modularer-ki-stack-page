@@ -1203,6 +1203,72 @@
       color: var(--nr-text);
     }
 
+    .contact-band {
+      background: var(--nr-primary-dark);
+      color: #FFFFFF;
+    }
+
+    .contact-inner {
+      width: min(1220px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 38px 0;
+      flex-wrap: wrap;
+    }
+
+    .contact-band h2 {
+      color: #FFFFFF;
+      font-size: clamp(24px, 3vw, 34px);
+    }
+
+    .contact-band p {
+      margin: 10px 0 0;
+      max-width: 660px;
+      color: #FFFFFF;
+    }
+
+    .contact-band a:not(.btn) {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-on-dark {
+      background: #FFFFFF;
+      color: var(--nr-primary-dark);
+    }
+
+    .btn-on-dark:hover,
+    .btn-on-dark:focus-visible {
+      background: var(--nr-bg-soft);
+      color: var(--nr-primary-dark);
+    }
+
+    .btn-on-dark-outline {
+      background: transparent;
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+    }
+
+    .btn-on-dark-outline:hover,
+    .btn-on-dark-outline:focus-visible {
+      background: #FFFFFF;
+      color: var(--nr-primary-dark);
+    }
+
+    /* keep focus ring visible on the dark band (accent orange is too low-contrast on teal) */
+    .contact-band :focus-visible {
+      outline-color: #FFFFFF;
+    }
+
     .site-footer {
       border-top: 4px solid var(--nr-primary);
       background: var(--nr-footer);
@@ -1408,6 +1474,7 @@
           <a href="#souveraenitaet">Souveränität</a>
           <a href="#module">Module</a>
           <a href="#faq">FAQ</a>
+          <a href="#feedback">Feedback</a>
         </nav>
       </div>
     </header>
@@ -1875,6 +1942,17 @@
               <h3>Wie sorgt der Stack für Datensouveränität?</h3>
               <p>Aus zwei Eigenschaften: Der gesamte Stack ist quelloffen und auf der selbst hostbaren TYPO3-Plattform aufgebaut, und <code>nr-llm</code> ist anbieterunabhängig — beliebige LLM-Anbieter und Hosting-Unternehmen oder lokale bzw. self-hosted Modelle. So bleiben sensible Daten in der eigenen Umgebung.</p>
             </div>
+          </div>
+        </div>
+      </section>
+      <section class="contact-band" id="feedback" aria-labelledby="feedback-heading">
+        <div class="contact-inner">
+          <div>
+            <h2 id="feedback-heading">Fragen? Probleme? Hinweise?</h2>
+            <p>Bitte ein Issue im GitHub-Projekt anlegen — so geht nichts verloren und alle Hinweise bleiben nachvollziehbar.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-on-dark" href="https://github.com/netresearch/modularer-ki-stack-page/issues/new">Issue anlegen</a>
           </div>
         </div>
       </section>
