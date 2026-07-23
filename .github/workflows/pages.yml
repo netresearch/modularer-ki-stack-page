@@ -6,27 +6,38 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
+  # The site is fully static and checked in under `public/`, so there is no
+  # generator to run — the build half exists here purely to own checkout +
+  # artifact upload, which keeps this workflow free of step-level `uses:`.
+  #
+  # `include-hidden-files: true` is set on BOTH halves on purpose. Setting it
+  # on the build half alone is a no-op end to end: pages-deploy.yml re-packages
+  # the downloaded directory with actions/upload-pages-artifact, which tars
+  # with `--exclude=.[^/]*` unless its own input is true — so `public/.nojekyll`
+  # would reach the artifact and then be stripped again during Pages packaging.
   build:
-    name: Build site artifact
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-
-      - name: Upload site artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: github-pages-site
-          path: public
-          include-hidden-files: true
+    uses: netresearch/.github/.github/workflows/pages-build.yml@main
+    permissions:
+      contents: read
+    with:
+      artifact-name: github-pages-site
+      artifact-path: public
+      include-hidden-files: true
+      # Static HTML: the build consumes neither PAGES_BASE_PATH nor
+      # PAGES_ORIGIN, so the extra configure-pages call is not needed here.
+      # The deploy half still runs configure-pages before deploying.
+      configure-pages: false
+      build-command: >-
+        test -f public/index.html
+        && test -f public/.nojekyll
+        && echo "Static site checked in under public/; no build step required."
 
   deploy:
     needs: build
@@ -38,3 +49,4 @@ jobs:
     with:
       artifact-name: github-pages-site
       artifact-path: ./public
+      include-hidden-files: true
