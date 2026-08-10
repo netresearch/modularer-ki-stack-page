@@ -40,7 +40,7 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 import yaml
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
@@ -82,7 +82,15 @@ def contact_url(position: str) -> str:
 
 def load_manifest() -> dict[str, dict]:
     """Fetch the organisation's aggregated product manifest, keyed by product id."""
+    # urllib also speaks file:// and ftp://, so the scheme is asserted rather
+    # than assumed. MANIFEST_URL is a constant unless PROJECTS_MANIFEST overrides
+    # it for a local build; the assertion is what keeps a remote build honest.
+    if not MANIFEST_URL.startswith(("https://", "file://")):
+        raise SystemExit(f"build: refusing a manifest URL that is not HTTPS: {MANIFEST_URL}")
     try:
+        # The URL is asserted above and comes from the build environment, not
+        # from a request or a user.
+        # nosemgrep: python.lang.security.audit.dynamic-urllib-use-detected.dynamic-urllib-use-detected
         with urllib.request.urlopen(MANIFEST_URL, timeout=20) as response:
             payload = json.load(response)
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
@@ -197,9 +205,11 @@ def json_ld(content: dict, canonical: str, manifest_rows: list[dict]) -> str:
 
 def main() -> None:
     manifest = load_manifest()
-    env = Environment(
+    env = Environment(# nosemgrep: python.flask.security.xss.audit.direct-use-of-jinja2.direct-use-of-jinja2
         loader=FileSystemLoader(ROOT / "templates"),
-        autoescape=select_autoescape(["html", "j2"]),
+        # Autoescape everything. An extension allow-list would miss ".html.j2",
+        # and every deliberate raw-HTML injection is marked |safe at its use site.
+        autoescape=True,
         trim_blocks=True,
         lstrip_blocks=True,
     )
