@@ -1,0 +1,459 @@
+{% extends "base.html.j2" %}
+{% from "icons.html.j2" import icon %}
+
+{% block header %}
+    <header class="site-header">
+      <div class="header-inner">
+        {#- Brand rule: the logo appears exactly once, here. -#}
+        <a class="brand-link" href="https://www.netresearch.de/" aria-label="Netresearch DTT GmbH">
+          <svg viewBox="-75 -75 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Netresearch">
+            <title>Netresearch DTT GmbH</title>
+            <g>
+              <path fill="#2F99A4" d="M209.6,0V31.62h32.77a26.38,26.38,0,0,1,26.44,26.43V242a26.38,26.38,0,0,1-26.44,26.44H209.6V300h47.93a42.77,42.77,0,0,0,42.86-42.86V42.89A42.76,42.76,0,0,0,257.53,0ZM43.25,0A42.76,42.76,0,0,0,.39,42.89V257.18A42.76,42.76,0,0,0,43.25,300H91.18V268.46H58.4A26.38,26.38,0,0,1,32,242v-184A26.37,26.37,0,0,1,58.4,31.62H91.18V0Z" transform="translate(-0.39 -0.04)" />
+              <path fill="#585961" d="M221.44,120.41c0-34.48-13.94-57.82-48.93-57.82-26.62,0-48.54,7.74-64.17,26.56l-.7-22.06-28.31.06V232.94h31.59V124.69c7.14-18.38,32.14-34.8,53-34.5,27.38.4,25.2,26.24,26,45.81v96.94h31.58" transform="translate(-0.39 -0.04)" />
+            </g>
+          </svg>
+          <span class="brand-text">
+            <span>{{ c.nav.brand_line1 }}</span>
+            <span>{{ c.nav.brand_line2 }}</span>
+          </span>
+        </a>
+        <nav class="nav-links" aria-label="{{ c.nav.label }}">
+          {%- for item in c.nav['items'] %}
+          <a href="{{ item.href }}">{{ item.label }}</a>
+          {%- endfor %}
+          <a href="{{ c.other_href }}" hreflang="{{ c.other_lang }}" lang="{{ c.other_lang }}">{{ c.other_label }}</a>
+        </nav>
+      </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">{{ c.hero.eyebrow }}</p>
+            <h1>{{ c.hero.title }}</h1>
+            <p class="hero-lead">{{ c.hero.lead }}</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="{{ contact.hero }}" data-cta="business" data-cta-position="hero">{{ c.hero.cta_business }}</a>
+              <a class="btn btn-outline" href="{{ c.hero.cta_technical_href }}">{{ c.hero.cta_technical }}</a>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="{{ c.hero.card_title }}">
+            <h2>{{ c.hero.card_title }}</h2>
+            <ol class="principle-list">
+              {%- for principle in c.hero.principles %}
+              <li>
+                <span class="principle-index">{{ loop.index0 }}</span>
+                <span><strong>{{ principle.title }}</strong> {{ principle.text | safe }}</span>
+              </li>
+              {%- endfor %}
+            </ol>
+          </aside>
+        </div>
+      </section>
+
+      <section class="module-section" id="problem" aria-labelledby="problem-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="problem-heading">{{ c.problem.heading }}</h2>
+            <p>{{ c.problem.lead }}</p>
+          </div>
+          <div class="module-grid">
+            {%- for item in c.problem['items'] %}
+            <div class="module-card">
+              <span class="mod-name">{{ icon(item.icon) }}{{ item.title }}</span>
+              <p class="mod-desc">{{ item.text }}</p>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="stack" aria-labelledby="stack-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="stack-heading">{{ c.stack.heading }}</h2>
+            <p>{{ c.stack.lead }}</p>
+          </div>
+
+          <div class="stack-explorer">
+            <div class="value-rail" aria-hidden="true">
+              <span class="rail-title">{{ c.stack.rail_title }}</span>
+              {%- for marker in c.stack.rail %}
+              <div class="rail-marker{% if marker.layer == '0' %} is-active{% endif %}" data-layer="{{ marker.layer }}">
+                <span class="rail-dot">{{ icon(marker.icon) }}</span>
+                <span>{{ marker.label }}</span>
+              </div>
+              {%- endfor %}
+            </div>
+
+            <div class="layer-diagram" role="tablist" aria-label="{{ c.stack.heading }}" aria-orientation="vertical">
+              {%- for layer in c.stack.layers %}
+              <button class="layer-card{% if layer.active %} is-active{% endif %}" type="button" data-layer="{{ layer.number }}"
+                      id="tab-{{ layer.number }}" role="tab" aria-selected="{{ 'true' if layer.active else 'false' }}" aria-controls="layer-panel">
+                <span class="layer-main">
+                  <span class="layer-head">
+                    <span class="layer-number">{{ layer.number }}</span>
+                    <span class="layer-title-wrap">
+                      <h3>{{ layer.title }}</h3>
+                      <p>{{ layer.subtitle }}</p>
+                    </span>
+                  </span>
+                  <span class="component-row">
+                    {%- for component in layer.components %}
+                    {%- if not loop.first %}<span class="component-plus" aria-hidden="true">+</span>{% endif %}
+                    <span class="component-chip{% if component.optional %} optional{% endif %}">{{ icon(component.icon) }}{{ component.label }}</span>
+                    {%- endfor %}
+                  </span>
+                  <span class="layer-inherits">
+                    <span class="inherit-badge">{{ layer.inherit_badge }}</span>
+                    <span>{{ layer.inherit_text }}</span>
+                  </span>
+                  <span class="layer-outcome">
+                    <span class="outcome-pill"><strong>{{ c.stack.detail_labels.problem }}</strong><span>{{ layer.outcome_problem }}</span></span>
+                    <span class="outcome-pill"><strong>{{ c.stack.detail_labels.audience }}</strong><span>{{ layer.outcome_audience }}</span></span>
+                  </span>
+                </span>
+                <span class="layer-side" aria-hidden="true">
+                  {{ icon(layer.side_icon) }}
+                  <span>{{ layer.side_text }}</span>
+                </span>
+              </button>
+              {%- endfor %}
+            </div>
+
+            {#
+              The detail panel is rendered with the layer-0 content already in place.
+              Without JavaScript the reader still gets a complete layer description,
+              and every layer's full text is in the JSON block below, which the
+              enhancement reads — no second source of truth.
+            #}
+            {%- set base_layer = c.stack.layers | selectattr('active') | first %}
+            <aside class="details-panel" id="layer-panel" role="region" aria-live="polite" aria-labelledby="detail-title" tabindex="0">
+              <span class="detail-kicker" id="detail-kicker">{{ base_layer.detail.kicker }}</span>
+              <h3 id="detail-title">{{ base_layer.title }}</h3>
+              <p id="detail-summary">{{ base_layer.detail.summary }}</p>
+
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <strong>{{ c.stack.detail_labels.problem }}</strong>
+                  <span id="detail-problem">{{ base_layer.detail.problem }}</span>
+                </div>
+                <div class="detail-item">
+                  <strong>{{ c.stack.detail_labels.audience }}</strong>
+                  <span id="detail-audience">{{ base_layer.detail.audience }}</span>
+                </div>
+                <div class="detail-item">
+                  <strong>{{ c.stack.detail_labels.result }}</strong>
+                  <span id="detail-result">{{ base_layer.detail.result }}</span>
+                </div>
+              </div>
+
+              <div class="detail-stack" aria-label="{{ c.stack.detail_labels.stack }}">
+                <p class="detail-stack-label">{{ c.stack.detail_labels.stack }}</p>
+                <div class="stack-path" id="stack-path">
+                  {%- for name in base_layer.detail.stack %}
+                  {%- if not loop.first %}<span class="path-arrow" aria-hidden="true">&rarr;</span>{% endif %}
+                  <a class="path-chip" href="{{ repos[name] }}">{{ name }}</a>
+                  {%- endfor %}
+                </div>
+              </div>
+
+              <div class="takeaway">
+                <strong id="detail-takeaway-title">{{ base_layer.detail.takeaway_title }}</strong>
+                <p id="detail-takeaway">{{ base_layer.detail.takeaway }}</p>
+              </div>
+            </aside>
+          </div>
+
+          <noscript>
+            <div class="solution-note">
+              <span class="solution-note-icon" aria-hidden="true">!</span>
+              <p>{{ c.stack.lead }}</p>
+            </div>
+          </noscript>
+        </div>
+      </section>
+
+      <section class="flow-section" id="flow" aria-labelledby="flow-heading">
+        <div class="container">
+          <div class="flow-card">
+            <h2 id="flow-heading">{{ c.flow.heading }}</h2>
+            <div class="flow-chain">
+              {%- for step in c.flow.steps %}
+              {%- if not loop.first %}<div class="flow-arrow" aria-hidden="true">&rarr;</div>{% endif %}
+              <div class="flow-step">{{ icon(step.icon) }}<span>{{ step.label }}</span></div>
+              {%- endfor %}
+            </div>
+            <div class="solution-note">
+              <span class="solution-note-icon" aria-hidden="true">!</span>
+              <p><strong>{{ c.flow.note_label }}</strong> {{ c.flow.note }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section" id="reifegrad" aria-labelledby="maturity-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="maturity-heading">{{ c.maturity.heading }}</h2>
+            <p>{{ c.maturity.lead }}</p>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ c.maturity.columns.module }}</th>
+                  <th scope="col">{{ c.maturity.columns.role }}</th>
+                  <th scope="col">{{ c.maturity.columns.status }}</th>
+                  <th scope="col">{{ c.maturity.columns.release }}</th>
+                  <th scope="col">{{ c.maturity.columns.usage }}</th>
+                  <th scope="col">{{ c.maturity.columns.boundary }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for row in maturity_rows %}
+                <tr>
+                  <th scope="row"><a href="{{ row.page }}">{{ row.name }}</a></th>
+                  <td>{{ row.role }}</td>
+                  <td><span class="status-pill status-{{ row.stage }}">{{ c.maturity.stages[row.stage] }}</span></td>
+                  <td>
+                    {%- if row.latest_release %}<a href="{{ row.repository }}/releases/tag/{{ row.latest_release }}">{{ row.latest_release }}</a>{% else %}&mdash;{% endif %}
+                    {%- if row.derived %}<span class="derived-note" title="{{ c.maturity.derived_note }}">*</span>{% endif %}
+                  </td>
+                  <td>{{ row.usage }}</td>
+                  <td>{{ row.boundary }}</td>
+                </tr>
+                {%- endfor %}
+                {%- for row in c.maturity.community_rows %}
+                <tr>
+                  <th scope="row">{{ row.name }}</th>
+                  <td>{{ row.role }}</td>
+                  <td><span class="status-pill status-community">{{ c.maturity.stages.community }}</span></td>
+                  <td>&mdash;</td>
+                  <td>{{ row.usage }}</td>
+                  <td>{{ row.boundary }}</td>
+                </tr>
+                {%- endfor %}
+              </tbody>
+            </table>
+          </div>
+          {%- if maturity_rows | selectattr('derived') | first is defined %}
+          <p class="table-note">* {{ c.maturity.derived_note }}</p>
+          {%- endif %}
+          <p class="table-note">{{ c.maturity.community_note }}</p>
+        </div>
+      </section>
+
+      <section class="section" id="stakeholder" aria-labelledby="stakeholder-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="stakeholder-heading">{{ c.stakeholders.heading }}</h2>
+            <p>{{ c.stakeholders.lead }}</p>
+          </div>
+          <div class="module-grid">
+            {%- for item in c.stakeholders['items'] %}
+            <div class="module-card" id="role-{{ loop.index }}">
+              <span class="mod-name">{{ icon(item.icon) }}{{ item.role }}</span>
+              <p class="mod-question">{{ item.question }}</p>
+              <p class="mod-desc">{{ item.answer }}</p>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section" id="betrieb" aria-labelledby="operating-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="operating-heading">{{ c.operating.heading }}</h2>
+            <p>{{ c.operating.lead }}</p>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ c.operating.columns.model }}</th>
+                  <th scope="col">{{ c.operating.columns.data }}</th>
+                  <th scope="col">{{ c.operating.columns.fit }}</th>
+                  <th scope="col">{{ c.operating.columns.tradeoff }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for row in c.operating.rows %}
+                <tr>
+                  <th scope="row">{{ row.model }}</th>
+                  <td>{{ row.data }}</td>
+                  <td>{{ row.fit }}</td>
+                  <td>{{ row.tradeoff }}</td>
+                </tr>
+                {%- endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="governance" aria-labelledby="governance-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="governance-heading">{{ c.governance.heading }}</h2>
+            <p>{{ c.governance.lead }}</p>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ c.governance.columns.decision }}</th>
+                  <th scope="col">{{ c.governance.columns.owner }}</th>
+                  <th scope="col">{{ c.governance.columns.evidence }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for row in c.governance.rows %}
+                <tr>
+                  <th scope="row">{{ row.decision }}</th>
+                  <td>{{ row.owner }}</td>
+                  <td>{{ row.evidence }}</td>
+                </tr>
+                {%- endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section" id="einstieg" aria-labelledby="entry-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="entry-heading">{{ c.entry.heading }}</h2>
+            <p>{{ c.entry.lead }}</p>
+          </div>
+          <div class="module-grid">
+            {%- for item in c.entry['items'] %}
+            <div class="module-card" id="entry-{{ loop.index }}">
+              <span class="mod-name">{{ item.title }}</span>
+              <p class="mod-desc">{{ item.text }}</p>
+              <span class="mod-repo">{{ item.module }}</span>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section" id="souveraenitaet" aria-labelledby="sov-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="sov-heading">{{ c.sovereignty.heading }}</h2>
+            <p>{{ c.sovereignty.lead }}</p>
+          </div>
+          <div class="module-grid">
+            {%- for card in c.sovereignty.cards %}
+            <div class="module-card">
+              <span class="mod-name">{{ icon(card.icon) }}{{ card.title }}</span>
+              <p class="mod-desc">{{ card.text | safe }}</p>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="module-section" id="module" aria-labelledby="module-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="module-heading">{{ c.modules.heading }}</h2>
+            <p>{{ c.modules.lead }}</p>
+          </div>
+
+          <div class="module-groups">
+            {%- for group in c.modules.groups %}
+            <div class="module-group">
+              <div class="module-group-head">
+                <span class="module-ebene">{{ c.modules.layer_label }} {{ group.layer }}</span>
+                <h3>{{ group.title }}</h3>
+              </div>
+              {%- if group.note %}<p class="module-group-note">{{ group.note }}</p>{% endif %}
+              <div class="module-grid">
+                {%- for item in group['items'] %}
+                <a class="module-card" href="{{ item.repo }}">
+                  <span class="mod-name">{{ item.name }}</span>
+                  <p class="mod-desc">{{ item.text }}</p>
+                  <span class="mod-repo">{{ item.source or item.repo | replace('https://', '') }}</span>
+                </a>
+                {%- endfor %}
+              </div>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="belege" aria-labelledby="evidence-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="evidence-heading">{{ c.evidence.heading }}</h2>
+            <p>{{ c.evidence.lead }}</p>
+          </div>
+          <div class="module-grid">
+            {%- for item in c.evidence['items'] %}
+            <a class="module-card" href="{{ item.href }}">
+              <span class="mod-name">{{ item.title }}</span>
+              <p class="mod-desc">{{ item.text }}</p>
+              <span class="mod-repo">{{ item.label }}</span>
+            </a>
+            {%- endfor %}
+          </div>
+
+          <div class="limits" id="grenzen">
+            <h3>{{ c.evidence.limits_heading }}</h3>
+            <ul>
+              {%- for limit in c.evidence.limits %}
+              <li>{{ limit }}</li>
+              {%- endfor %}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq" aria-labelledby="faq-heading">
+        <div class="container">
+          <div class="section-header">
+            <h2 id="faq-heading">{{ c.faq.heading }}</h2>
+            <p>{{ c.faq.lead }}</p>
+          </div>
+          <div class="faq-grid">
+            {%- for item in c.faq['items'] %}
+            <div class="faq-item">
+              <h3>{{ item.q }}</h3>
+              <p>{{ item.a | safe }}</p>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-band" id="kontakt" aria-labelledby="cta-heading">
+        <div class="contact-inner">
+          <div>
+            <h2 id="cta-heading">{{ c.cta.heading }}</h2>
+            <p>{{ c.cta.lead }}</p>
+            <p class="contact-note">
+              {{ c.cta.issue_note }}
+              <a href="https://github.com/netresearch/modularer-ki-stack-page/issues/new">{{ c.cta.issue_label }}</a>
+            </p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-on-dark" href="{{ contact.band }}" data-cta="business" data-cta-position="band">{{ c.cta.business }}</a>
+            <a class="btn btn-outline-on-dark" href="{{ c.cta.technical_href }}">{{ c.cta.technical }}</a>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+
+{% block scripts %}
+  <script type="application/json" id="layer-data">{{ layer_data | safe }}</script>
+  <script src="{{ base }}assets/stack.js" defer></script>
+{% endblock %}

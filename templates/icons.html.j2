@@ -1,0 +1,37 @@
+{#
+  Inline icon set.
+
+  Icons live here rather than in the content files: they are presentation, and
+  the content files are translated. A content entry names an icon key; an unknown
+  key renders nothing rather than breaking the layout.
+#}
+{% set ICONS = {
+  'shield': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="M9 12a3 3 0 1 1 6 0c0 1.5-1.5 2-3 3"></path>',
+  'chip': '<path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path>',
+  'chip-pins': '<path d="M9 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v1a3 3 0 0 0 3 3"></path><path d="M15 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v1a3 3 0 0 1-3 3"></path><path d="M9 3v18"></path><path d="M15 3v18"></path><path d="M9 8H6"></path><path d="M18 8h-3"></path><path d="M9 16H6"></path><path d="M18 16h-3"></path>',
+  'document': '<path d="M6 2h8l4 4v16H6z"></path><path d="M14 2v5h5"></path><path d="M8 13h8"></path><path d="M8 17h5"></path>',
+  'send': '<path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path>',
+  'distribute': '<path d="M4 13v-2l12-5v12L4 13Z"></path><path d="M6 13l2 6"></path><path d="M16 8l4-2v12l-4-2"></path>',
+  'repurpose': '<path d="M7 7h7a4 4 0 0 1 0 8H5"></path><path d="m8 4-4 3 4 3"></path><path d="M17 17h-7a4 4 0 0 1 0-8h9"></path><path d="m16 20 4-3-4-3"></path>',
+  'wand': '<path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle>',
+  'sparkle': '<rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M9 1v4"></path><path d="M15 1v4"></path><path d="M9 19v4"></path><path d="M15 19v4"></path><path d="M1 9h4"></path><path d="M1 15h4"></path><path d="M19 9h4"></path><path d="M19 15h4"></path>',
+  'vault': '<rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M12 9V7"></path><path d="M12 17v-2"></path>',
+  'key': '<circle cx="8" cy="12" r="4"></circle><path d="M11 12h11"></path><path d="M19 12v3"></path><path d="M16 12v2"></path>',
+  'agent': '<rect x="4" y="8" width="16" height="11" rx="2"></rect><path d="M12 8V4"></path><circle cx="9" cy="13" r="1"></circle><circle cx="15" cy="13" r="1"></circle><path d="M2 14v2"></path><path d="M22 14v2"></path>',
+  'lock': '<rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>',
+  'book': '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>',
+  'code': '<path d="m8 6-6 6 6 6"></path><path d="m16 6 6 6-6 6"></path><path d="m14 4-4 16"></path>',
+  'servers': '<rect x="3" y="4" width="18" height="8" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect><path d="M7 8h.01"></path><path d="M7 17h.01"></path>',
+  'shield-check': '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path><path d="m9 12 2 2 4-5"></path>',
+  'scale': '<path d="M12 3v18"></path><path d="M5 7h14"></path><path d="m5 7-3 7h6z"></path><path d="m19 7-3 7h6z"></path><path d="M8 21h8"></path>',
+  'coins': '<circle cx="8" cy="8" r="6"></circle><path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path><path d="M7 6h1v4"></path>',
+  'people': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>',
+  'route': '<circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle>',
+  'clipboard': '<rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path>',
+} %}
+
+{% macro icon(name) -%}
+{%- if name and name in ICONS -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ ICONS[name] | safe }}</svg>
+{%- endif -%}
+{%- endmacro %}

@@ -1,8 +1,10 @@
-.DS_Store
-Thumbs.db
-node_modules/
-dist/
-.cache/
-.env
-.env.*
-!.env.example
+# Generated pages. Built by scripts/build.py from content/ + templates/ and from
+# the organisation's product manifest, on every deploy. Committing them would
+# reintroduce exactly the drift this build removes.
+/public/index.html
+/public/en/
+/public/sitemap.xml
+/public/robots.txt
+
+__pycache__/
+*.py[cod]

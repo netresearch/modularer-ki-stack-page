@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ c.html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ c.meta.title }}</title>
+  <meta name="description" content="{{ c.meta.description }}">
+  <meta name="author" content="Netresearch DTT GmbH">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#2F99A4">
+
+  <link rel="canonical" href="{{ canonical }}">
+  {%- for alt in alternates %}
+  <link rel="alternate" hreflang="{{ alt.hreflang }}" href="{{ alt.href }}">
+  {%- endfor %}
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Netresearch DTT GmbH">
+  <meta property="og:locale" content="{{ c.og_locale }}">
+  <meta property="og:title" content="{{ c.meta.og_title }}">
+  <meta property="og:description" content="{{ c.meta.og_description }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="{{ site_url }}assets/og-ki-stack-{{ c.lang }}.png">
+  <meta property="og:image:alt" content="{{ c.meta.og_image_alt }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ c.meta.og_title }}">
+  <meta name="twitter:description" content="{{ c.meta.og_description }}">
+  <meta name="twitter:image" content="{{ site_url }}assets/og-ki-stack-{{ c.lang }}.png">
+
+  {#- Fonts are served from this origin. The page previously pulled them from a
+      third party on every visit, which is both a performance and a data-protection
+      cost for a page that argues for data sovereignty. -#}
+  <link rel="preload" href="{{ base }}assets/fonts/raleway-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ base }}assets/fonts/open-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ base }}assets/styles.css">
+  <link rel="icon" type="image/svg+xml" href="{{ base }}assets/favicon.svg">
+  <link rel="sitemap" href="{{ site_url }}sitemap.xml">
+
+  <script type="application/ld+json">{{ json_ld | safe }}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ c.skip_to_content }}</a>
+  <div class="page-shell">
+    {% block header %}{% endblock %}
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>{{ c.footer.tagline }} · {{ c.footer.reviewed }}: <time datetime="{{ last_verified }}">{{ last_verified }}</time></span>
+        <nav class="footer-nav" aria-label="{{ c.footer.nav_label }}">
+          {%- for link in c.footer.links %}
+          <a href="{{ link.href }}">{{ link.label }}</a>
+          {%- endfor %}
+          <a href="{{ contact.footer }}" data-cta="business" data-cta-position="footer">{{ c.cta.business }}</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
