@@ -220,6 +220,9 @@ maturity:
     boundary: Verantwortungsgrenze
   derived_note: >-
     Aus dem Repository abgeleitet – dieses Projekt veröffentlicht noch kein Manifest.
+  repository_note: >-
+    Kein eigener Produktauftritt. Release und Version kommen direkt aus dem
+    Repository; der Reifegrad ist die Einschätzung von Netresearch.
   community_note: >-
     Community-Extensions werden nicht von Netresearch gepflegt. Reifegrad, Sicherheit und
     Weiterentwicklung verantworten die jeweiligen Anbieter; hier steht deshalb kein Reifegrad.
@@ -236,6 +239,14 @@ maturity:
       role: Secret-Fundament
       usage: Schlüsselverwaltung
       boundary: Keine KI-Entscheidung, kein Prompt.
+    - id: nr-passkeys-be
+      role: Backend-Identität
+      usage: Passwortlose Anmeldung im TYPO3-Backend
+      boundary: Authentifiziert Personen. Vergibt keine Rechte, die der Backend-Nutzer nicht schon hatte.
+    - id: nr-passkeys-fe
+      role: Frontend-Identität
+      usage: Passwortlose Anmeldung für Frontend-Nutzer
+      boundary: Authentifiziert Personen. Autorisierung und Datenzugriff bleiben bei den Regeln der Seite.
     - id: nr-llm
       role: Control-Plane
       usage: Zentrale Nutzung von Sprachmodellen

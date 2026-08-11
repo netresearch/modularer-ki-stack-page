@@ -223,6 +223,7 @@
                   <td>
                     {%- if row.latest_release %}<a href="{{ row.repository }}/releases/tag/{{ row.latest_release }}">{{ row.latest_release }}</a>{% else %}&mdash;{% endif %}
                     {%- if row.derived %}<span class="derived-note" title="{{ c.maturity.derived_note }}">*</span>{% endif %}
+                    {%- if row.repository_sourced %}<span class="derived-note" title="{{ c.maturity.repository_note }}">†</span>{% endif %}
                   </td>
                   <td>{{ row.usage }}</td>
                   <td>{{ row.boundary }}</td>
@@ -243,6 +244,9 @@
           </div>
           {%- if maturity_rows | selectattr('derived') | first is defined %}
           <p class="table-note">* {{ c.maturity.derived_note }}</p>
+          {%- endif %}
+          {%- if maturity_rows | selectattr('repository_sourced') | first is defined %}
+          <p class="table-note">&dagger; {{ c.maturity.repository_note }}</p>
           {%- endif %}
           <p class="table-note">{{ c.maturity.community_note }}</p>
         </div>
