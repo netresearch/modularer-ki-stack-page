@@ -13,6 +13,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from check_accessibility import check_accessibility  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
 
@@ -76,6 +79,10 @@ def main() -> int:
             for param in ("utm_source", "utm_medium", "utm_campaign", "utm_content"):
                 if f"{param}=" not in href:
                     errors.append(f"{name}: contact link without {param}")
+
+        # Accessibility and semantics decidable from the markup alone.
+        for problem in check_accessibility(html):
+            errors.append(f"{name}: {problem}")
 
         # The logo is an inline SVG here; it must still appear exactly once.
         logos = re.findall(r"<title>Netresearch DTT GmbH</title>", html)
