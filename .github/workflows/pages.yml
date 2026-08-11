@@ -39,10 +39,18 @@ jobs:
       # manifest, so the page is rendered at deploy time rather than committed.
       # scripts/build.py fails if the manifest is unreachable — a maturity table
       # built from guesses is worse than none.
+      # Node is here only for the accessibility gate: axe-core needs a real
+      # browser and resolved CSS, which is exactly the class of defect
+      # verify_site.py cannot decide from markup.
+      setup-node: true
+      node-version: '22'
       build-command: >-
         python3 -m pip install --quiet jinja2 pyyaml
         && python3 scripts/build.py
         && python3 scripts/verify_site.py
+        && npm ci --ignore-scripts
+        && npx puppeteer browsers install chrome
+        && node scripts/axe-audit.mjs public
 
   deploy:
     needs: build
