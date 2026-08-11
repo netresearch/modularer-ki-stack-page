@@ -1,0 +1,523 @@
+lang: de
+html_lang: de
+og_locale: de_DE
+other_lang: en
+other_label: English
+other_href: /modularer-ki-stack-page/en/
+skip_to_content: Zum Inhalt springen
+
+meta:
+  title: Modularer KI-Stack für TYPO3 — kontrollierbar, austauschbar, schrittweise einführbar
+  description: >-
+    Der modulare KI-Stack von Netresearch: quelloffene TYPO3-Extensions vom Sicherheits-
+    und Identitätsfundament (nr-vault, nr-passkeys) über die governance-fähige KI-Basis
+    (nr-llm) bis zu Content-Produktion und Kanalausspielung — mit Reifegrad, Betriebsmodell
+    und Verantwortungsgrenze je Modul.
+  og_title: Modularer KI-Stack — kontrollierbar, austauschbar, schrittweise einführbar
+  og_description: >-
+    Sicherheit und Identität → KI-Control-Plane → Assistenz und Agenten → Content → Kanäle.
+    Ein Stack, in dem jede Schicht für sich austauschbar bleibt.
+  og_image_alt: Modularer KI-Stack von Netresearch
+
+nav:
+  label: Seitennavigation
+  brand_line1: Netresearch
+  brand_line2: KI-Stack
+  items:
+    - { href: '#stack', label: Stack }
+    - { href: '#reifegrad', label: Reifegrad }
+    - { href: '#stakeholder', label: Sichten }
+    - { href: '#betrieb', label: Betrieb }
+    - { href: '#governance', label: Governance }
+    - { href: '#einstieg', label: Einstieg }
+    - { href: '#module', label: Module }
+    - { href: '#faq', label: FAQ }
+
+hero:
+  eyebrow: Modularer KI-Stack · Open Source auf TYPO3
+  title: Ein modularer KI-Stack für TYPO3 – kontrollierbar, austauschbar und schrittweise einführbar.
+  lead: >-
+    Der modulare KI-Stack von Netresearch ist kein Werkzeugkasten, sondern ein aufeinander
+    aufbauender Wertstrom: Sicherheits- und Identitätsfundament, governance-fähige KI-Basis,
+    Content-Produktion und Distribution. Aufgebaut aus quelloffenen TYPO3-Extensions —
+    datensouverän durch frei wählbares Hosting und lokal oder selbst gehostet betreibbare Modelle.
+  cta_business: KI-Stack für Ihren Anwendungsfall planen
+  cta_technical: Technische Module vergleichen
+  cta_technical_href: '#module'
+  card_title: Prinzip der Visualisierung
+  principles:
+    - title: Sicherheit zuerst.
+      text: '<code>nr-vault</code> und <code>nr-passkeys</code> bilden das Zugriffs- und Identitätsfundament.'
+    - title: KI kontrolliert nutzbar.
+      text: '<code>nr-llm</code> macht KI als governance-fähige Basis verfügbar.'
+    - title: Inhalte erzeugen.
+      text: '<code>nr-repurpose</code>, <code>cowriter</code> und weitere KI-Werkzeuge kommen als Content-Schicht oben drauf.'
+    - title: Distribution erweitert.
+      text: Eine Kanal-Schicht macht aus Content kanalorientierte Veröffentlichung.
+
+problem:
+  heading: Woran KI-Vorhaben in bestehenden Systemen scheitern
+  lead: >-
+    Nicht an fehlenden Modellen. An fehlenden Zuständigkeiten, fehlender Übersicht und
+    Entscheidungen, die niemand mehr zurücknehmen kann.
+  items:
+    - { icon: sparkle, title: Unkontrollierte SaaS-Werkzeuge, text: 'Abteilungen schließen einzeln Verträge ab. Niemand weiß, welche Inhalte wohin fließen.' }
+    - { icon: key, title: Mehrfach gespeicherte Schlüssel, text: 'Derselbe API-Schlüssel liegt in drei Extensions, zwei Konfigurationsdateien und einem Repository.' }
+    - { icon: people, title: Schatten-KI, text: 'Was zentral fehlt, entsteht dezentral – ohne Protokoll, ohne Freigabe, ohne Budget.' }
+    - { icon: coins, title: Keine Kostenübersicht, text: 'Die Rechnung kommt monatlich, die Zuordnung zu Projekt oder Person nie.' }
+    - { icon: clipboard, title: Keine Verantwortlichkeit, text: 'Wer gibt ein Modell frei? Wer prüft die Protokolle? Ohne Antwort bleibt jede Kontrolle Theorie.' }
+    - { icon: scale, title: Anbieterbindung, text: 'Der Wechsel des Anbieters bedeutet, jede Integration erneut zu bauen.' }
+    - { icon: agent, title: Agenten mit zu großen Rechten, text: 'Ein Assistent, der schreiben darf, ohne dass jemand zustimmt, ist ein Vorfall mit Vorlaufzeit.' }
+
+stack:
+  heading: Der Stack wächst mit dem Problem.
+  lead: >-
+    Wählen Sie eine Ebene. Die Visualisierung zeigt nur die neu hinzukommenden Komponenten;
+    der Unterbau wird vererbt.
+  rail_title: Wertschöpfung
+  rail:
+    - { layer: '3', icon: distribute, label: Distribution }
+    - { layer: '2', icon: document, label: Content }
+    - { layer: '1', icon: chip, label: KI-Basis }
+    - { layer: '0', icon: shield, label: Sicherheit }
+  detail_labels:
+    problem: Problemlösung
+    audience: Zielgruppen
+    result: Ergebnis
+    stack: Aktiver Gesamtstack
+    open_repo: Repository öffnen
+  layers:
+    - number: '3'
+      title: Kanäle bedienen
+      subtitle: Neue Schicht für Distribution und Veröffentlichung.
+      side_icon: distribute
+      side_text: Publizieren · verteilen · automatisieren
+      components:
+        - { label: Community-Extensions für soziale Netzwerke, icon: send, optional: true }
+      inherit_badge: setzt auf Ebene 2 auf
+      inherit_text: Content wird publikationsfähig und kanalorientiert.
+      outcome_problem: Kanäle konsistent bedienen.
+      outcome_audience: Social Media, Kommunikation, TYPO3-Teams.
+      detail:
+        kicker: Ebene 3
+        summary: >-
+          Die Distributionsschicht macht aus fertigem Content kanalorientierte Veröffentlichung.
+          Sie besteht heute aus TYPO3-Community-Extensions, nicht aus Netresearch-Modulen —
+          diese Unterscheidung ist Absicht und steht in der Reifegradmatrix.
+        problem: Inhalte über mehrere Kanäle konsistent veröffentlichen, ohne sie mehrfach zu pflegen.
+        audience: Social Media · Unternehmenskommunikation · TYPO3-Teams
+        result: Veröffentlichung aus dem CMS heraus, mit den Freigaben, die dort ohnehin gelten.
+        takeaway_title: Diese Ebene stammt aus der Community.
+        takeaway: >-
+          Netresearch liefert hier kein eigenes Modul. Reifegrad, Pflege und Sicherheit
+          verantworten die jeweiligen Extension-Anbieter.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe, nr-llm, nr-mcp-agent, nr-repurpose, cowriter]
+    - number: '2'
+      title: Inhalte produzieren und umwandeln
+      subtitle: Neue Schicht für Repurposing und redaktionelle Arbeit.
+      side_icon: document
+      side_text: Erzeugen · strukturieren · variieren
+      components:
+        - { label: nr-repurpose, icon: repurpose }
+        - { label: cowriter, icon: wand }
+        - { label: weitere KI-Werkzeuge, icon: sparkle, optional: true }
+      inherit_badge: setzt auf Ebene 1 auf
+      inherit_text: Die kontrollierte KI-Basis wird zur Content-Maschine.
+      outcome_problem: Wissen in redaktionell nutzbaren Content verwandeln.
+      outcome_audience: Redaktion, Marketing, CMS-Teams.
+      detail:
+        kicker: Ebene 2
+        summary: >-
+          Werkzeuge, die vorhandenes Wissen in Formate bringen, die Redaktionen tatsächlich
+          weiterverwenden: Varianten, Textbausteine, Entwürfe im Editor.
+        problem: Vorhandenes Wissen ohne manuelles Abschreiben in CMS-fähige Inhalte überführen.
+        audience: Redaktion · Marketing · CMS-Teams
+        result: Entwürfe und Varianten im Editor, mit derselben Provider- und Budgetsteuerung wie alle anderen KI-Funktionen.
+        takeaway_title: Content-Werkzeuge erben die Kontrolle.
+        takeaway: >-
+          Sie bringen keine eigenen Schlüssel und keine eigene Abrechnung mit, sondern nutzen
+          die Control-Plane der Ebene 1.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe, nr-llm, nr-mcp-agent, nr-repurpose, cowriter]
+    - number: '1'
+      title: KI-Basis und Governance
+      subtitle: Kontrollierter, nachvollziehbarer Zugang zu Sprachmodellen.
+      side_icon: chip
+      side_text: KI kontrolliert und nachvollziehbar nutzen
+      components:
+        - { label: nr-llm, icon: chip-pins }
+        - { label: nr-mcp-agent, icon: agent }
+        - { label: 'optional: lokales Modell', icon: sparkle, optional: true }
+      inherit_badge: setzt auf Ebene 0 auf
+      inherit_text: Abgesicherte Zugänge werden zur kontrollierten KI.
+      outcome_problem: KI nutzbar machen, ohne die Kontrolle zu verlieren.
+      outcome_audience: Controlling, Audit, Governance, Compliance.
+      detail:
+        kicker: Ebene 1
+        summary: >-
+          Die Control-Plane: Provider und Modelle werden einmal konfiguriert, Berechtigungen
+          und Budgets zentral gesetzt, und jede Nutzung wird ausgewertet. Der Backend-Agent
+          sitzt als Oberfläche darauf.
+        problem: KI im Unternehmen verfügbar machen, ohne Schlüssel, Kosten und Zugriffe aus der Hand zu geben.
+        audience: Controlling · Audit · Governance · Compliance · Entwicklung
+        result: Ein Ort für Provider, Schlüssel, Berechtigungen, Budgets und Auswertung – für jede Extension der Seite.
+        takeaway_title: Ohne diese Ebene gibt es keine Kontrolle.
+        takeaway: >-
+          Jede Extension, die ihren eigenen Anbieter anbindet, hebelt Budgets, Protokolle und
+          Berechtigungen aus.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe, nr-llm, nr-mcp-agent]
+    - number: '0'
+      title: Sicherheit und Identität
+      subtitle: Fundament für kontrollierte Zugriffe und Identitäten.
+      side_icon: shield
+      side_text: Zugriff sichern · Identität schützen
+      active: true
+      components:
+        - { label: nr-vault, icon: vault }
+        - { label: nr-passkeys-be, icon: key }
+        - { label: nr-passkeys-fe, icon: key }
+      inherit_badge: Fundament
+      inherit_text: Zugriffe, Secrets und Identitäten werden abgesichert.
+      outcome_problem: Zugänge und Identitäten kontrollieren, bevor KI startet.
+      outcome_audience: IT-Security, Identity Management, Administration.
+      detail:
+        kicker: Ebene 0
+        summary: >-
+          Das Zugriffs- und Identitätsfundament: Secrets, Wissensquellen und Authentifizierung
+          werden abgesichert, bevor KI überhaupt ins Spiel kommt — mit Vault-gestützter
+          Geheimnisverwaltung und passwortloser Passkey-Anmeldung.
+        problem: Zugänge, Secrets und Identitäten kontrollieren, bevor KI auf Unternehmenswissen zugreift.
+        audience: IT-Security · Identity Management · Compliance · Administration
+        result: Eine abgesicherte Basis mit Vault-gestützter Geheimnisverwaltung und Passkey-Anmeldung für Backend und Frontend.
+        takeaway_title: Sicherheit ist die Ebene 0.
+        takeaway: Ohne kontrollierte Zugriffe und Identitäten bleibt jede KI-Nutzung ein Governance-Risiko.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe]
+
+flow:
+  heading: 'Wertstrom: von sicherem Zugriff zu Kanälen'
+  steps:
+    - { icon: lock, label: Zugriff }
+    - { icon: book, label: Wissen }
+    - { icon: chip, label: KI }
+    - { icon: document, label: Content }
+    - { icon: distribute, label: Kanäle }
+  note_label: 'Wichtig:'
+  note: >-
+    Die Darstellung vermeidet absichtlich redundante Modulreihen. Jede Ebene zeigt nur, was
+    neu hinzukommt — der vollständige Stack steht im Detailbereich. Die Sicherheitsebene 0 ist
+    das Fundament, auf dem KI, Content und Distribution aufbauen.
+
+maturity:
+  heading: Reifegradmatrix
+  lead: >-
+    Reifegrad und Version stammen aus dem Manifest des jeweiligen Projekts, nicht aus dieser
+    Seite. Netresearch-Kernmodule und Community-Abhängigkeiten stehen bewusst nicht auf einer Stufe.
+  columns:
+    module: Modul
+    role: Rolle
+    status: Reifegrad
+    release: Letzter Release
+    usage: Typischer Einsatz
+    boundary: Verantwortungsgrenze
+  derived_note: >-
+    Aus dem Repository abgeleitet – dieses Projekt veröffentlicht noch kein Manifest.
+  community_note: >-
+    Community-Extensions werden nicht von Netresearch gepflegt. Reifegrad, Sicherheit und
+    Weiterentwicklung verantworten die jeweiligen Anbieter; hier steht deshalb kein Reifegrad.
+  stages:
+    concept: Konzept
+    poc: Machbarkeitsnachweis
+    alpha: Alpha
+    beta: Beta
+    stable: Stabil
+    maintenance: Wartung
+    community: Community
+  rows:
+    - id: nr-vault
+      role: Secret-Fundament
+      usage: Schlüsselverwaltung
+      boundary: Keine KI-Entscheidung, kein Prompt.
+    - id: nr-llm
+      role: Control-Plane
+      usage: Zentrale Nutzung von Sprachmodellen
+      boundary: Provider- und Modellrisiken bleiben bei Anbieter und Betreiber.
+    - id: nr-browser-ai
+      role: On-Device-Assistent
+      usage: Seitenbezogene Fragen
+      boundary: Nur unterstützte Browser und Geräte.
+    - id: nr-mcp-agent
+      role: Backend-Agent
+      usage: Kontrollierte Assistenz im Backend
+      boundary: Schreibende Aktionen brauchen eine Freigabe.
+  community_rows:
+    - name: Extensions für soziale Netzwerke
+      role: Kanal-Ausspielung
+      usage: Veröffentlichung aus TYPO3 heraus
+      boundary: Fremde Anbieter, eigener Wartungsstand.
+
+stakeholders:
+  heading: Was der Stack für Ihre Rolle bedeutet
+  lead: Dieselbe Architektur, fünf verschiedene Fragen.
+  items:
+    - icon: route
+      role: CTO und CIO
+      question: Bleiben wir handlungsfähig?
+      answer: >-
+        Jede Schicht ist einzeln austauschbar. Der Anbieterwechsel ist eine Konfigurationsänderung,
+        kein Umbau der Integrationen. Betrieb wahlweise in der Cloud, im eigenen Rechenzentrum
+        oder gemischt.
+    - icon: shield-check
+      role: CISO und Datenschutz
+      question: Was verlässt unser Netz, und wer darf was?
+      answer: >-
+        Schlüssel liegen verschlüsselt im Vault, nie in der Datenbank. Berechtigungen gelten je
+        Fähigkeit, schreibende Werkzeuge sind freigabepflichtig, und jede Nutzung hinterlässt einen
+        Eintrag. Der Datenfluss steht auf der Produktseite, Kontrolle für Kontrolle.
+    - icon: coins
+      role: Finanzen und Controlling
+      question: Was kostet das, und wer verursacht es?
+      answer: >-
+        Budgets je Nutzer und Zeitraum, Auswertung nach Provider, Modell und Anwendungsfall,
+        Rückfall auf günstigere oder lokale Modelle. Kosten sind vor der Rechnung sichtbar.
+    - icon: document
+      role: Redaktion
+      question: Hilft das beim Schreiben, ohne Ärger zu machen?
+      answer: >-
+        Assistenz im Editor, Vorschläge statt stiller Änderungen, und Antworten mit Quellenangabe.
+        Was geschrieben wird, geht vorher durch eine menschliche Freigabe.
+    - icon: code
+      role: Entwicklung
+      question: Wie viel müssen wir selbst bauen?
+      answer: >-
+        Einen Service injizieren statt einen Anbieter anzubinden. Caching, Streaming,
+        Werkzeugaufrufe, Fehlerbehandlung und Rückfallketten sind einmal gebaut, nicht je Extension.
+
+operating:
+  heading: Betriebsmodelle
+  lead: >-
+    Der Stack schreibt kein Betriebsmodell vor. Er macht die Wahl zu einer Konfigurationsentscheidung.
+  columns:
+    model: Modell
+    data: Wo die Daten verarbeitet werden
+    fit: Passt, wenn
+    tradeoff: Preis dafür
+  rows:
+    - model: Kommerzieller Cloud-Anbieter
+      data: Beim Anbieter, außerhalb Ihres Netzes
+      fit: Qualität und Modellauswahl den Ausschlag geben
+      tradeoff: Vertragliche und datenschutzrechtliche Prüfung je Anbieter
+    - model: In der EU gehosteter Anbieter
+      data: Beim Anbieter, innerhalb der EU
+      fit: Der Verarbeitungsort vorgegeben ist
+      tradeoff: Kleinere Modellauswahl als bei den großen Anbietern
+    - model: Azure oder OpenAI-kompatibler Endpunkt
+      data: In Ihrem Cloud-Konto
+      fit: Bereits ein Rahmenvertrag mit dem Anbieter besteht
+      tradeoff: Bindung an die Plattform, nicht an das Modell
+    - model: Selbst gehostet (Ollama, vLLM, LocalAI)
+      data: In Ihrer Infrastruktur
+      fit: Daten das Netz nicht verlassen dürfen
+      tradeoff: Eigener Betrieb, eigene Hardware, eigene Modellpflege
+    - model: Im Browser (On-Device)
+      data: Auf dem Gerät der Besucherin
+      fit: Seitenbezogene Fragen ohne Serveraufruf beantwortet werden sollen
+      tradeoff: Nur unterstützte Browser und ausreichend ausgestattete Geräte
+    - model: Gemischter Betrieb
+      data: Je Anwendungsfall unterschiedlich
+      fit: Sensible und unkritische Fälle getrennt behandelt werden
+      tradeoff: Mehr Konfiguration, mehr Erklärungsbedarf
+
+governance:
+  heading: Wer entscheidet was
+  lead: >-
+    Technische Kontrollen wirken erst, wenn benannt ist, wer sie bedient. Diese Zuordnung ist ein
+    Vorschlag – die Rollen heißen bei Ihnen anders, die Fragen bleiben dieselben.
+  columns:
+    decision: Entscheidung
+    owner: Typische Rolle
+    evidence: Woran man sie nachvollzieht
+  rows:
+    - decision: Welche Anbieter zugelassen sind
+      owner: Architektur und Datenschutz gemeinsam
+      evidence: Provider-Konfiguration im Backend
+    - decision: Welche Budgets gelten
+      owner: Controlling
+      evidence: Budgets je Nutzer, Auswertung nach Modell
+    - decision: Wer schreibende Werkzeuge nutzen darf
+      owner: Fachbereichsleitung mit Security
+      evidence: Werkzeuggruppen und Berechtigungen je Fähigkeit
+    - decision: Wer die Protokolle prüft
+      owner: Security oder interne Revision
+      evidence: Auswertung und Freigabeverlauf
+    - decision: Wann Modelle gewechselt werden
+      owner: Architektur
+      evidence: Modell- und Konfigurationsstand, Rückfallketten
+    - decision: Was bei Fehlverhalten passiert
+      owner: Incident-Prozess des Unternehmens
+      evidence: Protokolle, Abschaltung der betroffenen Konfiguration
+
+entry:
+  heading: Womit anfangen
+  lead: Fünf Einstiege. Jeder ist für sich sinnvoll und blockiert die nächsten nicht.
+  items:
+    - title: Nur Provider- und Kostenkontrolle
+      text: >-
+        Sprachmodelle zentral anbinden, Budgets setzen, Nutzung auswerten. Ohne neue Funktionen
+        für Redaktionen. Der kleinste Schritt mit sofortiger Wirkung auf Schatten-KI.
+      module: nr-llm
+    - title: Redaktionelle Assistenz
+      text: >-
+        Übersetzung, Alternativtexte und Entwürfe im Editor – auf derselben Control-Plane, mit
+        denselben Budgets.
+      module: cowriter, nr-repurpose
+    - title: On-Device-Experiment
+      text: >-
+        Seitenbezogene Fragen auf dem Gerät der Besucherin beantworten, ohne Serveraufruf. Klar
+        begrenzt, gut geeignet als erster sichtbarer Schritt.
+      module: nr-browser-ai
+    - title: Kontrollierter Backend-Agent
+      text: >-
+        Ein Assistent im Backend, der liest und für jede Änderung eine Freigabe einholt. Alpha –
+        für die Evaluierung, nicht für den unbeaufsichtigten Betrieb.
+      module: nr-mcp-agent
+    - title: Vollständiger modularer Stack
+      text: >-
+        Sicherheit, Control-Plane, Assistenz, Content und Kanäle zusammen. Sinnvoll, wenn die
+        Architekturentscheidung ohnehin ansteht.
+      module: alle Ebenen
+
+sovereignty:
+  heading: Open Source und Datensouveränität
+  lead: Kontrolle über Code, Betrieb und Modelle — als Eigenschaft, nicht als Zusatz.
+  cards:
+    - icon: code
+      title: Open Source auf TYPO3
+      text: >-
+        Alle Netresearch-Module sind quelloffene TYPO3-Extensions auf einem selbst betreibbaren
+        Enterprise-CMS. Voller Einblick in den Code, keine Anbieterbindung an das CMS.
+    - icon: servers
+      title: Frei wählbarer Betrieb
+      text: >-
+        <code>nr-llm</code> ist anbieterunabhängig und spricht beliebige Anbieter und Betreiber an —
+        vom EU-Cloud-Anbieter bis zur eigenen Infrastruktur.
+    - icon: shield-check
+      title: Lokal und selbst gehostet
+      text: >-
+        Sensible Fälle laufen mit lokalen oder selbst gehosteten Modellen — die Daten verlassen
+        Ihre Umgebung nicht.
+
+modules:
+  heading: Module und Repositories
+  lead: Die Komponenten je Ebene — mit direktem Link zum öffentlichen Repository.
+  layer_label: Ebene
+  groups:
+    - layer: '0'
+      title: Sicherheit und Identität
+      items:
+        - { name: nr-vault, repo: 'https://github.com/netresearch/t3x-nr-vault', text: 'Sichere, prüfbare Secret- und Wissensbasis als Fundament des Stacks.' }
+        - { name: nr-passkeys-be, repo: 'https://github.com/netresearch/t3x-nr-passkeys-be', text: 'Passwortlose Passkey-Anmeldung im TYPO3-Backend.' }
+        - { name: nr-passkeys-fe, repo: 'https://github.com/netresearch/t3x-nr-passkeys-fe', text: 'Passwortlose Passkey-Anmeldung im Frontend.' }
+    - layer: '1'
+      title: KI-Basis und Governance
+      items:
+        - { name: nr-llm, repo: 'https://github.com/netresearch/t3x-nr-llm', text: 'Kontrollierter, nachvollziehbarer Zugang zu Sprachmodellen, mit Berechtigungen, Budgets und Auswertung.' }
+        - { name: nr-mcp-agent, repo: 'https://github.com/netresearch/t3x-nr-mcp-agent', text: 'Backend-Assistent mit MCP-Werkzeugaufrufen auf Basis von nr-llm.' }
+        - { name: nr-browser-ai, repo: 'https://github.com/netresearch/t3x-nr-browser-ai', text: 'On-Device-Assistent für Fragen zur aufgerufenen Seite, ohne eigene Chat-Schnittstelle.' }
+    - layer: '2'
+      title: Inhalte produzieren und umwandeln
+      items:
+        - { name: nr-repurpose, repo: 'https://github.com/netresearch/t3x-nr-repurpose', text: 'Wandelt vorhandenes Wissen in redaktionell nutzbare Formate, Varianten und Textbausteine um.' }
+        - { name: cowriter, repo: 'https://github.com/netresearch/t3x-cowriter', text: 'KI-gestütztes Schreiben direkt im Editor (TYPO3 / CKEditor).' }
+        - { name: nr-landingpage, repo: 'https://github.com/netresearch/nr-landingpage', text: 'Generator für TYPO3-Landingpages auf Basis von Sprachmodellen.' }
+    - layer: '3'
+      title: Kanäle bedienen
+      note: >-
+        Für die Distribution lassen sich bestehende TYPO3-Community-Extensions einsetzen. Sie
+        stammen nicht von Netresearch; Pflege und Sicherheit verantworten die jeweiligen Anbieter.
+        Einige Beispiele:
+      items:
+        - { name: Scheduled Social, repo: 'https://extensions.typo3.org/extension/rx_scheduled_social', text: 'Veröffentlicht News-Artikel automatisiert in sozialen Netzwerken.', source: 'TER · reelworx/rx-scheduled-social' }
+        - { name: T3 Socials, repo: 'https://extensions.typo3.org/extension/t3socials', text: 'Schnittstelle, die neue Inhalte direkt in soziale Netzwerke stellt.', source: 'TER · dmk/t3socials' }
+        - { name: Social Media Streams, repo: 'https://extensions.typo3.org/extension/pb_social', text: 'Bindet Feeds aus sozialen Netzwerken ein.', source: 'TER · plusb/pb_social' }
+
+evidence:
+  heading: Belege
+  lead: >-
+    Jede Aussage auf dieser Seite lässt sich nachlesen. Was hier nicht steht, wird auch nicht behauptet.
+  items:
+    - { title: Releases und Quellcode, text: 'Jedes Netresearch-Modul ist öffentlich, mit Release-Verlauf und Änderungsprotokoll.', href: 'https://github.com/netresearch', label: 'github.com/netresearch' }
+    - { title: Technische Dokumentation, text: 'Aufbau, Schnittstellen und Konfiguration je Modul.', href: 'https://netresearch.github.io/t3x-nr-llm/', label: 'Dokumentation nr-llm' }
+    - { title: Architekturentscheidungen, text: 'Warum etwas so gebaut ist, samt der verworfenen Alternativen.', href: 'https://netresearch.github.io/t3x-nr-llm/adr/', label: 'Architecture Decision Records' }
+    - { title: Gemessene Nutzung, text: 'Releases, Downloads, Mitwirkende und abhängige Projekte, täglich erhoben und als Datensatz herunterladbar.', href: 'https://netresearch.github.io/maint/', label: 'Impact-Dashboard' }
+  limits_heading: Was nicht behauptet wird
+  limits:
+    - >-
+      Keine pauschale Konformität mit dem EU-KI-Gesetz, dem NIST-Rahmenwerk oder ISO/IEC 42001.
+      Die Module unterstützen Kontrollen; ob eine Organisation konform ist, ist eine rechtliche und
+      organisatorische Bewertung, keine Eigenschaft einer Extension.
+    - >-
+      Keine Einsparungs- oder Rentabilitätszahl. Wir kennen Ihre Mengengerüste nicht.
+    - >-
+      Kein Schutz gegen falsche Modellantworten. Der Stack begrenzt, was ein Modell tun darf –
+      nicht, was es sagt.
+
+faq:
+  heading: Häufige Fragen
+  lead: 'Kurz erklärt: Aufbau und Zusammenspiel der Ebenen.'
+  items:
+    - q: Was ist der modulare KI-Stack?
+      a: >-
+        Ein aufeinander aufbauender Wertstrom aus vier Ebenen: Sicherheits- und Identitätsfundament
+        (Ebene 0), governance-fähige KI-Basis (Ebene 1), Content-Produktion (Ebene 2) und
+        Kanalausspielung (Ebene 3). Jede Ebene erbt den Unterbau der darunterliegenden.
+    - q: Welche Module gehören zur Sicherheitsebene?
+      a: >-
+        Ebene 0 umfasst <code>nr-vault</code> für eine sichere, prüfbare Secret- und Wissensbasis
+        sowie <code>nr-passkeys-be</code> und <code>nr-passkeys-fe</code> für passwortlose
+        Passkey-Anmeldung im TYPO3-Backend und -Frontend.
+    - q: Warum ist die KI-Basis von der Sicherheit getrennt?
+      a: >-
+        Zugriffe, Secrets und Identitäten werden zuerst abgesichert (Ebene 0), bevor mit
+        <code>nr-llm</code> ein kontrollierter, nachvollziehbarer KI-Zugang entsteht (Ebene 1).
+        So bleibt die KI-Nutzung von Anfang an prüfbar.
+    - q: Welche KI-Werkzeuge produzieren Inhalte?
+      a: >-
+        Ebene 2 nutzt <code>nr-repurpose</code> zum Umwandeln von Wissen in redaktionell nutzbare
+        Formate, <code>cowriter</code> für KI-gestütztes Schreiben im Editor sowie weitere
+        Werkzeuge wie <code>nr-landingpage</code>. Der Backend-Agent <code>nr-mcp-agent</code>
+        gehört zur KI-Basis (Ebene 1).
+    - q: Ist der Stack quelloffen und TYPO3-basiert?
+      a: >-
+        Ja, für alle Netresearch-Module. TYPO3 ist ein quelloffenes Enterprise-CMS, das selbst
+        betrieben werden kann. Die Kanal-Ebene besteht aus Community-Extensions, die eigenen
+        Lizenzen und Wartungsständen unterliegen.
+    - q: Wie sorgt der Stack für Datensouveränität?
+      a: >-
+        Aus zwei Eigenschaften: Der Netresearch-Teil ist quelloffen und auf der selbst betreibbaren
+        TYPO3-Plattform aufgebaut, und <code>nr-llm</code> ist anbieterunabhängig — beliebige
+        Anbieter und Betreiber oder lokale beziehungsweise selbst gehostete Modelle. Sensible
+        Daten bleiben damit in der eigenen Umgebung, wenn Sie das so konfigurieren.
+    - q: Womit fangen wir am besten an?
+      a: >-
+        Mit der zentralen Provider- und Kostenkontrolle. Sie wirkt sofort gegen Schatten-KI und
+        mehrfach gespeicherte Schlüssel und blockiert keinen der weiteren Schritte.
+
+cta:
+  heading: KI-Stack für Ihren Anwendungsfall planen
+  lead: >-
+    Wir gehen mit Ihnen durch, welche Ebenen Sie brauchen, welches Betriebsmodell zu Ihren
+    Vorgaben passt und wie ein erster, kleiner Schritt aussieht.
+  business: Beratungstermin anfragen
+  technical: Module vergleichen
+  technical_href: '#module'
+  issue_note: Fehler auf dieser Seite? Ein Issue im Repository geht nicht verloren.
+  issue_label: Issue anlegen
+
+footer:
+  tagline: Netresearch DTT GmbH · Modularer KI-Stack
+  nav_label: Fußzeilen-Navigation
+  reviewed: Seite zuletzt geprüft
+  links:
+    - { href: 'https://www.netresearch.de/', label: netresearch.de }
+    - { href: 'https://www.netresearch.de/impressum/', label: Impressum }
+    - { href: 'https://www.netresearch.de/datenschutz/', label: Datenschutz }
+    - { href: 'https://github.com/netresearch/modularer-ki-stack-page', label: Quellcode }

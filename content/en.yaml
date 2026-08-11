@@ -1,0 +1,521 @@
+lang: en
+html_lang: en
+og_locale: en_GB
+other_lang: de
+other_label: Deutsch
+other_href: /modularer-ki-stack-page/
+skip_to_content: Skip to content
+
+meta:
+  title: A modular AI stack for TYPO3 — controllable, replaceable, adoptable in steps
+  description: >-
+    The Netresearch modular AI stack: open-source TYPO3 extensions from the security and
+    identity foundation (nr-vault, nr-passkeys) through the governable AI control plane
+    (nr-llm) to content production and channel distribution — with maturity, operating model
+    and responsibility boundary stated per module.
+  og_title: A modular AI stack for TYPO3 — controllable, replaceable, adoptable in steps
+  og_description: >-
+    Security and identity → AI control plane → assistance and agents → content → channels.
+    A stack in which every layer stays replaceable on its own.
+  og_image_alt: The Netresearch modular AI stack
+
+nav:
+  label: Page navigation
+  brand_line1: Netresearch
+  brand_line2: AI Stack
+  items:
+    - { href: '#stack', label: Stack }
+    - { href: '#reifegrad', label: Maturity }
+    - { href: '#stakeholder', label: Perspectives }
+    - { href: '#betrieb', label: Operating }
+    - { href: '#governance', label: Governance }
+    - { href: '#einstieg', label: Getting started }
+    - { href: '#module', label: Modules }
+    - { href: '#faq', label: FAQ }
+
+hero:
+  eyebrow: Modular AI stack · open source on TYPO3
+  title: A modular AI stack for TYPO3 — controllable, replaceable and adoptable in steps.
+  lead: >-
+    The Netresearch modular AI stack is not a toolbox but a value stream where each layer
+    builds on the one below: security and identity foundation, governable AI base, content
+    production and distribution. Built from open-source TYPO3 extensions — sovereign through
+    freely chosen hosting and models you can run locally or self-hosted.
+  cta_business: Plan the AI stack for your use case
+  cta_technical: Compare the technical modules
+  cta_technical_href: '#module'
+  card_title: How to read the diagram
+  principles:
+    - title: Security first.
+      text: '<code>nr-vault</code> and <code>nr-passkeys</code> form the access and identity foundation.'
+    - title: AI, under control.
+      text: '<code>nr-llm</code> makes AI available as a governable base.'
+    - title: Produce content.
+      text: '<code>nr-repurpose</code>, <code>cowriter</code> and further AI tools sit on top as the content layer.'
+    - title: Distribution extends it.
+      text: A channel layer turns content into channel-oriented publication.
+
+problem:
+  heading: Why AI initiatives stall in existing systems
+  lead: >-
+    Not for want of models. For want of ownership, of an overview, and of decisions someone
+    can still take back.
+  items:
+    - { icon: sparkle, title: Uncontrolled SaaS tools, text: 'Departments sign up individually. Nobody knows which content goes where.' }
+    - { icon: key, title: Keys stored in several places, text: 'The same API key sits in three extensions, two configuration files and a repository.' }
+    - { icon: people, title: Shadow AI, text: 'What is missing centrally appears locally — with no log, no approval and no budget.' }
+    - { icon: coins, title: No view of cost, text: 'The invoice arrives monthly; the attribution to a project or a person never does.' }
+    - { icon: clipboard, title: No accountability, text: 'Who approves a model? Who reviews the logs? Without an answer, every control is theory.' }
+    - { icon: scale, title: Vendor lock-in, text: 'Switching provider means rebuilding every integration.' }
+    - { icon: agent, title: Agents with too many rights, text: 'An assistant that may write without anyone agreeing is an incident with a lead time.' }
+
+stack:
+  heading: The stack grows with the problem.
+  lead: >-
+    Pick a layer. The diagram shows only what that layer adds; everything below it is inherited.
+  rail_title: Value added
+  rail:
+    - { layer: '3', icon: distribute, label: Distribution }
+    - { layer: '2', icon: document, label: Content }
+    - { layer: '1', icon: chip, label: AI base }
+    - { layer: '0', icon: shield, label: Security }
+  detail_labels:
+    problem: Problem it solves
+    audience: Audiences
+    result: Result
+    stack: Active stack
+    open_repo: open repository
+  layers:
+    - number: '3'
+      title: Serve the channels
+      subtitle: A new layer for distribution and publication.
+      side_icon: distribute
+      side_text: Publish · distribute · automate
+      components:
+        - { label: Community extensions for social networks, icon: send, optional: true }
+      inherit_badge: builds on layer 2
+      inherit_text: Content becomes publishable and channel-oriented.
+      outcome_problem: Serve several channels consistently.
+      outcome_audience: Social media, communications, TYPO3 teams.
+      detail:
+        kicker: Layer 3
+        summary: >-
+          The distribution layer turns finished content into channel-oriented publication. Today
+          it consists of TYPO3 community extensions rather than Netresearch modules — a
+          distinction made on purpose and stated in the maturity table.
+        problem: Publish content across several channels consistently without maintaining it more than once.
+        audience: Social media · corporate communications · TYPO3 teams
+        result: Publication from the CMS, under the approvals that already apply there.
+        takeaway_title: This layer comes from the community.
+        takeaway: >-
+          Netresearch ships no module here. Maturity, maintenance and security are the respective
+          extension vendors' responsibility.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe, nr-llm, nr-mcp-agent, nr-repurpose, cowriter]
+    - number: '2'
+      title: Produce and repurpose content
+      subtitle: A new layer for repurposing and editorial work.
+      side_icon: document
+      side_text: Generate · structure · vary
+      components:
+        - { label: nr-repurpose, icon: repurpose }
+        - { label: cowriter, icon: wand }
+        - { label: further AI tools, icon: sparkle, optional: true }
+      inherit_badge: builds on layer 1
+      inherit_text: The controlled AI base becomes a content engine.
+      outcome_problem: Turn knowledge into content an editor can actually use.
+      outcome_audience: Editorial, marketing, CMS teams.
+      detail:
+        kicker: Layer 2
+        summary: >-
+          Tools that put existing knowledge into forms editors reuse: variants, text blocks,
+          drafts inside the editor.
+        problem: Move existing knowledge into CMS-ready content without retyping it.
+        audience: Editorial · marketing · CMS teams
+        result: Drafts and variants in the editor, under the same provider and budget controls as every other AI function.
+        takeaway_title: Content tools inherit the controls.
+        takeaway: >-
+          They bring no keys and no billing of their own; they use the control plane of layer 1.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe, nr-llm, nr-mcp-agent, nr-repurpose, cowriter]
+    - number: '1'
+      title: AI base and governance
+      subtitle: Controlled, traceable access to language models.
+      side_icon: chip
+      side_text: Use AI under control and on the record
+      components:
+        - { label: nr-llm, icon: chip-pins }
+        - { label: nr-mcp-agent, icon: agent }
+        - { label: 'optional: a local model', icon: sparkle, optional: true }
+      inherit_badge: builds on layer 0
+      inherit_text: Secured access becomes controlled AI.
+      outcome_problem: Make AI usable without losing control of it.
+      outcome_audience: Controlling, audit, governance, compliance.
+      detail:
+        kicker: Layer 1
+        summary: >-
+          The control plane: providers and models are configured once, permissions and budgets
+          are set centrally, and every use is measured. The backend agent sits on top as an
+          interface.
+        problem: Make AI available across the organisation without giving up keys, cost and access.
+        audience: Controlling · audit · governance · compliance · development
+        result: One place for providers, keys, permissions, budgets and analytics — for every extension on the site.
+        takeaway_title: Without this layer there is no control.
+        takeaway: >-
+          Any extension that wires up its own provider bypasses the budgets, the logs and the
+          permissions.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe, nr-llm, nr-mcp-agent]
+    - number: '0'
+      title: Security and identity
+      subtitle: The foundation for controlled access and identities.
+      side_icon: shield
+      side_text: Secure access · protect identity
+      active: true
+      components:
+        - { label: nr-vault, icon: vault }
+        - { label: nr-passkeys-be, icon: key }
+        - { label: nr-passkeys-fe, icon: key }
+      inherit_badge: Foundation
+      inherit_text: Access, secrets and identities are secured.
+      outcome_problem: Control access and identities before AI starts.
+      outcome_audience: IT security, identity management, administration.
+      detail:
+        kicker: Layer 0
+        summary: >-
+          The access and identity foundation: secrets, knowledge sources and authentication are
+          secured before AI enters the picture — with vault-backed secret storage and passwordless
+          passkey sign-in.
+        problem: Control access, secrets and identities before AI reaches company knowledge.
+        audience: IT security · identity management · compliance · administration
+        result: A secured base with vault-backed secret storage and passkey sign-in for backend and frontend.
+        takeaway_title: Security is layer 0.
+        takeaway: Without controlled access and identities, every use of AI stays a governance risk.
+        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe]
+
+flow:
+  heading: 'Value stream: from secured access to channels'
+  steps:
+    - { icon: lock, label: Access }
+    - { icon: book, label: Knowledge }
+    - { icon: chip, label: AI }
+    - { icon: document, label: Content }
+    - { icon: distribute, label: Channels }
+  note_label: 'Note:'
+  note: >-
+    The diagram deliberately avoids repeating module rows. Each layer shows only what it adds —
+    the full stack is in the detail panel. Security layer 0 is the foundation the AI, content and
+    distribution layers build on.
+
+maturity:
+  heading: Maturity
+  lead: >-
+    Maturity and version come from each project's own manifest, not from this page. Netresearch
+    core modules and community dependencies are deliberately not presented as equals.
+  columns:
+    module: Module
+    role: Role
+    status: Maturity
+    release: Latest release
+    usage: Typical use
+    boundary: Responsibility boundary
+  derived_note: >-
+    Derived from the repository — this project does not publish a manifest yet.
+  community_note: >-
+    Community extensions are not maintained by Netresearch. Maturity, security and further
+    development are the respective vendors' responsibility, so no maturity is stated here.
+  stages:
+    concept: Concept
+    poc: Proof of concept
+    alpha: Alpha
+    beta: Beta
+    stable: Stable
+    maintenance: Maintenance
+    community: Community
+  rows:
+    - id: nr-vault
+      role: Secret foundation
+      usage: Credential storage
+      boundary: Makes no AI decision and sees no prompt.
+    - id: nr-llm
+      role: Control plane
+      usage: Central use of language models
+      boundary: Provider and model risks stay with the provider and the operator.
+    - id: nr-browser-ai
+      role: On-device assistant
+      usage: Page-level questions
+      boundary: Supported browsers and devices only.
+    - id: nr-mcp-agent
+      role: Backend agent
+      usage: Controlled assistance in the backend
+      boundary: Writing actions require an approval.
+  community_rows:
+    - name: Social network extensions
+      role: Channel distribution
+      usage: Publication from TYPO3
+      boundary: Third-party vendors, their own maintenance state.
+
+stakeholders:
+  heading: What the stack means for your role
+  lead: The same architecture, five different questions.
+  items:
+    - icon: route
+      role: CTO and CIO
+      question: Do we stay able to act?
+      answer: >-
+        Every layer is replaceable on its own. Switching provider is a configuration change, not a
+        rebuild of the integrations. Run it in the cloud, in your own data centre, or mixed.
+    - icon: shield-check
+      role: CISO and data protection
+      question: What leaves our network, and who may do what?
+      answer: >-
+        Keys are stored encrypted in the vault, never in the database. Permissions apply per
+        capability, writing tools require approval, and every use leaves an entry. The data flow
+        is documented on the product page, control by control.
+    - icon: coins
+      role: Finance and controlling
+      question: What does it cost, and who causes it?
+      answer: >-
+        Budgets per user and period, analytics by provider, model and use case, and a fallback to
+        cheaper or local models. Cost is visible before the invoice.
+    - icon: document
+      role: Editorial
+      question: Does it help with writing without causing trouble?
+      answer: >-
+        Assistance in the editor, suggestions rather than silent edits, and answers that cite
+        their source. Anything written goes through a human approval first.
+    - icon: code
+      role: Development
+      question: How much do we have to build ourselves?
+      answer: >-
+        Inject a service instead of wiring up a provider. Caching, streaming, tool calls, error
+        handling and fallback chains are built once, not per extension.
+
+operating:
+  heading: Operating models
+  lead: >-
+    The stack does not prescribe an operating model. It turns the choice into a configuration
+    decision.
+  columns:
+    model: Model
+    data: Where data is processed
+    fit: Fits when
+    tradeoff: What it costs you
+  rows:
+    - model: Commercial cloud provider
+      data: At the provider, outside your network
+      fit: Quality and model choice decide
+      tradeoff: A contractual and data-protection review per provider
+    - model: EU-hosted provider
+      data: At the provider, inside the EU
+      fit: The processing location is prescribed
+      tradeoff: A smaller model selection than the large providers offer
+    - model: Azure or an OpenAI-compatible endpoint
+      data: In your own cloud account
+      fit: A framework agreement with the provider already exists
+      tradeoff: Commitment to the platform, not to the model
+    - model: Self-hosted (Ollama, vLLM, LocalAI)
+      data: In your own infrastructure
+      fit: Data must not leave the network
+      tradeoff: Your own operations, hardware and model maintenance
+    - model: In the browser (on-device)
+      data: On the visitor's device
+      fit: Page-level questions should be answered without a server call
+      tradeoff: Supported browsers and sufficiently equipped devices only
+    - model: Mixed operation
+      data: Different per use case
+      fit: Sensitive and uncritical cases are treated separately
+      tradeoff: More configuration and more to explain
+
+governance:
+  heading: Who decides what
+  lead: >-
+    Technical controls only work once someone is named to operate them. This mapping is a
+    proposal — your roles are called something else; the questions are the same.
+  columns:
+    decision: Decision
+    owner: Typical role
+    evidence: How it is evidenced
+  rows:
+    - decision: Which providers are permitted
+      owner: Architecture and data protection together
+      evidence: Provider configuration in the backend
+    - decision: Which budgets apply
+      owner: Controlling
+      evidence: Per-user budgets, analytics by model
+    - decision: Who may use writing tools
+      owner: Department head with security
+      evidence: Tool groups and per-capability permissions
+    - decision: Who reviews the logs
+      owner: Security or internal audit
+      evidence: Analytics and the approval trail
+    - decision: When models are changed
+      owner: Architecture
+      evidence: Model and configuration state, fallback chains
+    - decision: What happens after misbehaviour
+      owner: The organisation's incident process
+      evidence: Logs, and switching off the affected configuration
+
+entry:
+  heading: Where to start
+  lead: Five entry points. Each stands on its own and blocks none of the others.
+  items:
+    - title: Provider and cost control only
+      text: >-
+        Connect language models centrally, set budgets, measure use. No new features for editors.
+        The smallest step with an immediate effect on shadow AI.
+      module: nr-llm
+    - title: Editorial assistance
+      text: >-
+        Translation, alt text and drafts in the editor — on the same control plane, under the
+        same budgets.
+      module: cowriter, nr-repurpose
+    - title: On-device experiment
+      text: >-
+        Answer page-level questions on the visitor's device, with no server call. Clearly bounded,
+        and a good first visible step.
+      module: nr-browser-ai
+    - title: Controlled backend agent
+      text: >-
+        An assistant in the backend that reads, and asks for approval before any change. Alpha —
+        for evaluation, not for unattended operation.
+      module: nr-mcp-agent
+    - title: The full modular stack
+      text: >-
+        Security, control plane, assistance, content and channels together. Worth it when the
+        architecture decision is due anyway.
+      module: every layer
+
+sovereignty:
+  heading: Open source and data sovereignty
+  lead: Control over code, operation and models — as a property, not an add-on.
+  cards:
+    - icon: code
+      title: Open source on TYPO3
+      text: >-
+        Every Netresearch module is an open-source TYPO3 extension on an enterprise CMS you can
+        host yourself. Full sight of the code, no CMS lock-in.
+    - icon: servers
+      title: Freely chosen operation
+      text: >-
+        <code>nr-llm</code> is provider-independent and talks to any provider or operator — from
+        an EU cloud provider to your own infrastructure.
+    - icon: shield-check
+      title: Local and self-hosted
+      text: >-
+        Sensitive cases run on local or self-hosted models — the data does not leave your
+        environment.
+
+modules:
+  heading: Modules and repositories
+  lead: The components of each layer, with a direct link to the public repository.
+  layer_label: Layer
+  groups:
+    - layer: '0'
+      title: Security and identity
+      items:
+        - { name: nr-vault, repo: 'https://github.com/netresearch/t3x-nr-vault', text: 'A secure, auditable secret and knowledge store as the foundation of the stack.' }
+        - { name: nr-passkeys-be, repo: 'https://github.com/netresearch/t3x-nr-passkeys-be', text: 'Passwordless passkey sign-in for the TYPO3 backend.' }
+        - { name: nr-passkeys-fe, repo: 'https://github.com/netresearch/t3x-nr-passkeys-fe', text: 'Passwordless passkey sign-in for the frontend.' }
+    - layer: '1'
+      title: AI base and governance
+      items:
+        - { name: nr-llm, repo: 'https://github.com/netresearch/t3x-nr-llm', text: 'Controlled, traceable access to language models, with permissions, budgets and analytics.' }
+        - { name: nr-mcp-agent, repo: 'https://github.com/netresearch/t3x-nr-mcp-agent', text: 'Backend assistant with MCP tool calling, built on nr-llm.' }
+        - { name: nr-browser-ai, repo: 'https://github.com/netresearch/t3x-nr-browser-ai', text: 'On-device assistant for questions about the current page, with no chat API of its own.' }
+    - layer: '2'
+      title: Produce and repurpose content
+      items:
+        - { name: nr-repurpose, repo: 'https://github.com/netresearch/t3x-nr-repurpose', text: 'Turns existing knowledge into editorially usable formats, variants and text blocks.' }
+        - { name: cowriter, repo: 'https://github.com/netresearch/t3x-cowriter', text: 'AI-assisted writing inside the editor (TYPO3 / CKEditor).' }
+        - { name: nr-landingpage, repo: 'https://github.com/netresearch/nr-landingpage', text: 'Generator for TYPO3 landing pages, driven by language models.' }
+    - layer: '3'
+      title: Serve the channels
+      note: >-
+        Existing TYPO3 community extensions can be used for distribution. They do not come from
+        Netresearch; maintenance and security are the respective vendors' responsibility. A few
+        examples:
+      items:
+        - { name: Scheduled Social, repo: 'https://extensions.typo3.org/extension/rx_scheduled_social', text: 'Publishes news articles to social networks on a schedule.', source: 'TER · reelworx/rx-scheduled-social' }
+        - { name: T3 Socials, repo: 'https://extensions.typo3.org/extension/t3socials', text: 'An interface that posts new content directly to social networks.', source: 'TER · dmk/t3socials' }
+        - { name: Social Media Streams, repo: 'https://extensions.typo3.org/extension/pb_social', text: 'Embeds feeds from social networks.', source: 'TER · plusb/pb_social' }
+
+evidence:
+  heading: Evidence
+  lead: >-
+    Every statement on this page can be checked. What is not here is not claimed either.
+  items:
+    - { title: Releases and source code, text: 'Every Netresearch module is public, with its release history and changelog.', href: 'https://github.com/netresearch', label: 'github.com/netresearch' }
+    - { title: Technical documentation, text: 'Architecture, interfaces and configuration per module.', href: 'https://netresearch.github.io/t3x-nr-llm/', label: 'nr-llm documentation' }
+    - { title: Architecture decisions, text: 'Why something is built the way it is, including the alternatives that were rejected.', href: 'https://netresearch.github.io/t3x-nr-llm/adr/', label: 'Architecture Decision Records' }
+    - { title: Measured usage, text: 'Releases, downloads, contributors and dependent projects, collected daily and downloadable as a dataset.', href: 'https://netresearch.github.io/maint/', label: 'Impact dashboard' }
+  limits_heading: What is not claimed
+  limits:
+    - >-
+      No blanket conformity with the EU AI Act, the NIST AI Risk Management Framework or
+      ISO/IEC 42001. The modules support controls; whether an organisation is conformant is a
+      legal and organisational assessment, not a property of an extension.
+    - >-
+      No savings or return-on-investment figure. We do not know your volumes.
+    - >-
+      No protection against wrong model answers. The stack bounds what a model may do — not
+      what it says.
+
+faq:
+  heading: Frequently asked questions
+  lead: 'Briefly: how the layers are built and how they fit together.'
+  items:
+    - q: What is the modular AI stack?
+      a: >-
+        A value stream of four layers, each building on the one below: the security and identity
+        foundation (layer 0), the governable AI base (layer 1), content production (layer 2) and
+        channel distribution (layer 3). Each layer inherits everything below it.
+    - q: Which modules make up the security layer?
+      a: >-
+        Layer 0 comprises <code>nr-vault</code> for a secure, auditable secret and knowledge store,
+        plus <code>nr-passkeys-be</code> and <code>nr-passkeys-fe</code> for passwordless passkey
+        sign-in in the TYPO3 backend and frontend.
+    - q: Why is the AI base separated from security?
+      a: >-
+        Access, secrets and identities are secured first (layer 0) before <code>nr-llm</code>
+        establishes controlled, traceable AI access (layer 1). That keeps AI use auditable from
+        the start.
+    - q: Which AI tools produce content?
+      a: >-
+        Layer 2 uses <code>nr-repurpose</code> to turn knowledge into editorially usable formats,
+        <code>cowriter</code> for AI-assisted writing in the editor, and further tools such as
+        <code>nr-landingpage</code>. The backend agent <code>nr-mcp-agent</code> belongs to the AI
+        base (layer 1).
+    - q: Is the stack open source and TYPO3-based?
+      a: >-
+        Yes, for every Netresearch module. TYPO3 is an open-source enterprise CMS you can host
+        yourself. The channel layer consists of community extensions with their own licences and
+        maintenance states.
+    - q: How does the stack support data sovereignty?
+      a: >-
+        Through two properties: the Netresearch part is open source and built on the self-hostable
+        TYPO3 platform, and <code>nr-llm</code> is provider-independent — any provider or operator,
+        or local and self-hosted models. Sensitive data stays in your environment if you configure
+        it that way.
+    - q: Where is the best place to start?
+      a: >-
+        With central provider and cost control. It acts immediately against shadow AI and
+        duplicated keys, and it blocks none of the later steps.
+
+cta:
+  heading: Plan the AI stack for your use case
+  lead: >-
+    We work through which layers you need, which operating model fits your constraints, and what
+    a first, small step looks like.
+  business: Request a consultation
+  technical: Compare the modules
+  technical_href: '#module'
+  issue_note: Something wrong on this page? An issue in the repository will not get lost.
+  issue_label: Open an issue
+
+footer:
+  tagline: Netresearch DTT GmbH · Modular AI stack
+  nav_label: Footer navigation
+  reviewed: Page last reviewed
+  links:
+    - { href: 'https://www.netresearch.de/', label: netresearch.de }
+    - { href: 'https://www.netresearch.de/impressum/', label: Imprint }
+    - { href: 'https://www.netresearch.de/datenschutz/', label: Privacy }
+    - { href: 'https://github.com/netresearch/modularer-ki-stack-page', label: Source code }
