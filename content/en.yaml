@@ -218,6 +218,9 @@ maturity:
     boundary: Responsibility boundary
   derived_note: >-
     Derived from the repository — this project does not publish a manifest yet.
+  repository_note: >-
+    No product page of its own. Release and version come straight from the
+    repository; the maturity is Netresearch's own assessment.
   community_note: >-
     Community extensions are not maintained by Netresearch. Maturity, security and further
     development are the respective vendors' responsibility, so no maturity is stated here.
@@ -234,6 +237,14 @@ maturity:
       role: Secret foundation
       usage: Credential storage
       boundary: Makes no AI decision and sees no prompt.
+    - id: nr-passkeys-be
+      role: Backend identity
+      usage: Passwordless sign-in to the TYPO3 backend
+      boundary: Authenticates people. Grants no permission the backend user did not already have.
+    - id: nr-passkeys-fe
+      role: Frontend identity
+      usage: Passwordless sign-in for frontend users
+      boundary: Authenticates people. Authorisation and data access stay with the site's own rules.
     - id: nr-llm
       role: Control plane
       usage: Central use of language models

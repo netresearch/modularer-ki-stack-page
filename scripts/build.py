@@ -121,7 +121,12 @@ def maturity_rows(content: dict, manifest: dict[str, dict], lang: str) -> list[d
             "repository": product["repository"],
             "stage": product["stage"],
             "latest_release": product.get("latest_release"),
+            # Two different things, and the page says which. "derived": the
+            # project has a page but publishes no manifest yet — a gap.
+            # "repository_sourced": it has no page of its own, so the hub reads
+            # the repository — a description, not a deficiency.
             "derived": product.get("manifest_source") == "derived",
+            "repository_sourced": product.get("manifest_source") == "repository",
         })
     return rows
 
