@@ -1404,12 +1404,17 @@
   white-space: nowrap;
 }
 
-/* Orange is the accent and stays reserved for the stages that carry a warning. */
+/* Orange is the accent and stays reserved for the stages that carry a warning.
+ *
+ * The pills use the darkened brand variants, not #FF4D00 and #2F99A4: at 11.5px
+ * bold those two reach 3.32:1 and 3.37:1 on white, below the 4.5:1 that AA asks
+ * of text this size. The hue is the same; --nr-accent-dark and
+ * --nr-primary-dark reach 7.6:1 and 8.2:1. */
 .status-alpha,
 .status-poc,
-.status-concept { color: #FF4D00; }
+.status-concept { color: var(--nr-accent-dark); }
 .status-beta,
-.status-stable { color: #2F99A4; }
+.status-stable { color: var(--nr-primary-dark); }
 .status-maintenance,
 .status-community { color: #585961; }
 

@@ -1,0 +1,13 @@
+{
+  "name": "modularer-ki-stack-page",
+  "private": true,
+  "type": "module",
+  "description": "Node lives here for one reason: the accessibility gate. axe-core is a JavaScript engine and there is no equivalent that runs contrast checks against resolved CSS from Python. The page itself is built by scripts/build.py and has no JavaScript dependencies.",
+  "scripts": {
+    "axe": "node scripts/axe-audit.mjs public"
+  },
+  "devDependencies": {
+    "axe-core": "^4.13.0",
+    "puppeteer": "^25.5.0"
+  }
+}
