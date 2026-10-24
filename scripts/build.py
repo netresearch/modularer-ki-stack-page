@@ -212,9 +212,11 @@ def json_ld(content: dict, canonical: str, manifest_rows: list[dict]) -> str:
 
 
 def main() -> None:
-    manifest = load_manifest()
     facts_path = os.environ.get("PROJECT_FACTS")
-    facts = json.loads(Path(facts_path).read_text(encoding="utf-8")) if facts_path else resolve_products(REPOS, manifest)
+    if facts_path:
+        facts = json.loads(Path(facts_path).read_text(encoding="utf-8"))
+    else:
+        facts = resolve_products(REPOS, load_manifest())
     manifest = facts["products"]
     (PUBLIC / "stack-manifest.json").write_text(json.dumps(facts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     env = Environment(# nosemgrep: python.flask.security.xss.audit.direct-use-of-jinja2.direct-use-of-jinja2

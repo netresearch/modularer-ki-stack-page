@@ -86,7 +86,7 @@ strong,dt{font-weight:700}
 .theme-control select{min-height:48px;max-width:100%;border:1px solid var(--nr-border-strong);border-radius:10px;padding:8px;background:var(--nr-surface);color:var(--nr-text)}
 .header-tools .menu-toggle{display:none}
 .hero{padding:64px 0 72px;background:linear-gradient(125deg,var(--nr-hero-start),var(--nr-hero-middle) 55%,var(--nr-hero-end));color:#fff;position:relative;isolation:isolate}
-.hero::before{content:'';position:absolute;right:4%;top:24px;width:min(36vw,440px);aspect-ratio:1;border:1px solid rgb(255 255 255 / .13);border-radius:24px;box-shadow:0 0 0 24px rgb(255 255 255 / .035),0 0 0 48px rgb(255 255 255 / .025);z-index:-1}
+.hero::before{content:'';opacity:.2;position:absolute;right:4%;top:24px;width:min(36vw,440px);aspect-ratio:1;border:1px solid rgb(255 255 255 / .13);border-radius:24px;box-shadow:0 0 0 24px rgb(255 255 255 / .035),0 0 0 48px rgb(255 255 255 / .025);z-index:-1}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;align-items:center}
 .eyebrow{font-family:Raleway,Arial,sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:10px}
 .eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--nr-accent);flex-shrink:0}

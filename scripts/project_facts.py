@@ -22,6 +22,18 @@ PRODUCT_MANIFESTS = {
 STAGES = {"concept", "poc", "alpha", "beta", "stable", "maintenance"}
 
 
+class HttpsRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Validate each hop before urllib sends the redirected request."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if urlsplit(newurl).scheme != "https":
+            raise ValueError("Refusing a redirect to a non-HTTPS source")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+OPENER = urllib.request.build_opener(HttpsRedirectHandler())
+
+
 def fetch(url: str, *, optional_release: bool = False):
     parsed = urlsplit(url)
     if parsed.scheme != "https" or not parsed.hostname:
@@ -29,10 +41,13 @@ def fetch(url: str, *, optional_release: bool = False):
     is_github_api = parsed.hostname == "api.github.com"
     headers = {"User-Agent": "netresearch-ki-stack-build", "Accept": "application/json"}
     token = os.environ.get("GITHUB_TOKEN")
+    request = urllib.request.Request(url, headers=headers)
     if token and is_github_api:
-        headers["Authorization"] = f"Bearer {token}"
+        # urllib copies ordinary headers on redirects. Authentication is only
+        # for this initial, trusted API request, never a subsequent hop.
+        request.add_unredirected_header("Authorization", f"Bearer {token}")
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as response:
+        with OPENER.open(request, timeout=30) as response:
             text = response.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
         if optional_release and exc.code == 404:

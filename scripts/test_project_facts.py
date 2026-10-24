@@ -1,5 +1,8 @@
 """Contract tests for the data shown to readers, independent of remote services."""
 import unittest
+import urllib.request
+
+import project_facts
 from io import BytesIO
 from unittest.mock import patch
 
@@ -9,7 +12,7 @@ from project_facts import fetch, merge_product, validate_source
 class FetchBoundaryTest(unittest.TestCase):
     def test_api_hostname_receives_token_and_decodes_json(self):
         with patch.dict("os.environ", {"GITHUB_TOKEN": "fixture-token"}), \
-             patch("project_facts.urllib.request.urlopen", return_value=BytesIO(b'{"ok":true}')) as request:
+             patch("project_facts.OPENER.open", return_value=BytesIO(b'{"ok":true}')) as request:
             self.assertEqual(fetch("https://API.GITHUB.COM/repos/netresearch/example"), {"ok": True})
         self.assertEqual(request.call_args.args[0].get_header("Authorization"), "Bearer fixture-token")
 
@@ -21,21 +24,45 @@ class FetchBoundaryTest(unittest.TestCase):
         ):
             with self.subTest(url=url), \
                  patch.dict("os.environ", {"GITHUB_TOKEN": "fixture-token"}), \
-                 patch("project_facts.urllib.request.urlopen", return_value=BytesIO(b"plain source")) as request:
+                 patch("project_facts.OPENER.open", return_value=BytesIO(b"plain source")) as request:
                 self.assertEqual(fetch(url), "plain source")
                 self.assertIsNone(request.call_args.args[0].get_header("Authorization"))
 
     def test_raw_json_file_with_query_never_receives_api_token(self):
         with patch.dict("os.environ", {"GITHUB_TOKEN": "fixture-token"}), \
-             patch("project_facts.urllib.request.urlopen", return_value=BytesIO(b'{"name":"example"}')) as request:
+             patch("project_facts.OPENER.open", return_value=BytesIO(b'{"name":"example"}')) as request:
             self.assertEqual(fetch("https://raw.githubusercontent.com/netresearch/example/main/composer.json?ref=main"), {"name": "example"})
         self.assertIsNone(request.call_args.args[0].get_header("Authorization"))
 
     def test_plain_http_is_rejected_before_request(self):
-        with patch("project_facts.urllib.request.urlopen") as request:
+        with patch("project_facts.OPENER.open") as request:
             with self.assertRaises(ValueError):
                 fetch("http://api.github.com/repos/netresearch/example")
         request.assert_not_called()
+
+    def test_redirect_does_not_forward_api_authorization(self):
+        with patch.dict("os.environ", {"GITHUB_TOKEN": "fixture-token"}), \
+             patch("project_facts.OPENER.open", return_value=BytesIO(b'{"ok":true}')) as opened:
+            fetch("https://api.github.com/repos/netresearch/example")
+        first = opened.call_args.args[0]
+        handler = next(item for item in project_facts.OPENER.handlers
+                       if isinstance(item, project_facts.HttpsRedirectHandler))
+        redirected = handler.redirect_request(
+            first, None, 302, "Found", {}, "https://other.example.test/result.json",
+        )
+        self.assertEqual(first.get_header("Authorization"), "Bearer fixture-token")
+        self.assertIsNone(redirected.get_header("Authorization"))
+
+    def test_redirect_refuses_downgrade_before_following_it(self):
+        handler = next((item for item in project_facts.OPENER.handlers
+                        if isinstance(item, project_facts.HttpsRedirectHandler)), None)
+        self.assertIsNotNone(handler)
+        request = urllib.request.Request("https://api.github.com/example")
+        secure = handler.redirect_request(request, None, 302, "Found", {}, "https://other.example.test/result")
+        self.assertEqual(secure.full_url, "https://other.example.test/result")
+        for scheme in ("http", "ftp"):
+            with self.subTest(scheme=scheme), self.assertRaises(ValueError):
+                handler.redirect_request(secure, None, 302, "Found", {}, f"{scheme}://other.example.test/result")
 
 
 class ProjectFactsTest(unittest.TestCase):

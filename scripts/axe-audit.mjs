@@ -259,9 +259,12 @@ async function auditPage(browser, port, route, scheme, width) {
   await sequentially([0, 1, 2, 3], async (layer) => {
     functionalErrors.push(...(await checkLayer(page, width, layer)));
   });
-  functionalErrors.push(...(await checkMobileMenu(page, width)));
-  functionalErrors.push(...(await checkThemePreference(page, scheme)));
-  functionalErrors.push(...(await checkTextAdaptation(page, width, scheme)));
+  // Argument evaluation awaits each check from left to right on this page.
+  functionalErrors.push(
+    ...(await checkMobileMenu(page, width)),
+    ...(await checkThemePreference(page, scheme)),
+    ...(await checkTextAdaptation(page, width, scheme)),
+  );
   await context.close();
 
   const label = `${route} at ${width}px`;
