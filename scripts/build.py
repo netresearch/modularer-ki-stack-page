@@ -16,13 +16,10 @@ Now:
   templates/            markup, no copy
   public/               the built site — German at /, English at /en/
 
-Maturity and release version are not written in this repository at all. They are
-read from the organisation's aggregated manifest:
-
-  https://netresearch.github.io/projects.json
-
-A module the manifest does not cover is a build error, not a blank cell: a
-maturity table with an unexplained gap is worse than no table.
+The portfolio supplies editorial metadata. scripts/project_facts.py resolves
+current releases and the install requirements at their tags, preferring a
+product's own maturity declaration and recording the source of every field.
+The same records feed the comparison, JSON-LD and public stack-manifest.json.
 
     uv run scripts/build.py
 """
@@ -31,13 +28,12 @@ from __future__ import annotations
 
 import json
 import os
-import shutil
 import sys
 import urllib.error
 import urllib.request
-from datetime import date
 from pathlib import Path
 from urllib.parse import urlencode
+from project_facts import resolve_products
 
 import yaml
 from jinja2 import Environment, FileSystemLoader
@@ -54,9 +50,9 @@ LANGS = ("de", "en")
 # linked from outside, and it stays the canonical one.
 PATHS = {"de": "", "en": "en/"}
 
-LAST_VERIFIED = "2026-08-10"
+LAST_VERIFIED = "2026-10-24"
 
-CONTACT_BASE = "https://www.netresearch.de/kontakt/"
+CONTACT_BASE = {"de": "https://www.netresearch.de/kontakt/", "en": "https://www.netresearch.de/en/contact/"}
 
 REPOS = {
     "nr-vault": "https://github.com/netresearch/t3x-nr-vault",
@@ -71,8 +67,8 @@ REPOS = {
 }
 
 
-def contact_url(position: str) -> str:
-    return CONTACT_BASE + "?" + urlencode({
+def contact_url(position: str, lang: str) -> str:
+    return CONTACT_BASE[lang] + "?" + urlencode({
         "utm_source": "github-pages",
         "utm_medium": "referral",
         "utm_campaign": "ki-stack",
@@ -114,10 +110,17 @@ def maturity_rows(content: dict, manifest: dict[str, dict], lang: str) -> list[d
                 file=sys.stderr,
             )
             raise SystemExit(1)
+        page = product["page"]
+        if row["id"] in ("nr-llm", "nr-browser-ai", "nr-mcp-agent"):
+            locale_path = ""
+            if row["id"] == "nr-llm" or lang == "de":
+                locale_path = f"{lang}/"
+            page = f"https://netresearch.github.io/t3x-{row['id']}/{locale_path}"
         rows.append({
+            **product,
             **row,
             "name": product["name"],
-            "page": product["page"],
+            "page": page,
             "repository": product["repository"],
             "stage": product["stage"],
             "latest_release": product.get("latest_release"),
@@ -170,7 +173,7 @@ def json_ld(content: dict, canonical: str, manifest_rows: list[dict]) -> str:
         "name": content["meta"]["title"],
         "description": content["meta"]["description"],
         "inLanguage": content["html_lang"],
-        "isPartOf": {"@id": f"{SITE_URL}#organization"},
+        "isPartOf": {"@type": "WebSite", "@id": "https://netresearch.github.io/#website", "url": "https://netresearch.github.io/"},
         "publisher": {"@id": f"{SITE_URL}#organization"},
     }
     # Only the modules the page actually renders with a status, and only the
@@ -209,7 +212,13 @@ def json_ld(content: dict, canonical: str, manifest_rows: list[dict]) -> str:
 
 
 def main() -> None:
-    manifest = load_manifest()
+    facts_path = os.environ.get("PROJECT_FACTS")
+    if facts_path:
+        facts = json.loads(Path(facts_path).read_text(encoding="utf-8"))
+    else:
+        facts = resolve_products(REPOS, load_manifest())
+    manifest = facts["products"]
+    (PUBLIC / "stack-manifest.json").write_text(json.dumps(facts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     env = Environment(# nosemgrep: python.flask.security.xss.audit.direct-use-of-jinja2.direct-use-of-jinja2
         loader=FileSystemLoader(ROOT / "templates"),
         # Autoescape everything. An extension allow-list would miss ".html.j2",
@@ -239,12 +248,13 @@ def main() -> None:
             last_verified=LAST_VERIFIED,
             repos=REPOS,
             maturity_rows=rows,
+            facts_checked=facts["generated_at"],
             layer_data=layer_data(content),
             json_ld=json_ld(content, canonical, rows),
             contact={
-                "hero": contact_url("hero"),
-                "band": contact_url("cta-band"),
-                "footer": contact_url("footer"),
+                "hero": contact_url("hero", lang),
+                "band": contact_url("cta-band", lang),
+                "footer": contact_url("footer", lang),
             },
         )
 

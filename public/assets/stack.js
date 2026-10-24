@@ -1,114 +1,131 @@
-/**
- * Interactive layer explorer.
- *
- * The layer data used to live in this file, in German. It now comes from a JSON
- * block the page renders, so the same script serves both languages and the copy
- * has exactly one source: content/<lang>.yaml.
- *
- * The panel is server-rendered with layer 0 already filled in, so a reader
- * without JavaScript gets a complete layer description rather than an empty box.
- */
+/** Progressive enhancement: navigation, colour preference and task explorer. */
 (() => {
   'use strict';
 
+  const root = document.documentElement;
+  const themeControl = document.querySelector('[data-theme-control]');
+  let preference = 'system';
+  try {
+    const stored = localStorage.getItem('nr-theme');
+    // An explicit "system" preference takes precedence over any legacy key.
+    const saved = stored === null ? localStorage.getItem('nr-color-theme') : stored;
+    if (saved === 'light' || saved === 'dark') {
+      preference = saved;
+      if (stored === null) localStorage.setItem('nr-theme', saved);
+    }
+  } catch { /* Preferences remain usable when browser storage is unavailable. */ }
+  const applyTheme = () => {
+    if (preference === 'system') delete root.dataset.theme;
+    else root.dataset.theme = preference;
+  };
+  applyTheme();
+  if (themeControl) {
+    themeControl.value = preference;
+    themeControl.closest('.theme-control').hidden = false;
+    themeControl.addEventListener('change', () => {
+      preference = themeControl.value;
+      try { localStorage.setItem('nr-theme', preference); } catch { /* Optional persistence. */ }
+      applyTheme();
+    });
+  }
+
+  const menu = document.getElementById('menu-toggle');
+  const nav = document.getElementById('site-navigation');
+  const compact = window.matchMedia('(max-width: 1100px)');
+  if (menu && nav) {
+    const closeMenu = (restoreFocus = false) => {
+      menu.setAttribute('aria-expanded', 'false');
+      nav.hidden = compact.matches;
+      if (restoreFocus) menu.focus();
+    };
+    menu.hidden = false;
+    closeMenu();
+    compact.addEventListener('change', () => closeMenu());
+    menu.addEventListener('click', () => {
+      if (menu.getAttribute('aria-expanded') === 'true') return closeMenu();
+      menu.setAttribute('aria-expanded', 'true');
+      nav.hidden = false;
+      nav.querySelector('a')?.focus();
+    });
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a') && compact.matches) closeMenu();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
+        event.preventDefault();
+        closeMenu(true);
+      }
+    });
+  }
+
   const dataNode = document.getElementById('layer-data');
   if (!dataNode) return;
-
   let data;
-  try {
-    data = JSON.parse(dataNode.textContent);
-  } catch {
-    return; // Leave the server-rendered panel exactly as it is.
-  }
-
+  try { data = JSON.parse(dataNode.textContent); } catch { return; }
   const { repos = {}, layers = {}, labels = {} } = data;
-
   const cards = Array.from(document.querySelectorAll('.layer-card'));
-  const markers = Array.from(document.querySelectorAll('.rail-marker'));
-  if (!cards.length) return;
-
+  const panel = document.getElementById('layer-panel');
+  if (!cards.length || !panel) return;
+  root.classList.add('js');
   const fields = {
-    kicker: document.getElementById('detail-kicker'),
-    title: document.getElementById('detail-title'),
-    summary: document.getElementById('detail-summary'),
-    problem: document.getElementById('detail-problem'),
-    audience: document.getElementById('detail-audience'),
-    result: document.getElementById('detail-result'),
-    stackPath: document.getElementById('stack-path'),
-    takeawayTitle: document.getElementById('detail-takeaway-title'),
+    kicker: document.getElementById('detail-kicker'), title: document.getElementById('detail-title'),
+    summary: document.getElementById('detail-summary'), problem: document.getElementById('detail-problem'),
+    audience: document.getElementById('detail-audience'), result: document.getElementById('detail-result'),
+    stackPath: document.getElementById('stack-path'), takeawayTitle: document.getElementById('detail-takeaway-title'),
     takeaway: document.getElementById('detail-takeaway'),
   };
-
-  function renderStackPath(stack) {
-    fields.stackPath.replaceChildren();
-    stack.forEach((item, index) => {
-      const url = repos[item];
-      const chip = document.createElement(url ? 'a' : 'span');
-      chip.className = 'path-chip';
-      chip.textContent = item;
-      if (url) {
-        chip.href = url;
-        if (labels.openRepo) chip.setAttribute('aria-label', `${item} — ${labels.openRepo}`);
-      }
-      fields.stackPath.appendChild(chip);
-
-      if (index < stack.length - 1) {
-        const arrow = document.createElement('span');
-        arrow.className = 'path-arrow';
-        arrow.setAttribute('aria-hidden', 'true');
-        arrow.textContent = '→';
-        fields.stackPath.appendChild(arrow);
-      }
-    });
+  function repositoryUrl(value) {
+    if (typeof value !== 'string') return null;
+    try {
+      const url = new URL(value);
+      if (url.protocol !== 'https:' || url.hostname !== 'github.com' ||
+          url.username || url.password || url.port || url.search || url.hash ||
+          !/^\/netresearch\/[A-Za-z0-9_.-]+\/?$/.test(url.pathname)) return null;
+      return url.href;
+    } catch {
+      return null;
+    }
   }
-
-  function setActiveLayer(layerId) {
+  function selectLayer(layerId) {
     const layer = layers[layerId];
     if (!layer) return;
-
     cards.forEach((card) => {
-      const active = card.dataset.layer === layerId;
-      card.classList.toggle('is-active', active);
-      card.setAttribute('aria-selected', active ? 'true' : 'false');
-      card.tabIndex = active ? 0 : -1;
+      const selected = card.dataset.layer === layerId;
+      card.classList.toggle('is-active', selected);
+      card.setAttribute('aria-selected', String(selected));
+      card.tabIndex = selected ? 0 : -1;
     });
-
-    markers.forEach((marker) => {
-      marker.classList.toggle('is-active', marker.dataset.layer === layerId);
-    });
-
-    fields.kicker.textContent = layer.kicker;
-    fields.title.textContent = layer.title;
-    fields.summary.textContent = layer.summary;
-    fields.problem.textContent = layer.problem;
-    fields.audience.textContent = layer.audience;
-    fields.result.textContent = layer.result;
-    fields.takeawayTitle.textContent = layer.takeawayTitle;
-    fields.takeaway.textContent = layer.takeaway;
-    renderStackPath(layer.stack);
+    panel.setAttribute('aria-labelledby', `tab-${layerId}`);
+    for (const field of ['kicker', 'title', 'summary', 'problem', 'audience', 'result', 'takeawayTitle', 'takeaway']) {
+      fields[field].textContent = layer[field];
+    }
+    fields.stackPath.replaceChildren();
+    fields.stackPath.closest('.detail-stack').hidden = !layer.stack.length;
+    for (const name of layer.stack) {
+      const url = repositoryUrl(repos[name]);
+      const link = document.createElement(url ? 'a' : 'span');
+      link.className = 'path-chip';
+      link.textContent = name;
+      if (url) {
+        link.href = url;
+        if (labels.openRepo) link.setAttribute('aria-label', `${name} — ${labels.openRepo}`);
+      }
+      fields.stackPath.appendChild(link);
+    }
+    document.getElementById('panel-state').textContent = layer.title;
   }
-
-  cards.forEach((card) => {
-    card.tabIndex = card.classList.contains('is-active') ? 0 : -1;
-    card.addEventListener('click', () => setActiveLayer(card.dataset.layer));
+  cards.forEach((card, index) => {
+    card.addEventListener('click', () => selectLayer(card.dataset.layer));
     card.addEventListener('keydown', (event) => {
-      const currentIndex = cards.findIndex((item) => item.dataset.layer === card.dataset.layer);
-      let nextIndex = currentIndex;
-
-      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-        nextIndex = Math.min(cards.length - 1, currentIndex + 1);
-      }
-      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-        nextIndex = Math.max(0, currentIndex - 1);
-      }
-      if (event.key === 'Home') nextIndex = 0;
-      if (event.key === 'End') nextIndex = cards.length - 1;
-
-      if (nextIndex !== currentIndex) {
+      let next;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (index + 1) % cards.length;
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (index - 1 + cards.length) % cards.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = cards.length - 1;
+      if (next !== undefined) {
         event.preventDefault();
-        const nextCard = cards[nextIndex];
-        setActiveLayer(nextCard.dataset.layer);
-        nextCard.focus();
+        selectLayer(cards[next].dataset.layer);
+        cards[next].focus();
       }
     });
   });

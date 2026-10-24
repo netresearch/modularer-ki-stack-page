@@ -5,6 +5,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  # Rebuild public release facts even when this repository's copy is unchanged.
+  schedule:
+    - cron: '47 6 * * *'
 
 permissions: {}
 
@@ -44,13 +47,17 @@ jobs:
       # verify_site.py cannot decide from markup.
       setup-node: true
       node-version: '22'
-      build-command: >-
+      expose-github-token: build
+      pre-build-command: >-
         python3 -m pip install --quiet jinja2 pyyaml
-        && python3 scripts/build.py
-        && python3 scripts/verify_site.py
         && npm ci --ignore-scripts
         && ./node_modules/.bin/puppeteer browsers install chrome
-        && node scripts/axe-audit.mjs public
+      build-command: >-
+        env -u GITHUB_TOKEN -u GH_TOKEN python3 -m unittest discover -s scripts -p 'test_*.py'
+        && python3 scripts/build.py
+        && env -u GITHUB_TOKEN -u GH_TOKEN python3 scripts/verify_site.py
+        && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/test_stack_dom.mjs
+        && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/axe-audit.mjs public
 
   deploy:
     needs: build

@@ -1,92 +1,60 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["cairosvg", "pyyaml"]
+# dependencies = ["pyyaml", "playwright"]
 # ///
-"""Render the social preview cards.
+"""Render branded 1200×630 previews with the same local fonts as the page.
 
-One 1200x630 card per language, built from the headline the page itself renders,
-so the preview cannot say something the page does not. Output is committed:
-og:image has to resolve, and the card only changes when the headline does.
-
-    uv run scripts/render_og.py
+Set CHROME_PATH to an installed Chrome, or install Playwright Chromium once.
+Rendering in a browser avoids a silent system-font fallback in SVG rasterizers.
 """
-
 from __future__ import annotations
 
+import asyncio
+import base64
 import html
+import os
+import shutil
 from pathlib import Path
 
-import cairosvg
 import yaml
+from playwright.async_api import async_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-CONTENT = ROOT / "content"
 ASSETS = ROOT / "public" / "assets"
 
-TEAL = "#2F99A4"
-ORANGE = "#FF4D00"
-BACKGROUND = "#0f1115"
-TEXT = "#e8eaed"
-MUTED = "#9aa0a6"
 
-BACKGROUND = "#0f1115"
-
-SUBTITLE = {
-    "en": "Security → control plane → assistance → content → channels",
-    "de": "Sicherheit → Control-Plane → Assistenz → Content → Kanäle",
-}
+def data_url(path: Path, mime: str) -> str:
+    return f"data:{mime};base64," + base64.b64encode(path.read_bytes()).decode("ascii")
 
 
-def wrap(text: str, width: int) -> list[str]:
-    lines: list[str] = []
-    current = ""
-    for word in text.split():
-        candidate = f"{current} {word}".strip()
-        if len(candidate) > width and current:
-            lines.append(current)
-            current = word
-        else:
-            current = candidate
-    if current:
-        lines.append(current)
-    return lines
+def card(content: dict) -> str:
+    heading_font = data_url(ASSETS / "fonts/raleway-latin-800-normal.woff2", "font/woff2")
+    body_font = data_url(ASSETS / "fonts/open-sans-latin-400-normal.woff2", "font/woff2")
+    logo = data_url(ASSETS / "netresearch-symbol-only.svg", "image/svg+xml")
+    return f"""<!doctype html><html lang="{content['lang']}"><meta charset="utf-8"><style>
+@font-face{{font-family:Raleway;src:url('{heading_font}');font-weight:800}}
+@font-face{{font-family:'Open Sans';src:url('{body_font}');font-weight:400}}
+*{{box-sizing:border-box}}body{{margin:0;width:1200px;height:630px;background:linear-gradient(125deg,#15585E,#0A5057 55%,#06363B);color:white;font:26px/1.45 'Open Sans';position:relative}}
+header{{height:108px;background:white;color:#4D4F57;display:flex;align-items:center;gap:20px;padding:16px 60px;font:800 28px Raleway}}
+header img{{width:64px;height:64px}}main{{padding:42px 64px}}.eyebrow{{font-size:20px;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:12px}}.eyebrow::before{{content:'';width:10px;height:10px;border-radius:50%;background:#FF4D00}}
+h1{{font:800 64px/1.1 Raleway;margin:20px 0;max-width:1000px}}p{{margin:0;max-width:1050px}}footer{{position:absolute;bottom:0;left:0;width:100%;height:58px;background:#25272D;display:flex;align-items:center;justify-content:space-between;padding:0 64px;font-size:18px}}
+</style><header><img src="{logo}" alt="Netresearch">netresearch</header><main><div class="eyebrow">Open Source · TYPO3</div><h1>{html.escape(content['meta']['og_title'])}</h1><p>{html.escape(content['meta']['og_description'])}</p></main><footer><span>Netresearch DTT GmbH</span><span>netresearch.github.io</span></footer></html>"""
 
 
-def card(title: str, subtitle: str) -> str:
-    lines = wrap(title, 26)
-    tspans = "".join(
-        f'<tspan x="72" dy="{0 if index == 0 else 78}">{html.escape(line)}</tspan>'
-        for index, line in enumerate(lines)
-    )
-    # Anchor the block so one-line and three-line titles both sit sensibly.
-    baseline = 330 - (len(lines) - 1) * 39
-
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="{BACKGROUND}"/>
-  <rect width="1200" height="10" fill="{TEAL}"/>
-  <rect x="72" y="{baseline - 110}" width="120" height="8" fill="{ORANGE}"/>
-  <text x="72" y="110" font-family="Raleway, 'Open Sans', sans-serif" font-size="34"
-        font-weight="600" fill="{TEAL}">netresearch</text>
-  <text x="72" y="{baseline}" font-family="Raleway, 'Open Sans', sans-serif" font-size="66"
-        font-weight="700" fill="{TEXT}">{tspans}</text>
-  <text x="72" y="558" font-family="'Open Sans', sans-serif" font-size="26"
-        fill="{MUTED}">{html.escape(subtitle)}</text>
-</svg>"""
-
-
-def main() -> None:
-    for lang in ("en", "de"):
-        content = yaml.safe_load((CONTENT / f"{lang}.yaml").read_text(encoding="utf-8"))
-        target = ASSETS / f"og-ki-stack-{lang}.png"
-        cairosvg.svg2png(
-            bytestring=card(content["meta"]["og_title"], SUBTITLE[lang]).encode("utf-8"),
-            write_to=str(target),
-            output_width=1200,
-            output_height=630,
-        )
-        print(f"Wrote {target}")
+async def main() -> None:
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch(executable_path=os.environ.get("CHROME_PATH") or shutil.which("google-chrome"))
+        page = await browser.new_page(viewport={"width": 1200, "height": 630}, device_scale_factor=1)
+        for lang in ("de", "en"):
+            content = yaml.safe_load((ROOT / "content" / f"{lang}.yaml").read_text(encoding="utf-8"))
+            await page.set_content(card(content), wait_until="load")
+            await page.evaluate("document.fonts.ready")
+            target = ASSETS / f"og-ki-stack-{lang}.png"
+            await page.screenshot(path=str(target))
+            print(f"Wrote {target.relative_to(ROOT)}")
+        await browser.close()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
