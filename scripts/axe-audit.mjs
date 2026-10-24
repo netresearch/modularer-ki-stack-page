@@ -28,10 +28,12 @@ const axePath = require.resolve('axe-core/axe.min.js');
 
 const DIST = process.argv[2] ?? 'public';
 
-// WCAG 2.1 AA, which is what the pages claim. 'best-practice' is deliberately
+// WCAG 2.2 A/AA plus a separate enhanced-text-contrast check. 'best-practice' is deliberately
 // not included: it flags stylistic preferences, and a gate that fails on those
 // gets disabled instead of fixed.
-const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
+const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+const BASE_PATH = '/modularer-ki-stack-page';
+const WIDTHS = [1280, 390, 320];
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -114,7 +116,9 @@ function sampleRoutes(routes) {
 
 function serve(files) {
   const server = createServer(async (req, res) => {
-    const file = files.get(new URL(req.url, 'http://localhost').pathname);
+    const pathname = new URL(req.url, 'http://localhost').pathname;
+    const file = pathname.startsWith(`${BASE_PATH}/`)
+      ? files.get(pathname.slice(BASE_PATH.length)) : undefined;
     if (!file) {
       res.writeHead(404).end('not found');
       return;
@@ -150,8 +154,11 @@ function report({ route, scheme, violation }) {
 }
 
 /** Audits one page and returns the failures found on it. */
-async function auditPage(browser, port, route, scheme) {
-  const page = await browser.newPage();
+async function auditPage(browser, port, route, scheme, width) {
+  // Colour preference is persistent site state. A previous theme-button check
+  // must not silently turn the next requested light render into a dark one.
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
 
   // A page whose stylesheet 404s has no contrast failures at all, so a silent
   // asset error turns this gate into a rubber stamp. Any request that does not
@@ -162,17 +169,74 @@ async function auditPage(browser, port, route, scheme) {
   });
 
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);
-  await page.setViewport({ width: 1280, height: 900 });
-  await page.goto(`http://127.0.0.1:${port}${route}`, { waitUntil: 'networkidle0' });
+  await page.setViewport({ width, height: 900 });
+  await page.goto(`http://127.0.0.1:${port}${BASE_PATH}${route}`, { waitUntil: 'networkidle0' });
   await page.addScriptTag({ path: axePath });
 
   const results = await page.evaluate(
     async (tags) => await window.axe.run(document, { runOnly: { type: 'tag', values: tags } }),
     TAGS,
   );
-  await page.close();
+  const enhanced = await page.evaluate(async () => await window.axe.run(document, {
+    runOnly: { type: 'rule', values: ['color-contrast-enhanced'] },
+  }));
+  results.violations.push(...enhanced.violations);
+  const functionalErrors = [];
+  for (let layer = 0; layer < 4; layer += 1) {
+    await page.click(`#tab-${layer}`);
+    const state = await page.evaluate(() => ({
+      width: document.documentElement.scrollWidth,
+      selected: document.querySelector('[role="tab"][aria-selected="true"]')?.id,
+      label: document.getElementById('layer-panel').getAttribute('aria-labelledby'),
+    }));
+    if (state.width > width) functionalErrors.push(`Layer ${layer}: document ${state.width}px exceeds ${width}px`);
+    if (state.selected !== `tab-${layer}` || state.label !== `tab-${layer}`) functionalErrors.push(`Layer ${layer}: selection/panel label mismatch`);
+  }
+  if (width === 320) {
+    await page.click('#menu-toggle');
+    if (!(await page.$eval('#site-navigation', (nav) => !nav.hidden))) functionalErrors.push('Mobile menu did not open');
+    await page.keyboard.press('Escape');
+    if (!(await page.$eval('#menu-toggle', (button) => button === document.activeElement && button.getAttribute('aria-expanded') === 'false'))) functionalErrors.push('Escape did not return focus and close the menu');
+  }
+  const before = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
+  await page.click('#theme-toggle');
+  const after = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
+  if (before === after) functionalErrors.push('Theme switch did not change the actual colour scheme');
+  await page.evaluate(() => {
+    localStorage.setItem('nr-theme', 'system');
+    localStorage.setItem('nr-color-theme', 'dark');
+  });
+  await page.reload({ waitUntil: 'networkidle0' });
+  const system = await page.evaluate(() => ({
+    color: getComputedStyle(document.body).backgroundColor,
+    preference: localStorage.getItem('nr-theme'),
+  }));
+  if (system.color !== before || system.preference !== 'system') functionalErrors.push('Explicit system preference was overridden by a legacy theme');
+  await page.evaluate(() => localStorage.removeItem('nr-theme'));
+  await page.reload({ waitUntil: 'networkidle0' });
+  if (!(await page.$eval('#theme-toggle', (button) => button.getAttribute('aria-pressed') === 'true'))) functionalErrors.push('Legacy dark preference did not migrate');
+  if (width === 320 && scheme === 'light') {
+    // User text enlargement must not revive the min-content overflow that
+    // affected the long German task subtitle at otherwise valid mobile widths.
+    await page.evaluate(() => {
+      const sizes = [...document.querySelectorAll('body, body *')]
+        .map((element) => [element, parseFloat(getComputedStyle(element).fontSize)]);
+      for (const [element, size] of sizes) element.style.fontSize = `${size * 2}px`;
+    });
+    if ((await page.$eval('html', (html) => html.scrollWidth)) > width) functionalErrors.push('200% text enlargement causes document overflow');
+    await page.reload({ waitUntil: 'networkidle0' });
+    await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
+    if ((await page.$eval('html', (html) => html.scrollWidth)) > width) functionalErrors.push('WCAG text spacing causes document overflow');
+  }
+  await context.close();
 
-  const found = results.violations.map((violation) => ({ route, scheme, violation }));
+  const label = `${route} at ${width}px`;
+  const found = results.violations.map((violation) => ({ route: label, scheme, violation }));
+  if (functionalErrors.length) found.push({ route: label, scheme, violation: {
+    id: 'interaction-or-reflow', impact: 'serious', help: 'Task selection, reflow, theme and keyboard navigation must work',
+    helpUrl: 'https://www.w3.org/WAI/WCAG22/Understanding/reflow.html',
+    nodes: functionalErrors.map((entry) => ({ target: [entry], failureSummary: '' })),
+  } });
   if (broken.length) {
     found.unshift({
       route,
@@ -204,6 +268,7 @@ async function main() {
   }
 
   const browser = await puppeteer.launch({
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
     args: ['--no-sandbox', '--disable-dev-shm-usage'],
   });
 
@@ -212,8 +277,10 @@ async function main() {
 
   for (const { route } of sampled) {
     for (const scheme of SCHEMES) {
-      failures.push(...(await auditPage(browser, port, route, scheme)));
-      checked += 1;
+      for (const width of WIDTHS) {
+        failures.push(...(await auditPage(browser, port, route, scheme, width)));
+        checked += 1;
+      }
     }
   }
 
@@ -224,13 +291,13 @@ async function main() {
 
   if (failures.length) {
     console.error(
-      `\naxe: ${failures.length} violation(s) across ${checked} page renders (${sampled.length} route shapes × ${SCHEMES.length} colour schemes, sampled from ${routes.length} pages)`,
+      `\naxe: ${failures.length} violations across ${checked} renders (${sampled.length} routes × ${SCHEMES.length} schemes × ${WIDTHS.length} widths)`,
     );
     process.exit(1);
   }
 
   console.log(
-    `axe: no WCAG 2.1 AA violations in ${checked} page renders (${sampled.length} route shapes × ${SCHEMES.length} colour schemes, sampled from ${routes.length} pages)`,
+    `axe: no WCAG 2.2 AA or enhanced-contrast violations in ${checked} renders; task selection, mobile menu, theme and reflow checked`,
   );
 }
 

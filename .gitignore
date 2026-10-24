@@ -5,6 +5,7 @@
 /public/en/
 /public/sitemap.xml
 /public/robots.txt
+/public/stack-manifest.json
 
 __pycache__/
 *.py[cod]

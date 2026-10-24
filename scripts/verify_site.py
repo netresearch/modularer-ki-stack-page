@@ -72,7 +72,7 @@ def main() -> int:
                 if "@type" not in node:
                     errors.append(f"{name}: JSON-LD node without @type")
 
-        contact_links = re.findall(r'href="([^"]*netresearch\.de/kontakt/[^"]*)"', html)
+        contact_links = re.findall(r'href="([^"]*netresearch\.de/(?:kontakt|en/contact)/[^"]*)"', html)
         if not contact_links:
             errors.append(f"{name}: no business CTA to the contact form")
         for href in contact_links:
