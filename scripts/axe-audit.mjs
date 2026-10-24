@@ -153,6 +153,79 @@ function report({ route, scheme, violation }) {
   }
 }
 
+/** Promise chaining states the serial execution requirement explicitly. */
+function sequentially(items, run) {
+  return items.reduce((sequence, item) => sequence.then(() => run(item)), Promise.resolve());
+}
+
+async function checkLayer(page, width, layer) {
+  const functionalErrors = [];
+  await page.click(`#tab-${layer}`);
+  const state = await page.evaluate(() => ({
+    width: document.documentElement.scrollWidth,
+    selected: document.querySelector('[role="tab"][aria-selected="true"]')?.id,
+    label: document.getElementById('layer-panel').getAttribute('aria-labelledby'),
+  }));
+  if (state.width > width) functionalErrors.push(`Layer ${layer}: document ${state.width}px exceeds ${width}px`);
+  if (state.selected !== `tab-${layer}` || state.label !== `tab-${layer}`) functionalErrors.push(`Layer ${layer}: selection/panel label mismatch`);
+  return functionalErrors;
+}
+
+async function checkMobileMenu(page, width) {
+  if (width !== 320) return [];
+  const functionalErrors = [];
+  await page.click('#menu-toggle');
+  if (!(await page.$eval('#site-navigation', (nav) => !nav.hidden))) functionalErrors.push('Mobile menu did not open');
+  await page.keyboard.press('Escape');
+  if (!(await page.$eval('#menu-toggle', (button) => button === document.activeElement && button.getAttribute('aria-expanded') === 'false'))) functionalErrors.push('Escape did not return focus and close the menu');
+  return functionalErrors;
+}
+
+async function checkThemePreference(page, scheme) {
+  const functionalErrors = [];
+  const opposite = scheme === 'dark' ? 'light' : 'dark';
+  const before = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
+  await page.select('[data-theme-control]', opposite);
+  const after = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
+  if (before === after) functionalErrors.push('Theme choice did not change the actual colour scheme');
+  await page.reload({ waitUntil: 'networkidle0' });
+  const selected = await page.$eval('[data-theme-control]', (control) => control.value);
+  if (selected !== opposite) functionalErrors.push('Theme choice did not persist');
+  await page.evaluate(() => localStorage.setItem('nr-color-theme', 'dark'));
+  await page.select('[data-theme-control]', 'system');
+  await page.reload({ waitUntil: 'networkidle0' });
+  const system = await page.evaluate(() => ({
+    color: getComputedStyle(document.body).backgroundColor,
+    preference: localStorage.getItem('nr-theme'),
+    selected: document.querySelector('[data-theme-control]').value,
+  }));
+  if (system.color !== before || system.preference !== 'system' || system.selected !== 'system') functionalErrors.push('System reset was overridden by a legacy theme');
+  await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: opposite }]);
+  if ((await page.$eval('body', (body) => getComputedStyle(body).backgroundColor)) !== after) functionalErrors.push('System preference did not follow a changed OS scheme');
+  await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);
+  await page.evaluate(() => localStorage.removeItem('nr-theme'));
+  await page.reload({ waitUntil: 'networkidle0' });
+  if ((await page.$eval('[data-theme-control]', (control) => control.value)) !== 'dark') functionalErrors.push('Legacy dark preference did not migrate');
+  return functionalErrors;
+}
+
+async function checkTextAdaptation(page, width, scheme) {
+  if (width !== 320 || scheme !== 'light') return [];
+  const functionalErrors = [];
+  // User text enlargement must not revive the min-content overflow that
+  // affected the long German task subtitle at otherwise valid mobile widths.
+  await page.evaluate(() => {
+    const sizes = [...document.querySelectorAll('body, body *')]
+      .map((element) => [element, Number.parseFloat(getComputedStyle(element).fontSize)]);
+    for (const [element, size] of sizes) element.style.fontSize = `${size * 2}px`;
+  });
+  if ((await page.$eval('html', (html) => html.scrollWidth)) > width) functionalErrors.push('200% text enlargement causes document overflow');
+  await page.reload({ waitUntil: 'networkidle0' });
+  await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
+  if ((await page.$eval('html', (html) => html.scrollWidth)) > width) functionalErrors.push('WCAG text spacing causes document overflow');
+  return functionalErrors;
+}
+
 /** Audits one page and returns the failures found on it. */
 async function auditPage(browser, port, route, scheme, width) {
   // Colour preference is persistent site state. A previous theme-button check
@@ -182,52 +255,13 @@ async function auditPage(browser, port, route, scheme, width) {
   }));
   results.violations.push(...enhanced.violations);
   const functionalErrors = [];
-  for (let layer = 0; layer < 4; layer += 1) {
-    await page.click(`#tab-${layer}`);
-    const state = await page.evaluate(() => ({
-      width: document.documentElement.scrollWidth,
-      selected: document.querySelector('[role="tab"][aria-selected="true"]')?.id,
-      label: document.getElementById('layer-panel').getAttribute('aria-labelledby'),
-    }));
-    if (state.width > width) functionalErrors.push(`Layer ${layer}: document ${state.width}px exceeds ${width}px`);
-    if (state.selected !== `tab-${layer}` || state.label !== `tab-${layer}`) functionalErrors.push(`Layer ${layer}: selection/panel label mismatch`);
-  }
-  if (width === 320) {
-    await page.click('#menu-toggle');
-    if (!(await page.$eval('#site-navigation', (nav) => !nav.hidden))) functionalErrors.push('Mobile menu did not open');
-    await page.keyboard.press('Escape');
-    if (!(await page.$eval('#menu-toggle', (button) => button === document.activeElement && button.getAttribute('aria-expanded') === 'false'))) functionalErrors.push('Escape did not return focus and close the menu');
-  }
-  const before = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
-  await page.click('#theme-toggle');
-  const after = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
-  if (before === after) functionalErrors.push('Theme switch did not change the actual colour scheme');
-  await page.evaluate(() => {
-    localStorage.setItem('nr-theme', 'system');
-    localStorage.setItem('nr-color-theme', 'dark');
+  // A layer selection changes this page's active panel; never race selections.
+  await sequentially([0, 1, 2, 3], async (layer) => {
+    functionalErrors.push(...(await checkLayer(page, width, layer)));
   });
-  await page.reload({ waitUntil: 'networkidle0' });
-  const system = await page.evaluate(() => ({
-    color: getComputedStyle(document.body).backgroundColor,
-    preference: localStorage.getItem('nr-theme'),
-  }));
-  if (system.color !== before || system.preference !== 'system') functionalErrors.push('Explicit system preference was overridden by a legacy theme');
-  await page.evaluate(() => localStorage.removeItem('nr-theme'));
-  await page.reload({ waitUntil: 'networkidle0' });
-  if (!(await page.$eval('#theme-toggle', (button) => button.getAttribute('aria-pressed') === 'true'))) functionalErrors.push('Legacy dark preference did not migrate');
-  if (width === 320 && scheme === 'light') {
-    // User text enlargement must not revive the min-content overflow that
-    // affected the long German task subtitle at otherwise valid mobile widths.
-    await page.evaluate(() => {
-      const sizes = [...document.querySelectorAll('body, body *')]
-        .map((element) => [element, parseFloat(getComputedStyle(element).fontSize)]);
-      for (const [element, size] of sizes) element.style.fontSize = `${size * 2}px`;
-    });
-    if ((await page.$eval('html', (html) => html.scrollWidth)) > width) functionalErrors.push('200% text enlargement causes document overflow');
-    await page.reload({ waitUntil: 'networkidle0' });
-    await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
-    if ((await page.$eval('html', (html) => html.scrollWidth)) > width) functionalErrors.push('WCAG text spacing causes document overflow');
-  }
+  functionalErrors.push(...(await checkMobileMenu(page, width)));
+  functionalErrors.push(...(await checkThemePreference(page, scheme)));
+  functionalErrors.push(...(await checkTextAdaptation(page, width, scheme)));
   await context.close();
 
   const label = `${route} at ${width}px`;
@@ -275,14 +309,15 @@ async function main() {
   const failures = [];
   let checked = 0;
 
-  for (const { route } of sampled) {
-    for (const scheme of SCHEMES) {
-      for (const width of WIDTHS) {
-        failures.push(...(await auditPage(browser, port, route, scheme, width)));
-        checked += 1;
-      }
-    }
-  }
+  const cases = sampled.flatMap(({ route }) => SCHEMES.flatMap((scheme) =>
+    WIDTHS.map((width) => ({ route, scheme, width })),
+  ));
+  // Keep browser work bounded and diagnostics ordered rather than starting all
+  // page lifecycles in parallel.
+  await sequentially(cases, async ({ route, scheme, width }) => {
+    failures.push(...(await auditPage(browser, port, route, scheme, width)));
+    checked += 1;
+  });
 
   await browser.close();
   server.close();

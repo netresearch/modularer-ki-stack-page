@@ -110,12 +110,17 @@ def maturity_rows(content: dict, manifest: dict[str, dict], lang: str) -> list[d
                 file=sys.stderr,
             )
             raise SystemExit(1)
+        page = product["page"]
+        if row["id"] in ("nr-llm", "nr-browser-ai", "nr-mcp-agent"):
+            locale_path = ""
+            if row["id"] == "nr-llm" or lang == "de":
+                locale_path = f"{lang}/"
+            page = f"https://netresearch.github.io/t3x-{row['id']}/{locale_path}"
         rows.append({
             **product,
             **row,
             "name": product["name"],
-            "page": (f"https://netresearch.github.io/t3x-{row['id']}/{lang + '/' if row['id'] == 'nr-llm' or lang == 'de' else ''}"
-                     if row["id"] in ("nr-llm", "nr-browser-ai", "nr-mcp-agent") else product["page"]),
+            "page": page,
             "repository": product["repository"],
             "stage": product["stage"],
             "latest_release": product.get("latest_release"),

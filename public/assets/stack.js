@@ -3,28 +3,30 @@
   'use strict';
 
   const root = document.documentElement;
-  const themeButton = document.getElementById('theme-toggle');
-  const darkPreference = window.matchMedia('(prefers-color-scheme: dark)');
+  const themeControl = document.querySelector('[data-theme-control]');
+  let preference = 'system';
   try {
-    const preference = localStorage.getItem('nr-theme');
+    const stored = localStorage.getItem('nr-theme');
     // An explicit "system" preference takes precedence over any legacy key.
-    const saved = preference === null ? localStorage.getItem('nr-color-theme') : preference;
+    const saved = stored === null ? localStorage.getItem('nr-color-theme') : stored;
     if (saved === 'light' || saved === 'dark') {
-      root.dataset.theme = saved;
-      if (preference === null) localStorage.setItem('nr-theme', saved);
+      preference = saved;
+      if (stored === null) localStorage.setItem('nr-theme', saved);
     }
   } catch { /* Preferences remain usable when browser storage is unavailable. */ }
-  const currentTheme = () => root.dataset.theme || (darkPreference.matches ? 'dark' : 'light');
-  const syncThemeButton = () => themeButton?.setAttribute('aria-pressed', String(currentTheme() === 'dark'));
-  if (themeButton) {
-    themeButton.hidden = false;
-    syncThemeButton();
-    themeButton.addEventListener('click', () => {
-      root.dataset.theme = currentTheme() === 'dark' ? 'light' : 'dark';
-      try { localStorage.setItem('nr-theme', root.dataset.theme); } catch { /* Optional persistence. */ }
-      syncThemeButton();
+  const applyTheme = () => {
+    if (preference === 'system') delete root.dataset.theme;
+    else root.dataset.theme = preference;
+  };
+  applyTheme();
+  if (themeControl) {
+    themeControl.value = preference;
+    themeControl.closest('.theme-control').hidden = false;
+    themeControl.addEventListener('change', () => {
+      preference = themeControl.value;
+      try { localStorage.setItem('nr-theme', preference); } catch { /* Optional persistence. */ }
+      applyTheme();
     });
-    darkPreference.addEventListener('change', syncThemeButton);
   }
 
   const menu = document.getElementById('menu-toggle');

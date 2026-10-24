@@ -16,7 +16,13 @@
     </nav>
     <div class="header-tools">
       <a class="language-link" href="{{ c.other_href }}" hreflang="{{ c.other_lang }}" lang="{{ c.other_lang }}">{{ c.other_label }}</a>
-      <button class="theme-toggle" type="button" id="theme-toggle" aria-label="{{ c.nav.theme }}" title="{{ c.nav.theme }}" aria-pressed="false" hidden><span aria-hidden="true">◐</span></button>
+      <label class="theme-control" for="site-theme" hidden>{{ 'Darstellung' if c.lang == 'de' else 'Appearance' }}
+        <select id="site-theme" data-theme-control>
+          <option value="system">System</option>
+          <option value="light">{{ 'Hell' if c.lang == 'de' else 'Light' }}</option>
+          <option value="dark">{{ 'Dunkel' if c.lang == 'de' else 'Dark' }}</option>
+        </select>
+      </label>
       <button class="menu-toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="site-navigation" hidden>{{ c.nav.menu }}</button>
     </div>
   </div>
