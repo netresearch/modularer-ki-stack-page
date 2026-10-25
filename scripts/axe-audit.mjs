@@ -34,7 +34,7 @@ const DIST = process.argv[2] ?? 'public';
 // gets disabled instead of fixed.
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 const BASE_PATH = '/modularer-ki-stack-page';
-const WIDTHS = [1280, 390, 320];
+const WIDTHS = [1280, 1024, 390, 320];
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
