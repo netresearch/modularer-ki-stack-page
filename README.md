@@ -107,7 +107,9 @@ system fallback fonts. The PNGs are committed and served from this site.
 
 `shared/site-shell/` vendors the common Netresearch header source. The build uses
 its Python renderer and publishes byte-identical CSS, JavaScript and the original
-symbol under `assets/site-shell/`. The early inline bootstrap applies System,
+symbol under `assets/site-shell/`. That public directory is generated during
+every build and excluded from Git; `shared/site-shell/` is the maintained source.
+The early inline bootstrap applies System,
 Light or Dark before styles load; the task explorer does not own colour or
 global-navigation state. The browser gate checks radio-keyboard selection,
 persistence, legacy and System reset, blocked storage, native NoJS navigation

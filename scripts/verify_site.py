@@ -11,7 +11,9 @@ from __future__ import annotations
 import json
 import re
 import sys
-from pathlib import Path
+from html.parser import HTMLParser
+from pathlib import Path, PurePosixPath
+from urllib.parse import urlsplit
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_accessibility import check_accessibility  # noqa: E402
@@ -41,6 +43,30 @@ def strip_markup(html: str) -> str:
     html = re.sub(r"<script\b[^>]*>.*?</script\b[^>]*>", " ", html, flags=re.S | re.I)
     html = re.sub(r"<style\b[^>]*>.*?</style\b[^>]*>", " ", html, flags=re.S | re.I)
     return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html))
+
+
+class BrandLogoParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.count = 0
+
+    def handle_starttag(self, tag, attributes) -> None:
+        if tag != "img":
+            return
+        source = dict(attributes).get("src") or ""
+        try:
+            path = urlsplit(source).path
+        except ValueError:
+            return
+        if PurePosixPath(path).parts[-3:] == ("assets", "site-shell", "netresearch-symbol-only.svg"):
+            self.count += 1
+
+
+def count_brand_logos(markup: str) -> int:
+    parser = BrandLogoParser()
+    parser.feed(markup)
+    parser.close()
+    return parser.count
 
 
 def main() -> int:
@@ -85,9 +111,9 @@ def main() -> int:
             errors.append(f"{name}: {problem}")
 
         # Every page uses the same canonical symbol asset in its shared header.
-        logos = re.findall(r'<img[^>]+assets/site-shell/netresearch-symbol-only\.svg[^>]*>', html)
-        if len(logos) != 1:
-            errors.append(f"{name}: the logo appears {len(logos)} times, expected exactly once")
+        logos = count_brand_logos(html)
+        if logos != 1:
+            errors.append(f"{name}: the logo appears {logos} times, expected exactly once")
 
         # No maturity claim without a status pill, and no status without a source.
         if "maturity-heading" in html and 'class="status-pill' not in html:
