@@ -16,14 +16,14 @@ import yaml
 
 class OfflineBuildTest(unittest.TestCase):
     def test_bilingual_inventory_and_security_group_include_http_guard(self):
-        self.assertEqual(10, len(build.REPOS))
-        self.assertEqual("https://github.com/netresearch/typo3_http_guard", build.REPOS["nr-http-guard"])
+        self.assertEqual(len(build.REPOS), 10)
+        self.assertEqual(build.REPOS["nr-http-guard"], "https://github.com/netresearch/typo3_http_guard")
         for lang in build.LANGS:
             with self.subTest(language=lang):
                 content = yaml.safe_load((build.ROOT / "content" / f"{lang}.yaml").read_text())
                 ids = [row["id"] for row in content["maturity"]["rows"]]
                 self.assertEqual(len(ids), len(set(ids)))
-                self.assertEqual(set(build.REPOS), set(ids))
+                self.assertEqual(set(ids), set(build.REPOS))
                 self.assertIn("nr-http-guard", content["stack"]["layers"][0]["detail"]["stack"])
 
     def test_shared_renderers_produce_identical_bytes_in_ascii_locale(self):
@@ -98,8 +98,8 @@ json.dump(output, sys.stdout, ensure_ascii=False)
                 self.assertIn("composer require netresearch/nr-http-guard", markup)
                 linked_data = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', markup, re.S).group(1))
                 modules = next(item for item in linked_data["@graph"] if item["@type"] == "ItemList")
-                self.assertEqual(10, modules["numberOfItems"])
-                self.assertEqual(set(build.REPOS), {item["item"]["name"] for item in modules["itemListElement"]})
+                self.assertEqual(modules["numberOfItems"], 10)
+                self.assertEqual({item["item"]["name"] for item in modules["itemListElement"]}, set(build.REPOS))
             for name in ("site-shell.css", "site-shell.js", "netresearch-symbol-only.svg"):
                 self.assertEqual((public / "assets/site-shell" / name).read_bytes(), (root / "shared/site-shell" / name).read_bytes())
 
