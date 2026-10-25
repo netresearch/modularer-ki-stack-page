@@ -17,6 +17,7 @@ from urllib.parse import urlsplit
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_accessibility import check_accessibility  # noqa: E402
+from check_contact_links import check_contact_links  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
@@ -98,13 +99,9 @@ def main() -> int:
                 if "@type" not in node:
                     errors.append(f"{name}: JSON-LD node without @type")
 
-        contact_links = re.findall(r'href="([^"]*netresearch\.de/(?:kontakt|en/contact)/[^"]*)"', html)
-        if not contact_links:
-            errors.append(f"{name}: no business CTA to the contact form")
-        for href in contact_links:
-            for param in ("utm_source", "utm_medium", "utm_campaign", "utm_content"):
-                if f"{param}=" not in href:
-                    errors.append(f"{name}: contact link without {param}")
+        lang = "de" if re.search(r'<html\b[^>]*\blang="de"', html) else "en"
+        for problem in check_contact_links(html, lang):
+            errors.append(f"{name}: {problem}")
 
         # Accessibility and semantics decidable from the markup alone.
         for problem in check_accessibility(html):
@@ -127,7 +124,20 @@ def main() -> int:
             if not asset.startswith(ALLOWED_ASSET_PREFIXES):
                 errors.append(f"{name}: loads a third-party asset: {asset}")
 
-    for required in ("sitemap.xml", "robots.txt", ".nojekyll", "assets/styles.css",
+    error_page = PUBLIC / "404.html"
+    if error_page.is_file():
+        markup = error_page.read_text(encoding="utf-8")
+        for marker in ('name="robots" content="noindex, follow"', 'class="nr-error-page"', 'data-nr-shell',
+                       'href="https://netresearch.github.io/modularer-ki-stack-page/en/"',
+                       'href="https://netresearch.github.io/modularer-ki-stack-page/"', 'lang="de"'):
+            if marker not in markup:
+                errors.append(f"404.html: missing error-page recovery contract: {marker}")
+        if 'rel="canonical"' in markup or 'rel="alternate"' in markup or 'http-equiv="refresh"' in markup.lower():
+            errors.append("404.html: error page must not redirect or claim a normal page's canonical or language counterpart")
+        for problem in check_accessibility(markup):
+            errors.append(f"404.html: {problem}")
+
+    for required in ("404.html", "sitemap.xml", "robots.txt", ".nojekyll", "assets/styles.css",
                      "assets/stack.js", "assets/og-ki-stack-de.png", "assets/og-ki-stack-en.png"):
         if not (PUBLIC / required).exists():
             errors.append(f"missing public/{required}")

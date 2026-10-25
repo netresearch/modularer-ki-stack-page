@@ -282,6 +282,18 @@ def main() -> None:
         target.write_text(html, encoding="utf-8")
         print(f"Wrote {target.relative_to(ROOT)}")
 
+    error_url = f"{SITE_URL}404.html"
+    (PUBLIC / "404.html").write_text(env.get_template("not_found.html.j2").render(
+        site_title="Modular AI stack", asset_base="/modularer-ki-stack-page/assets",
+        home_en=f"{SITE_URL}en/", home_de=SITE_URL,
+        contact=contact_url("error-footer", "en"), shell_bootstrap=shell_bootstrap,
+        global_header=render_header({
+            "lang": "en", "assetBase": "/modularer-ki-stack-page/assets/site-shell",
+            "languageUrls": {"de": f"{error_url}#deutsch", "en": f"{error_url}#english"},
+            "contactHref": contact_url("error-header", "en"),
+        }),
+    ), encoding="utf-8")
+
     urls = [f"{SITE_URL}{PATHS[lang]}" for lang in LANGS]
     entries = "\n".join(
         f"  <url><loc>{url}</loc><lastmod>{LAST_VERIFIED}</lastmod></url>" for url in urls

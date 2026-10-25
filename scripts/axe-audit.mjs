@@ -219,9 +219,11 @@ async function auditPage(browser, port, route, scheme, width) {
   results.violations.push(...enhanced.violations);
   const functionalErrors = [];
   // A layer selection changes this page's active panel; never race selections.
-  await sequentially([0, 1, 2, 3], async (layer) => {
-    functionalErrors.push(...(await checkLayer(page, width, layer)));
-  });
+  if (route !== '/404.html') {
+    await sequentially([0, 1, 2, 3], async (layer) => {
+      functionalErrors.push(...(await checkLayer(page, width, layer)));
+    });
+  }
   // Argument evaluation awaits each check from left to right on this page.
   functionalErrors.push(
     ...(await checkSiteShell(page, scheme)),
