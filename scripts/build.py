@@ -39,6 +39,10 @@ import yaml
 from jinja2 import Environment, FileSystemLoader
 
 ROOT = Path(__file__).resolve().parent.parent
+SHELL_SOURCE = ROOT / "shared" / "site-shell"
+sys.path.insert(0, str(SHELL_SOURCE))
+from site_shell import render_header, render_page_navigation
+
 PUBLIC = ROOT / "public"
 SITE_URL = "https://netresearch.github.io/modularer-ki-stack-page/"
 MANIFEST_URL = os.environ.get(
@@ -212,6 +216,11 @@ def json_ld(content: dict, canonical: str, manifest_rows: list[dict]) -> str:
 
 
 def main() -> None:
+    shell_assets = PUBLIC / "assets" / "site-shell"
+    shell_assets.mkdir(parents=True, exist_ok=True)
+    for name in ("site-shell.css", "site-shell.js", "netresearch-symbol-only.svg"):
+        (shell_assets / name).write_bytes((SHELL_SOURCE / name).read_bytes())
+    shell_bootstrap = (SHELL_SOURCE / "theme-bootstrap.js").read_text(encoding="utf-8")
     facts_path = os.environ.get("PROJECT_FACTS")
     if facts_path:
         facts = json.loads(Path(facts_path).read_text(encoding="utf-8"))
@@ -240,6 +249,16 @@ def main() -> None:
         rows = maturity_rows(content, manifest, lang)
 
         html = env.get_template("index.html.j2").render(
+            shell_bootstrap=shell_bootstrap,
+            page_navigation=render_page_navigation({
+                "lang": lang, "title": content["nav"]["brand_line2"], "titleHref": "#main",
+                "links": content["nav"]["items"],
+            }),
+            global_header=render_header({
+                "lang": lang, "assetBase": f"{'../' if lang == 'en' else ''}assets/site-shell",
+                "languageUrls": {"de": SITE_URL, "en": f"{SITE_URL}en/"},
+                "active": "stack", "contactHref": contact_url("header", lang),
+            }),
             c=content,
             canonical=canonical,
             alternates=alternates,
