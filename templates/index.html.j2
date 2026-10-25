@@ -4,18 +4,18 @@
 {{ page_navigation | safe }}
 {% endblock %}
 {% block content %}
-<section class="hero">
-  <div class="container hero-grid">
-    <div>
-      <p class="eyebrow">{{ c.hero.eyebrow }}</p>
-      <h1>{{ c.hero.title }}</h1>
-      <p class="hero-lead">{{ c.hero.lead }}</p>
-      <div class="hero-actions">
+<section class="nr-hero" data-nr-hero data-nr-hero-layout="split">
+  <div class="nr-hero-inner">
+    <div class="nr-hero-content">
+      <p class="nr-hero-eyebrow">{{ c.hero.eyebrow }}</p>
+      <h1 class="nr-hero-title">{{ c.hero.title }}</h1>
+      <p class="nr-hero-lead">{{ c.hero.lead }}</p>
+      <div class="nr-hero-actions">
         <a class="btn btn-primary" href="{{ contact.hero }}" data-cta="business" data-cta-position="hero">{{ c.hero.cta_business }}</a>
         <a class="btn btn-outline" href="{{ c.hero.cta_technical_href }}">{{ c.hero.cta_technical }}</a>
       </div>
     </div>
-    <aside class="hero-card" aria-labelledby="start-heading">
+    <aside class="nr-hero-aside" aria-labelledby="start-heading">
       <h2 id="start-heading">{{ c.hero.card_title }}</h2>
       <ul class="hero-facts">{% for fact in c.hero.facts %}<li><strong>{{ fact.title }}</strong><p>{{ fact.text }}</p></li>{% endfor %}</ul>
     </aside>
