@@ -1,5 +1,22 @@
 """The logo gate counts actual image sources rather than attribute or script text."""
 import unittest
+from check_contact_links import check_contact_links
+
+
+class BusinessContactTest(unittest.TestCase):
+    def test_valid_footer_cannot_hide_a_broken_hero_or_header(self):
+        query = "?utm_source=pages&amp;utm_medium=referral&amp;utm_campaign=stack&amp;utm_content=hero"
+        for lang, path in (("de", "kontakt/"), ("en", "en/contact/")):
+            valid = f"https://www.netresearch.de/{path}{query}"
+            footer = f'<a data-cta="business" href="{valid}">Contact</a>'
+            self.assertEqual(check_contact_links(footer, lang), [])
+            self.assertEqual(check_contact_links("<a href='https://example.org/'>Source</a>" + footer, lang), [])
+            invalid = ("https://example.org/", "/kontakt/", "https://[", "https://www.netresearch.de/other/", valid.replace("utm_medium=", "other="), valid.replace("utm_medium=referral", "utm_medium="))
+            for href in invalid:
+                for marker in ('data-cta="business"', 'class="nr-shell-contact"'):
+                    with self.subTest(lang=lang, href=href, marker=marker):
+                        self.assertTrue(check_contact_links(f'<a {marker} href="{href}">Hero</a>' + footer, lang))
+            self.assertTrue(check_contact_links('<a data-cta="business">Hero</a>' + footer, lang))
 
 from verify_site import count_brand_logos
 
