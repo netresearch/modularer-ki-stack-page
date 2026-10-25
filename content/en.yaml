@@ -208,6 +208,6 @@ footer:
   links:
     - {href: 'https://www.netresearch.de/', label: netresearch.de}
     - {href: 'https://netresearch.github.io/', label: Open source portfolio}
-    - {href: 'https://www.netresearch.de/impressum/', label: Imprint}
-    - {href: 'https://www.netresearch.de/datenschutz/', label: Privacy}
+    - {href: 'https://www.netresearch.de/en/imprint/', label: Imprint}
+    - {href: 'https://www.netresearch.de/en/privacy-policy/', label: Privacy}
     - {href: 'https://github.com/netresearch/modularer-ki-stack-page', label: Source}

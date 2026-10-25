@@ -2,6 +2,7 @@
 # the organisation's product manifest, on every deploy. Committing them would
 # reintroduce exactly the drift this build removes.
 /public/index.html
+/public/404.html
 /public/en/
 /public/sitemap.xml
 /public/robots.txt
