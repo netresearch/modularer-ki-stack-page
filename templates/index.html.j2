@@ -1,32 +1,7 @@
 {% extends "base.html.j2" %}
 {% block header %}
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand-link" href="https://www.netresearch.de/">
-      <svg viewBox="-75 -75 440 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Netresearch DTT GmbH">
-        <title>Netresearch DTT GmbH</title>
-        <path fill="#2F99A4" d="M209.6,0V31.62h32.77a26.38,26.38,0,0,1,26.44,26.43V242a26.38,26.38,0,0,1-26.44,26.44H209.6V300h47.93a42.77,42.77,0,0,0,42.86-42.86V42.89A42.76,42.76,0,0,0,257.53,0ZM43.25,0A42.76,42.76,0,0,0,.39,42.89V257.18A42.76,42.76,0,0,0,43.25,300H91.18V268.46H58.4A26.38,26.38,0,0,1,32,242v-184A26.37,26.37,0,0,1,58.4,31.62H91.18V0Z" transform="translate(-0.39 -0.04)"/>
-        <path fill="#585961" d="M221.44,120.41c0-34.48-13.94-57.82-48.93-57.82-26.62,0-48.54,7.74-64.17,26.56l-.7-22.06-28.31.06V232.94h31.59V124.69c7.14-18.38,32.14-34.8,53-34.5,27.38.4,25.2,26.24,26,45.81v96.94h31.58" transform="translate(-0.39 -0.04)"/>
-      </svg>
-      <span class="brand-text"><span>{{ c.nav.brand_line1 }}</span> <span>{{ c.nav.brand_line2 }}</span></span>
-    </a>
-    <nav class="nav-links" id="site-navigation" aria-label="{{ c.nav.label }}">
-      <a href="{{ c.nav.portfolio_href }}">{{ c.nav.portfolio }}</a>
-      {% for item in c.nav['items'] %}<a href="{{ item.href }}">{{ item.label }}</a>{% endfor %}
-    </nav>
-    <div class="header-tools">
-      <a class="language-link" href="{{ c.other_href }}" hreflang="{{ c.other_lang }}" lang="{{ c.other_lang }}">{{ c.other_label }}</a>
-      <label class="theme-control" for="site-theme" hidden>{{ 'Darstellung' if c.lang == 'de' else 'Appearance' }}
-        <select id="site-theme" data-theme-control>
-          <option value="system">System</option>
-          <option value="light">{{ 'Hell' if c.lang == 'de' else 'Light' }}</option>
-          <option value="dark">{{ 'Dunkel' if c.lang == 'de' else 'Dark' }}</option>
-        </select>
-      </label>
-      <button class="menu-toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="site-navigation" hidden>{{ c.nav.menu }}</button>
-    </div>
-  </div>
-</header>
+{{ global_header | safe }}
+{{ page_navigation | safe }}
 {% endblock %}
 {% block content %}
 <section class="hero">
@@ -130,4 +105,4 @@
   <div class="container contact-inner"><div><h2 id="cta-heading">{{ c.cta.heading }}</h2><p>{{ c.cta.lead }}</p><p>{{ c.cta.issue_note }} <a href="https://github.com/netresearch/modularer-ki-stack-page/issues/new">{{ c.cta.issue_label }}</a></p></div><div class="contact-actions"><a class="btn btn-primary" href="{{ contact.band }}" data-cta="business" data-cta-position="band">{{ c.cta.business }}</a><a class="btn btn-outline" href="{{ c.cta.technical_href }}">{{ c.cta.technical }}</a></div></div>
 </section>
 {% endblock %}
-{% block scripts %}<script type="application/json" id="layer-data">{{ layer_data | safe }}</script><script src="{{ base }}assets/stack.js" defer></script>{% endblock %}
+{% block scripts %}<script type="application/json" id="layer-data">{{ layer_data | safe }}</script><script src="{{ base }}assets/site-shell/site-shell.js" defer></script><script src="{{ base }}assets/stack.js" defer></script>{% endblock %}

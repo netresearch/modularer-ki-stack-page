@@ -22,6 +22,7 @@ import { readdirSync, statSync, readFileSync } from 'node:fs';
 import { join, extname, relative, sep } from 'node:path';
 import { createRequire } from 'node:module';
 import puppeteer from 'puppeteer';
+import { checkSiteShell } from './check_site_shell.mjs';
 
 const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
@@ -171,44 +172,6 @@ async function checkLayer(page, width, layer) {
   return functionalErrors;
 }
 
-async function checkMobileMenu(page, width) {
-  if (width !== 320) return [];
-  const functionalErrors = [];
-  await page.click('#menu-toggle');
-  if (!(await page.$eval('#site-navigation', (nav) => !nav.hidden))) functionalErrors.push('Mobile menu did not open');
-  await page.keyboard.press('Escape');
-  if (!(await page.$eval('#menu-toggle', (button) => button === document.activeElement && button.getAttribute('aria-expanded') === 'false'))) functionalErrors.push('Escape did not return focus and close the menu');
-  return functionalErrors;
-}
-
-async function checkThemePreference(page, scheme) {
-  const functionalErrors = [];
-  const opposite = scheme === 'dark' ? 'light' : 'dark';
-  const before = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
-  await page.select('[data-theme-control]', opposite);
-  const after = await page.$eval('body', (body) => getComputedStyle(body).backgroundColor);
-  if (before === after) functionalErrors.push('Theme choice did not change the actual colour scheme');
-  await page.reload({ waitUntil: 'networkidle0' });
-  const selected = await page.$eval('[data-theme-control]', (control) => control.value);
-  if (selected !== opposite) functionalErrors.push('Theme choice did not persist');
-  await page.evaluate(() => localStorage.setItem('nr-color-theme', 'dark'));
-  await page.select('[data-theme-control]', 'system');
-  await page.reload({ waitUntil: 'networkidle0' });
-  const system = await page.evaluate(() => ({
-    color: getComputedStyle(document.body).backgroundColor,
-    preference: localStorage.getItem('nr-theme'),
-    selected: document.querySelector('[data-theme-control]').value,
-  }));
-  if (system.color !== before || system.preference !== 'system' || system.selected !== 'system') functionalErrors.push('System reset was overridden by a legacy theme');
-  await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: opposite }]);
-  if ((await page.$eval('body', (body) => getComputedStyle(body).backgroundColor)) !== after) functionalErrors.push('System preference did not follow a changed OS scheme');
-  await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);
-  await page.evaluate(() => localStorage.removeItem('nr-theme'));
-  await page.reload({ waitUntil: 'networkidle0' });
-  if ((await page.$eval('[data-theme-control]', (control) => control.value)) !== 'dark') functionalErrors.push('Legacy dark preference did not migrate');
-  return functionalErrors;
-}
-
 async function checkTextAdaptation(page, width, scheme) {
   if (width !== 320 || scheme !== 'light') return [];
   const functionalErrors = [];
@@ -261,8 +224,7 @@ async function auditPage(browser, port, route, scheme, width) {
   });
   // Argument evaluation awaits each check from left to right on this page.
   functionalErrors.push(
-    ...(await checkMobileMenu(page, width)),
-    ...(await checkThemePreference(page, scheme)),
+    ...(await checkSiteShell(page, scheme)),
     ...(await checkTextAdaptation(page, width, scheme)),
   );
   await context.close();

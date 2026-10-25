@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>{{ shell_bootstrap | safe }}</script>
 
   <title>{{ c.meta.title }}</title>
   <meta name="description" content="{{ c.meta.description }}">
@@ -34,6 +35,7 @@
   <link rel="preload" href="{{ base }}assets/fonts/raleway-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ base }}assets/fonts/open-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ base }}assets/styles.css">
+  <link rel="stylesheet" href="{{ base }}assets/site-shell/site-shell.css">
   <link rel="icon" type="image/svg+xml" href="{{ base }}assets/favicon.svg">
   <link rel="sitemap" href="{{ site_url }}sitemap.xml">
 

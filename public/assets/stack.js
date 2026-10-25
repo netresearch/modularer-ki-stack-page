@@ -3,61 +3,6 @@
   'use strict';
 
   const root = document.documentElement;
-  const themeControl = document.querySelector('[data-theme-control]');
-  let preference = 'system';
-  try {
-    const stored = localStorage.getItem('nr-theme');
-    // An explicit "system" preference takes precedence over any legacy key.
-    const saved = stored === null ? localStorage.getItem('nr-color-theme') : stored;
-    if (saved === 'light' || saved === 'dark') {
-      preference = saved;
-      if (stored === null) localStorage.setItem('nr-theme', saved);
-    }
-  } catch { /* Preferences remain usable when browser storage is unavailable. */ }
-  const applyTheme = () => {
-    if (preference === 'system') delete root.dataset.theme;
-    else root.dataset.theme = preference;
-  };
-  applyTheme();
-  if (themeControl) {
-    themeControl.value = preference;
-    themeControl.closest('.theme-control').hidden = false;
-    themeControl.addEventListener('change', () => {
-      preference = themeControl.value;
-      try { localStorage.setItem('nr-theme', preference); } catch { /* Optional persistence. */ }
-      applyTheme();
-    });
-  }
-
-  const menu = document.getElementById('menu-toggle');
-  const nav = document.getElementById('site-navigation');
-  const compact = window.matchMedia('(max-width: 1100px)');
-  if (menu && nav) {
-    const closeMenu = (restoreFocus = false) => {
-      menu.setAttribute('aria-expanded', 'false');
-      nav.hidden = compact.matches;
-      if (restoreFocus) menu.focus();
-    };
-    menu.hidden = false;
-    closeMenu();
-    compact.addEventListener('change', () => closeMenu());
-    menu.addEventListener('click', () => {
-      if (menu.getAttribute('aria-expanded') === 'true') return closeMenu();
-      menu.setAttribute('aria-expanded', 'true');
-      nav.hidden = false;
-      nav.querySelector('a')?.focus();
-    });
-    nav.addEventListener('click', (event) => {
-      if (event.target.closest('a') && compact.matches) closeMenu();
-    });
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') {
-        event.preventDefault();
-        closeMenu(true);
-      }
-    });
-  }
-
   const dataNode = document.getElementById('layer-data');
   if (!dataNode) return;
   let data;

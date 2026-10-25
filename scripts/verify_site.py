@@ -84,8 +84,8 @@ def main() -> int:
         for problem in check_accessibility(html):
             errors.append(f"{name}: {problem}")
 
-        # The logo is an inline SVG here; it must still appear exactly once.
-        logos = re.findall(r"<title>Netresearch DTT GmbH</title>", html)
+        # Every page uses the same canonical symbol asset in its shared header.
+        logos = re.findall(r'<img[^>]+assets/site-shell/netresearch-symbol-only\.svg[^>]*>', html)
         if len(logos) != 1:
             errors.append(f"{name}: the logo appears {len(logos)} times, expected exactly once")
 
@@ -105,6 +105,11 @@ def main() -> int:
                      "assets/stack.js", "assets/og-ki-stack-de.png", "assets/og-ki-stack-en.png"):
         if not (PUBLIC / required).exists():
             errors.append(f"missing public/{required}")
+    for name in ("site-shell.css", "site-shell.js", "netresearch-symbol-only.svg"):
+        shipped = PUBLIC / "assets/site-shell" / name
+        source = ROOT / "shared/site-shell" / name
+        if not shipped.is_file() or shipped.read_bytes() != source.read_bytes():
+            errors.append(f"shared header asset differs from source: {name}")
 
     for message in errors:
         print(f"ERROR {message}", file=sys.stderr)
