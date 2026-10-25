@@ -54,12 +54,13 @@ LANGS = ("de", "en")
 # linked from outside, and it stays the canonical one.
 PATHS = {"de": "", "en": "en/"}
 
-LAST_VERIFIED = "2026-10-24"
+LAST_VERIFIED = "2026-10-25"
 
 CONTACT_BASE = {"de": "https://www.netresearch.de/kontakt/", "en": "https://www.netresearch.de/en/contact/"}
 
 REPOS = {
     "nr-vault": "https://github.com/netresearch/t3x-nr-vault",
+    "nr-http-guard": "https://github.com/netresearch/typo3_http_guard",
     "nr-passkeys-be": "https://github.com/netresearch/t3x-nr-passkeys-be",
     "nr-passkeys-fe": "https://github.com/netresearch/t3x-nr-passkeys-fe",
     "nr-llm": "https://github.com/netresearch/t3x-nr-llm",

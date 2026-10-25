@@ -1,6 +1,7 @@
 """The supplied fact snapshot is a complete, genuinely offline build input."""
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -10,9 +11,21 @@ from pathlib import Path
 from unittest.mock import patch
 
 import build
+import yaml
 
 
 class OfflineBuildTest(unittest.TestCase):
+    def test_bilingual_inventory_and_security_group_include_http_guard(self):
+        self.assertEqual(len(build.REPOS), 10)
+        self.assertEqual(build.REPOS["nr-http-guard"], "https://github.com/netresearch/typo3_http_guard")
+        for lang in build.LANGS:
+            with self.subTest(language=lang):
+                content = yaml.safe_load((build.ROOT / "content" / f"{lang}.yaml").read_text())
+                ids = [row["id"] for row in content["maturity"]["rows"]]
+                self.assertEqual(len(ids), len(set(ids)))
+                self.assertEqual(set(ids), set(build.REPOS))
+                self.assertIn("nr-http-guard", content["stack"]["layers"][0]["detail"]["stack"])
+
     def test_shared_renderers_produce_identical_bytes_in_ascii_locale(self):
         program = """
 import json, sys
@@ -51,6 +64,11 @@ json.dump(output, sys.stdout, ensure_ascii=False)
                     for name, url in build.REPOS.items()
                 },
             }
+            facts["products"]["nr-http-guard"].update({
+                "composer_package": "netresearch/nr-http-guard",
+                "latest_release": "v0.1.4", "php": "^8.2", "typo3": "^13.4.36 || ^14.3.8",
+                "dependencies": [],
+            })
             snapshot = root / "facts.json"
             snapshot.write_text(json.dumps(facts), encoding="utf-8")
             environment = {key: value for key, value in os.environ.items() if key != "PROJECTS_MANIFEST"}
@@ -77,6 +95,11 @@ json.dump(output, sys.stdout, ensure_ascii=False)
                 self.assertIn("data-nr-shell", markup)
                 self.assertIn("data-nr-page-navigation", markup)
                 self.assertIn('name="nr-shell-theme"', markup)
+                self.assertIn("composer require netresearch/nr-http-guard", markup)
+                linked_data = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', markup, re.S).group(1))
+                modules = next(item for item in linked_data["@graph"] if item["@type"] == "ItemList")
+                self.assertEqual(modules["numberOfItems"], 10)
+                self.assertEqual({item["item"]["name"] for item in modules["itemListElement"]}, set(build.REPOS))
             for name in ("site-shell.css", "site-shell.js", "netresearch-symbol-only.svg"):
                 self.assertEqual((public / "assets/site-shell" / name).read_bytes(), (root / "shared/site-shell" / name).read_bytes())
 

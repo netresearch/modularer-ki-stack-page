@@ -7,6 +7,7 @@ const script = await readFile(new URL('../public/assets/stack.js', import.meta.u
 const attack = '<img src=x onerror="globalThis.domAttack=true">';
 const urls = [
   ['https://github.com/netresearch/t3x-nr-vault', true],
+  ['https://github.com/netresearch/typo3_http_guard', true],
   ['javascript:globalThis.domAttack=true', false],
   ['data:text/html,<script>globalThis.domAttack=true</script>', false],
   ['https://github.com.evil.invalid/netresearch/example', false],
@@ -56,7 +57,7 @@ try {
   // Each case owns a context but shares this browser; retain bounded, serial
   // execution and close each context before opening the next one.
   await urls.reduce((sequence, entry) => sequence.then(() => checkRepositoryUrl(entry)), Promise.resolve());
-  console.log('DOM boundary: literal markup remains text; only Netresearch HTTPS repository links are clickable (6 cases)');
+  console.log(`DOM boundary: literal markup remains text; only Netresearch HTTPS repository links are clickable (${urls.length} cases)`);
 } finally {
   await browser.close();
 }

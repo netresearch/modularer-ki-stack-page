@@ -26,7 +26,7 @@ endpoint means “no GitHub release”; other errors never become a guessed vers
 
 The browser gate serves the real `/modularer-ki-stack-page/` base path. It checks
 both locales and actual light/dark preferences in isolated browser contexts at
-1280, 390 and 320 CSS px. Besides WCAG 2.2 A/AA rules and enhanced text contrast,
+1280, 1024, 390 and 320 CSS px. Besides WCAG 2.2 A/AA rules and enhanced text contrast,
 it exercises task selection, reflow, the mobile menu's Escape/focus behaviour
 and the colour switch. Set `PUPPETEER_EXECUTABLE_PATH` to reuse an installed Chrome.
 These checks do not certify complete WCAG AA or AAA conformance.
@@ -37,7 +37,7 @@ remain clickable.
 ## Fact provenance
 
 `public/stack-manifest.json` is generated and published with every build. It
-contains the retrieval time and these sources for each of the nine modules:
+contains the retrieval time and these sources for each of the ten modules:
 
 - Latest GitHub release, read directly from its repository.
 - PHP/TYPO3 constraints and direct Netresearch dependencies from `composer.json`
@@ -76,7 +76,14 @@ tools are optional choices. Browser AI is independent and does not inherit
 server-side logging/budgets. Social publication is an integration task until a
 current, compatible implementation is evidenced.
 Frontend passkeys require the backend passkey extension; both are optional for
-the AI foundation. The shared colour preference uses `nr-theme`, with migration
+the AI foundation. HTTP Guard is a separate security component, not a direct
+dependency of Vault or passkeys. Its published alpha protects the registered
+TYPO3 RequestFactory path after activation and clients bound to guard factories,
+subject to policy, configured exceptions and operating mode. Vault requires the
+optional adapter integration; independent SDK/Guzzle clients, direct cURL or
+socket calls and early bootstrap calls require separate integration. See the
+[release-tagged security boundary](https://github.com/netresearch/typo3_http_guard/blob/v0.1.4/Documentation/Security/Index.rst).
+The shared colour preference uses `nr-theme`, with migration
 from the earlier `nr-color-theme` key.
 
 Follow the standalone-page profile of Netresearch branding skill **3.1.0**:

@@ -7,7 +7,7 @@ other_href: /modularer-ki-stack-page/
 skip_to_content: Skip to content
 meta:
   title: Modular AI stack for TYPO3 – modules, requirements and data flows
-  description: 'Netresearch AI stack for TYPO3: secret management, shared language models, editorial assistance and independent browser AI. With releases, requirements and explicit limits.'
+  description: 'Netresearch AI stack for TYPO3: secrets, controlled HTTP requests, language models, editorial assistance and browser AI. With releases and requirements.'
   og_title: A modular AI stack for TYPO3
   og_description: 'Introduce AI in steps: suitable modules, evidenced requirements, controlled data flows and explicit integration work.'
   og_image_alt: Netresearch modular AI stack
@@ -29,7 +29,7 @@ nav:
 hero:
   eyebrow: Open source · TYPO3 · Netresearch
   title: Introduce AI in TYPO3. Keep control of models, costs and access.
-  lead: 'Connect language models centrally, support your editors and add the functions you need. Nine open-source extensions can be combined to suit your use case. An independent browser assistant answers questions about the current page.'
+  lead: 'Connect language models centrally, support your editors and add the functions you need. Ten open-source components can be combined to suit your use case. The independent browser assistant answers questions about the current page.'
   cta_business: Plan the introduction together
   cta_technical: Compare modules and requirements
   cta_technical_href: '#reifegrad'
@@ -52,21 +52,22 @@ stack:
     open_repo: Open repository
   layers:
     - number: '0'
-      title: Protect access and secrets
-      subtitle: Encrypted credential management and optional passkey sign-in.
+      title: Protect access, secrets and HTTP destinations
+      subtitle: Credential management, optional passkeys and controlled outbound HTTP requests.
       active: true
       components:
         - {label: nr-vault}
+        - {label: nr-http-guard}
         - {label: Optional passkeys}
       detail:
         kicker: Security and identity
-        summary: 'nr-vault manages API keys with envelope encryption. nr-passkeys-be and nr-passkeys-fe add passwordless sign-in for the respective user group.'
-        problem: Manage credentials centrally, limit access and trace changes.
+        summary: 'nr-vault manages API keys with envelope encryption. Passkeys add passwordless sign-in. nr-http-guard checks outbound HTTP destinations on the registered TYPO3 RequestFactory path and bound guard clients.'
+        problem: Manage credentials, limit access and reject disallowed HTTP destinations on the integrated client path.
         audience: Administration · IT security · Identity management
-        result: Encrypted secret values in the database; the master key lives outside it. Consuming extensions store vault identifiers.
-        takeaway_title: Separate authentication from permissions
-        takeaway: 'Passkeys authenticate people. TYPO3 permissions define their access. Passkeys are optional for the AI foundation, but nr-passkeys-fe requires nr-passkeys-be. nr-llm requires neither passkey extension.'
-        stack: [nr-vault, nr-passkeys-be, nr-passkeys-fe]
+        result: 'Encrypted secrets with an external master key, separate sign-in and HTTP destination checks under the configured policy. This grouping is not a dependency chain.'
+        takeaway_title: Separate sign-in, permissions and HTTP protection
+        takeaway: 'Passkeys authenticate people; TYPO3 permissions define their access. Passkeys are optional for the AI foundation, but nr-passkeys-fe requires nr-passkeys-be. HTTP Guard does not automatically protect Vault: its optional adapter integration is needed. Independent SDK/Guzzle clients and direct cURL/socket calls are outside the protected path.'
+        stack: [nr-vault, nr-http-guard, nr-passkeys-be, nr-passkeys-fe]
     - number: '1'
       title: Connect language models centrally
       subtitle: Manage providers, models, budgets and server-side usage.
@@ -118,7 +119,7 @@ stack:
     label: Explore browser AI and its limits
     href: https://netresearch.github.io/t3x-nr-browser-ai/
 maturity:
-  heading: Compare all nine modules
+  heading: Compare all ten modules
   lead: 'GitHub release and Composer requirements are read from the same release tag where one exists. Maturity comes from the product manifest, portfolio or extension declaration. Each value links to its source.'
   checked: Sources retrieved
   download: Download source data
@@ -134,6 +135,7 @@ maturity:
   stages: {concept: Concept, poc: Proof of concept, alpha: Alpha, beta: Beta, stable: Stable, maintenance: Maintenance}
   rows:
     - {id: nr-vault, role: Secret management, boundary: 'Stores encrypted credentials and audit data; not a business knowledge store.'}
+    - {id: nr-http-guard, role: Outbound HTTP requests and SSRF protection, boundary: 'Alpha: registered TYPO3 RequestFactory and bound guard clients after activation. Policy, exceptions and operating mode determine protection; Vault needs separate adapter integration, while independent HTTP clients remain outside.'}
     - {id: nr-passkeys-be, role: Backend sign-in, boundary: 'Authenticates backend users; TYPO3 permissions still apply.'}
     - {id: nr-passkeys-fe, role: Frontend sign-in, boundary: 'Authenticates frontend users; the site controls data access.'}
     - {id: nr-llm, role: Shared model integration, boundary: 'Controls connected server-side calls; model answers can be wrong.'}
@@ -183,8 +185,10 @@ evidence:
 faq:
   heading: Frequently asked questions
   items:
-    - q: Do I need all nine extensions?
-      a: 'No. nr-llm requires nr-vault. The backend agent and content tools are additional, individually selectable consumers of nr-llm. Passkeys are optional for the AI foundation, but nr-passkeys-fe requires nr-passkeys-be. nr-browser-ai requires neither nr-llm, vault nor passkeys. The table lists direct Netresearch dependencies and version requirements.'
+    - q: Do I need all ten modules?
+      a: 'No. nr-llm requires nr-vault. The backend agent and content tools are additional, individually selectable consumers of nr-llm. Passkeys and HTTP Guard are separate choices; nr-passkeys-fe requires nr-passkeys-be. HTTP Guard requires neither Vault nor passkeys. nr-browser-ai works independently. The table lists direct Netresearch dependencies and version requirements.'
+    - q: Does HTTP Guard automatically protect all outbound connections?
+      a: 'No. After activation, nr-http-guard covers the registered TYPO3 RequestFactory path and clients created by its guard factories. Configured policies, exceptions and enforce, observe or disabled modes still apply. Vault needs the optional adapter integration; independent SDK/Guzzle clients, early bootstrap requests and direct cURL/socket calls need their own integration. The published version is alpha for evaluation.'
     - q: Where are API keys stored?
       a: 'The local default adapter of nr-vault stores encrypted secret values and encrypted data keys in the database. The master key lives outside it. Consuming extensions use vault identifiers. The goal is to avoid plaintext keys, not database storage itself.'
     - q: Do budgets and logs cover every use of AI?

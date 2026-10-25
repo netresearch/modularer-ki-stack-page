@@ -66,6 +66,23 @@ class FetchBoundaryTest(unittest.TestCase):
 
 
 class ProjectFactsTest(unittest.TestCase):
+    def test_http_guard_uses_tagged_alpha_requirements_without_a_portfolio_record(self):
+        repository = "https://github.com/netresearch/typo3_http_guard"
+        product = merge_product(
+            "nr-http-guard", repository, {}, {},
+            {"name": "netresearch/nr-http-guard", "require": {
+                "php": "^8.2", "typo3/cms-core": "^13.4.36 || ^14.3.8", "ext-curl": "*",
+            }}, "'state' => 'alpha'", {"tag_name": "v0.1.4", "published_at": "2026-10-18T17:45:25Z"}, "now",
+        )
+        self.assertEqual(product["stage"], "alpha")
+        self.assertEqual(product["latest_release"], "v0.1.4")
+        self.assertEqual(product["composer_package"], "netresearch/nr-http-guard")
+        self.assertEqual(product["php"], "^8.2")
+        self.assertEqual(product["typo3"], "^13.4.36 || ^14.3.8")
+        self.assertEqual(product["dependencies"], [])
+        self.assertEqual(product["stage_source"], repository + "/blob/v0.1.4/ext_emconf.php")
+        self.assertEqual(product["requirements_source"], repository + "/blob/v0.1.4/composer.json")
+
     def test_current_product_release_replaces_an_older_portfolio_snapshot(self):
         product = merge_product(
             "nr-llm", "https://github.com/netresearch/t3x-nr-llm",
