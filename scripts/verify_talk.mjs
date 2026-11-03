@@ -117,8 +117,45 @@ try {
       await page.waitForFunction(() => [...document.querySelectorAll('.nr-image-lens')].some((lens) => lens.checkVisibility()));
       assert.equal(await page.$eval('.nr-image-lens', (lens) => lens.dataset.lensSource), thumbnail.src, 'Thumbnail lens source differs');
       assert.equal(await page.$eval('.nr-image-lens', (lens) => getComputedStyle(lens).pointerEvents), 'none', 'Lens blocks image clicks');
+      await page.waitForFunction(() => ['webgl', 'canvas2d'].includes(document.querySelector('.nr-image-lens')?.dataset.lensRenderer));
+      const magnifier = await page.$eval('.nr-image-lens', (lens) => {
+        const rect = lens.getBoundingClientRect(), canvas = lens.querySelector('canvas');
+        return { width: rect.width, height: rect.height, core: Number(lens.dataset.lensCore), zoom: Number(lens.dataset.lensZoom), renderer: lens.dataset.lensRenderer, pixels: canvas && [canvas.width, canvas.height], radius: getComputedStyle(lens).borderRadius };
+      });
+      assert(magnifier.width >= 560 && Math.abs(magnifier.width - magnifier.height) < 2, 'Reading lens must be large and square');
+      assert(magnifier.width * magnifier.core >= 400 && magnifier.zoom >= 2.5, 'Lens must have a wide, sharp magnified center');
+      const minimumPixels = magnifier.renderer === 'webgl' ? magnifier.width : 256;
+      assert(magnifier.pixels?.[0] >= minimumPixels && magnifier.pixels[1] >= minimumPixels, 'Lens renderer did not allocate visible pixels');
+      assert.notEqual(magnifier.radius, '50%', 'Lens still has circular clipping');
     }
-    await trigger.click(); await opened();
+    if (imageChecks === 1) { await trigger.focus(); await page.keyboard.press('Enter'); }
+    else await trigger.click();
+    await opened();
+    if (imageChecks === 1) {
+      // Changing modal src reuses its <img>. Do not hover the new thumbnail:
+      // a texture cache keyed only by element identity would still paint slide 3.
+      await page.hover(`${dialog} img`);
+      await page.waitForFunction(() => [...document.querySelectorAll('dialog[open] .nr-image-lens')].some(lens => lens.checkVisibility()));
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      const screenshot = await page.screenshot({ encoding: 'base64' });
+      const sourceError = await page.evaluate(async (png) => {
+        const shot = new Image(); shot.src = `data:image/png;base64,${png}`; await shot.decode();
+        const actualCanvas = document.createElement('canvas'); actualCanvas.width = innerWidth; actualCanvas.height = innerHeight;
+        const actualContext = actualCanvas.getContext('2d'); actualContext.drawImage(shot, 0, 0);
+        const expectedCanvas = document.createElement('canvas'); expectedCanvas.width = innerWidth; expectedCanvas.height = innerHeight;
+        const expectedContext = expectedCanvas.getContext('2d');
+        const lens = document.querySelector('dialog[open] .nr-image-lens'), lensRect = lens.getBoundingClientRect();
+        const img = document.querySelector('dialog[open] .nr-image-viewer-image img'), rect = img.getBoundingClientRect();
+        const zoom = Number(lens.dataset.lensZoom), cx = lensRect.left + lensRect.width / 2, cy = lensRect.top + lensRect.height / 2;
+        expectedContext.drawImage(img, cx + (rect.left - cx) * zoom, cy + (rect.top - cy) * zoom, rect.width * zoom, rect.height * zoom);
+        const actual = actualContext.getImageData(Math.round(cx - 100), Math.round(cy - 50), 200, 100).data;
+        const expected = expectedContext.getImageData(Math.round(cx - 100), Math.round(cy - 50), 200, 100).data;
+        let error = 0;
+        for (let i = 0; i < actual.length; i++) if (i % 4 !== 3) error += Math.abs(actual[i] - expected[i]);
+        return error / (200 * 100 * 3);
+      }, screenshot);
+      assert(sourceError < 12, `Modal magnifier painted a stale source: mean pixel error ${sourceError}`);
+    }
     if (imageChecks === 0) {
       await page.hover(`${dialog} img`);
       await page.waitForFunction(() => [...document.querySelectorAll('dialog[open] .nr-image-lens')].some((lens) => lens.checkVisibility()));

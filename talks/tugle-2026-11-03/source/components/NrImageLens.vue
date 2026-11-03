@@ -1,19 +1,51 @@
 <script setup>
 import { useNav } from '@slidev/client'
-import { onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
+import { createLensRenderer } from './image-lens-renderer.js'
 
 const nav = useNav()
 const lens = ref(null)
 const destination = shallowRef('body')
 const zoom = 2.5
+const canvas = ref()
+const canvasKey = ref(0)
+const rendererType = ref('')
+let renderer
+let forceCanvas = false
 let activeImage
 let finePointer
-
-const clamp = (value, min, max) => Math.max(min, Math.min(value, max))
+let pending
+let frame = 0
+let mounted = true
 
 function hide() {
+  cancelAnimationFrame(frame)
+  frame = 0
+  pending = undefined
   lens.value = null
   activeImage = undefined
+}
+
+async function useCanvasFallback() {
+  renderer?.dispose()
+  renderer = undefined
+  rendererType.value = ''
+  forceCanvas = true
+  canvasKey.value++
+  await nextTick()
+  if (mounted) paint()
+}
+
+function paint() {
+  if (!lens.value || !activeImage || !canvas.value) return
+  try {
+    renderer ||= createLensRenderer(canvas.value, { forceCanvas, onContextLost: useCanvasFallback })
+    renderer.draw(activeImage, lens.value)
+    rendererType.value = renderer.type
+  } catch {
+    if (!forceCanvas) void useCanvasFallback()
+    else hide()
+  }
 }
 
 function offset(value, freeSpace, scale) {
@@ -55,7 +87,7 @@ function paintedBox(img) {
   }
 }
 
-function move(event) {
+function update(event) {
   if (event.pointerType !== 'mouse' || !finePointer?.matches || nav.isPrintMode.value) return hide()
   const img = event.target instanceof HTMLImageElement && event.target.matches('.nr-screenshot, .nr-image-viewer-image img') ? event.target : null
   if (!img?.complete || !img.naturalWidth || !img.naturalHeight) return hide()
@@ -67,34 +99,39 @@ function move(event) {
   if (x < 0 || y < 0 || x > box.width || y > box.height
     || event.clientX < box.clip.left || event.clientX > box.clip.right
     || event.clientY < box.clip.top || event.clientY > box.clip.bottom) return hide()
-  const size = Math.min(232, innerWidth - 16, innerHeight - 16)
+  const size = Math.min(640, innerWidth - 16, innerHeight - 16)
   if (size < 120) return hide()
-  let left = event.clientX - size / 2
-  let top = event.clientY - size / 2
-  // Keep the lens on the picture when it fits, then within the viewport.
-  if (box.width >= size) left = clamp(left, box.left, box.left + box.width - size)
-  if (box.height >= size) top = clamp(top, box.top, box.top + box.height - size)
-  left = clamp(left, 8, innerWidth - size - 8)
-  top = clamp(top, 8, innerHeight - size - 8)
+  // Keep the focus and deformation center together. Moving the lens away from
+  // the pointer at an edge can fold the mapping and mirror letters in its rim.
+  // The viewport layer clips the outside portion instead, like a physical lens.
+  const left = event.clientX - size / 2
+  const top = event.clientY - size / 2
   activeImage = img
   destination.value = img.closest('dialog[open]') || 'body'
   const src = img.currentSrc || img.src
   lens.value = {
-    src, x, y, width: box.width, height: box.height,
-    style: {
-      left: `${left}px`, top: `${top}px`, width: `${size}px`, height: `${size}px`,
-      backgroundImage: `url(${JSON.stringify(src)})`,
-      backgroundSize: `${box.width * zoom}px ${box.height * zoom}px`,
-      // Preserve the pixel under the pointer even when the lens is edge-clamped.
-      backgroundPosition: `${event.clientX - left - x * zoom}px ${event.clientY - top - y * zoom}px`,
-    },
+    src, x, y, width: box.width, height: box.height, box,
+    size, left, top, pointerX: event.clientX, pointerY: event.clientY,
+    style: { left: `${left}px`, top: `${top}px`, width: `${size}px`, height: `${size}px` },
   }
+
+}
+
+function move(event) {
+  pending = { target: event.target, clientX: event.clientX, clientY: event.clientY, pointerType: event.pointerType }
+  if (!frame) frame = requestAnimationFrame(() => {
+    frame = 0
+    const event = pending
+    pending = undefined
+    if (event) update(event)
+  })
 }
 
 function leave(event) {
-  if (event.target === activeImage && event.relatedTarget !== activeImage) hide()
+  if ((event.target === activeImage || event.target === pending?.target) && event.relatedTarget !== event.target) hide()
 }
 
+watch(lens, paint, { flush: 'post' })
 watch(nav.currentSlideNo, hide)
 watch(nav.isPrintMode, hide)
 onMounted(() => {
@@ -113,6 +150,9 @@ onMounted(() => {
   document.addEventListener('visibilitychange', hide)
 })
 onUnmounted(() => {
+  mounted = false
+  hide()
+  renderer?.dispose()
   finePointer?.removeEventListener('change', hide)
   window.removeEventListener('pointermove', move)
   window.removeEventListener('pointerout', leave)
@@ -129,7 +169,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Teleport v-if="lens" :to="destination">
-    <div class="nr-image-lens" aria-hidden="true" :data-lens-source="lens.src" :data-lens-zoom="zoom" :data-lens-x="lens.x" :data-lens-y="lens.y" :data-lens-image-width="lens.width" :data-lens-image-height="lens.height" :style="lens.style" />
+  <Teleport :to="destination">
+    <div v-show="lens" class="nr-image-lens-viewport" aria-hidden="true">
+      <div class="nr-image-lens" :data-lens-source="lens?.src" :data-lens-zoom="zoom" :data-lens-x="lens?.x" :data-lens-y="lens?.y" :data-lens-image-width="lens?.width" :data-lens-image-height="lens?.height" :data-lens-size="lens?.size" data-lens-core="0.7" :data-lens-renderer="rendererType" :style="lens?.style">
+        <canvas :key="canvasKey" ref="canvas" />
+      </div>
+    </div>
   </Teleport>
 </template>

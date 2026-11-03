@@ -4,7 +4,7 @@ Sebastian Mendel · Netresearch
 
 [Präsentation öffnen](https://netresearch.github.io/modularer-ki-stack-page/vortraege/tugle-2026-11-03/) · [PDF](source/public/TUGLE-KI-in-TYPO3.pdf) · [Quellen](QUELLEN.md)
 
-27 Vortragsfolien einschließlich vier ruhiger Abschnittsfolien in fünf Abschnitten. Hinzu kommen zwei Referenzfolien, eine Themenübersicht und 17 Erklärfolien für Rückfragen. Die Fortschrittsanzeige zählt nur den Hauptvortrag. Beim Darüberfahren mit der Maus zeigt eine Lupe Bilddetails. Screenshots und „Bild vergrößern“ öffnen eine Großansicht direkt über der Folie; erneuter Klick auf das große Bild, Escape, Schließen-Button oder Klick neben das Bild führen zurück; währenddessen pausiert die Foliennavigation. Pfeiltasten oder Mausrad blättern; Sprungschaltflächen öffnen gezielt Reservefolien. Über die Slidev-Werkzeugleiste lässt sich das PDF herunterladen.
+27 Vortragsfolien einschließlich vier ruhiger Abschnittsfolien in fünf Abschnitten. Hinzu kommen zwei Referenzfolien, eine Themenübersicht und 17 Erklärfolien für Rückfragen. Die Fortschrittsanzeige zählt nur den Hauptvortrag. Beim Darüberfahren mit der Maus zeigt eine große quadratische Lupe die Bilddetails: scharfe Mitte, weicher Übergang am Rand. Screenshots und „Bild vergrößern“ öffnen eine Großansicht direkt über der Folie; erneuter Klick auf das große Bild, Escape, Schließen-Button oder Klick neben das Bild führen zurück; währenddessen pausiert die Foliennavigation. Pfeiltasten oder Mausrad blättern; Sprungschaltflächen öffnen gezielt Reservefolien. Über die Slidev-Werkzeugleiste lässt sich das PDF herunterladen.
 
 ## Bearbeiten und bauen
 
