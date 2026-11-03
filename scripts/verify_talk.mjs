@@ -21,7 +21,7 @@ for (let i = 1; i + 1 < chunks.length; i += 2) {
     assert(raw !== undefined, `Missing ${key} in slide metadata`);
     try { return JSON.parse(raw); } catch { return raw; }
   };
-  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), divider: value('sectionDivider'), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
+  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), divider: value('sectionDivider'), screenshot: chunks[i + 1].match(/<NrImage file="([^"]+)"/)?.[1], menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
 }
 const titles = slides.map((slide) => slide.title);
 const talkTotal = slides.filter((slide) => !slide.appendix).length;
@@ -60,7 +60,8 @@ const url = origin + prefix;
 const downloadsDir = await mkdtemp(resolve(tmpdir(), 'tugle-download-'));
 let browser;
 try {
-  browser = await puppeteer.launch({ executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, args: ['--no-sandbox', '--disable-dev-shm-usage'] });
+  // Headless Chrome can report no pointer; this is explicitly the desktop/mouse gate.
+  browser = await puppeteer.launch({ executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined, args: ['--no-sandbox', '--disable-dev-shm-usage', '--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4'] });
   const page = await browser.newPage();
   await page.setViewport({ width: 1600, height: 900 });
   const failures = [], localLinks = new Set(), fontFiles = new Set();
@@ -84,6 +85,75 @@ try {
       await Promise.all([...document.images].filter((image) => image.checkVisibility()).map((image) => image.decode()));
       await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
     });
+  }
+  let imageChecks = 0;
+  async function checkImageViewer(number) {
+    const trigger = (await page.evaluateHandle((title) => [...document.querySelectorAll('.slidev-layout h1')].find((heading) => heading.textContent === title && heading.checkVisibility()).closest('.slidev-layout').querySelector('button.nr-original'), titles[number - 1])).asElement();
+    assert(trigger, `Slide ${number}: screenshot is not an in-page button`);
+    const thumbnail = await trigger.evaluate((button) => ({ src: button.querySelector('img').src, alt: button.querySelector('img').alt }));
+    const initialUrl = page.url(), initialPages = (await browser.pages()).length;
+    const dialog = 'dialog.nr-image-viewer[open]';
+    async function opened() {
+      await page.waitForSelector(dialog, { visible: true });
+      await page.$eval(`${dialog} img`, (image) => image.decode());
+      assert.equal(await page.$eval(`${dialog} img`, (image) => image.src), thumbnail.src);
+      assert.equal(page.url(), initialUrl, 'Opening screenshot changed the slide');
+      assert.equal((await browser.pages()).length, initialPages, 'Screenshot opened another tab');
+    }
+    async function closed() {
+      await page.waitForSelector(dialog, { hidden: true });
+      assert.equal(page.url(), initialUrl, 'Closing screenshot changed the slide');
+      assert(await trigger.evaluate((button) => document.activeElement === button), 'Screenshot trigger did not regain focus');
+    }
+    if (imageChecks === 0) {
+      const point = await trigger.evaluate((button) => {
+        const image = button.querySelector('img'), rect = image.getBoundingClientRect();
+        const factor = Math.min(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+        const width = image.naturalWidth * factor, height = image.naturalHeight * factor;
+        const position = getComputedStyle(image).objectPosition.split(' ').map(parseFloat);
+        return { x: rect.x + (rect.width - width) * position[0] / 100 + width / 2, y: rect.y + (rect.height - height) * position[1] / 100 + height / 2 };
+      });
+      await page.mouse.move(point.x, point.y);
+      await page.waitForFunction(() => [...document.querySelectorAll('.nr-image-lens')].some((lens) => lens.checkVisibility()));
+      assert.equal(await page.$eval('.nr-image-lens', (lens) => lens.dataset.lensSource), thumbnail.src, 'Thumbnail lens source differs');
+      assert.equal(await page.$eval('.nr-image-lens', (lens) => getComputedStyle(lens).pointerEvents), 'none', 'Lens blocks image clicks');
+    }
+    await trigger.click(); await opened();
+    if (imageChecks === 0) {
+      await page.hover(`${dialog} img`);
+      await page.waitForFunction(() => [...document.querySelectorAll('dialog[open] .nr-image-lens')].some((lens) => lens.checkVisibility()));
+      assert.equal(await page.$eval('dialog[open] .nr-image-lens', (lens) => lens.dataset.lensSource), thumbnail.src, 'Dialog lens source differs');
+      for (const key of ['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', 'Home', 'End']) await page.keyboard.press(key);
+      await page.mouse.move(800, 450); await page.mouse.wheel({ deltaY: 160 });
+      assert.equal(page.url(), initialUrl, 'Dialog input navigated the underlying presentation');
+      await page.keyboard.press('Tab');
+      await page.keyboard.down('Shift'); await page.keyboard.press('Tab'); await page.keyboard.up('Shift');
+      assert(await page.$eval(dialog, (element) => element.contains(document.activeElement)), 'Dialog lost keyboard focus');
+    }
+    if (imageChecks % 3 === 0) await page.keyboard.press('Escape');
+    else if (imageChecks % 3 === 1) await page.click(`${dialog} button[aria-label="Bild schließen"]`);
+    else await page.mouse.click(2, 2);
+    await closed();
+    const second = (await trigger.evaluateHandle((button) => button.closest('.slidev-layout').querySelector('.nr-action-links button.nr-image-link'))).asElement();
+    assert(second, 'Screenshot action button missing');
+    await second.click(); await opened();
+    await page.keyboard.press('Escape'); await page.waitForSelector(dialog, { hidden: true });
+    assert(await second.evaluate((button) => document.activeElement === button), 'Image action did not regain focus');
+    assert.equal(page.url(), initialUrl);
+    if (imageChecks === 0) {
+      await trigger.focus(); await page.keyboard.press('Enter'); await opened();
+      for (const key of ['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', 'Home', 'End']) await page.keyboard.press(key);
+      await page.mouse.move(800, 450); await page.mouse.wheel({ deltaY: 600 });
+      await page.keyboard.press('Tab');
+      await page.keyboard.down('Shift'); await page.keyboard.press('Tab'); await page.keyboard.up('Shift');
+      await page.$eval(`${dialog} button[aria-label="Bild schließen"]`, (button) => button.focus());
+      await page.keyboard.press('Space'); await closed();
+      // The native close event is asynchronous; immediate navigation must still work.
+      await page.keyboard.press('ArrowRight');
+      await page.waitForFunction((target) => location.hash === `#/${target}`, {}, number + 1);
+    }
+    localLinks.add(thumbnail.src);
+    imageChecks++;
   }
   for (let number = 1; number <= titles.length; number++) {
     await show(number);
@@ -115,7 +185,9 @@ try {
       assert(['https:', 'http:'].includes(link.protocol), `Unexpected link ${href}`);
       if (link.origin === origin && !link.hash) localLinks.add(href);
     }
+    if (metadata.screenshot) await checkImageViewer(number);
   }
+  assert.equal(imageChecks, slides.filter(slide => slide.screenshot).length, 'Not every screenshot was checked');
   await show(1);
   // Check the fonts actually used for glyphs, not just declared CSS families.
   const cdp = await page.createCDPSession();
@@ -167,7 +239,7 @@ try {
     }
   }
   assert.deepEqual(failures, [], 'Browser or network errors');
-  console.log(`Talk verified: ${titles.length} slides, ${talkTotal}-slide progress, ${dividers.length} quiet dividers, appendix, local images/fonts, ${menuTargets.length} reserve jumps, navigation and ${localLinks.size} local links/downloads`);
+  console.log(`Talk verified: ${titles.length} slides, ${talkTotal}-slide progress, ${dividers.length} quiet dividers, appendix, local images/fonts, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, navigation and ${localLinks.size} local links/downloads`);
 } finally {
   await browser?.close(); await new Promise((done) => server.close(done));
   await rm(downloadsDir, { recursive: true, force: true });

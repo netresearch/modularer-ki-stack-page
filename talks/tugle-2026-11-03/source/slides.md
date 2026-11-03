@@ -95,7 +95,7 @@ title: "Schreibunterstützung im Editor"
 
 # Schreibunterstützung im Editor
 
-<div class="nr-demo"><figure><NrImage file="screens/03-cowriter-05-vorschau-lang0.png" alt="Cowriter-Vorschau · Aufnahme vom 2.11.2026"/><figcaption>Cowriter-Vorschau · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgewählten Text überarbeiten</span></li><li><span class="nr-number">02</span><span>Vorschlag prüfen und übernehmen</span></li><li><span class="nr-number">03</span><span>Die Redaktion entscheidet über die Übernahme</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Btt_content%5D%5B30%5D%3Dedit">Cowriter im Backend</NrLink><NrLink href="./screens/03-cowriter-05-vorschau-lang0.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/03-cowriter-05-vorschau-lang0.png" alt="Cowriter-Vorschau · Aufnahme vom 2.11.2026"/><figcaption>Cowriter-Vorschau · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgewählten Text überarbeiten</span></li><li><span class="nr-number">02</span><span>Vorschlag prüfen und übernehmen</span></li><li><span class="nr-number">03</span><span>Die Redaktion entscheidet über die Übernahme</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Btt_content%5D%5B30%5D%3Dedit">Cowriter im Backend</NrLink><NrLink href="./screens/03-cowriter-05-vorschau-lang0.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -114,7 +114,7 @@ title: "Antworten aus Website-Inhalten"
 
 # Antworten aus Website-Inhalten
 
-<div class="nr-demo"><figure><NrImage file="screens/04-ai-search-02-antwort-quellen.png" alt="Antwort mit Quelltreffern · Aufnahme vom 2.11.2026"/><figcaption>Antwort mit Quelltreffern · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Antwort mit Quelle nachvollziehen</span></li><li><span class="nr-number">02</span><span>Quelltreffer öffnen</span></li><li><span class="nr-number">03</span><span>Zeigen, wenn die Quellen keine Antwort liefern</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/extensions/ai-search">AI Search · Vorschau</NrLink><NrLink href="./screens/04-ai-search-02-antwort-quellen.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/04-ai-search-02-antwort-quellen.png" alt="Antwort mit Quelltreffern · Aufnahme vom 2.11.2026"/><figcaption>Antwort mit Quelltreffern · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Antwort mit Quelle nachvollziehen</span></li><li><span class="nr-number">02</span><span>Quelltreffer öffnen</span></li><li><span class="nr-number">03</span><span>Zeigen, wenn die Quellen keine Antwort liefern</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/extensions/ai-search">AI Search · Vorschau</NrLink><NrLink href="./screens/04-ai-search-02-antwort-quellen.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -133,7 +133,7 @@ title: "Ein Inhalt, mehrere Formate"
 
 # Ein Inhalt, mehrere Formate
 
-<div class="nr-demo"><figure><NrImage file="screens/05-repurpose-job-3-detail.png" alt="Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026"/><figcaption>Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgangsquelle bleibt nachvollziehbar</span></li><li><span class="nr-number">02</span><span>Schaubild und Podcast als Ergebnisse</span></li><li><span class="nr-number">03</span><span>Jedes Artefakt einzeln prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=web_nrrepurpose">Repurpose öffnen</NrLink><NrLink href="./screens/05-repurpose-job-3-detail.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/05-repurpose-job-3-detail.png" alt="Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026"/><figcaption>Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgangsquelle bleibt nachvollziehbar</span></li><li><span class="nr-number">02</span><span>Schaubild und Podcast als Ergebnisse</span></li><li><span class="nr-number">03</span><span>Jedes Artefakt einzeln prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=web_nrrepurpose">Repurpose öffnen</NrLink><NrLink href="./screens/05-repurpose-job-3-detail.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -152,7 +152,7 @@ title: "Der Agent schlägt vor, ihr gebt frei"
 
 # Der Agent schlägt vor, ihr gebt frei
 
-<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Konkrete Schreibfreigabe · Aufnahme vom 2.11.2026"/><figcaption>Konkrete Schreibfreigabe · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Daten mit Werkzeugen lesen</span></li><li><span class="nr-number">02</span><span>Geplante Änderung prüfen</span></li><li><span class="nr-number">03</span><span>Freigeben und Ergebnis kontrollieren</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nr_mcp_agent_chat">KI-Chat öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Konkrete Schreibfreigabe · Aufnahme vom 2.11.2026"/><figcaption>Konkrete Schreibfreigabe · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Daten mit Werkzeugen lesen</span></li><li><span class="nr-number">02</span><span>Geplante Änderung prüfen</span></li><li><span class="nr-number">03</span><span>Freigeben und Ergebnis kontrollieren</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nr_mcp_agent_chat">KI-Chat öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -171,7 +171,7 @@ title: "Vom Briefing zum Seitenentwurf"
 
 # Vom Briefing zum Seitenentwurf
 
-<div class="nr-demo"><figure><NrImage file="screens/07-landingpage-07-ergebnis-vorschau-10110.png" alt="Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026"/><figcaption>Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Briefing und Struktur vorgeben</span></li><li><span class="nr-number">02</span><span>Generierte Seite als Entwurf prüfen</span></li><li><span class="nr-number">03</span><span>Auch Metadaten brauchen Kontrolle</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Entwurf in Vorschau</NrLink><NrLink href="./screens/07-landingpage-07-ergebnis-vorschau-10110.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/07-landingpage-07-ergebnis-vorschau-10110.png" alt="Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026"/><figcaption>Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Briefing und Struktur vorgeben</span></li><li><span class="nr-number">02</span><span>Generierte Seite als Entwurf prüfen</span></li><li><span class="nr-number">03</span><span>Auch Metadaten brauchen Kontrolle</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Entwurf in Vorschau</NrLink><NrLink href="./screens/07-landingpage-07-ergebnis-vorschau-10110.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -318,7 +318,7 @@ title: "Wiederkehrende Aufgaben, gemeinsame Regeln"
 
 # Wiederkehrende Aufgaben, gemeinsame Regeln
 
-<div class="nr-demo"><figure><NrImage file="screens/14-nr-llm-06-konfigurationen.png" alt="Konfigurationsübersicht · Aufnahme vom 2.11.2026"/><figcaption>Konfigurationsübersicht · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Systemprompt und Parameter pro Zweck</span></li><li><span class="nr-number">02</span><span>Tasks verbinden Eingabe und Konfiguration</span></li><li><span class="nr-number">03</span><span>Snippets: Textbausteine für Tonalität oder Zielgruppe</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink><NrLink href="./screens/14-nr-llm-06-konfigurationen.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/14-nr-llm-06-konfigurationen.png" alt="Konfigurationsübersicht · Aufnahme vom 2.11.2026"/><figcaption>Konfigurationsübersicht · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Systemprompt und Parameter pro Zweck</span></li><li><span class="nr-number">02</span><span>Tasks verbinden Eingabe und Konfiguration</span></li><li><span class="nr-number">03</span><span>Snippets: Textbausteine für Tonalität oder Zielgruppe</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink><NrLink href="./screens/14-nr-llm-06-konfigurationen.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -360,7 +360,7 @@ title: "Ein plausibler Entwurf kann falsch sein"
 
 # Ein plausibler Entwurf kann falsch sein
 
-<div class="nr-demo"><figure><NrImage file="screens/16-landingpage-03-seitenfelder.png" alt="Prüfbeispiel: erfundene Frist in den Metadaten · 2.11.2026"/><figcaption>Prüfbeispiel: erfundene Frist in den Metadaten · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Im Briefing: keine Frist vorgegeben</span></li><li><span class="nr-number">02</span><span>Im Ergebnis: „bis 4. November“</span></li><li><span class="nr-number">03</span><span>Fachlich prüfen, bevor ihr freigebt</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Landingpage-Vorschau</NrLink><NrLink href="./screens/16-landingpage-03-seitenfelder.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/16-landingpage-03-seitenfelder.png" alt="Prüfbeispiel: erfundene Frist in den Metadaten · 2.11.2026"/><figcaption>Prüfbeispiel: erfundene Frist in den Metadaten · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Im Briefing: keine Frist vorgegeben</span></li><li><span class="nr-number">02</span><span>Im Ergebnis: „bis 4. November“</span></li><li><span class="nr-number">03</span><span>Fachlich prüfen, bevor ihr freigebt</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Landingpage-Vorschau</NrLink><NrLink href="./screens/16-landingpage-03-seitenfelder.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -379,7 +379,7 @@ title: "Kosten schätzen und Nutzung begrenzen"
 
 # Kosten schätzen und Nutzung begrenzen
 
-<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Budgets begrenzen weitere Aufrufe</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Budgets begrenzen weitere Aufrufe</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -421,7 +421,7 @@ title: "Werkzeugzugriff und Schreibfreigaben"
 
 # Werkzeugzugriff und Schreibfreigaben
 
-<div class="nr-demo"><figure><NrImage file="screens/19-nr-llm-08-tools.png" alt="Werkzeugübersicht · Aufnahme vom 2.11.2026"/><figcaption>Werkzeugübersicht · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Geplante Änderung vor Ausführung prüfen</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/19-nr-llm-08-tools.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/19-nr-llm-08-tools.png" alt="Werkzeugübersicht · Aufnahme vom 2.11.2026"/><figcaption>Werkzeugübersicht · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Geplante Änderung vor Ausführung prüfen</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/19-nr-llm-08-tools.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -440,7 +440,7 @@ title: "Was hat der Agent tatsächlich getan?"
 
 # Was hat der Agent tatsächlich getan?
 
-<div class="nr-demo"><figure><NrImage file="screens/20-agent-02-lesen-c-aktivitaet.png" alt="Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026"/><figcaption>Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Werkzeug, Argumente und Ergebnis ansehen</span></li><li><span class="nr-number">02</span><span>Freigaben und ausgeführte Schritte nachvollziehen</span></li><li><span class="nr-number">03</span><span>Aus Protokollen gezielt Fehler untersuchen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nr_mcp_agent_chat">KI-Chat öffnen</NrLink><NrLink href="./screens/20-agent-02-lesen-c-aktivitaet.png">Originalbild öffnen</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/20-agent-02-lesen-c-aktivitaet.png" alt="Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026"/><figcaption>Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Werkzeug, Argumente und Ergebnis ansehen</span></li><li><span class="nr-number">02</span><span>Freigaben und ausgeführte Schritte nachvollziehen</span></li><li><span class="nr-number">03</span><span>Aus Protokollen gezielt Fehler untersuchen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nr_mcp_agent_chat">KI-Chat öffnen</NrLink><NrLink href="./screens/20-agent-02-lesen-c-aktivitaet.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useNav } from '@slidev/client'
 import { onMounted, onUnmounted } from 'vue'
+import NrImageViewer from './components/NrImageViewer.vue'
+import NrImageLens from './components/NrImageLens.vue'
 
 const nav = useNav()
 const threshold = 72
@@ -25,7 +27,7 @@ function visible(element: Element) {
 function overlayOpen() {
   // Slidev 53 uses z-modal for its overview and dialogs; floating-vue uses
   // v-popper__popper--shown for the settings and synchronization menus.
-  return [...document.querySelectorAll('.z-modal, .v-popper__popper--shown, [role="dialog"], [aria-modal="true"]')].some(visible)
+  return [...document.querySelectorAll('.z-modal, .v-popper__popper--shown, dialog[open], [role="dialog"], [aria-modal="true"]')].some(visible)
 }
 
 function ownsScrolling(event: WheelEvent) {
@@ -87,5 +89,6 @@ onUnmounted(() => window.removeEventListener('wheel', onWheel))
 </script>
 
 <template>
-  <span hidden aria-hidden="true" />
+  <NrImageViewer />
+  <NrImageLens />
 </template>
