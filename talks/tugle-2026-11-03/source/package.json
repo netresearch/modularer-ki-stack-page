@@ -1,0 +1,15 @@
+{
+  "name": "tugle-ki-in-typo3",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "slidev slides.md --bind 127.0.0.1",
+    "build": "slidev build slides.md --base ./ --without-notes --out ../site",
+    "export": "slidev export slides.md --output public/TUGLE-KI-in-TYPO3.pdf"
+  },
+  "devDependencies": {
+    "@slidev/cli": "53.0.0",
+    "@slidev/theme-default": "0.25.0"
+  }
+}

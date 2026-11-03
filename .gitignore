@@ -12,3 +12,7 @@
 __pycache__/
 *.py[cod]
 node_modules/
+
+# Slidev talk output is generated and verified during publication.
+/talks/*/site/
+/public/vortraege/

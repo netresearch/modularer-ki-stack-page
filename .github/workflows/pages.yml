@@ -42,9 +42,8 @@ jobs:
       # manifest, so the page is rendered at deploy time rather than committed.
       # scripts/build.py fails if the manifest is unreachable — a maturity table
       # built from guesses is worse than none.
-      # Node is here only for the accessibility gate: axe-core needs a real
-      # browser and resolved CSS, which is exactly the class of defect
-      # verify_site.py cannot decide from markup.
+      # Node builds the talk and runs browser checks for both the stack and
+      # talk. The talk's dependency installation never receives a token.
       setup-node: true
       node-version: '22'
       expose-github-token: build
@@ -52,12 +51,16 @@ jobs:
         python3 -m pip install --quiet jinja2 pyyaml
         && npm ci --ignore-scripts
         && ./node_modules/.bin/puppeteer browsers install chrome
+        && env -u GITHUB_TOKEN -u GH_TOKEN npm --prefix talks/tugle-2026-11-03/source ci --ignore-scripts
       build-command: >-
         env -u GITHUB_TOKEN -u GH_TOKEN python3 -m unittest discover -s scripts -p 'test_*.py'
         && python3 scripts/build.py
         && env -u GITHUB_TOKEN -u GH_TOKEN python3 scripts/verify_site.py
         && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/test_stack_dom.mjs
         && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/axe-audit.mjs public
+        && env -u GITHUB_TOKEN -u GH_TOKEN npm --prefix talks/tugle-2026-11-03/source run build
+        && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/verify_talk.mjs
+        && env -u GITHUB_TOKEN -u GH_TOKEN python3 scripts/publish_talks.py
 
   deploy:
     needs: build

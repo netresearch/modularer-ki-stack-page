@@ -175,6 +175,7 @@ docs:
   adr: Architekturentscheidungen von nr-llm (EN)
   impact: Messdaten zur Open-Source-Nutzung
   impact_href: https://netresearch.github.io/maint/de/
+  tugle: "Vortrag: KI in TYPO3 · TUGLE, 3. November 2026"
 evidence:
   limits_heading: Grenzen und offene Aufgaben
   limits:

@@ -175,6 +175,7 @@ docs:
   adr: nr-llm architecture decisions (EN)
   impact: Open source usage data
   impact_href: https://netresearch.github.io/maint/
+  tugle: "Talk: AI in TYPO3 · TUGLE, 3 November 2026 (German)"
 evidence:
   limits_heading: Limits and open work
   limits:

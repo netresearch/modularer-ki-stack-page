@@ -94,7 +94,7 @@
   <div class="container">
     <div class="section-header"><h2 id="docs-heading">{{ c.docs.heading }}</h2><p>{{ c.docs.lead }}</p></div>
     <div class="module-grid">{% for row in maturity_rows %}<article class="module-card docs-card"><h3>{{ row.name }}</h3><p>{{ row.role }}</p><p><span class="cell-detail">{{ c.docs.install }}</span><code>composer require {{ row.composer_package }}</code></p><div class="card-links"><a href="{{ row.documentation }}">{{ c.docs.manual }}</a><a href="{{ row.page }}">{{ c.docs.product }}</a></div></article>{% endfor %}</div>
-    <ul class="related-links"><li><a href="{{ c.nav.portfolio_href }}">{{ c.docs.portfolio }}</a></li><li><a href="https://netresearch.github.io/t3x-nr-llm/adr/" hreflang="en">{{ c.docs.adr }}</a></li><li><a href="{{ c.docs.impact_href }}">{{ c.docs.impact }}</a></li></ul>
+    <ul class="related-links"><li><a href="{{ c.nav.portfolio_href }}">{{ c.docs.portfolio }}</a></li><li><a href="https://netresearch.github.io/t3x-nr-llm/adr/" hreflang="en">{{ c.docs.adr }}</a></li><li><a href="{{ c.docs.impact_href }}">{{ c.docs.impact }}</a></li><li><a href="{{ base }}vortraege/tugle-2026-11-03/" hreflang="de">{{ c.docs.tugle }}</a></li></ul>
     <aside class="limits" id="grenzen" aria-labelledby="limits-heading"><h3 id="limits-heading">{{ c.evidence.limits_heading }}</h3><ul>{% for limit in c.evidence.limits %}<li>{{ limit }}</li>{% endfor %}</ul></aside>
   </div>
 </section>
