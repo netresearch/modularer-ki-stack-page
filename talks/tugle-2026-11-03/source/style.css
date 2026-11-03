@@ -91,6 +91,11 @@ div[title="Clicks in this slide: 1"]{display:none!important}
 /* PDF reserve entries are page references, not interactive buttons. */
 @media print{.nr .nr-jump-print{text-decoration:none!important}}
 
+/* Quiet section starts leave the moderation and questions with the speaker. */
+.nr.nr-section-divider .nr-content{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:78px 88px 84px}
+.nr-section-number{font-family:'Raleway',Arial,sans-serif;font-size:28px;line-height:1.2;font-weight:600;letter-spacing:2px;color:var(--nr-primary-text);margin-bottom:26px;font-variant-numeric:tabular-nums}
+.nr.nr-section-divider h1{font-size:58px!important;line-height:1.14!important;font-weight:600!important;letter-spacing:-.5px;max-width:1030px;margin:0!important}
+
 /* Append after the shared slide styles. The content area ends before y=642. */
 .nr .nr-progress-footer {
   height: 78px;

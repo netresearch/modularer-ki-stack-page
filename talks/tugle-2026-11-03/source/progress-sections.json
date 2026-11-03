@@ -8,30 +8,30 @@
   },
   {
     "number": 2,
-    "label": "Bedarf",
-    "title": "Anforderungen",
+    "label": "Fragen",
+    "title": "Fragen zum KI-Einsatz",
     "start": 8,
-    "end": 9
+    "end": 10
   },
   {
     "number": 3,
-    "label": "nr-llm",
-    "title": "nr-llm",
-    "start": 10,
-    "end": 18
+    "label": "Antworten",
+    "title": "Antworten und Grenzen",
+    "start": 11,
+    "end": 20
   },
   {
     "number": 4,
     "label": "Agenten",
     "title": "Agentenwege",
-    "start": 19,
-    "end": 20
+    "start": 21,
+    "end": 23
   },
   {
     "number": 5,
     "label": "Einordnung",
     "title": "Einordnung & Austausch",
-    "start": 21,
-    "end": 23
+    "start": 24,
+    "end": 27
   }
 ]

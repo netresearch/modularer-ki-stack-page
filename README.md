@@ -127,8 +127,9 @@ and short viewports against the actual built pages.
 The German presentation “KI in TYPO3” is published at
 [vortraege/tugle-2026-11-03/](https://netresearch.github.io/modularer-ki-stack-page/vortraege/tugle-2026-11-03/).
 Its editable Slidev source and PDF are in `talks/tugle-2026-11-03/`.
-The presentation contains 23 main slides, two reference slides, a reserve index
-and 17 technical explanations. Speaker notes are excluded from the published
+The presentation contains 27 main slides, including four quiet section dividers.
+Two reference slides, a reserve index and 17 technical explanations form the
+appendix. Speaker notes are excluded from the published
 source and build. Fonts and demo screenshots are local; external demo links
 remain optional. The talk's pinned nr-llm examples describe v0.35.0, not the
 landing page's automatically refreshed release data.
