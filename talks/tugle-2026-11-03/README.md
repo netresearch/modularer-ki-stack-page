@@ -6,7 +6,25 @@ Sebastian Mendel · Netresearch
 
 27 Vortragsfolien einschließlich vier ruhiger Abschnittsfolien in fünf Abschnitten. Hinzu kommen zwei Referenzfolien, eine Themenübersicht und 17 Erklärfolien für Rückfragen. Die Fortschrittsanzeige zählt nur den Hauptvortrag. Beim Darüberfahren mit der Maus zeigt eine große quadratische Lupe die Bilddetails: scharfe Mitte, weicher Übergang am Rand. Screenshots und „Bild vergrößern“ öffnen eine Großansicht direkt über der Folie; erneuter Klick auf das große Bild, Escape, Schließen-Button oder Klick neben das Bild führen zurück; währenddessen pausiert die Foliennavigation. Pfeiltasten oder Mausrad blättern; Sprungschaltflächen öffnen gezielt Reservefolien. Über die Slidev-Werkzeugleiste lässt sich das PDF herunterladen.
 
-## Bearbeiten und bauen
+## Eingefrorenes Archiv
+
+Dieser Vortrag ist seit dem 4. November 2026 eingefroren. Die einzige
+nachträgliche Ergänzung ist ein kleines Info-Symbol auf allen Webfolien,
+das zur [aktuellen neutralen Vorlage](https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/) führt.
+Das PDF und alle ursprünglichen Folieninhalte bleiben unverändert.
+
+`snapshot/` enthält den tatsächlich veröffentlichten Build aus dem erfolgreichen
+Deployment 41788113150, ergänzt ausschließlich um diesen Link in `index.html`.
+Vor der Archivierung wurden alle 145 Originaldateien bytegenau mit der live
+ausgelieferten Website verglichen. `snapshot.sha256.json` und
+`source.sha256.json` schützen den archivierten Build und seine Quellen.
+CI baut diesen Vortrag nicht mehr neu.
+
+Verbesserungen ausschließlich unter `talks/vorlage/source/` vornehmen.
+Die folgenden Bauhinweise dokumentieren den historischen Aufbau, nicht den
+aktuellen Bearbeitungsweg dieses Archivs.
+
+## Historischer Aufbau
 
 Node.js 22.12 oder neuer. Im Ordner `source/`:
 

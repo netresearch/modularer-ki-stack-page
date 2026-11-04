@@ -1,0 +1,10 @@
+{
+  "event": "TUGLE",
+  "event_date": "2026-11-03",
+  "frozen_on": "2026-11-04",
+  "deployed_commit": "f8b46d6f25c8021005929c42e103fd88cf5ef7b0",
+  "deployed_run": 41788113150,
+  "baseline_verified_files": 145,
+  "allowed_addition": "index.html: current-version information link to ../vorlage/#/1",
+  "current_version": "https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/"
+}

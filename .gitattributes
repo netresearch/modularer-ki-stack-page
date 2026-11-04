@@ -1,0 +1,4 @@
+# Presentation archives are verified byte for byte, including on Windows.
+# Preserve even the blank-line indentation shipped by the original builder.
+talks/*/snapshot/** -text whitespace=-blank-at-eol
+talks/*/source/** -text

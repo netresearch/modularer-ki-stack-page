@@ -1,6 +1,6 @@
 /** Check the built talk at its real Pages subpath, with no external assets. */
 import assert from 'node:assert/strict';
-import { readFile, readdir, stat, mkdtemp, rm } from 'node:fs/promises';
+import { readFile, readdir, stat, lstat, mkdtemp, rm } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,10 +8,20 @@ import { tmpdir } from 'node:os';
 import puppeteer from 'puppeteer';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const talk = resolve(root, 'talks/tugle-2026-11-03');
-const site = resolve(talk, 'site');
-const prefix = '/modularer-ki-stack-page/vortraege/tugle-2026-11-03/';
-const pdfName = 'TUGLE-KI-in-TYPO3.pdf';
+const decks = { vorlage: 'KI-in-TYPO3.pdf', 'tmuc-2026-11-09': 'TMUC-KI-in-TYPO3.pdf' };
+const slug = process.argv[2] || 'vorlage';
+assert(Object.hasOwn(decks, slug) && process.argv.length <= 3, 'Usage: verify_talk.mjs [vorlage|tmuc-2026-11-09]');
+const talk = resolve(root, 'talks', slug);
+const freezeParts = ['snapshot', 'snapshot.sha256.json', 'source.sha256.json'];
+const frozenParts = await Promise.all(freezeParts.map(async (name) => {
+  try { await lstat(resolve(talk, name)); return true; }
+  catch (error) { if (error.code === 'ENOENT') return false; throw error; }
+}));
+const frozen = slug !== 'vorlage' && frozenParts.some(Boolean);
+assert(!frozen || frozenParts.every(Boolean), 'Partial event freeze: snapshot and both manifests are required');
+const site = resolve(talk, frozen ? 'snapshot' : 'site');
+const prefix = `/modularer-ki-stack-page/vortraege/${slug}/`;
+const pdfName = decks[slug];
 const source = await readFile(resolve(talk, 'source/slides.md'), 'utf8');
 const chunks = source.split(/^---\s*$/m);
 const slides = [];
@@ -57,7 +67,7 @@ const server = createServer(async (req, res) => {
 await new Promise((done) => server.listen(0, '127.0.0.1', done));
 const origin = `http://127.0.0.1:${server.address().port}`;
 const url = origin + prefix;
-const downloadsDir = await mkdtemp(resolve(tmpdir(), 'tugle-download-'));
+const downloadsDir = await mkdtemp(resolve(tmpdir(), `${slug}-download-`));
 let browser;
 try {
   // Headless Chrome can report no pointer; this is explicitly the desktop/mouse gate.
@@ -276,7 +286,7 @@ try {
     }
   }
   assert.deepEqual(failures, [], 'Browser or network errors');
-  console.log(`Talk verified: ${titles.length} slides, ${talkTotal}-slide progress, ${dividers.length} quiet dividers, appendix, local images/fonts, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, navigation and ${localLinks.size} local links/downloads`);
+  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, ${dividers.length} quiet dividers, appendix, local images/fonts, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, navigation and ${localLinks.size} local links/downloads`);
 } finally {
   await browser?.close(); await new Promise((done) => server.close(done));
   await rm(downloadsDir, { recursive: true, force: true });
