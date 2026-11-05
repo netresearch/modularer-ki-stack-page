@@ -251,7 +251,10 @@ try {
   localLinks.add(url + 'pruefbeispiel/quality-proof.zip');
   localLinks.add(url + 'pruefbeispiel/quality-proof.json');
   await page.click('a.back');
-  await page.waitForFunction(() => location.hash === '#/16');
+  // A committed URL precedes Slidev mounting after this full-page navigation.
+  // Verify the returned slide before issuing the next hash navigation.
+  await page.waitForFunction((title) => location.hash === '#/16'
+    && [...document.querySelectorAll('.slidev-layout h1')].some((node) => node.textContent === title && node.checkVisibility()), {}, titles[15]);
   await show(1);
   // Check the fonts actually used for glyphs, not just declared CSS families.
   const cdp = await page.createCDPSession();
