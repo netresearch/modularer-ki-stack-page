@@ -51,6 +51,8 @@ def prepare(root=ROOT):
     slides = slides.replace('Sebastian Mendel · Netresearch</div>', 'Sebastian Mendel · Netresearch<br>9. November 2026</div>', 1)
     slides = slides.replace('download: ./KI-in-TYPO3.pdf', 'download: ./TMUC-KI-in-TYPO3.pdf')
     slides = slides.replace('exportFilename: KI-in-TYPO3', 'exportFilename: TMUC-KI-in-TYPO3')
+    slides = slides.replace('print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/',
+                            'print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/')
     (target / 'slides.md').write_text(slides)
     package['name'] = 'tmuc-2026-11-09-ki-in-typo3'
     package['scripts']['export'] = 'slidev export slides.md --output public/TMUC-KI-in-TYPO3.pdf'

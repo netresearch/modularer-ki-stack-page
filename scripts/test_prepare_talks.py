@@ -103,6 +103,17 @@ class PrepareTalkTests(unittest.TestCase):
         prepare(self.root)
         self.assertEqual(self.target_files(), before)
 
+    def test_pdf_proof_link_uses_event_while_template_reference_stays_neutral(self):
+        neutral = 'https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/'
+        (self.master / 'slides.md').write_text(SLIDES + (
+            f'<NrLink href="pruefbeispiel/index.html" print-href="{neutral}pruefbeispiel/index.html">Proof</NrLink>\n'
+            f'<NrLink href="{neutral}">Current template</NrLink>\n'
+        ))
+        prepare(self.root)
+        actual = (self.target / 'slides.md').read_text()
+        self.assertIn('print-href="' + neutral.replace('vorlage/', EVENT + '/') + 'pruefbeispiel/index.html"', actual)
+        self.assertIn(f'href="{neutral}">Current template', actual)
+
     def test_each_partial_freeze_marker_prevents_source_changes(self):
         before = self.target_files()
         for name in MARKERS:

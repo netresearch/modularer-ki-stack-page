@@ -1,0 +1,134 @@
+{
+    "title": "Formale Regeln prüfen – Aussagen belegen",
+    "source": {
+        "package": "netresearch/nr-llm",
+        "version": "0.35.0",
+        "commit": "6afad3444ceb0ef3f206f6687df8d23eb881f496",
+        "license": "GPL-2.0-or-later",
+        "copyright": "Copyright (c) 2025-2026 Netresearch DTT GmbH",
+        "sourceFilesUnmodified": true,
+        "files": [
+            {
+                "path": "Classes/Service/Schema/StrictSchemaSubset.php",
+                "sha256": "1d7d0ddd7fe1524b63862aa36e5b3a7688d41aa9da4601d414036d21d29a6407",
+                "url": "https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Schema/StrictSchemaSubset.php"
+            },
+            {
+                "path": "Classes/Service/Schema/JsonSchemaValidator.php",
+                "sha256": "f3316827c1a321cfcf09876ddea7c0739777d2fe780b7d2e4dfc6c811f6bc25a",
+                "url": "https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Schema/JsonSchemaValidator.php"
+            },
+            {
+                "path": "LICENSE",
+                "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+                "url": "https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/LICENSE"
+            }
+        ]
+    },
+    "runtime": {
+        "phpVersion": "8.5.12",
+        "mbstring": true,
+        "encoding": "UTF-8"
+    },
+    "scope": {
+        "executed": "Unveränderte lokale PHP-Schema-Prüfung aus nr-llm 0.35.0.",
+        "api": "JsonSchemaValidator::supportsSchema() + JsonSchemaValidator::validateJsonStrict()",
+        "modelCalls": 0,
+        "networkCalls": 0,
+        "backendChanges": 0,
+        "notDemonstrated": [
+            "Modellgenerierung, Providerverhalten oder Reparaturversuch in completeStructured().",
+            "Automatische Faktenprüfung, Warnmeldung oder Freigabe im TYPO3-Backend."
+        ],
+        "internalApi": "Die hier direkt aufgerufenen Klassen sind als @internal markiert. Für Extensions ist die öffentliche CompletionService-API vorgesehen.",
+        "interpretationFields": "Die Erläuterungen sind Teil des Vortragsbeispiels. Der Validator liefert einen booleschen Wert, keine Fehlerdiagnose in Prosa."
+    },
+    "briefing": {
+        "text": "Wir laden zu einem TYPO3-Abend über KI ein. Ein Anmeldeschluss steht noch nicht fest.",
+        "passedToValidator": false,
+        "explanation": "Dieses Briefing macht die unbelegte Ergänzung sichtbar. Es ist kein Bestandteil des Schemas und wird vom Validator nicht inhaltlich ausgewertet."
+    },
+    "schema": {
+        "type": "object",
+        "required": [
+            "status",
+            "description"
+        ],
+        "additionalProperties": false,
+        "properties": {
+            "status": {
+                "type": "string",
+                "enum": [
+                    "entwurf",
+                    "pruefung"
+                ]
+            },
+            "description": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 160
+            }
+        }
+    },
+    "schemaSupported": true,
+    "cases": [
+        {
+            "id": "valid_draft",
+            "label": "Gültiger Entwurf",
+            "input": {
+                "status": "entwurf",
+                "description": "Diskutiert mit uns, wie KI in TYPO3 eingesetzt werden kann."
+            },
+            "expectedValid": true,
+            "interpretation": "Status und Textlänge erfüllen die angegebenen Regeln.",
+            "inputJson": "{\"status\":\"entwurf\",\"description\":\"Diskutiert mit uns, wie KI in TYPO3 eingesetzt werden kann.\"}",
+            "descriptionLength": 59,
+            "actualValid": true,
+            "matchesExpected": true
+        },
+        {
+            "id": "invalid_status",
+            "label": "Nicht erlaubter Status",
+            "input": {
+                "status": "veroeffentlicht",
+                "description": "Diskutiert mit uns, wie KI in TYPO3 eingesetzt werden kann."
+            },
+            "expectedValid": false,
+            "interpretation": "Der Status ist nicht in der erlaubten Wertemenge enthalten.",
+            "inputJson": "{\"status\":\"veroeffentlicht\",\"description\":\"Diskutiert mit uns, wie KI in TYPO3 eingesetzt werden kann.\"}",
+            "descriptionLength": 59,
+            "actualValid": false,
+            "matchesExpected": true
+        },
+        {
+            "id": "description_too_long",
+            "label": "161 statt höchstens 160 Zeichen",
+            "input": {
+                "status": "entwurf",
+                "description": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            },
+            "expectedValid": false,
+            "interpretation": "Die Beschreibung überschreitet die angegebene Maximallänge.",
+            "inputJson": "{\"status\":\"entwurf\",\"description\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"}",
+            "descriptionLength": 161,
+            "actualValid": false,
+            "matchesExpected": true
+        },
+        {
+            "id": "unsupported_deadline",
+            "label": "Formal gültig, Frist unbelegt",
+            "input": {
+                "status": "entwurf",
+                "description": "Meldet euch bis 4. November zum TYPO3-Abend an."
+            },
+            "expectedValid": true,
+            "interpretation": "Das Schema akzeptiert den Text. Das Briefing belegt den 4. November nicht; ein Quellenvergleich findet in dieser Prüfung nicht statt.",
+            "inputJson": "{\"status\":\"entwurf\",\"description\":\"Meldet euch bis 4. November zum TYPO3-Abend an.\"}",
+            "descriptionLength": 47,
+            "actualValid": true,
+            "matchesExpected": true
+        }
+    ],
+    "allExpectedResults": true,
+    "conclusion": "Die gelieferten formalen Regeln werden geprüft. Ein passendes Schema belegt nicht die Wahrheit einer frei formulierten Aussage."
+}

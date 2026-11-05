@@ -1,12 +1,12 @@
 <script setup>
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-const props = defineProps({ href: { type: String, required: true } })
+const props = defineProps({ href: { type: String, required: true }, printHref: String })
 const { isPrintMode } = useNav()
 const base = import.meta.env.BASE_URL
 const isRemote = computed(() => /^https?:\/\//i.test(props.href))
 const isScreenshot = computed(() => /^\.?\/screens\//.test(props.href))
-const url = computed(() => isRemote.value ? props.href : base + props.href.replace(/^\.?\//, ''))
+const url = computed(() => isPrintMode.value && props.printHref ? props.printHref : isRemote.value ? props.href : base + props.href.replace(/^\.?\//, ''))
 
 function openImage(event) {
   const slide = event.currentTarget.closest('.slidev-layout')
@@ -27,5 +27,5 @@ function allowSlideNavigation(event) {
 
 <template>
   <button v-if="isScreenshot && !isPrintMode" type="button" class="nr-image-link" aria-haspopup="dialog" @click.stop="openImage" @keydown="allowSlideNavigation"><slot /></button>
-  <a v-else-if="!isScreenshot && (!isPrintMode || isRemote)" :href="url" target="_blank" rel="noopener"><slot /></a>
+  <a v-else-if="!isScreenshot && (!isPrintMode || isRemote || printHref)" :href="url" target="_blank" rel="noopener"><slot /></a>
 </template>

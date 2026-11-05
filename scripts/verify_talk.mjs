@@ -31,7 +31,7 @@ for (let i = 1; i + 1 < chunks.length; i += 2) {
     assert(raw !== undefined, `Missing ${key} in slide metadata`);
     try { return JSON.parse(raw); } catch { return raw; }
   };
-  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), divider: value('sectionDivider'), screenshot: chunks[i + 1].match(/<NrImage file="([^"]+)"/)?.[1], menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
+  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), divider: value('sectionDivider'), screenshots: [...chunks[i + 1].matchAll(/<NrImage file="([^"]+)"/g)].map(match => match[1]), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
 }
 const titles = slides.map((slide) => slide.title);
 const talkTotal = slides.filter((slide) => !slide.appendix).length;
@@ -97,8 +97,8 @@ try {
     });
   }
   let imageChecks = 0;
-  async function checkImageViewer(number) {
-    const trigger = (await page.evaluateHandle((title) => [...document.querySelectorAll('.slidev-layout h1')].find((heading) => heading.textContent === title && heading.checkVisibility()).closest('.slidev-layout').querySelector('button.nr-original'), titles[number - 1])).asElement();
+  async function checkImageViewer(number, imageIndex) {
+    const trigger = (await page.evaluateHandle(({title, imageIndex}) => [...document.querySelectorAll('.slidev-layout h1')].find((heading) => heading.textContent === title && heading.checkVisibility()).closest('.slidev-layout').querySelectorAll('button.nr-original')[imageIndex], { title: titles[number - 1], imageIndex })).asElement();
     assert(trigger, `Slide ${number}: screenshot is not an in-page button`);
     const thumbnail = await trigger.evaluate((button) => ({ src: button.querySelector('img').src, alt: button.querySelector('img').alt }));
     const initialUrl = page.url(), initialPages = (await browser.pages()).length;
@@ -181,7 +181,7 @@ try {
     else if (imageChecks % 3 === 1) await page.click(`${dialog} button[aria-label="Bild schließen"]`);
     else await page.mouse.click(2, 2);
     await closed();
-    const second = (await trigger.evaluateHandle((button) => button.closest('.slidev-layout').querySelector('.nr-action-links button.nr-image-link'))).asElement();
+    const second = (await trigger.evaluateHandle((button) => (button.closest('figure').querySelector('.nr-action-links button.nr-image-link') || button.closest('.slidev-layout').querySelector('.nr-action-links button.nr-image-link')))).asElement();
     assert(second, 'Screenshot action button missing');
     await second.click(); await opened();
     await page.keyboard.press('Escape'); await page.waitForSelector(dialog, { hidden: true });
@@ -208,7 +208,7 @@ try {
       const heading = [...document.querySelectorAll('.slidev-layout h1')].find((node) => node.textContent === title && node.checkVisibility());
       const slide = heading.closest('.slidev-layout'), box = slide.getBoundingClientRect();
       const footer = slide.querySelector('.nr-footer'), footerTop = footer.getBoundingClientRect().top;
-      const overflow = [...slide.querySelectorAll('h1,h2,p,li,figcaption,.nr-columns section,.nr-subtitle,.nr-author,.nr-topics,.nr-stack section,.nr-flow-note,.nr-takeaway,.nr-controls,.nr-section-number')].filter((node) => {
+      const overflow = [...slide.querySelectorAll('h1,h2,p,li,figcaption,blockquote,table,.nr-columns section,.nr-question-grid section,.nr-config-chain section,.nr-context-flow section,.nr-data-gate section,.nr-editor-demos figure,.nr-subtitle,.nr-author,.nr-topics,.nr-stack section,.nr-flow-note,.nr-takeaway,.nr-controls,.nr-section-number')].filter((node) => {
         if (!node.checkVisibility() || !node.getClientRects().length) return false;
         const rect = node.getBoundingClientRect();
         const connector = node.matches('.nr-flow>li,.nr-stack-connected>section');
@@ -232,9 +232,24 @@ try {
       assert(['https:', 'http:'].includes(link.protocol), `Unexpected link ${href}`);
       if (link.origin === origin && !link.hash) localLinks.add(href);
     }
-    if (metadata.screenshot) await checkImageViewer(number);
+    for (let imageIndex = 0; imageIndex < metadata.screenshots.length; imageIndex++) {
+      if (imageIndex) await show(number);
+      await checkImageViewer(number, imageIndex);
+    }
   }
-  assert.equal(imageChecks, slides.filter(slide => slide.screenshot).length, 'Not every screenshot was checked');
+  assert.equal(imageChecks, slides.reduce((total, slide) => total + slide.screenshots.length, 0), 'Not every screenshot was checked');
+  // The proof page displays a recorded PHP run, including the accepted false claim.
+  const proof = JSON.parse(await readFile(resolve(site, 'pruefbeispiel/quality-proof.json'), 'utf8'));
+  await page.goto(url + 'pruefbeispiel/index.html', { waitUntil: 'networkidle0' });
+  for (const example of proof.cases) {
+    await page.click(`button[data-case="${example.id}"]`);
+    assert.equal(await page.$eval('#input-json', (node) => node.textContent), JSON.stringify(example.input, null, 2));
+    assert.equal(await page.$eval('#boolean', (node) => node.textContent), String(example.actualValid));
+  }
+  localLinks.add(url + 'pruefbeispiel/quality-proof.zip');
+  localLinks.add(url + 'pruefbeispiel/quality-proof.json');
+  await page.click('a.back');
+  await page.waitForFunction(() => location.hash === '#/16');
   await show(1);
   // Check the fonts actually used for glyphs, not just declared CSS families.
   const cdp = await page.createCDPSession();

@@ -42,7 +42,6 @@ export:
   withClicks: false
   timeout: 30000
 ---
-
 <div class="nr-kicker">TMUC · 9. November 2026</div>
 
 # KI in TYPO3
@@ -72,31 +71,27 @@ title: "Was euch heute erwartet"
 
 # Was euch heute erwartet
 
-
-
-<ul class="nr-points"><li><span class="nr-number">01</span><span>Möglichkeiten: fünf Anwendungen erleben</span></li><li><span class="nr-number">02</span><span>Fragen: Erfahrungen und offene Punkte sammeln</span></li><li><span class="nr-number">03</span><span>Antworten und Grenzen: am Beispiel nr-llm</span></li><li><span class="nr-number">04</span><span>Agentenwege: intern und extern vergleichen</span></li><li><span class="nr-number">05</span><span>Einordnung: andere Lösungen und Austausch</span></li></ul>
+<ul class="nr-points"><li><span class="nr-number">01</span><span>Möglichkeiten: fünf Anwendungen erleben</span></li><li><span class="nr-number">02</span><span>Fragen zum KI-Einsatz: Daten, Vorgaben, Aufwand und Kontrolle</span></li><li><span class="nr-number">03</span><span>Antworten und Grenzen: am Beispiel nr-llm</span></li><li><span class="nr-number">04</span><span>Agentenwege: intern und extern vergleichen</span></li><li><span class="nr-number">05</span><span>Einordnung: andere Grundlagen und Austausch</span></li></ul>
 
 <div class="nr-controls"></div>
 
-
 ---
 layout: nr
-class: nr-screen-slide
+class: nr-screen-slide nr-editor-slide
 section: 1
 sectionTitle: "Möglichkeiten"
 sectionDivider: false
 talkPage: 3
 talkTotal: 27
 appendix: ""
-title: "Schreibunterstützung im Editor"
+title: "KI direkt beim Bearbeiten nutzen"
 ---
 
-<div class="nr-kicker">01 · Cowriter</div>
+<div class="nr-kicker">01 · Cowriter · Kurze Wege im Redaktionsalltag</div>
 
-# Schreibunterstützung im Editor
+# KI direkt beim Bearbeiten nutzen
 
-<div class="nr-demo"><figure><NrImage file="screens/03-cowriter-05-vorschau-lang0.png" alt="Cowriter-Vorschau · Aufnahme vom 2.11.2026"/><figcaption>Cowriter-Vorschau · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgewählten Text überarbeiten</span></li><li><span class="nr-number">02</span><span>Vorschlag prüfen und übernehmen</span></li><li><span class="nr-number">03</span><span>Die Redaktion entscheidet über die Übernahme</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Btt_content%5D%5B30%5D%3Dedit">Cowriter im Backend</NrLink><NrLink href="./screens/03-cowriter-05-vorschau-lang0.png">Bild vergrößern</NrLink></div></div></div>
-
+<div class="nr-editor-demos"><figure><h2>Im Editor</h2><NrImage file="screens/cowriter-ckeditor-toolbar-2026-11-05.png" alt="KI-Knöpfe direkt im CKEditor · 5.11.2026"/><figcaption>Text kürzen, überarbeiten oder übersetzen · Aufnahme 5.11.2026</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Btt_content%5D%5B30%5D%3Dedit">Editor öffnen</NrLink><NrLink href="./screens/cowriter-ckeditor-toolbar-2026-11-05.png">Bild vergrößern</NrLink></div></figure><figure><h2>An Seitenfeldern</h2><NrImage file="screens/cowriter-page-seo-2026-11-05.png" alt="Direkte KI-Aktionen an SEO-Titel und Beschreibung · 5.11.2026"/><figcaption>Direkt am Feld: Vorschläge für Titel und Beschreibung.<small>Aktuelle Oberfläche · Aufnahme 5.11.2026</small></figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Bpages%5D%5B10077%5D%3Dedit">Seitenfelder öffnen</NrLink><NrLink href="./screens/cowriter-page-seo-2026-11-05.png">Bild vergrößern</NrLink></div></figure></div>
 
 ---
 layout: nr
@@ -109,7 +104,6 @@ talkTotal: 27
 appendix: ""
 title: "Antworten aus Website-Inhalten"
 ---
-
 <div class="nr-kicker">02 · AI Search</div>
 
 # Antworten aus Website-Inhalten
@@ -128,7 +122,6 @@ talkTotal: 27
 appendix: ""
 title: "Ein Inhalt, mehrere Formate"
 ---
-
 <div class="nr-kicker">03 · Repurpose</div>
 
 # Ein Inhalt, mehrere Formate
@@ -145,15 +138,14 @@ sectionDivider: false
 talkPage: 6
 talkTotal: 27
 appendix: ""
-title: "Der Agent schlägt vor, ihr gebt frei"
+title: "Mit TYPO3 sprechen und Aufgaben erledigen lassen"
 ---
 
-<div class="nr-kicker">04 · Backend-Agent</div>
+<div class="nr-kicker">04 · Backend-Agent · Der Chat als Arbeitsoberfläche</div>
 
-# Der Agent schlägt vor, ihr gebt frei
+# Mit TYPO3 sprechen und Aufgaben erledigen lassen
 
-<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Konkrete Schreibfreigabe · Aufnahme vom 2.11.2026"/><figcaption>Konkrete Schreibfreigabe · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Daten mit Werkzeugen lesen</span></li><li><span class="nr-number">02</span><span>Geplante Änderung prüfen</span></li><li><span class="nr-number">03</span><span>Freigeben und Ergebnis kontrollieren</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nr_mcp_agent_chat">KI-Chat öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
-
+<div class="nr-demo"><figure><NrImage file="screens/agent-chat-2026-11-05.png" alt="Aktuelle Chat-Oberfläche mit vorhandenem Demo-Verlauf · Aufnahme 5.11.2026"/><figcaption>Aktuelle Chat-Oberfläche · vorhandener Verlauf · Aufnahme 5.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Fragen zu Inhalten in TYPO3 stellen</span></li><li><span class="nr-number">02</span><span>Änderungen in natürlicher Sprache beauftragen</span></li><li><span class="nr-number">03</span><span>Zum Beispiel einen Seitenentwurf anlegen lassen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nr/mcp/agent/chat/conversation">KI-Chat öffnen</NrLink><NrLink href="./screens/agent-chat-2026-11-05.png">Bild vergrößern</NrLink></div></div></div>
 
 ---
 layout: nr
@@ -166,7 +158,6 @@ talkTotal: 27
 appendix: ""
 title: "Vom Briefing zum Seitenentwurf"
 ---
-
 <div class="nr-kicker">05 · Landingpage</div>
 
 # Vom Briefing zum Seitenentwurf
@@ -183,60 +174,58 @@ sectionDivider: true
 talkPage: 8
 talkTotal: 27
 appendix: ""
-title: "Fragen zum KI-Einsatz"
+title: "Was müssen wir für den KI-Einsatz klären?"
 ---
 
 <div class="nr-section-number" aria-label="Abschnitt 2">02</div>
 
-# Fragen zum KI-Einsatz
-
-
+# Was müssen wir für den KI-Einsatz klären?
 
 ---
 layout: nr
-class: nr-text-slide nr-discussion
+class: nr-explanation-slide nr-question-focus-slide
 section: 2
 sectionTitle: "Fragen zum KI-Einsatz"
 sectionDivider: false
 talkPage: 9
 talkTotal: 27
 appendix: ""
-title: "Welche Fragen werfen diese Beispiele auf?"
+title: "Was müssten wir vor dem Einsatz im eigenen TYPO3 klären?"
 ---
 
-<div class="nr-kicker">Fragen zum KI-Einsatz · Erfahrungen und offene Punkte</div>
+<div class="nr-kicker">Fragen zum KI-Einsatz</div>
 
-# Welche Fragen werfen diese Beispiele auf?
-
-
-
-<ul class="nr-points"><li><span class="nr-number">01</span><span>Was möchtet ihr vor dem Einsatz klären?</span></li><li><span class="nr-number">02</span><span>Welche Fragen kennt ihr aus euren Projekten?</span></li><li><span class="nr-number">03</span><span>Was ist beim Zuschauen neu aufgekommen?</span></li></ul>
+<div class="nr-question-focus">
+<h1>Was müssten wir vor dem Einsatz im eigenen TYPO3 klären?</h1>
+<div class="nr-discussion-origins"><p>Aus den gerade gezeigten Beispielen</p><p>Aus euren bisherigen Projekten</p></div>
+</div>
 
 <div class="nr-controls"></div>
 
-
 ---
 layout: nr
-class: nr-column-slide nr-requirements
+class: nr-explanation-slide nr-question-grid-slide
 section: 2
 sectionTitle: "Fragen zum KI-Einsatz"
 sectionDivider: false
 talkPage: 10
 talkTotal: 27
 appendix: ""
-title: "Vier Fragenfelder beim KI-Einsatz"
+title: "Welche Fragen müssen wir beantworten?"
 ---
 
-<div class="nr-kicker">Fragen zum KI-Einsatz</div>
+<div class="nr-kicker">Fragen zum KI-Einsatz · Vier Felder für die Diskussion</div>
 
-# Vier Fragenfelder beim KI-Einsatz
+# Welche Fragen müssen wir beantworten?
 
-<div class="nr-columns nr-columns-4"><section><NrIcon name="quality"/><h2>Qualität</h2><p>Wie prüfen wir Ergebnisse und erkennen Fehler?</p></section><section><NrIcon name="operations"/><h2>Betrieb</h2><p>Wie wählen wir Modelle und begrenzen Kosten und Ausfälle?</p></section><section><NrIcon name="data"/><h2>Daten</h2><p>Welche Inhalte gehen an welchen Anbieter?</p></section><section><NrIcon name="responsibility"/><h2>Verantwortung</h2><p>Wer darf welche Änderungen ausführen – und wer gibt sie frei?</p></section></div>
-
-
+<div class="nr-question-grid">
+<section><NrIcon name="data"/><h2>Daten und Vorgaben</h2><p>Welche Inhalte dürfen wohin? Welche rechtlichen und betrieblichen Vorgaben gelten?</p></section>
+<section><NrIcon name="operations"/><h2>Aufwand und Betrieb</h2><p>Was müssen wir integrieren und betreiben? Was kostet das?</p></section>
+<section><NrIcon name="quality"/><h2>Qualität</h2><p>Welche Fehler lassen sich automatisch erkennen? Was müssen Menschen prüfen?</p></section>
+<section><NrIcon name="responsibility"/><h2>Kontrolle und Verantwortung</h2><p>Wer darf ändern, wer gibt frei und wer verantwortet das Ergebnis?</p></section>
+</div>
 
 <div class="nr-controls"></div>
-
 
 ---
 layout: nr
@@ -249,7 +238,6 @@ talkTotal: 27
 appendix: ""
 title: "Antworten und Grenzen"
 ---
-
 <div class="nr-section-number" aria-label="Abschnitt 3">03</div>
 
 # Antworten und Grenzen
@@ -258,110 +246,127 @@ title: "Antworten und Grenzen"
 
 ---
 layout: nr
-class: nr-stack-slide
+class: nr-explanation-slide nr-shared-basis-slide
 section: 3
 sectionTitle: "Antworten und Grenzen"
 sectionDivider: false
 talkPage: 12
 talkTotal: 27
 appendix: ""
-title: "Fünf Anwendungen, eine KI-Anbindung"
+title: "Die KI-Anbindung in jeder Extension neu bauen?"
 ---
 
-<div class="nr-kicker">Vom Anwendungsfall zur Integration</div>
+<div class="nr-kicker">Aufwand · Gemeinsame Aufgaben einmal lösen</div>
 
-# Fünf Anwendungen, eine KI-Anbindung
+# Die KI-Anbindung in jeder Extension neu bauen?
 
-<div class="nr-stack nr-stack-connected"><section><h2>Anwendungen</h2><p>Cowriter · AI Search · Repurpose · Landingpage · Backend-Agent</p></section><section><h2>nr-llm</h2><p>Dienste · Konfigurationen · Werkzeuge · Nutzungskontrolle</p></section><section><h2>Provider und Modelle</h2><p>Anbindung und Fähigkeiten passend zur jeweiligen Aufgabe</p></section></div>
-
-
+<div class="nr-shared-basis">
+<div class="nr-app-row"><span>Cowriter</span><span>AI Search</span><span>Repurpose</span><span>Landingpage</span><span>Backend-Agent</span></div>
+<p class="nr-flow-label">Integrierte Anwendungen nutzen dieselbe technische Grundlage.</p>
+<section class="nr-shared-core"><h2>nr-llm</h2><div class="nr-shared-services"><span>Provider und Zugänge</span><span>Konfigurationen und Aufgaben</span><span>Nutzung und Kontrolle</span></div></section>
+<div class="nr-provider-row">Modellanbieter und Modelle</div>
+<p class="nr-ownership">Die Fachfunktion und ihr Ablauf bleiben in der jeweiligen Extension.</p>
+</div>
 
 <div class="nr-controls"><div class="nr-action-links"><NrLink href="https://netresearch.github.io/modularer-ki-stack-page/">Modularer KI-Stack im Überblick</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm">nr-llm: Projekt und Dokumentation</NrLink></div></div>
 
-
 ---
 layout: nr
-class: nr-stack-slide
+class: nr-explanation-slide nr-config-chain-slide
 section: 3
 sectionTitle: "Antworten und Grenzen"
 sectionDivider: false
 talkPage: 13
 talkTotal: 27
 appendix: ""
-title: "Anbieter, Modell und Aufgabe trennen"
+title: "Modell wechseln, ohne die Anwendung neu zu bauen?"
 ---
 
-<div class="nr-kicker">Modellwahl</div>
+<div class="nr-kicker">Modellwahl · Fachfunktion und Anbieter trennen</div>
 
-# Anbieter, Modell und Aufgabe trennen
+# Modell wechseln, ohne die Anwendung neu zu bauen?
 
-<div class="nr-stack "><section><h2>Provider</h2><p>Verbindung, Endpunkt und Zugang zum gewählten Dienst</p></section><section><h2>Modell</h2><p>Fähigkeiten, Kontextfenster und Preise des gewählten Modells</p></section><section><h2>Konfiguration</h2><p>Systemprompt und Parameter für eine wiederkehrende Aufgabe</p></section></div>
+<div class="nr-config-chain">
+<section><span class="nr-step-label">Anwendung</span><h2>SEO-Text erzeugen</h2><p>Ruft eine benannte Konfiguration auf.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section class="nr-emphasis"><span class="nr-step-label">Konfiguration</span><h2>Aufgabe festlegen</h2><p>Vorgaben, Parameter und Modellwahl.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section><span class="nr-step-label">Modell</span><h2>Fähigkeiten wählen</h2><p>Passend zur Aufgabe.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section><span class="nr-step-label">Provider</span><h2>Dienst anbinden</h2><p>Endpunkt und Zugang.</p></section>
+</div>
 
-
-
-<div class="nr-controls"></div>
-
+<p class="nr-takeaway">Die Anwendung behält ihre Schnittstelle; die Modellwahl wird zentral geändert.</p>
+<p class="nr-limit">Beim Wechsel benötigte Fähigkeiten, Datenweg und Ergebnisqualität erneut prüfen.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink></div></div>
 
 ---
 layout: nr
-class: nr-screen-slide
+class: nr-explanation-slide nr-rule-example-slide
 section: 3
 sectionTitle: "Antworten und Grenzen"
 sectionDivider: false
 talkPage: 14
 talkTotal: 27
 appendix: ""
-title: "Wiederkehrende Aufgaben, gemeinsame Regeln"
+title: "Wie verwenden Aufgaben dieselben Vorgaben?"
 ---
 
-<div class="nr-kicker">Prompts und Konfiguration</div>
+<div class="nr-kicker">Wiederverwendung · Anweisungen zentral pflegen</div>
 
-# Wiederkehrende Aufgaben, gemeinsame Regeln
+# Wie verwenden Aufgaben dieselben Vorgaben?
 
-<div class="nr-demo"><figure><NrImage file="screens/14-nr-llm-06-konfigurationen.png" alt="Konfigurationsübersicht · Aufnahme vom 2.11.2026"/><figcaption>Konfigurationsübersicht · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Systemprompt und Parameter pro Zweck</span></li><li><span class="nr-number">02</span><span>Tasks verbinden Eingabe und Konfiguration</span></li><li><span class="nr-number">03</span><span>Snippets: Textbausteine für Tonalität oder Zielgruppe</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink><NrLink href="./screens/14-nr-llm-06-konfigurationen.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-rule-example">
+<section class="nr-rule-task"><span class="nr-step-label">Beispielaufgabe</span><h2>Absatz kürzen</h2><p>Bei jedem Aufruf kommt ein anderer Text dazu.</p></section>
+<section class="nr-rule-prompt"><span class="nr-step-label">Zentrale Anweisung in der Konfiguration</span><blockquote>Sprache beibehalten.<br>Keine neuen Fakten ergänzen.</blockquote><p>Gemeinsame Textbausteine ergänzen z. B. Tonalität oder Zielgruppe.</p></section>
+</div>
 
+<p class="nr-takeaway">Die Aufgabe verbindet Eingabe und Konfiguration; gemeinsame Anweisungen werden wiederverwendet.</p>
+<p class="nr-limit">Eine Prompt-Anweisung ist noch kein Nachweis, dass das Ergebnis sie einhält.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Documentation/Administration/Tasks.rst">Tasks: Eingabe und Konfiguration</NrLink></div></div>
 
 ---
 layout: nr
-class: nr-column-slide
+class: nr-explanation-slide nr-context-flow-slide
 section: 3
 sectionTitle: "Antworten und Grenzen"
 sectionDivider: false
 talkPage: 15
 talkTotal: 27
 appendix: ""
-title: "Die Anwendung liefert den Kontext"
+title: "Woher kennt die KI unsere Inhalte?"
 ---
 
-<div class="nr-kicker">Kontext</div>
+<div class="nr-kicker">Kontext · Die Anwendung wählt Informationen aus</div>
 
-# Die Anwendung liefert den Kontext
+# Woher kennt die KI unsere Inhalte?
 
-<div class="nr-columns nr-columns-3"><section><h2>Cowriter</h2><p>Der ausgewählte Absatz aus dem Editor</p></section><section><h2>AI Search</h2><p>Passende, gefundene Inhalte der Website</p></section><section><h2>Repurpose</h2><p>Die Ausgangsquelle für neue Formate</p></section></div>
+<div class="nr-context-flow">
+<section><span class="nr-step-label">In TYPO3</span><h2>Benötigte Quelle</h2><p>Zum Beispiel der ausgewählte Absatz im Editor.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section class="nr-emphasis"><span class="nr-step-label">In der Anwendung</span><h2>Kontext zusammenstellen</h2><p>Absatz + Auftrag + passende Anweisungen.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section><span class="nr-step-label">Beim Modell</span><h2>Mit diesem Inhalt arbeiten</h2><p>Für die aktuelle Anfrage.</p></section>
+</div>
 
-
-
-<p class="nr-takeaway">Nur passende und benötigte Informationen als Kontext hinzufügen.</p><div class="nr-controls"></div>
-
+<p class="nr-takeaway">Das Modell erhält den zusammengestellten Kontext, nicht automatisch das gesamte TYPO3.</p>
+<p class="nr-limit">Eine Suche liefert gefundene Inhalte; ein Agent kann über erlaubte Werkzeuge weitere Informationen laden.</p>
+<div class="nr-controls"><div class="nr-jump-links"><NrJump :page="37">Reserve: Kontext und Wissen</NrJump></div></div>
 
 ---
 layout: nr
-class: nr-screen-slide
+class: nr-explanation-slide nr-quality-slide
 section: 3
 sectionTitle: "Antworten und Grenzen"
 sectionDivider: false
 talkPage: 16
 talkTotal: 27
 appendix: ""
-title: "Ein plausibler Entwurf kann falsch sein"
+title: "Was lässt sich automatisch prüfen?"
 ---
 
-<div class="nr-kicker">Qualität</div>
+<div class="nr-kicker">Qualität · Prüfbeispiel mit nr-llm 0.35.0</div>
 
-# Ein plausibler Entwurf kann falsch sein
+# Was lässt sich automatisch prüfen?
 
-<div class="nr-demo"><figure><NrImage file="screens/16-landingpage-03-seitenfelder.png" alt="Prüfbeispiel: erfundene Frist in den Metadaten · 2.11.2026"/><figcaption>Prüfbeispiel: erfundene Frist in den Metadaten · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Im Briefing: keine Frist vorgegeben</span></li><li><span class="nr-number">02</span><span>Im Ergebnis: „bis 4. November“</span></li><li><span class="nr-number">03</span><span>Fachlich prüfen, bevor ihr freigebt</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Landingpage-Vorschau</NrLink><NrLink href="./screens/16-landingpage-03-seitenfelder.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-quality-grid"><section><NrIcon name="quality"/><h2>Formale Regeln</h2><p>Erlaubte Statuswerte und maximal 160 Zeichen sind im Schema festgelegt.</p><div class="nr-proof-result"><strong>Abgelehnt</strong><span>Unerlaubter Status oder 161 Zeichen</span></div></section><section><NrIcon name="responsibility"/><h2>Inhaltliche Aussagen</h2><p>„Meldet euch bis 4. November an.“<br>Im Briefing steht keine Frist.</p><div class="nr-proof-result nr-proof-caution"><strong>Formal akzeptiert</strong><span>Die Frist wird nicht mit Quellen abgeglichen.</span></div></section></div>
 
+<p class="nr-takeaway">Ein gültiges Format belegt keine wahre Aussage. Fachliche Prüfung bleibt nötig.</p><p class="nr-limit">Mit dem Original-Prüfcode ausgeführt. Keine automatische Faktenwarnung belegt.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/pruefbeispiel/index.html">Prüfbeispiel und Ergebnisse öffnen</NrLink></div><div class="nr-jump-links"><NrJump :page="31">Reserve: Wie die Prüfung funktioniert</NrJump></div></div>
 
 ---
 layout: nr
@@ -372,38 +377,40 @@ sectionDivider: false
 talkPage: 17
 talkTotal: 27
 appendix: ""
-title: "Kosten schätzen und Nutzung begrenzen"
+title: "Wie behalten wir Verbrauch und Kosten im Blick?"
 ---
-
 <div class="nr-kicker">Betrieb</div>
 
-# Kosten schätzen und Nutzung begrenzen
+# Wie behalten wir Verbrauch und Kosten im Blick?
 
-<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Budgets begrenzen weitere Aufrufe</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Konfigurierte Budgets vor weiteren Aufrufen prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink><NrJump :page="43">Reserve: Budgetgrenzen</NrJump></div></div></div>
 
 
 ---
 layout: nr
-class: nr-column-slide
+class: nr-explanation-slide nr-data-gate-slide
 section: 3
 sectionTitle: "Antworten und Grenzen"
 sectionDivider: false
 talkPage: 18
 talkTotal: 27
 appendix: ""
-title: "Welche Daten gehen an welchen Anbieter?"
+title: "Wie begrenzen wir, welche Daten wohin gelangen?"
 ---
 
-<div class="nr-kicker">Daten und Zugang</div>
+<div class="nr-kicker">Daten und Vorgaben · Deklarierte Grenzen technisch prüfen</div>
 
-# Welche Daten gehen an welchen Anbieter?
+# Wie begrenzen wir, welche Daten wohin gelangen?
 
-<div class="nr-columns nr-columns-3"><section><h2>Empfänger</h2><p>Welcher Anbieter verarbeitet die übertragenen Inhalte?</p></section><section><h2>Zugang</h2><p>Zugangsdaten zentral verwalten und Zugriffe steuern.</p></section><section><h2>Datenumfang</h2><p>Für jede Aufgabe die benötigten Inhalte gezielt auswählen.</p></section></div>
+<div class="nr-data-gate">
+<section class="nr-data-source"><span class="nr-step-label">Vorbereiten</span><h2>Quellen klassifizieren</h2><p>Systemprompt, Textbausteine und Skills erhalten eine Datenklasse.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section class="nr-emphasis"><span class="nr-step-label">Vor dem Versand</span><h2>Datenklasse prüfen</h2><p>Gegen die hinterlegte Provider-Zone – einschließlich Fallbacks.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section class="nr-data-outcomes"><span class="nr-step-label">Bei aktiver Durchsetzung</span><p><strong>Passt:</strong> Aufruf zulassen.</p><p><strong>Passt nicht:</strong> Aufruf stoppen.</p></section>
+</div>
 
-
-
-<div class="nr-controls"></div>
-
+<p class="nr-limit"><strong>Grenze:</strong> Freie Eingaben werden nicht automatisch klassifiziert. Unklassifizierte Quellen setzen hier keine Beschränkung.</p>
+<p class="nr-takeaway">Das Projekt legt die Datenfreigabe fest; nr-llm prüft die hinterlegten Grenzen. Das ersetzt keine rechtliche Prüfung.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Context/InputContextTrustGate.php">Prüfung vor dem Versand</NrLink></div></div>
 
 ---
 layout: nr
@@ -414,14 +421,13 @@ sectionDivider: false
 talkPage: 19
 talkTotal: 27
 appendix: ""
-title: "Werkzeugzugriff und Schreibfreigaben"
+title: "Wer darf Änderungen ausführen?"
 ---
-
 <div class="nr-kicker">Kontrolle</div>
 
-# Werkzeugzugriff und Schreibfreigaben
+# Wer darf Änderungen ausführen?
 
-<div class="nr-demo"><figure><NrImage file="screens/19-nr-llm-08-tools.png" alt="Werkzeugübersicht · Aufnahme vom 2.11.2026"/><figcaption>Werkzeugübersicht · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Geplante Änderung vor Ausführung prüfen</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/19-nr-llm-08-tools.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026"/><figcaption>Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Backend-Agent: konkrete Änderung vorab freigeben</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -435,12 +441,11 @@ talkTotal: 27
 appendix: ""
 title: "Was hat der Agent tatsächlich getan?"
 ---
-
 <div class="nr-kicker">Audit und Fehleranalyse</div>
 
 # Was hat der Agent tatsächlich getan?
 
-<div class="nr-demo"><figure><NrImage file="screens/20-agent-02-lesen-c-aktivitaet.png" alt="Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026"/><figcaption>Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Werkzeug, Argumente und Ergebnis ansehen</span></li><li><span class="nr-number">02</span><span>Freigaben und ausgeführte Schritte nachvollziehen</span></li><li><span class="nr-number">03</span><span>Aus Protokollen gezielt Fehler untersuchen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nr_mcp_agent_chat">KI-Chat öffnen</NrLink><NrLink href="./screens/20-agent-02-lesen-c-aktivitaet.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/20-agent-02-lesen-c-aktivitaet.png" alt="Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026"/><figcaption>Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Werkzeug, Argumente und Ergebnis ansehen</span></li><li><span class="nr-number">02</span><span>Freigaben und ausgeführte Schritte nachvollziehen</span></li><li><span class="nr-number">03</span><span>Aus Protokollen gezielt Fehler untersuchen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nr/mcp/agent/chat/conversation">KI-Chat öffnen</NrLink><NrLink href="./screens/20-agent-02-lesen-c-aktivitaet.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -454,7 +459,6 @@ talkTotal: 27
 appendix: ""
 title: "Agentenwege"
 ---
-
 <div class="nr-section-number" aria-label="Abschnitt 4">04</div>
 
 # Agentenwege
@@ -472,7 +476,6 @@ talkTotal: 27
 appendix: ""
 title: "Wie kann ein Agent mit TYPO3 arbeiten?"
 ---
-
 <div class="nr-kicker">Zwei Zugangswege im Vergleich</div>
 
 # Wie kann ein Agent mit TYPO3 arbeiten?
@@ -495,7 +498,6 @@ talkTotal: 27
 appendix: ""
 title: "A2A: Ein Agent beauftragt einen anderen"
 ---
-
 <div class="nr-kicker">A2A · Ausblick</div>
 
 # A2A: Ein Agent beauftragt einen anderen
@@ -518,7 +520,6 @@ talkTotal: 27
 appendix: ""
 title: "Einordnung & Austausch"
 ---
-
 <div class="nr-section-number" aria-label="Abschnitt 5">05</div>
 
 # Einordnung & Austausch
@@ -534,15 +535,20 @@ sectionDivider: false
 talkPage: 25
 talkTotal: 27
 appendix: ""
-title: "KI-Schichten und MCP-Server für TYPO3"
+title: "Welche weiteren Grundlagen gibt es für TYPO3?"
 ---
 
 <div class="nr-kicker">Ökosystem · Bausteine für eigene Integrationen</div>
 
-# KI-Schichten und MCP-Server für TYPO3
+# Welche weiteren Grundlagen gibt es für TYPO3?
 
-<div class="nr-resources"><section><h2>KI-Schicht für Extensions</h2><p class="nr-resource-description">Gemeinsame Modellanbindung und Konfiguration für eigene Anwendungen.</p><ul class="nr-resource-links"><li><NrLink href="https://github.com/netresearch/t3x-nr-llm">Netresearch · nr-llm</NrLink></li><li><NrLink href="https://github.com/b13/aim">b13 · AiM (Alpha)</NrLink></li><li><NrLink href="https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/Index.html">NITSAN / T3Planet · AI Foundation</NrLink></li></ul></section><section><h2>MCP-Zugang zu TYPO3</h2><p class="nr-resource-description">TYPO3-Werkzeuge für externe Assistenten und deren Agentenabläufe.</p><ul class="nr-resource-links"><li><NrLink href="https://github.com/hauptsacheNet/typo3-mcp-server">hauptsache.net · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/marekskopal/typo3-mcp-server">Marek Skopal · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/autodudesde/ai-suite#mcp-server-optional-sub-extension">AutoDudes · AI Suite MCP (Zusatz)</NrLink></li></ul></section></div><p class="nr-takeaway">KI-Schicht und MCP-Server lösen unterschiedliche Aufgaben und können sich ergänzen.</p><div class="nr-controls"><div class="nr-jump-links"><NrJump :page="45">KI-Schichten im Vergleich</NrJump><NrJump :page="46">MCP-Server im Vergleich</NrJump><NrJump :page="47">Such- und RAG-Grundlagen</NrJump></div></div>
+<div class="nr-resources nr-ecosystem-grid">
+<section><h2>KI-Schicht für Extensions</h2><p class="nr-resource-description">Gemeinsame Anbindung für eigene KI-Funktionen.</p><ul class="nr-resource-links"><li><NrLink href="https://github.com/netresearch/t3x-nr-llm">Netresearch · nr-llm</NrLink></li><li><NrLink href="https://github.com/b13/aim">b13 · AiM (Alpha)</NrLink></li><li><NrLink href="https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/Index.html">NITSAN / T3Planet · AI Foundation</NrLink></li><li><NrLink href="https://www.louis.info/leistungen/technologien/typo3-extensions/">LOUIS INTERNET · LIA Middleware AI</NrLink><span class="nr-resource-meta">Für Extensions und Eigenentwicklungen · kommerziell</span></li></ul></section>
+<section><h2>MCP-Zugang zu TYPO3</h2><p class="nr-resource-description">TYPO3-Werkzeuge für externe Assistenten.</p><ul class="nr-resource-links"><li><NrLink href="https://github.com/hauptsacheNet/typo3-mcp-server">hauptsache.net · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/marekskopal/typo3-mcp-server">Marek Skopal · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/autodudesde/ai-suite#mcp-server-optional-sub-extension">AutoDudes · AI Suite MCP (Zusatz)</NrLink></li></ul></section>
+</div>
 
+<p class="nr-takeaway">KI-Anbindung und Agentenzugriff sind unterschiedliche Aufgaben; beide Bausteine können sich ergänzen.</p>
+<div class="nr-controls"><div class="nr-jump-links"><NrJump :page="45">KI-Schichten im Vergleich</NrJump><NrJump :page="46">MCP-Server im Vergleich</NrJump><NrJump :page="47">Such- und RAG-Grundlagen</NrJump></div></div>
 
 ---
 layout: nr
@@ -555,7 +561,6 @@ talkTotal: 27
 appendix: ""
 title: "Eine Aufgabe wählen und ihren Nutzen prüfen"
 ---
-
 <div class="nr-kicker">Vom Vortrag ins eigene Projekt</div>
 
 # Eine Aufgabe wählen und ihren Nutzen prüfen
@@ -578,7 +583,6 @@ talkTotal: 27
 appendix: ""
 title: "Welche Fragen sind noch offen?"
 ---
-
 <div class="nr-kicker">Diskussion</div>
 
 # Welche Fragen sind noch offen?
@@ -606,8 +610,7 @@ title: "Links zu Demos und Anwendungen"
 
 # Links zu Demos und Anwendungen
 
-<div class="nr-resources"><section><h2>Demo und Ausgangsmaterial</h2><ul class="nr-resource-links"><li><NrLink href="https://typo3-demo.netresearch.de/">Öffentliche TYPO3-Demo</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/typo3/main">TYPO3-Backend · Anmeldung nötig</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/extensions/ai-search">AI Search · Backend-Vorschau</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Landingpage-Entwurf · Backend-Vorschau</NrLink></li><li><NrLink href="https://www.netresearch.de/blog/ki-kennzeichnung-auf-websites-was-jetzt-wirklich-gekennzeichnet-werden-muss/">Ausgangsartikel des Repurpose-Beispiels</NrLink></li></ul></section><section><h2>Anwendungen und Beschreibungen</h2><ul class="nr-resource-links"><li><NrLink href="https://github.com/netresearch/t3x-cowriter">Cowriter</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/extensions">AI Search · Demo-Übersicht</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-repurpose">Repurpose</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-mcp-agent">Backend-Agent</NrLink></li><li><NrLink href="https://github.com/netresearch/nr-landingpage">Landingpage</NrLink></li></ul></section></div><div class="nr-controls"></div>
-
+<div class="nr-resources"><section><h2>Präsentation und Demo</h2><ul class="nr-resource-links"><li><NrLink href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/">Aktuelle neutrale Präsentation</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/">Öffentliche TYPO3-Demo</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/typo3/main">TYPO3-Backend · Anmeldung nötig</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/extensions/ai-search">AI Search · Backend-Vorschau</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Landingpage-Entwurf · Backend-Vorschau</NrLink></li><li><NrLink href="https://www.netresearch.de/blog/ki-kennzeichnung-auf-websites-was-jetzt-wirklich-gekennzeichnet-werden-muss/">Ausgangsartikel des Repurpose-Beispiels</NrLink></li></ul></section><section><h2>Anwendungen und Beschreibungen</h2><ul class="nr-resource-links"><li><NrLink href="https://github.com/netresearch/t3x-cowriter">Cowriter</NrLink></li><li><NrLink href="https://typo3-demo.netresearch.de/extensions">AI Search · Demo-Übersicht</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-repurpose">Repurpose</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-mcp-agent">Backend-Agent</NrLink></li><li><NrLink href="https://github.com/netresearch/nr-landingpage">Landingpage</NrLink></li></ul></section></div><div class="nr-controls"></div>
 
 ---
 layout: nr
@@ -625,8 +628,7 @@ title: "Quellen zu KI-Grundlagen und MCP"
 
 # Quellen zu KI-Grundlagen und MCP
 
-<div class="nr-resources"><section><h2>Technische Grundlage</h2><ul class="nr-resource-links"><li><NrLink href="https://netresearch.github.io/modularer-ki-stack-page/">Modularer KI-Stack · Module und Voraussetzungen</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-llm">nr-llm · Projekt und Dokumentation</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-llm/tree/6afad3444ceb0ef3f206f6687df8d23eb881f496">nr-llm · für die Folien geprüfter Quellstand</NrLink></li><li><NrLink href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture">MCP · Architektur von Client und Server</NrLink></li><li><NrLink href="https://a2a-protocol.org/latest/topics/a2a-and-mcp/">A2A und MCP · offizielle Einordnung</NrLink></li><li><NrLink href="https://symfony.com/doc/current/ai/components/platform.html">Symfony AI Platform · PHP-Unterbau</NrLink></li></ul></section><section><h2>KI-Schichten und MCP-Server</h2><ul class="nr-resource-links"><li><NrLink href="https://github.com/b13/aim">b13 AiM · TYPO3-KI-Schicht</NrLink></li><li><NrLink href="https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/Index.html">NITSAN / T3Planet · AI Foundation</NrLink></li><li><NrLink href="https://github.com/hauptsacheNet/typo3-mcp-server">hauptsache.net · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/marekskopal/typo3-mcp-server">Marek Skopal · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/autodudesde/ai-suite#mcp-server-optional-sub-extension">AutoDudes · AI Suite MCP (Zusatz)</NrLink></li></ul></section></div><div class="nr-controls"></div>
-
+<div class="nr-resources"><section><h2>Technische Grundlage</h2><ul class="nr-resource-links"><li><NrLink href="https://netresearch.github.io/modularer-ki-stack-page/">Modularer KI-Stack · Module und Voraussetzungen</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-llm">nr-llm · Projekt und Dokumentation</NrLink></li><li><NrLink href="https://github.com/netresearch/t3x-nr-llm/tree/6afad3444ceb0ef3f206f6687df8d23eb881f496">nr-llm · für die Folien geprüfter Quellstand</NrLink></li><li><NrLink href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture">MCP · Architektur von Client und Server</NrLink></li><li><NrLink href="https://a2a-protocol.org/latest/topics/a2a-and-mcp/">A2A und MCP · offizielle Einordnung</NrLink></li><li><NrLink href="https://symfony.com/doc/current/ai/components/platform.html">Symfony AI Platform · PHP-Unterbau</NrLink></li></ul></section><section><h2>KI-Schichten und MCP-Server</h2><ul class="nr-resource-links"><li><NrLink href="https://github.com/b13/aim">b13 AiM · TYPO3-KI-Schicht</NrLink></li><li><NrLink href="https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/Index.html">NITSAN / T3Planet · AI Foundation</NrLink></li><li><NrLink href="https://www.louis.info/leistungen/technologien/typo3-extensions/">LOUIS INTERNET · LIA Middleware AI</NrLink></li><li><NrLink href="https://docs.typo3.org/p/madj2k/t3-ai-assistant/main/en-us/Introduction/ArchitectureOverview.html">Madj2k AI Core + TYPO3 AI Assistant</NrLink></li><li><NrLink href="https://github.com/hauptsacheNet/typo3-mcp-server">hauptsache.net · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/marekskopal/typo3-mcp-server">Marek Skopal · TYPO3 MCP Server</NrLink></li><li><NrLink href="https://github.com/autodudesde/ai-suite#mcp-server-optional-sub-extension">AutoDudes · AI Suite MCP (Zusatz)</NrLink></li></ul></section></div><div class="nr-controls"></div>
 
 ---
 layout: nr
@@ -639,7 +641,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Rückfragen: die passende Erklärung öffnen"
 ---
-
 <div class="nr-kicker">Reserve · nach Zielgruppe und Fragestellung</div>
 
 # Rückfragen: die passende Erklärung öffnen
@@ -662,16 +663,15 @@ talkTotal: 27
 appendix: "technical"
 title: "Formale Vorgaben werden maschinell geprüft"
 ---
-
 <div class="nr-kicker">Reserve · Entwicklung · nr-llm v0.35.0</div>
 
 # Formale Vorgaben werden maschinell geprüft
 
-<ol class="nr-flow" style="--steps:4"><li><span class="nr-flow-number">01</span><h2>Schema festlegen</h2><p>Pflichtfelder, Datentypen, erlaubte Werte und Längen definieren.</p></li><li><span class="nr-flow-number">02</span><h2>Antwort erzeugen</h2><p>Die Anwendung fordert eine strukturierte JSON-Ausgabe an.</p></li><li><span class="nr-flow-number">03</span><h2>Lokal prüfen</h2><p>nr-llm prüft die Antwort gegen das unterstützte Schema.</p></li><li><span class="nr-flow-number">04</span><h2>Nur bei Fehlern</h2><p>Ein Reparaturversuch; danach gültiges Ergebnis oder Fehler.</p></li></ol><p class="nr-flow-note">Beispiel: Ein Titel muss vorhanden sein und darf höchstens 60 Zeichen haben.</p>
+<ol class="nr-flow" style="--steps:4"><li><span class="nr-flow-number">01</span><h2>Schema festlegen</h2><p>Pflichtfelder, Datentypen, erlaubte Werte und Längen definieren.</p></li><li><span class="nr-flow-number">02</span><h2>Antwort erzeugen</h2><p>Die Anwendung übergibt das Schema an <code>completeStructured()</code>.</p></li><li><span class="nr-flow-number">03</span><h2>Lokal prüfen</h2><p>nr-llm prüft die Antwort gegen das unterstützte Schema.</p></li><li><span class="nr-flow-number">04</span><h2>Nur bei Fehlern</h2><p>Ein Reparaturversuch; danach gültiges Ergebnis oder Fehler.</p></li></ol><p class="nr-flow-note">Prüfbeispiel: erlaubte Statuswerte und höchstens 160 Zeichen für die Beschreibung.</p>
 
 
 
-<p class="nr-takeaway">Ein gültiges Format belegt noch keine korrekte Aussage.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Feature/CompletionService.php#L105-L165">Funktionsweise und Quellbeleg</NrLink></div><div class="nr-jump-links"><NrJump :page="30">Themenübersicht</NrJump><NrJump :page="27">Zur Diskussion</NrJump></div></div>
+<p class="nr-takeaway">Ein gültiges Format belegt noch keine korrekte Aussage.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Prüfbeispiel</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Feature/CompletionService.php#L105-L165">Funktionsweise und Quellbeleg</NrLink></div><div class="nr-jump-links"><NrJump :page="30">Themenübersicht</NrJump><NrJump :page="27">Zur Diskussion</NrJump></div></div>
 
 
 ---
@@ -685,7 +685,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Qualität wird an Beispielaufgaben gemessen"
 ---
-
 <div class="nr-kicker">Reserve · Entscheidung · nr-llm v0.35.0</div>
 
 # Qualität wird an Beispielaufgaben gemessen
@@ -708,7 +707,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Skills werden als Prompt-Kontext eingebunden"
 ---
-
 <div class="nr-kicker">Reserve · Entwicklung · nr-llm v0.35.0</div>
 
 # Skills werden als Prompt-Kontext eingebunden
@@ -731,7 +729,6 @@ talkTotal: 27
 appendix: "technical"
 title: "MCP verbindet den Agenten mit Werkzeugen"
 ---
-
 <div class="nr-kicker">Reserve · Integration · nr-llm v0.35.0</div>
 
 # MCP verbindet den Agenten mit Werkzeugen
@@ -754,7 +751,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Ein Agent arbeitet in einer begrenzten Schleife"
 ---
-
 <div class="nr-kicker">Reserve · Entwicklung · nr-llm v0.35.0</div>
 
 # Ein Agent arbeitet in einer begrenzten Schleife
@@ -777,7 +773,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Wie bindet eine eigene Extension nr-llm ein?"
 ---
-
 <div class="nr-kicker">Entwicklerfragen · nr-llm v0.35.0</div>
 
 # Wie bindet eine eigene Extension nr-llm ein?
@@ -800,7 +795,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Woher kommen Kontext und Wissen?"
 ---
-
 <div class="nr-kicker">Entwicklerfragen · nr-llm v0.35.0</div>
 
 # Woher kommen Kontext und Wissen?
@@ -823,7 +817,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Was passiert bei Fehlern oder zu viel Kontext?"
 ---
-
 <div class="nr-kicker">Entwicklerfragen · nr-llm v0.35.0</div>
 
 # Was passiert bei Fehlern oder zu viel Kontext?
@@ -846,7 +839,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Ein Modellwechsel braucht einen Eignungstest"
 ---
-
 <div class="nr-kicker">Reserve · Integration · nr-llm v0.35.0</div>
 
 # Ein Modellwechsel braucht einen Eignungstest
@@ -869,12 +861,11 @@ talkTotal: 27
 appendix: "technical"
 title: "Werkzeugzugriff braucht mehrere Freigaben"
 ---
-
 <div class="nr-kicker">Reserve · Integration · nr-llm v0.35.0</div>
 
 # Werkzeugzugriff braucht mehrere Freigaben
 
-<ol class="nr-flow" style="--steps:4"><li><span class="nr-flow-number">01</span><h2>Werkzeug aktivieren</h2><p>Gruppe und einzelnes Werkzeug zentral freischalten.</p></li><li><span class="nr-flow-number">02</span><h2>Aufgabe begrenzen</h2><p>Werkzeuggruppen je Konfiguration und Lauf einschränken.</p></li><li><span class="nr-flow-number">03</span><h2>Nutzerrechte prüfen</h2><p>Adminpflicht und konkrete TYPO3-Rechte des ausführenden Nutzers beachten.</p></li><li><span class="nr-flow-number">04</span><h2>Änderung bestätigen</h2><p>Bei den eingebauten Schreibwerkzeugen die geplante Änderung vorab freigeben.</p></li></ol><p class="nr-flow-note">Prüfbeispiel: Redaktion darf einen Seitentitel ändern, aber keine Systemdaten auslesen.</p>
+<ol class="nr-flow" style="--steps:4"><li><span class="nr-flow-number">01</span><h2>Werkzeug aktivieren</h2><p>Gruppe und einzelnes Werkzeug zentral freischalten.</p></li><li><span class="nr-flow-number">02</span><h2>Aufgabe begrenzen</h2><p>Werkzeuggruppen je Konfiguration und Lauf einschränken.</p></li><li><span class="nr-flow-number">03</span><h2>Nutzerrechte prüfen</h2><p>Je Werkzeug: Adminpflicht oder konkrete TYPO3-Rechte prüfen.</p></li><li><span class="nr-flow-number">04</span><h2>Änderung bestätigen</h2><p>Bei den eingebauten Schreibwerkzeugen die geplante Änderung vorab freigeben.</p></li></ol><p class="nr-flow-note">Prüfbeispiel: Redaktion darf einen Seitentitel ändern, aber keine Systemdaten auslesen.</p>
 
 
 
@@ -892,12 +883,11 @@ talkTotal: 27
 appendix: "technical"
 title: "Betrieb braucht Messwerte und Löschroutinen"
 ---
-
 <div class="nr-kicker">Reserve · Integration · nr-llm v0.35.0</div>
 
 # Betrieb braucht Messwerte und Löschroutinen
 
-<div class="nr-columns nr-columns-3"><section><h2>Nutzung auswerten</h2><p>Anfragen, Tokens und geschätzte Kosten nach Anbieter, Modell und Nutzer ansehen.</p></section><section><h2>Läufe nachvollziehen</h2><p>Status, Schritte, Modellaufrufe und Entscheidungen in der Run-Timeline prüfen.</p></section><section><h2>Aufbewahrung betreiben</h2><p>Speicherumfang und Fristen wählen. Den Löschlauf regelmäßig ausführen lassen.</p></section></div>
+<div class="nr-columns nr-columns-3"><section><h2>Nutzung auswerten</h2><p>Anfragen, Tokens und geschätzte Kosten nach Anbieter, Modell und Nutzer ansehen.</p></section><section><h2>Läufe nachvollziehen</h2><p>Metadaten zu Status, Schritten, Modellaufrufen und Entscheidungen in der Run-Timeline prüfen.</p></section><section><h2>Aufbewahrung betreiben</h2><p>Speicherumfang und Fristen wählen. Den Löschlauf regelmäßig ausführen lassen.</p></section></div>
 
 
 
@@ -915,7 +905,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Wann lohnt sich eine gemeinsame KI-Grundlage?"
 ---
-
 <div class="nr-kicker">Entscheidung · Kriterien für einen Pilot</div>
 
 # Wann lohnt sich eine gemeinsame KI-Grundlage?
@@ -938,7 +927,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Wie begrenzen wir Kosten?"
 ---
-
 <div class="nr-kicker">Entscheidung · Funktionen im Demo-Quellstand v0.35.0</div>
 
 # Wie begrenzen wir Kosten?
@@ -961,7 +949,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Was muss vor dem produktiven Einsatz geklärt sein?"
 ---
-
 <div class="nr-kicker">Entscheidung · Einführungsempfehlung</div>
 
 # Was muss vor dem produktiven Einsatz geklärt sein?
@@ -975,7 +962,7 @@ title: "Was muss vor dem produktiven Einsatz geklärt sein?"
 
 ---
 layout: nr
-class: nr-technical-slide
+class: nr-technical-slide nr-foundation-comparison
 section: 5
 sectionTitle: "Einordnung & Austausch"
 sectionDivider: false
@@ -985,16 +972,20 @@ appendix: "technical"
 title: "Welche gemeinsame KI-Schicht passt zur Integration?"
 ---
 
-<div class="nr-kicker">Reserve · gemeinsame Dienste für TYPO3-Extensions</div>
+<div class="nr-kicker">Reserve · Gemeinsame Dienste mit unterschiedlichen Schwerpunkten</div>
 
 # Welche gemeinsame KI-Schicht passt zur Integration?
 
-<div class="nr-columns nr-columns-3"><section><h2>Netresearch nr-llm</h2><p>Gemeinsame KI-Dienste, Konfigurationen, Tasks und Werkzeugsteuerung für integrierte Anwendungen.</p></section><section><h2>b13 AiM</h2><p>TYPO3-Proxy mit Routing und Regeln; Provider-Anbindung über Symfony-AI-Bridges. Als Alpha gekennzeichnet.</p></section><section><h2>T3Planet AI Foundation</h2><p>Gemeinsame Service-API, Provider, Prompts, Kontext und Nutzungsdaten; ergänzt um MCP-Zugriff.</p></section></div>
+<table class="nr-foundation-table"><thead><tr><th>Grundlage</th><th>Schwerpunkt</th><th>Für die Auswahl prüfen</th></tr></thead><tbody>
+<tr><td><NrLink href="https://github.com/netresearch/t3x-nr-llm">Netresearch nr-llm</NrLink></td><td>Dienste, Konfigurationen, Tasks und Werkzeuge</td><td>Passende API und Regeln für die eigene Anwendung</td></tr>
+<tr><td><NrLink href="https://github.com/b13/aim">b13 AiM · Alpha</NrLink></td><td>KI-Proxy, Routing und Regeln; Symfony-AI-Bridges</td><td>Benötigte Bridges und Änderungen der Alpha-API</td></tr>
+<tr><td><NrLink href="https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/DeveloperGuide/ExtensionIntegration/Index.html">T3Planet AI Foundation</NrLink></td><td>Service-API, Provider, Prompts, Kontext und MCP</td><td>Integration der eigenen Extension und Betriebsmodell</td></tr>
+<tr><td><NrLink href="https://www.louis.info/leistungen/technologien/typo3-extensions/">LIA Middleware AI</NrLink></td><td>Zentrale KI-Anbindung für Extensions und Eigenentwicklungen</td><td>Kommerziell; API und Lizenz beim Hersteller klären</td></tr>
+<tr><td><NrLink href="https://docs.typo3.org/p/madj2k/t3-ai-assistant/main/en-us/Introduction/ArchitectureOverview.html">Madj2k AI Core + AI Assistant</NrLink></td><td>PHP-Kern und TYPO3-Integration für Assistenz, Pipelines und RAG</td><td>Passung zum eigenen Such- oder Assistenzablauf</td></tr>
+</tbody></table>
 
-
-
-<p class="nr-takeaway">An der eigenen Extension prüfen: API, Aufgabensteuerung, Rechte, Datenweg und Betriebsanforderungen.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/b13/aim">b13 AiM: Konzept und Schnittstellen</NrLink><NrLink href="https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/DeveloperGuide/ExtensionIntegration/Index.html">AI Foundation: Extension-Integration</NrLink></div><div class="nr-jump-links"><NrJump :page="30">Themenübersicht</NrJump><NrJump :page="27">Zur Diskussion</NrJump></div></div>
-
+<p class="nr-takeaway">An einer konkreten Aufgabe vergleichen: Schnittstelle, Datenweg, Rechte, Kosten und Wartung.</p>
+<div class="nr-controls"><div class="nr-jump-links"><NrJump :page="30">Themenübersicht</NrJump><NrJump :page="27">Zur Diskussion</NrJump></div></div>
 
 ---
 layout: nr
@@ -1007,7 +998,6 @@ talkTotal: 27
 appendix: "technical"
 title: "MCP-Server: welcher Zugang zu TYPO3?"
 ---
-
 <div class="nr-kicker">Reserve · Integration · öffentlich geprüfte Projektquellen</div>
 
 # MCP-Server: welcher Zugang zu TYPO3?
@@ -1030,7 +1020,6 @@ talkTotal: 27
 appendix: "technical"
 title: "Welche Grundlagen gibt es für eigene Wissenssuche?"
 ---
-
 <div class="nr-kicker">Reserve · Entwicklung · Such- und RAG-Infrastruktur</div>
 
 # Welche Grundlagen gibt es für eigene Wissenssuche?
