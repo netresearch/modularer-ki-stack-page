@@ -91,7 +91,7 @@ title: "KI direkt beim Bearbeiten nutzen"
 
 # KI direkt beim Bearbeiten nutzen
 
-<div class="nr-editor-demos"><figure><h2>Im Editor</h2><NrImage file="screens/cowriter-ckeditor-toolbar-2026-11-05.png" alt="KI-Knöpfe direkt im CKEditor · 5.11.2026"/><figcaption>Text kürzen, überarbeiten oder übersetzen · Aufnahme 5.11.2026</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Btt_content%5D%5B30%5D%3Dedit">Editor öffnen</NrLink><NrLink href="./screens/cowriter-ckeditor-toolbar-2026-11-05.png">Bild vergrößern</NrLink></div></figure><figure><h2>An Seitenfeldern</h2><NrImage file="screens/cowriter-page-seo-2026-11-05.png" alt="Direkte KI-Aktionen an SEO-Titel und Beschreibung · 5.11.2026"/><figcaption>Direkt am Feld: Vorschläge für Titel und Beschreibung.<small>Aktuelle Oberfläche · Aufnahme 5.11.2026</small></figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=record_edit&amp;redirectParams=edit%5Bpages%5D%5B10077%5D%3Dedit">Seitenfelder öffnen</NrLink><NrLink href="./screens/cowriter-page-seo-2026-11-05.png">Bild vergrößern</NrLink></div></figure></div>
+<div class="nr-editor-demos"><figure><h2>Im Editor</h2><NrImage file="screens/cowriter-ckeditor-toolbar-2026-11-05.png" alt="KI-Knöpfe direkt im CKEditor · 5.11.2026"/><figcaption>Text kürzen, überarbeiten oder übersetzen · Aufnahme 5.11.2026</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/record/edit?edit%5Btt_content%5D%5B30%5D=edit">Editor öffnen</NrLink><NrLink href="./screens/cowriter-ckeditor-toolbar-2026-11-05.png">Bild vergrößern</NrLink></div></figure><figure><h2>An Seitenfeldern</h2><NrImage file="screens/cowriter-page-seo-2026-11-05.png" alt="Direkte KI-Aktionen an SEO-Titel und Beschreibung · 5.11.2026"/><figcaption>Direkt am Feld: Vorschläge für Titel und Beschreibung.<small>Aktuelle Oberfläche · Aufnahme 5.11.2026</small></figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/record/edit?edit%5Bpages%5D%5B10077%5D=edit">Seitenfelder öffnen</NrLink><NrLink href="./screens/cowriter-page-seo-2026-11-05.png">Bild vergrößern</NrLink></div></figure></div>
 
 ---
 layout: nr
@@ -126,7 +126,7 @@ title: "Ein Inhalt, mehrere Formate"
 
 # Ein Inhalt, mehrere Formate
 
-<div class="nr-demo"><figure><NrImage file="screens/05-repurpose-job-3-detail.png" alt="Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026"/><figcaption>Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgangsquelle bleibt nachvollziehbar</span></li><li><span class="nr-number">02</span><span>Schaubild und Podcast als Ergebnisse</span></li><li><span class="nr-number">03</span><span>Jedes Artefakt einzeln prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=web_nrrepurpose">Repurpose öffnen</NrLink><NrLink href="./screens/05-repurpose-job-3-detail.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/05-repurpose-job-3-detail.png" alt="Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026"/><figcaption>Vorbereiteter Auftrag 3 · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Ausgangsquelle bleibt nachvollziehbar</span></li><li><span class="nr-number">02</span><span>Schaubild und Podcast als Ergebnisse</span></li><li><span class="nr-number">03</span><span>Jedes Artefakt einzeln prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/web/nr-repurpose">Repurpose öffnen</NrLink><NrLink href="./screens/05-repurpose-job-3-detail.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -295,7 +295,7 @@ title: "Modell wechseln, ohne die Anwendung neu zu bauen?"
 
 <p class="nr-takeaway">Die Anwendung behält ihre Schnittstelle; die Modellwahl wird zentral geändert.</p>
 <p class="nr-limit">Beim Wechsel benötigte Fähigkeiten, Datenweg und Ergebnisqualität erneut prüfen.</p>
-<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink></div></div>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/configurations">Konfigurationen öffnen</NrLink></div></div>
 
 ---
 layout: nr
@@ -320,7 +320,7 @@ title: "Wie verwenden Aufgaben dieselben Vorgaben?"
 
 <p class="nr-takeaway">Die Aufgabe verbindet Eingabe und Konfiguration; gemeinsame Anweisungen werden wiederverwendet.</p>
 <p class="nr-limit">Eine Prompt-Anweisung ist noch kein Nachweis, dass das Ergebnis sie einhält.</p>
-<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_configurations">Konfigurationen öffnen</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Documentation/Administration/Tasks.rst">Tasks: Eingabe und Konfiguration</NrLink></div></div>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/configurations">Konfigurationen öffnen</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Documentation/Administration/Tasks.rst">Tasks: Eingabe und Konfiguration</NrLink></div></div>
 
 ---
 layout: nr
@@ -383,7 +383,7 @@ title: "Wie behalten wir Verbrauch und Kosten im Blick?"
 
 # Wie behalten wir Verbrauch und Kosten im Blick?
 
-<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Konfigurierte Budgets vor weiteren Aufrufen prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink><NrJump :page="43">Reserve: Budgetgrenzen</NrJump></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Konfigurierte Budgets vor weiteren Aufrufen prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink><NrJump :page="43">Reserve: Budgetgrenzen</NrJump></div></div></div>
 
 
 ---
@@ -427,7 +427,7 @@ title: "Wer darf Änderungen ausführen?"
 
 # Wer darf Änderungen ausführen?
 
-<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026"/><figcaption>Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Backend-Agent: konkrete Änderung vorab freigeben</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/main?redirect=nrllm_tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026"/><figcaption>Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Backend-Agent: konkrete Änderung vorab freigeben</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---

@@ -40,6 +40,7 @@ assert.equal(dividers.length, 4, 'Expected four quiet section dividers');
 assert(slides.every((slide) => slide.talkTotal === talkTotal), 'Inconsistent main-slide total');
 assert.match(source, /^presenter: false$/m, 'Public presenter mode must remain disabled');
 assert(!source.includes('<!--'), 'Public source contains speaker notes');
+assert(!source.includes('/typo3/main?redirect='), 'Legacy backend redirects open the dashboard; use verified native module/record paths');
 for (const file of await readdir(resolve(site, 'assets'), { recursive: true })) {
   if (file.endsWith('.js')) {
     const text = await readFile(resolve(site, 'assets', file), 'utf8');
@@ -228,6 +229,7 @@ try {
       assert.equal(result.dividerExtras, 0, `Slide ${number}: distracting divider controls`);
     }
     for (const href of result.links) {
+      assert(!href.includes('/typo3/main?redirect='), `Slide ${number}: legacy backend redirect opens the dashboard`);
       const link = new URL(href);
       assert(['https:', 'http:'].includes(link.protocol), `Unexpected link ${href}`);
       if (link.origin === origin && !link.hash) localLinks.add(href);
