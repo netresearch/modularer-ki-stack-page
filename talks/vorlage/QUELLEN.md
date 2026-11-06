@@ -51,13 +51,15 @@ In den geprüften Erzeugungspfaden sind Schema-Prüfung, Prompt-Vorgaben und
 redaktionelle Freigabe vorhanden; ein zusätzlicher semantischer Quellenabgleich
 ist dort nicht eingebunden.
 
-Die Folien beschreiben deshalb einen **Erweiterungsvorschlag**: zuerst das
-gemeinsame Briefing gegen das Originalmaterial prüfen, danach jeden fertigen
-Formattext erneut gegen das Original. Kürzungen müssen vor der zweiten Prüfung
-erfolgen; Sprachsynthese und Medienproduktion sollten erst danach beginnen.
-Automatische Bewertung und menschliche Freigabe brauchen getrennte Zustände.
-Eine ausgefallene oder nicht durchgeführte Prüfung ist kein bestandenes Ergebnis.
-Diese Folienkorrektur implementiert die vorgeschlagene Erweiterung nicht.
+Die Erweiterung ist inzwischen in **[PR 205](https://github.com/netresearch/t3x-nr-repurpose/pull/205)
+implementiert**, aber noch nicht zusammengeführt und nicht veröffentlicht.
+Bei aktivierter Quellenprüfung gleicht sie zuerst das gemeinsame Briefing mit
+dem Originalmaterial ab, danach jeden fertigen Formattext erneut mit dem Original.
+Kürzungen erfolgen vor der zweiten Prüfung; Sprachsynthese und Medienproduktion
+beginnen danach. Automatische Bewertung und menschliche Freigabe haben getrennte
+Zustände. Eine ausgefallene oder nicht durchgeführte Prüfung ist kein bestandenes
+Ergebnis. Die Voreinstellung bleibt ausgeschaltet. Die Aussage über die fehlende
+Einbindung in Release 0.14.0 bleibt davon unberührt.
 
 - [Repurpose: Analyse des Ausgangsmaterials](https://github.com/netresearch/t3x-nr-repurpose/blob/09bc94e4deae0870b76671647b15cddf94998fb5/Classes/Understanding/DocumentAnalyzer.php)
 - [Repurpose: gemeinsamer Textgenerator](https://github.com/netresearch/t3x-nr-repurpose/blob/09bc94e4deae0870b76671647b15cddf94998fb5/Classes/Generator/AbstractTextGenerator.php)
