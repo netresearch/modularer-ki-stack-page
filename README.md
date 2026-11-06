@@ -122,19 +122,30 @@ global-navigation state. The browser gate checks radio-keyboard selection,
 persistence, legacy and System reset, blocked storage, native NoJS navigation
 and short viewports against the actual built pages.
 
-## TUGLE talk, 3 November 2026
+## Presentations
 
-The German presentation “KI in TYPO3” is published at
-[vortraege/tugle-2026-11-03/](https://netresearch.github.io/modularer-ki-stack-page/vortraege/tugle-2026-11-03/).
-Its editable Slidev source and PDF are in `talks/tugle-2026-11-03/`.
-The presentation contains 27 main slides, including four quiet section dividers.
-Two reference slides, a reserve index and 17 technical explanations form the
-appendix. Speaker notes are excluded from the published
-source and build. Fonts and demo screenshots are local; external demo links
-remain optional. The talk's pinned nr-llm examples describe v0.35.0, not the
-landing page's automatically refreshed release data.
+The event-neutral [template](https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/)
+is maintained in `talks/vorlage/source/`. The upcoming TMUC edition is derived
+from it by `scripts/prepare_talks.py`. The TUGLE edition from 3 November is a
+frozen archive: never edit or rebuild its source, PDF or snapshot.
 
-After the existing landing-page gates pass, the workflow builds and checks the
-talk separately, then assembles it under `public/vortraege/`. It checks actual
-slides in the browser, including fonts, images, navigation and the PDF.
-Generated presentation HTML/assets are not committed.
+The active presentation has 27 main slides plus references and technical
+appendices. Public source and builds exclude speaker notes. Fonts and demo
+screenshots are local; screenshots retain their historical capture dates.
+See `talks/vorlage/QUELLEN.md` for the reviewed nr-llm release, limitations and
+source-refresh procedure. The landing page's automatically refreshed release
+facts do not update presentation claims or recorded demonstrations.
+
+After the landing-page gates pass:
+
+```bash
+python3 scripts/prepare_talks.py
+node scripts/build_talks.mjs
+node scripts/verify_talk.mjs vorlage
+node scripts/verify_talk.mjs tmuc-2026-11-09
+python3 scripts/publish_talks.py
+```
+
+The build exports active PDFs and checks the rendered slides, local resources,
+navigation and downloads before publication. Generated presentation HTML/assets
+are not committed. Archive checks run before publishing the frozen snapshot.

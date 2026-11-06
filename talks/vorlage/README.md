@@ -7,6 +7,10 @@ Inhalte und Gestaltung werden in `source/` bearbeitet. Der erste Stand übernimm
 die TUGLE-Folien mit neutralem Titelblatt; die inhaltliche Nachbesprechung vom
 4. November wird ausschließlich hier eingearbeitet.
 
+Technischer Prüfstand: **nr-llm v0.43.19, geprüft am 6. November 2026**.
+[Quellen, Aussagegrenzen und Aktualisierungsverfahren](QUELLEN.md) dokumentieren
+die Grundlage. Datierte Screenshots behalten ihren historischen Aufnahmestand.
+
 Abschnitt 2 heißt „Fragen zum KI-Einsatz“. Das verworfene Wort „Einsatzfragen“
 nicht als Abschnittsname verwenden.
 

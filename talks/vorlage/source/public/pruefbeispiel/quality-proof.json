@@ -2,26 +2,29 @@
     "title": "Formale Regeln prüfen – Aussagen belegen",
     "source": {
         "package": "netresearch/nr-llm",
-        "version": "0.35.0",
-        "commit": "6afad3444ceb0ef3f206f6687df8d23eb881f496",
+        "version": "0.43.19",
+        "commit": "5b6fca6de8d9593638486c0baca9424934bdc231",
         "license": "GPL-2.0-or-later",
         "copyright": "Copyright (c) 2025-2026 Netresearch DTT GmbH",
         "sourceFilesUnmodified": true,
         "files": [
             {
                 "path": "Classes/Service/Schema/StrictSchemaSubset.php",
-                "sha256": "1d7d0ddd7fe1524b63862aa36e5b3a7688d41aa9da4601d414036d21d29a6407",
-                "url": "https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Schema/StrictSchemaSubset.php"
+                "sha256": "cf1b61f517bb574c51dd597f3254cc2eb3c1b64b6e11bfdea5b2ebe0e7771e5f",
+                "url": "https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Schema/StrictSchemaSubset.php",
+                "gitBlob": "cdfeff3bbbff4da3e657a8475342deb8bff924ae"
             },
             {
                 "path": "Classes/Service/Schema/JsonSchemaValidator.php",
-                "sha256": "f3316827c1a321cfcf09876ddea7c0739777d2fe780b7d2e4dfc6c811f6bc25a",
-                "url": "https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/Classes/Service/Schema/JsonSchemaValidator.php"
+                "sha256": "18c96fbc70e9b7e679ada1de66c6c958f3e55145191d4c5c72492d638d45d874",
+                "url": "https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Schema/JsonSchemaValidator.php",
+                "gitBlob": "4d90142185727e7d695a57db425d479ec5b4143d"
             },
             {
                 "path": "LICENSE",
                 "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
-                "url": "https://github.com/netresearch/t3x-nr-llm/blob/6afad3444ceb0ef3f206f6687df8d23eb881f496/LICENSE"
+                "url": "https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/LICENSE",
+                "gitBlob": "9efa6fbc962836e243e20f7f23db062e2c077d28"
             }
         ]
     },
@@ -31,7 +34,7 @@
         "encoding": "UTF-8"
     },
     "scope": {
-        "executed": "Unveränderte lokale PHP-Schema-Prüfung aus nr-llm 0.35.0.",
+        "executed": "Unveränderte lokale PHP-Schema-Prüfung aus nr-llm 0.43.19.",
         "api": "JsonSchemaValidator::supportsSchema() + JsonSchemaValidator::validateJsonStrict()",
         "modelCalls": 0,
         "networkCalls": 0,
@@ -130,5 +133,19 @@
         }
     ],
     "allExpectedResults": true,
+    "semanticReview": {
+        "service": "DecisionServiceInterface",
+        "availableSince": "0.39.0",
+        "executed": false,
+        "status": "not_performed",
+        "question": "Ist die Anmeldefrist 4. November durch das mitgegebene Briefing belegt?",
+        "subject": {
+            "task": "Verfasse eine kurze Einladung auf Basis des Briefings. Ergänze keine neuen Fakten.",
+            "candidate": "Meldet euch bis 4. November zum TYPO3-Abend an.",
+            "evidence": "Wir laden zu einem TYPO3-Abend über KI ein. Ein Anmeldeschluss steht noch nicht fest."
+        },
+        "explanation": "nr-llm bietet einen zusätzlichen modellgestützten Quellenabgleich. Die Anwendung muss ihn mit einem Prüfprofil ausdrücklich aufrufen und die Folgen festlegen. Hier wurde kein solcher Modellaufruf ausgeführt; es liegt kein automatisches Urteil zur Frist vor.",
+        "documentation": "https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/DecisionService.rst"
+    },
     "conclusion": "Die gelieferten formalen Regeln werden geprüft. Ein passendes Schema belegt nicht die Wahrheit einer frei formulierten Aussage."
 }
