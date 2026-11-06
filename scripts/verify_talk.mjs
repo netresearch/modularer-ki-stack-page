@@ -31,12 +31,23 @@ for (let i = 1; i + 1 < chunks.length; i += 2) {
     assert(raw !== undefined, `Missing ${key} in slide metadata`);
     try { return JSON.parse(raw); } catch { return raw; }
   };
-  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), divider: value('sectionDivider'), screenshots: [...chunks[i + 1].matchAll(/<NrImage file="([^"]+)"/g)].map(match => match[1]), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
+  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), sectionTitle: value('sectionTitle'), divider: value('sectionDivider'), body: chunks[i + 1], screenshots: [...chunks[i + 1].matchAll(/<NrImage file="([^"]+)"/g)].map(match => match[1]), jumps: [...chunks[i + 1].matchAll(/<NrJump\b[^>]*:page="(\d+)"/g)].map(match => Number(match[1])), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
 }
 const titles = slides.map((slide) => slide.title);
 const talkTotal = slides.filter((slide) => !slide.appendix).length;
 const dividers = slides.flatMap((slide, i) => slide.divider ? [i + 1] : []);
-assert.equal(dividers.length, 4, 'Expected four quiet section dividers');
+const sections = JSON.parse(await readFile(resolve(talk, 'source/progress-sections.json'), 'utf8'));
+assert.deepEqual(sections.map(section => section.number), [1, 2, 3, 4, 5], 'Only the five main sections get progress segments');
+assert.deepEqual(slides.filter(slide => !slide.appendix && slide.section === 0).map(slide => slide.title), ['KI in TYPO3', 'Was euch heute erwartet'], 'Title and agenda form the unnumbered introduction');
+assert(slides.slice(0, 2).every(slide => slide.section === 0 && !slide.divider && !slide.appendix), 'The introduction must precede the first section');
+assert.deepEqual(dividers, sections.map(section => section.start), 'Every main section starts with exactly one quiet divider');
+for (const section of sections) {
+  const pages = slides.flatMap((slide, index) => !slide.appendix && slide.section === section.number ? [index + 1] : []);
+  assert.deepEqual(pages, Array.from({ length: section.end - section.start + 1 }, (_, index) => section.start + index), `Section ${section.number}: progress range differs from source`);
+  assert(pages.length && pages.every(page => slides[page - 1].sectionTitle === section.title), `Section ${section.number}: title differs`);
+}
+assert(slides.every((slide, index) => index < talkTotal ? !slide.appendix && slide.talkPage === index + 1 : slide.appendix && slide.talkPage === talkTotal), 'Main-slide numbering must stop at the appendix');
+for (const slide of slides) for (const target of slide.jumps) assert(target >= 1 && target <= slides.length, `Invalid jump from ${slide.title} to ${target}`);
 assert(slides.every((slide) => slide.talkTotal === talkTotal), 'Inconsistent main-slide total');
 assert.match(source, /^presenter: false$/m, 'Public presenter mode must remain disabled');
 assert(!source.includes('<!--'), 'Public source contains speaker notes');
@@ -203,26 +214,41 @@ try {
     localLinks.add(thumbnail.src);
     imageChecks++;
   }
+  let mainJumpChecks = 0;
   for (let number = 1; number <= titles.length; number++) {
     await show(number);
     const result = await page.evaluate((title) => {
       const heading = [...document.querySelectorAll('.slidev-layout h1')].find((node) => node.textContent === title && node.checkVisibility());
       const slide = heading.closest('.slidev-layout'), box = slide.getBoundingClientRect();
       const footer = slide.querySelector('.nr-footer'), footerTop = footer.getBoundingClientRect().top;
-      const overflow = [...slide.querySelectorAll('h1,h2,p,li,figcaption,blockquote,table,.nr-columns section,.nr-question-grid section,.nr-config-chain section,.nr-context-flow section,.nr-data-gate section,.nr-editor-demos figure,.nr-subtitle,.nr-author,.nr-topics,.nr-stack section,.nr-flow-note,.nr-takeaway,.nr-controls,.nr-section-number')].filter((node) => {
+      const overflow = [...slide.querySelectorAll('h1,h2,p,li,figcaption,blockquote,table,.nr-columns section,.nr-question-grid section,.nr-config-chain section,.nr-context-flow section,.nr-data-gate section,.nr-editor-demos figure,.nr-subtitle,.nr-author,.nr-topics,.nr-stack section,.nr-flow-note,.nr-takeaway,.nr-controls,.nr-section-number,.nr-content .nr-jump')].filter((node) => {
         if (!node.checkVisibility() || !node.getClientRects().length) return false;
         const rect = node.getBoundingClientRect();
         const connector = node.matches('.nr-flow>li,.nr-stack-connected>section');
         return rect.left < box.left - 2 || rect.right > box.right + 2 || rect.bottom > footerTop + 2
           || (!connector && (node.scrollHeight > node.clientHeight + 4 || node.scrollWidth > node.clientWidth + 4));
       }).map((node) => node.className || node.tagName);
-      return { overflow, divider: slide.classList.contains('nr-section-divider'), content: slide.querySelector('.nr-content').innerText.replace(/\s+/g, ' ').trim(), dividerExtras: slide.querySelectorAll('.nr-content img,.nr-content ul,.nr-content ol,.nr-content button,.nr-content a,.nr-content .nr-controls').length, broken: [...slide.querySelectorAll('img')].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src), footer: footer.innerText, max: footer.querySelector('[role="progressbar"]').getAttribute('aria-valuemax'), links: [...slide.querySelectorAll('a[href]')].map((link) => link.href) };
+      const progress = footer.querySelector('[role="progressbar"]');
+      return { overflow, divider: slide.classList.contains('nr-section-divider'), content: slide.querySelector('.nr-content').innerText.replace(/\s+/g, ' ').trim(), dividerExtras: slide.querySelectorAll('.nr-content img,.nr-content ul,.nr-content ol,.nr-content button,.nr-content a,.nr-content .nr-controls').length, broken: [...slide.querySelectorAll('img')].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src), footer: footer.innerText, max: progress.getAttribute('aria-valuemax'), progressText: progress.getAttribute('aria-valuetext'), sectionText: footer.querySelector('.nr-section-progress').textContent, segmentLabels: [...footer.querySelectorAll('.nr-progress-label')].map(node => node.textContent), current: [...footer.querySelectorAll('.is-current .nr-progress-label')].map(node => node.textContent), fills: [...footer.querySelectorAll('.nr-progress-fill')].map(node => node.style.width), links: [...slide.querySelectorAll('a[href]')].map((link) => link.href) };
     }, titles[number - 1]);
     assert.deepEqual(result.overflow, [], `Slide ${number}: overflow`);
     assert.deepEqual(result.broken, [], `Slide ${number}: images`);
     const metadata = slides[number - 1];
     assert.equal(result.max, String(talkTotal));
     assert(result.footer.includes(metadata.appendix ? 'Anhang · nicht mitgezählt' : `Folie ${metadata.talkPage}/${talkTotal}`), `Slide ${number}: footer`);
+    assert.deepEqual(result.segmentLabels, sections.map(section => `${section.number} ${section.label}`), `Slide ${number}: visible section labels`);
+    if (metadata.appendix) {
+      assert.deepEqual(result.current, [], `Slide ${number}: appendix must not mark an active section`);
+      assert(result.fills.every(fill => fill === '100%'), `Slide ${number}: completed presentation`);
+    } else if (metadata.section === 0) {
+      assert.deepEqual(result.current, [], `Slide ${number}: introduction must not activate section 1`);
+      assert(result.fills.every(fill => fill === '0%'), `Slide ${number}: no main section has started`);
+      assert.equal(result.sectionText, 'Auftakt');
+      assert(result.progressText.startsWith('Auftakt.'), `Slide ${number}: accessible intro label`);
+    } else {
+      const section = sections.find(section => section.number === metadata.section);
+      assert.deepEqual(result.current, [`${section.number} ${section.label}`], `Slide ${number}: active section`);
+    }
     assert.equal(result.divider, metadata.divider, `Slide ${number}: divider class`);
     if (metadata.divider) {
       assert.equal(result.content, `${String(metadata.section).padStart(2, '0')} ${metadata.title}`, `Slide ${number}: quiet divider content`);
@@ -237,6 +263,24 @@ try {
     for (let imageIndex = 0; imageIndex < metadata.screenshots.length; imageIndex++) {
       if (imageIndex) await show(number);
       await checkImageViewer(number, imageIndex);
+    }
+    // Main slides link into the reserve. Verify the rendered target and that
+    // keyboard navigation still works after a mouse or keyboard jump.
+    if (!metadata.appendix) for (const [index, target] of metadata.jumps.entries()) {
+      await show(number);
+      const button = (await page.evaluateHandle(({ title, index }) => {
+        const heading = [...document.querySelectorAll('.slidev-layout h1')].find(node => node.textContent === title && node.checkVisibility());
+        return heading.closest('.slidev-layout').querySelectorAll('button.nr-jump')[index];
+      }, { title: metadata.title, index })).asElement();
+      assert(button, `Slide ${number}: missing jump button ${index}`);
+      if (mainJumpChecks === 0) { await button.focus(); await page.keyboard.press('Enter'); }
+      else await button.click();
+      await page.waitForFunction(({ target, title }) => location.hash === `#/${target}` && [...document.querySelectorAll('.slidev-layout h1')].some(node => node.textContent === title && node.checkVisibility()), {}, { target, title: titles[target - 1] });
+      if (target < slides.length) {
+        await page.keyboard.press('ArrowRight');
+        await page.waitForFunction(target => location.hash === `#/${target}`, {}, target + 1);
+      }
+      mainJumpChecks++;
     }
   }
   assert.equal(imageChecks, slides.reduce((total, slide) => total + slide.screenshots.length, 0), 'Not every screenshot was checked');
@@ -253,8 +297,11 @@ try {
   await page.click('a.back');
   // A committed URL precedes Slidev mounting after this full-page navigation.
   // Verify the returned slide before issuing the next hash navigation.
-  await page.waitForFunction((title) => location.hash === '#/16'
-    && [...document.querySelectorAll('.slidev-layout h1')].some((node) => node.textContent === title && node.checkVisibility()), {}, titles[15]);
+  const proofOwners = slides.flatMap((slide, index) => !slide.appendix && slide.body.includes('href="pruefbeispiel/index.html"') ? [index + 1] : []);
+  assert.equal(proofOwners.length, 1, 'The proof example needs one main-slide return target');
+  const proofPage = proofOwners[0];
+  await page.waitForFunction(({ number, title }) => location.hash === `#/${number}`
+    && [...document.querySelectorAll('.slidev-layout h1')].some((node) => node.textContent === title && node.checkVisibility()), {}, { number: proofPage, title: titles[proofPage - 1] });
   await show(1);
   // Check the fonts actually used for glyphs, not just declared CSS families.
   const cdp = await page.createCDPSession();
@@ -306,7 +353,7 @@ try {
     }
   }
   assert.deepEqual(failures, [], 'Browser or network errors');
-  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, ${dividers.length} quiet dividers, appendix, local images/fonts, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, navigation and ${localLinks.size} local links/downloads`);
+  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, navigation and ${localLinks.size} local links/downloads`);
 } finally {
   await browser?.close(); await new Promise((done) => server.close(done));
   await rm(downloadsDir, { recursive: true, force: true });

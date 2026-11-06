@@ -129,8 +129,13 @@ is maintained in `talks/vorlage/source/`. The upcoming TMUC edition is derived
 from it by `scripts/prepare_talks.py`. The TUGLE edition from 3 November is a
 frozen archive: never edit or rebuild its source, PDF or snapshot.
 
-The active presentation has 27 main slides plus references and technical
-appendices. Public source and builds exclude speaker notes. Fonts and demo
+The active presentation has 32 main slides plus references and technical
+appendices. Title and agenda form an unnumbered introduction (section 0);
+each of the five main sections starts with its own divider. Four compact
+overviews connect the examples to complementary measures. Small detail links
+lead to the relevant appendix slides and stay out of the PDF. Progress ranges
+and the proof example's return link are derived from slide metadata.
+Public source and builds exclude speaker notes. Fonts and demo
 screenshots are local; screenshots retain their historical capture dates.
 See `talks/vorlage/QUELLEN.md` for the reviewed nr-llm release, limitations and
 source-refresh procedure. The landing page's automatically refreshed release

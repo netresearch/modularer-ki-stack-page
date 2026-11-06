@@ -7,24 +7,50 @@ import unittest
 from prepare_talks import EVENT, MARKERS, prepare
 
 
-SLIDES = """---
-title: KI in TYPO3
-info: |
+INTRO = [(0, False, 'KI in TYPO3', 'Auftakt', ''), (0, False, 'Agenda', 'Auftakt', '')]
+CONTENT = [
+    (1, True, 'Möglichkeiten', 'Möglichkeiten', ''),
+    (1, False, 'Gemeinsame Inhalte', 'Möglichkeiten', 'Dieser Inhalt gehört beiden aktiven Fassungen.'),
+    (2, True, 'Fragen', 'Fragen zum KI-Einsatz', ''),
+    (3, True, 'Antworten', 'Antworten und Grenzen', ''),
+    (3, False, 'Prüfbeispiel', 'Antworten und Grenzen', '<NrLink href="pruefbeispiel/index.html">Proof</NrLink>'),
+    (4, True, 'Agentenwege', 'Agentenwege', ''),
+    (5, True, 'Einordnung', 'Einordnung & Austausch', ''),
+]
+EDITION = """info: |
   KI in TYPO3. Neutrale, fortlaufend gepflegte Vorlage.
 presenter: false
 record: false
 download: ./KI-in-TYPO3.pdf
 exportFilename: KI-in-TYPO3
----
+"""
+COVER = """
 <div class="nr-kicker">Anwendungen · Fragen · gemeinsame Grundlagen</div>
 <div class="nr-author">Sebastian Mendel · Netresearch</div>
----
-title: Gemeinsame Inhalte
----
-# Gemeinsame Inhalte
-
-Dieser Inhalt gehört beiden aktiven Fassungen.
 """
+
+
+def fixture_slides(intro=INTRO):
+    main = [*intro, *CONTENT]
+    entries = [*main, (5, False, 'Reserve', 'Einordnung & Austausch', 'Anhang')]
+    chunks = []
+    for page, (section, divider, title, section_title, body) in enumerate(entries, 1):
+        chunks.append(f'''---
+title: {title}
+section: {section}
+sectionTitle: {json.dumps(section_title, ensure_ascii=False)}
+sectionDivider: {str(divider).lower()}
+talkPage: {min(page, len(main))}
+talkTotal: {len(main)}
+appendix: {json.dumps('technical' if page > len(main) else '')}
+{EDITION if page == 1 else ''}---
+# {title}
+{COVER if page == 1 else body}
+''')
+    return ''.join(chunks)
+
+
+SLIDES = fixture_slides()
 
 
 class PrepareTalkTests(unittest.TestCase):
@@ -38,6 +64,9 @@ class PrepareTalkTests(unittest.TestCase):
         self.master.mkdir(parents=True)
         self.target.mkdir(parents=True)
         (self.master / 'slides.md').write_text(SLIDES, encoding='utf-8')
+        self.proof = self.master / 'public/pruefbeispiel/index.html'
+        self.proof.parent.mkdir(parents=True)
+        self.proof.write_text('<a class="back" href="../#/999">Zurück</a>', encoding='utf-8')
         (self.master / 'package.json').write_text(json.dumps({
             'name': 'vorlage', 'scripts': {'export': 'template export'},
             'devDependencies': {'example': '1.0.0'},
@@ -94,14 +123,51 @@ class PrepareTalkTests(unittest.TestCase):
         self.assertEqual(package['name'], lock['packages']['']['name'])
         self.assertEqual(lock['packages']['node_modules/example']['version'], '1.0.0')
 
-    def test_complete_freeze_preserves_event_even_when_template_changes(self):
+    def test_complete_freeze_preserves_event_while_master_navigation_keeps_up(self):
         (self.event / 'snapshot').mkdir()
         for name in MARKERS[1:]:
             (self.event / name).write_text('{}')
-        (self.master / 'slides.md').write_text('changed template, irrelevant to archived event')
+        (self.master / 'slides.md').write_text(fixture_slides([*INTRO, (0, False, 'Zusätzlicher Auftakt', 'Auftakt', '')]))
         before = self.target_files()
         prepare(self.root)
         self.assertEqual(self.target_files(), before)
+        sections = json.loads((self.master / 'progress-sections.json').read_text())
+        self.assertEqual(sections[0]['start'], 4)
+        self.assertIn('href="../#/8"', self.proof.read_text())
+
+    def test_navigation_excludes_intro_and_appendix_and_is_shared_with_event(self):
+        prepare(self.root)
+        sections = json.loads((self.master / 'progress-sections.json').read_text())
+        self.assertEqual([section['number'] for section in sections], [1, 2, 3, 4, 5])
+        self.assertEqual((sections[0]['start'], sections[0]['end']), (3, 4))
+        self.assertEqual(sections[-1]['end'], len(INTRO) + len(CONTENT))
+        self.assertEqual((self.master / 'progress-sections.json').read_bytes(),
+                         (self.target / 'progress-sections.json').read_bytes())
+        self.assertIn('href="../#/7"', self.proof.read_text())
+        self.assertEqual(self.proof.read_bytes(), (self.target / 'public/pruefbeispiel/index.html').read_bytes())
+
+    def test_inserted_intro_moves_section_start_and_proof_return_together(self):
+        (self.master / 'slides.md').write_text(fixture_slides([*INTRO, (0, False, 'Vorwissen', 'Auftakt', '')]))
+        prepare(self.root)
+        sections = json.loads((self.master / 'progress-sections.json').read_text())
+        self.assertEqual(sections[0]['start'], 4)
+        self.assertIn('href="../#/8"', self.proof.read_text())
+
+    def test_invalid_outline_is_rejected_before_existing_event_is_changed(self):
+        before = self.target_files()
+        variants = {
+            'numbered intro': SLIDES.replace('section: 0', 'section: 1', 1),
+            'missing divider': SLIDES.replace('sectionDivider: true', 'sectionDivider: false', 1),
+            'wrong total': SLIDES.replace('talkTotal: 9', 'talkTotal: 99', 1),
+            'invalid jump': SLIDES + '<NrJump :page="999">Out of bounds</NrJump>',
+        }
+        for name, source in variants.items():
+            with self.subTest(name=name):
+                (self.master / 'slides.md').write_text(source)
+                with self.assertRaises(ValueError):
+                    prepare(self.root)
+                self.assertEqual(self.target_files(), before)
+                self.assertIn('href="../#/999"', self.proof.read_text())
 
     def test_pdf_proof_link_uses_event_while_template_reference_stays_neutral(self):
         neutral = 'https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/'

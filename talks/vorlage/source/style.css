@@ -201,3 +201,34 @@ div[title="Clicks in this slide: 1"]{display:none!important}
 .nr-image-lens{position:absolute;box-sizing:border-box;pointer-events:none;user-select:none;border:0;background:transparent;contain:strict}
 .nr-image-lens canvas{display:block;width:100%;height:100%;pointer-events:none}
 @media print{.nr-image-lens-viewport{display:none!important}}
+
+/* Quiet presenter navigation; appendix controls keep their existing prominence. */
+.nr .nr-detail-links{position:absolute;left:60px;right:60px;bottom:18px;display:flex;align-items:center;flex-wrap:wrap;gap:3px 10px;min-height:26px;font-size:14px;line-height:1.25}
+.nr .nr-detail-links::before{content:'Details';color:var(--nr-text-secondary);margin-right:3px}
+.nr .nr-detail-links .nr-jump{border:0;border-radius:3px;background:transparent;color:var(--nr-text-secondary);font-size:14px;line-height:1.3;padding:4px 5px;min-height:26px;text-decoration:underline;text-decoration-color:var(--nr-border);text-underline-offset:3px}
+.nr .nr-detail-links .nr-jump:hover{color:var(--nr-primary-text);background:var(--nr-bg-alt)}
+.nr .nr-detail-links:not(:has(button)){display:none}
+.nr.nr-cover .nr-detail-links::before,.nr.nr-cover .nr-detail-links .nr-jump{color:white}
+@media print{.nr .nr-detail-links{display:none!important}}
+
+/* One mechanism per example, followed by a compact view of complementary controls. */
+.nr.nr-overview-slide h1{font-size:39px!important;margin-bottom:24px!important}
+.nr-feature-overview{margin:0;padding:0}
+.nr-feature-overview>div{display:grid;grid-template-columns:295px 1fr;gap:28px;align-items:center;min-height:61px;padding:8px 0;border-bottom:1px solid var(--nr-border-light)}
+.nr-feature-overview>div:first-child{border-top:1px solid var(--nr-border-light)}
+.nr-feature-overview dt{font-family:'Raleway',Arial,sans-serif;font-size:25px;line-height:1.18;font-weight:700;color:var(--nr-primary-text)}
+.nr-feature-overview dd{margin:0;font-size:23px;line-height:1.28}
+.nr .nr-overview-limit{font-size:18px;line-height:1.35;margin-top:18px!important}
+.nr .nr-project-decision{font-size:20px;line-height:1.3;font-weight:600;color:var(--nr-primary-text);margin-top:15px!important}
+.nr.nr-code-gate-slide h1{font-size:38px!important;max-width:1030px;margin-bottom:20px!important}
+.nr .nr-code-task{opacity:1;background:var(--nr-bg-alt);font-size:24px;line-height:1.3;padding:12px 18px;margin-bottom:20px!important}
+.nr .nr-code-task strong{font-size:16px;letter-spacing:.4px;text-transform:uppercase;color:var(--nr-primary-text);margin-right:12px}
+.nr-code-gate{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;gap:10px}
+.nr-code-gate>section{border:1px solid var(--nr-border);border-radius:8px;padding:18px 20px}
+.nr-code-gate .nr-step-label{margin-bottom:14px;font-size:16px}
+.nr-code-gate h2{font-size:26px!important;margin-bottom:14px!important}
+.nr-code-gate p{font-size:22px;line-height:1.3}
+.nr-code-gate code{font-size:20px;color:var(--nr-primary-text)}
+.nr .nr-code-result{display:flex;align-items:center;gap:20px;background:var(--nr-primary-text);color:white;padding:16px 20px;border-radius:8px;font-size:23px;line-height:1.3;margin-top:18px!important}
+.nr-code-result>strong{font-family:'Raleway',Arial,sans-serif;font-size:23px;border:1px solid #FFFFFF88;border-radius:4px;padding:6px 12px}
+.nr .nr-code-limit{font-size:17px;line-height:1.35;margin-top:15px!important}

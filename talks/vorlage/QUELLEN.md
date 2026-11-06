@@ -6,6 +6,48 @@ Commit [`5b6fca6de8d9593638486c0baca9424934bdc231`](https://github.com/netresear
 Das war das bei dieser Prüfung zuletzt veröffentlichte Release. Die Angabe ist
 ein datierter Prüfstand und wird nicht automatisch mit jedem Release geändert.
 
+Der Release-Abgleich am **7. November 2026** bestätigt weiterhin v0.43.19.
+Die vier ergänzenden Übersichtsfolien verwenden denselben Quellstand.
+
+## Ergänzende Maßnahmen in den vier Themenfeldern
+
+Die Übersichten bündeln vorhandene und ergänzende Funktionen. Ihre technischen
+Voraussetzungen bleiben unterschiedlich: verpflichtende Schlüsselmaskierung,
+konfigurierte Rechte und Budgets, optionale Vieraugenfreigabe und ausdrücklich
+einzubindende fachliche Prüfungen.
+
+- **Daten und Vorgaben:** [Schlüsselmaskierung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionInputGuardrail.php),
+  [Maskierung in Antwort und Thinking](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionGuardrail.php),
+  [Vault-Referenzen](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/ext_conf_template.txt),
+  [Web-Werkzeug mit Adressprüfung und Zustimmung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr202APublicWebPageThroughAnAddressGuard.rst),
+  [Protokollumfang und Löschlauf](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/DataRetention.rst).
+  nr-vault besitzt Geheimnisspeicherung, Zugriffsrechte und den verwendeten
+  sicheren HTTP-Client; nr-llm bindet diesen Baustein ein. Die Maskierung erkennt
+  bekannte Muster, nicht beliebige sensible Inhalte; Toolargumente und Embeddings
+  sind ausgenommen. Die Web-Regeln betreffen das entsprechende Werkzeug, nicht
+  sämtliche HTTP-Aufrufe einer Anwendung. Chatverläufe und verschlüsselte
+  Hintergrundantworten haben dokumentierte Aufbewahrungsausnahmen.
+- **Aufwand und Betrieb:** [Circuit Breaker und Konfiguration](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/ext_conf_template.txt),
+  [Provider-Fallbacks](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr063ProviderResilience.rst).
+  Ein Fallback wird nur bei geeigneten Fehlern versucht. Vorab geprüfte Budgets
+  garantieren bei parallelen Aufrufen keine harte Kostengrenze.
+- **Qualität:** [Begriffslisten mit Geltungsbereich und Ausnahmen](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/TermLists.rst),
+  [DecisionService](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/DecisionService.rst),
+  [Qualitätsevaluation](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Developer/QualityEvaluation.rst).
+  Begriffslisten erkennen keine Umschreibungen. Bewertungen brauchen eine
+  ausdrückliche Einbindung und passende Kriterien. Die fachliche Freigabe bleibt
+  Aufgabe der Anwendung und ihrer Nutzer.
+- **Kontrolle und Verantwortung:** [optionale Vieraugenregel](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr172FourEyesApprovalPerConfiguration.rst),
+  [Bindung an den Werkzeugschritt und gespeichertes Audit](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr132ApprovalAuditAndTurnBinding.rst),
+  [Bindung an die angezeigte Vorschau](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr184ApprovalBindsToTheStateItShowed.rst),
+  [anwendungsspezifische Regeln vor Werkzeugaufrufen](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/ToolInvocationPolicy.rst).
+  Die Zustandsbindung setzt eine erfolgreiche Werkzeugvorschau voraus;
+  fachliche Regeln muss die Anwendung implementieren.
+
+Die kleinen Detailverweise im Hauptteil führen zu passenden bestehenden
+Reservefolien. Sie sind Bedienhilfen für den Vortrag und werden im PDF
+ausgeblendet; sie enthalten keine privaten Notizen.
+
 ## Formale und inhaltliche Prüfung
 
 Ein JSON-Schema prüft Struktur, Datentypen, erlaubte Werte und unterstützte

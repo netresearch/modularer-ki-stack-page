@@ -3,35 +3,35 @@
     "number": 1,
     "label": "Möglichkeiten",
     "title": "Möglichkeiten",
-    "start": 1,
-    "end": 7
+    "start": 3,
+    "end": 8
   },
   {
     "number": 2,
     "label": "Fragen",
     "title": "Fragen zum KI-Einsatz",
-    "start": 8,
-    "end": 10
+    "start": 9,
+    "end": 11
   },
   {
     "number": 3,
     "label": "Antworten",
     "title": "Antworten und Grenzen",
-    "start": 11,
-    "end": 20
+    "start": 12,
+    "end": 25
   },
   {
     "number": 4,
     "label": "Agenten",
     "title": "Agentenwege",
-    "start": 21,
-    "end": 23
+    "start": 26,
+    "end": 28
   },
   {
     "number": 5,
     "label": "Einordnung",
     "title": "Einordnung & Austausch",
-    "start": 24,
-    "end": 27
+    "start": 29,
+    "end": 32
   }
 ]

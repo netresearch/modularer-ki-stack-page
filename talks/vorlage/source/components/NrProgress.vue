@@ -2,36 +2,32 @@
 import { computed, unref } from 'vue'
 import { useSlideContext } from '@slidev/client'
 
-// These ranges count only the talk; references and reserve slides come afterwards.
+// Generated from the main sections; the unnumbered introduction has no segment.
 const props = defineProps({
   sections: {
     type: Array,
-    default: () => [
-      { number: 1, label: 'Möglichkeiten', title: 'Möglichkeiten', start: 1, end: 7 },
-      { number: 2, label: 'Bedarf', title: 'Anforderungen', start: 8, end: 9 },
-      { number: 3, label: 'nr-llm', title: 'nr-llm', start: 10, end: 18 },
-      { number: 4, label: 'Agenten', title: 'Agentenwege', start: 19, end: 20 },
-      { number: 5, label: 'Einordnung', title: 'Einordnung & Austausch', start: 21, end: 23 },
-    ],
+    required: true,
   },
 })
 const { $page, $frontmatter } = useSlideContext()
 const frontmatter = computed(() => unref($frontmatter))
-const talkTotal = computed(() => props.sections.at(-1)?.end || 23)
-const rawPage = computed(() => Number(frontmatter.value.talkPage || unref($page)))
+const talkTotal = computed(() => props.sections.at(-1).end)
+const rawPage = computed(() => Number(frontmatter.value.talkPage ?? unref($page)))
 const isAppendix = computed(() => Boolean(frontmatter.value.appendix) || rawPage.value > talkTotal.value)
+const isIntro = computed(() => !isAppendix.value && Number(frontmatter.value.section) === 0)
 const talkPage = computed(() => Math.max(1, Math.min(rawPage.value, talkTotal.value)))
-const currentSection = computed(() => props.sections.find(section => talkPage.value >= section.start && talkPage.value <= section.end) || props.sections[0])
+const currentSection = computed(() => props.sections.find(section => talkPage.value >= section.start && talkPage.value <= section.end))
 const appendixLabel = computed(() => frontmatter.value.appendix === 'technical' ? 'Reserve für Rückfragen' : 'Links & Quellen')
 const progressLabel = computed(() => isAppendix.value
   ? 'Vortrag abgeschlossen. Anhang: ' + appendixLabel.value + '. Nicht in der Folienzahl enthalten.'
+  : isIntro.value ? `Auftakt. Folie ${talkPage.value} von ${talkTotal.value}.`
   : `Abschnitt ${currentSection.value.number} von ${props.sections.length}: ${currentSection.value.title}. Folie ${talkPage.value} von ${talkTotal.value}.`)
 const segments = computed(() => props.sections.map(section => ({
   ...section,
   length: section.end - section.start + 1,
-  fill: isAppendix.value ? 100 : Math.max(0, Math.min(100, (talkPage.value - section.start + 1) / (section.end - section.start + 1) * 100)),
-  current: !isAppendix.value && section.number === currentSection.value.number,
-  complete: isAppendix.value || talkPage.value > section.end,
+  fill: isAppendix.value ? 100 : isIntro.value ? 0 : Math.max(0, Math.min(100, (talkPage.value - section.start + 1) / (section.end - section.start + 1) * 100)),
+  current: !isAppendix.value && !isIntro.value && section.number === currentSection.value.number,
+  complete: isAppendix.value || !isIntro.value && talkPage.value > section.end,
 })))
 </script>
 
@@ -63,7 +59,7 @@ const segments = computed(() => props.sections.map(section => ({
     </div>
     <div class="nr-progress-meta">
       <a href="https://www.netresearch.de/">Netresearch DTT GmbH</a>
-      <span class="nr-section-progress">{{ isAppendix ? 'Anhang · nicht mitgezählt' : 'Abschnitt ' + currentSection.number + '/' + sections.length + ' · ' + currentSection.title }}</span>
+      <span class="nr-section-progress">{{ isAppendix ? 'Anhang · nicht mitgezählt' : isIntro ? 'Auftakt' : 'Abschnitt ' + currentSection.number + '/' + sections.length + ' · ' + currentSection.title }}</span>
       <span class="nr-slide-progress">{{ isAppendix ? appendixLabel : 'Folie ' + talkPage + '/' + talkTotal }}</span>
     </div>
   </footer>
