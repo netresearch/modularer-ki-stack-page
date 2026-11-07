@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
-const props = defineProps({ href: { type: String, required: true }, printHref: String })
+const props = defineProps({ href: { type: String, required: true }, printHref: String, screenOnly: Boolean })
 const { isPrintMode } = useNav()
 const base = import.meta.env.BASE_URL
 const isRemote = computed(() => /^https?:\/\//i.test(props.href))
@@ -27,5 +27,5 @@ function allowSlideNavigation(event) {
 
 <template>
   <button v-if="isScreenshot && !isPrintMode" type="button" class="nr-image-link" aria-haspopup="dialog" @click.stop="openImage" @keydown="allowSlideNavigation"><slot /></button>
-  <a v-else-if="!isScreenshot && (!isPrintMode || isRemote || printHref)" :href="url" target="_blank" rel="noopener"><slot /></a>
+  <a v-else-if="!isScreenshot && !(screenOnly && isPrintMode) && (!isPrintMode || isRemote || printHref)" :href="url" target="_blank" rel="noopener"><slot /></a>
 </template>

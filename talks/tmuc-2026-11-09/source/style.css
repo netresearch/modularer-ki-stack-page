@@ -207,7 +207,7 @@ div[title="Clicks in this slide: 1"]{display:none!important}
 .nr .nr-detail-links::before{content:'Details';color:var(--nr-text-secondary);margin-right:3px}
 .nr .nr-detail-links .nr-jump{border:0;border-radius:3px;background:transparent;color:var(--nr-text-secondary);font-size:14px;line-height:1.3;padding:4px 5px;min-height:26px;text-decoration:underline;text-decoration-color:var(--nr-border);text-underline-offset:3px}
 .nr .nr-detail-links .nr-jump:hover{color:var(--nr-primary-text);background:var(--nr-bg-alt)}
-.nr .nr-detail-links:not(:has(button)){display:none}
+.nr .nr-detail-links:not(:has(button,a[href])){display:none}
 .nr.nr-cover .nr-detail-links::before,.nr.nr-cover .nr-detail-links .nr-jump{color:white}
 @media print{.nr .nr-detail-links{display:none!important}}
 

@@ -205,38 +205,69 @@ gehören in die aktive Vorlage und die daraus abgeleitete TMUC-Fassung.
 Die folgenden sechs Reservefolien ergänzen die Übersichten. Alle Belege wurden
 im oben genannten Quellstand geprüft.
 
-### 57: Begriffslisten
+### 58: Begriffslisten
 
 Quelle: [TermLists.rst](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/TermLists.rst).
 
 Die zugeordnete Konfiguration bestimmt die Geltung; Fallback ändert diese ursprüngliche Zuordnung nicht. Ein Verstoß blockiert Ausgabe, Cache und betroffenen Werkzeugaufruf. „Rabatt*“ ist das dokumentierte Beispiel für das Sternsuffix. Synonyme, Schreibfehler und Umschreibungen werden nicht erkannt. Pflichtwörter gelten u. a. nicht für Antworten unter 30 Wörtern, JSON oder Agentenläufe. Agentenläufe prüfen Sperrbegriffe in Schreibargumenten; der Chattext bleibt frei. Ein importiertes MCP-Werkzeug zählt in diesem Mechanismus als schreibend, auch wenn es eine Suche anbietet. Optionaler Site-/Sprachbezug hat weitere dokumentierte Metadatenregeln. Bei noch fehlender Datenbanktabelle wird die Prüfung mit Warnung übergangen; andere Prüfungsfehler blockieren. Diese seltenen Betriebsausnahmen sind nicht als universelle Garantie auf der Folie verallgemeinert.
 
-### 58: Circuit Breaker und Fallback
+### 59: Circuit Breaker und Fallback
 
 Quellen: [ADR-063](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr063ProviderResilience.rst), [Voreinstellungen](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/ext_conf_template.txt), [gemeinsamer FailureClassifier](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Provider/Middleware/FailureClassifier.php), [FallbackMiddleware](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Provider/Middleware/FallbackMiddleware.php).
 
 `circuitBreaker.enabled=1`, Fehlergrenze 5, Pause 30 Sekunden. Verbindungsfehler, 429 und 5xx sind relevante Ausfallklassen; ein offener Circuit Breaker ist für Fallback geeignet. Anmelde- und Konfigurationsfehler rechtfertigen keinen Fallback. Der Breaker sitzt innerhalb der Fallback-Schleife. Die Probe nach der Pause ist cachebasiert, Fehlerzählung und Probezugang sind nicht atomar: parallele Fehler können den Zeitpunkt verschieben und mehrere Proben zulassen. Die Folie nennt daher Voreinstellungen und keine harte Verfügbarkeits- oder Zählgarantie. Die gesundheitsabhängige Umsortierung von Fallbacks ist gesondert optional und standardmäßig aus; sie wird nicht als automatische Voreinstellung behauptet.
 
-### 59: Geheimnismaskierung und nr-vault
+### 60: Geheimnismaskierung und nr-vault
 
 Quellen: [Vault-Einbindung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr030SpecializedServicesVaultMigration.rst), [SecretRedactionInputGuardrail](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionInputGuardrail.php), [SecretRedactionGuardrail](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionGuardrail.php), [Grenzen der Maskierung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr089GuardrailBoundaryCompleteness.rst), [Musterkatalog und Fehlerverhalten](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr123OneSecretShapeCatalogue.rst).
 
 Zugänge werden über Vault-Kennungen konfiguriert und für HTTP-Aufrufe eingebunden. Ein- und ausgehende Geheimnismaskierung erklären sich als verpflichtend; die Ausgabeseite erfasst Antwort und Thinking, ausdrücklich nicht Toolargumente. Embeddings sind ebenfalls ausgenommen. Die Maskierung erkennt Muster, keine beliebigen vertraulichen oder personenbezogenen Inhalte. Der Musterkatalog beschreibt die Textmaskierung als Best Effort und bei Regexfehlern als offen; die Folie behauptet keine lückenlose Verhinderung von Geheimnisabfluss. Vault-Speicherung und Textmaskierung sind verschiedene Schutzmechanismen.
 
-### 60: Externe Webseiten
+### 61: Externe Webseiten
 
 Quelle: [ADR-202](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr202APublicWebPageThroughAnAddressGuard.rst).
 
 `fetch_external_url` ist standardmäßig deaktiviert. Nach Aktivierung fordert jeder Aufruf grundsätzlich Zustimmung; nur eine ausdrücklich konfigurierte Ausnahme mit nicht leerer Allowlist hebt sie auf. Start-URL und jeder Redirect durchlaufen die Adressprüfung, eine Host-Allowlist hebt die Privatrangensperre nicht auf. Die normalen Verbindungen werden an geprüfte Adressen gebunden; die explizite Proxy-Ausnahme hat einen anderen Vertrauensbereich. Rückgabe: begrenzter Text, als nicht vertrauenswürdig gekennzeichnet; keine JavaScript-Ausführung, keine Formulare oder übertragenen Zugangsdaten. Eine zugelassene URL kann über Query-Parameter Informationen nach außen tragen. Öffentlich adressierte interne Dienste bleiben Betreiberaufgabe und brauchen gezielte Listenregeln. Die Folie verspricht keine allgemeine Absicherung beliebiger HTTP-Aufrufe und keinen vollständigen Prompt-Injection-Schutz.
 
-### 61: Vieraugenregel, Aufruf-/Vorschaubindung, Audit
+### 62: Vieraugenregel, Aufruf-/Vorschaubindung, Audit
 
 Quellen: [ADR-172](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr172FourEyesApprovalPerConfiguration.rst), [ADR-184](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr184ApprovalBindsToTheStateItShowed.rst), [ADR-132](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr132ApprovalAuditAndTurnBinding.rst).
 
 Vieraugenregel pro Konfiguration, standardmäßig aus. Bei Aktivierung darf der auslösende Backend-Nutzer nicht selbst zustimmen, auch nicht als Administrator; Selbstablehnung bleibt möglich. Service Accounts sind nicht mit erfasst. Die Aufrufbindung gilt für den ganzen anstehenden Turn. Eine erfolgreich angezeigte Vorschau wird vor Ausführung erneut gebildet und verglichen; Änderung führt zu erneuter Freigabe mit aktueller Vorschau. Keine Bindung an eine fehlende oder bei Suspend fehlgeschlagene Vorschau, kein allgemeines optimistisches Sperren aller TYPO3-Daten. Vor schreibenden Turns muss das APPROVAL-Ereignis gespeichert werden; lesende Turns und Ablehnungen haben andere Audit-Ausfallregeln. Die Folie beschränkt ihre Zusage entsprechend auf Schreibfreigaben.
 
-### 62: Anwendungsspezifische Werkzeugregeln
+### 63: Anwendungsspezifische Werkzeugregeln
 
 Quelle: [ToolInvocationPolicy.rst](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/ToolInvocationPolicy.rst).
 
 Die Anwendung implementiert `ToolInvocationRuleInterface`; ohne Implementierung keine zusätzliche fachliche Beschränkung. Grundberechtigung wird zuerst geprüft. Die eigenen Regeln erhalten endgültige Argumente, Konfiguration, handelnde Person und Laufkontext; Zielangaben erfordern bei Bedarf einen Resolver. Auch nach menschlicher Freigabe greift die Regel unmittelbar vor Ausführung. Erste Ablehnung stoppt, eine Regel-Exception ebenfalls. Ein fehlendes Ziel wird nicht pauschal automatisch abgelehnt: Die darauf angewiesene eigene Regel muss dies tun. Wer vollständige Historie benötigt, muss dies deklarieren; unvollständig nachgewiesene Historie führt dann zur Ablehnung. Das Beispiel mit einem erlaubten Seitenbereich ist ausdrücklich eine mögliche Projektregel, keine fertige Standardfunktion.
+
+
+## Ergänzende Demo-Einsatzfälle in Abschnitt 1
+
+Die neue Folie 9 bündelt eingerichtete Möglichkeiten; sie behauptet keinen
+frischen erfolgreichen Modellaufruf für jede Funktion. Grundlage ist der
+[Demo-Stand `54656cc`](https://github.com/netresearch/typo3-demo/tree/54656cc6a107af0f801c5cc1f51df300f9fc5eb4),
+dessen Update-Deployment am 7. November 2026 erfolgreich abgeschlossen wurde.
+
+- **Fehleranalyse:** Die [Agent-Demo](https://typo3-demo.netresearch.de/extensions/ai-agent)
+  beschreibt den Zugriff auf Logs. Die Demo-Konfiguration weist den Agenten
+  an, Fehlerfragen durch Logabfragen zu bearbeiten. Eine neue erfolgreiche
+  Loganalyse ist für diese Folie nicht aufgezeichnet.
+- **Systemrecherche:** Der vorhandene Screenshot
+  `20-agent-02-lesen-c-aktivitaet.png` zeigt die tatsächlich ausgeführte Suche
+  nach den drei neuesten News-Beiträgen samt Werkzeugverlauf.
+- **Externe Systeme:** Die [DeepWiki-Konfiguration](https://github.com/netresearch/typo3-demo/blob/54656cc6a107af0f801c5cc1f51df300f9fc5eb4/data/seed-extensions.sql#L7933)
+  enthält den externen MCP-Server und dokumentiert den Import von
+  `read_wiki_structure` und `read_wiki_contents`. Der damalige Import übersprang
+  `ask_question`; diese Funktion wird nicht zugesagt. Ein neuer erfolgreicher
+  Remote-Aufruf wurde für die Folie nicht durchgeführt.
+- **Bilder, Alttexte und Übersetzung:** Die [Demo-Dokumentation](https://github.com/netresearch/typo3-demo/blob/54656cc6a107af0f801c5cc1f51df300f9fc5eb4/README.md)
+  und die [Startkonfiguration](https://github.com/netresearch/typo3-demo/blob/54656cc6a107af0f801c5cc1f51df300f9fc5eb4/docker/web/entrypoint.sh)
+  belegen Cowriter-Bilderzeugung, Alttexte mit `ai_filemetadata` auf Englisch
+  und Deutsch sowie Datensatzübersetzung mit `autotranslate` über nr-llm.
+  `ai_filemetadata` nutzt seine eigene Anbindung; die Folie behauptet keine
+  gemeinsame nr-llm-Anbindung für alle genannten Funktionen.
+- **Formularassistenz:** Die [öffentliche Wetter-Demo](https://typo3-demo.netresearch.de/extensions/browser-ai-form-assistant)
+  ist vorhanden. Die KI-Ausführung benötigt einen unterstützten Browser mit
+  lokalem Modell. Browser AI ist ein eigener Baustein und nutzt hierfür nicht
+  nr-llm; die Wetterabfrage greift auf einen externen Datendienst zu.

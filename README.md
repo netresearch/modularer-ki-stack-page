@@ -129,9 +129,11 @@ is maintained in `talks/vorlage/source/`. The upcoming TMUC edition is derived
 from it by `scripts/prepare_talks.py`. The TUGLE edition from 3 November is a
 frozen archive: never edit or rebuild its source, PDF or snapshot.
 
-The active presentation has 32 main slides and 30 reference/appendix slides.
+The active presentation has 33 main slides and 30 reference/appendix slides.
 Title and agenda form an unnumbered introduction (section 0);
-each of the five main sections starts with its own divider. Four compact
+each of the five main sections starts with its own divider. The possibilities
+section closes with a brief overview of further demo use cases, including log
+analysis, system research and external MCP tools. Four compact
 overviews connect the examples to complementary measures. Small detail links
 lead to the relevant appendix slides and stay out of the PDF. Six focused
 appendix explanations cover term lists, provider resilience, secrets, web access,
