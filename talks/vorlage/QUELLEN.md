@@ -292,8 +292,8 @@ Versionsstand oder die allgemeine Wirksamkeit einer Sicherheitsfunktion.
 | 5 | [Suchantwort mit einem Link zur verwendeten Website-Quelle](source/public/screens/04-ai-search-02-antwort-quellen.png) | 2.11.2026 | Vergrößerter Ausschnitt |
 | 6 | [Repurpose-Auftrag mit Ausgangsquelle, Podcast und Schaubild](source/public/screens/05-repurpose-job-3-detail.png) | 2.11.2026 | Vollständige Aufnahme |
 | 7 | [Chatverlauf mit einem Auftrag für einen Seitenentwurf und der Rückmeldung des Agenten](source/public/screens/agent-chat-2026-11-05.png) | 5.11.2026 | Vollständige Aufnahme |
-| 8 | [Landingpage-Assistent mit vorgeschlagenem Seitentitel und SEO-Metadaten](source/public/screens/16-landingpage-03-seitenfelder.png) | 2.11.2026 | Vergrößerter Ausschnitt des Dialogs |
-| 8 | [Vorschau des oberen Seitenbereichs eines generierten Entwurfs](source/public/screens/07-landingpage-07-ergebnis-vorschau-10110.png) | 2.11.2026 | Vergrößerter Ausschnitt |
+| 8 | [Landingpage-Assistent mit generierten Metadaten](source/public/screens/landingpage-backend-detail-2026-11-07.png) | 7.11.2026 | Browser-Elementaufnahme, vergrößerter Ausschnitt |
+| 8 | [Vorschau des neuen Demoentwurfs 10114](source/public/screens/landingpage-preview-detail-2026-11-07.png) | 7.11.2026 | Browser-Elementaufnahme, vergrößerter Ausschnitt |
 | 20 | [Kostenübersicht mit Anfragen, Tokenverbrauch und geschätzten Kosten](source/public/screens/17-nr-llm-07-analyse-kosten.png) | 2.11.2026 | Vergrößerter Ausschnitt |
 | 24 | [Freigabekarte für die geplante Seitenanlage durch den Agenten](source/public/screens/06-agent-03-schreiben-b-freigabekarte.png) | 2.11.2026 | Vergrößerter Ausschnitt |
 | 25 | [Chatantwort mit sichtbarem Verlauf der Modell- und Werkzeugaufrufe](source/public/screens/20-agent-02-lesen-c-aktivitaet.png) | 2.11.2026 | Vergrößerter Ausschnitt |
@@ -303,13 +303,15 @@ Der Repurpose-Auftrag auf Folie 6 zeigt erzeugte Artefakte, deren fachliche
 Freigabe in der Aufnahme noch aussteht. Die Kosten auf Folie 20 sind eine
 historische Anzeige mit Schätzwerten.
 
-Auf Folie 8 stehen der Assistent mit generierten Seitenfeldern und die Vorschau
-des fiktiven Veranstaltungsentwurfs nebeneinander. Beide zeigen denselben
-Veranstaltungstitel; die Aufnahmen allein belegen keinen identischen
-Generierungslauf. Die Metadaten enthalten noch die erfundene Frist „bis 4.
-November“. Die Vorschau zeigt dagegen bereits einen redaktionell bearbeiteten
-Entwurf mit Platzhaltern. Die Gegenüberstellung illustriert zwei Prüfstellen,
-keinen ungeprüft veröffentlichten Modelloutput.
+Auf Folie 8 stehen Backend und Vorschau desselben neuen Generierungslaufs vom
+7. November 2026 nebeneinander (Entwurf UID 10114). Das ausdrücklich fiktive
+Briefing legt Donnerstag, 19. November 2026, 18:30–20:00 Uhr und „Demo-Labor
+Leipzig, Raum 3“ als erfundenen Veranstaltungsort fest. Die Seite bleibt verborgen.
+Die Bilder sind echte Browseraufnahmen. Details zum Ablauf, redaktionellen
+Korrekturen und vollständige Originale dokumentiert der
+[Aufnahmenachweis](source/public/screens/landingpage-provenance-2026-11-07.md).
+Die historische Aufnahme mit der unbelegten Frist bleibt ein gesondertes
+Qualitätsbeispiel; sie ist nicht die neue Demo auf Folie 8.
 
 Die SEO-Aufnahme auf Folie 4 wurde am 7. November 2026 um 11:31:51–11:31:52
 MEZ im laufenden Demo-Backend erstellt. Sie zeigt die deutsche Seite
