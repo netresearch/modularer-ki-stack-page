@@ -37,29 +37,29 @@
 .nr .nr-data-gate h2 { font-size:26px!important; }
 .nr .nr-data-gate p { font-size:23px; }
 .nr .nr-data-outcomes p { padding-top:23px; }
-.nr .nr-data-gate-slide .nr-takeaway { font-size:23px; margin-top:16px!important; }
+.nr .nr-data-gate-slide .nr-takeaway { font-size:22px; margin-top:16px!important; }
 .nr-rule-example { display:grid; grid-template-columns:350px 1fr; gap:30px; margin-top:34px; }
 .nr-rule-example section { border-top:3px solid var(--nr-primary); padding:23px 24px; background:var(--nr-bg-alt); min-height:238px; }
 .nr .nr-rule-example p { font-size:24px; line-height:1.35; }
 .nr .nr-rule-example h2 { font-size:29px!important; }
 .nr .nr-rule-example blockquote { border:0; padding:0; margin:0 0 20px; font-size:31px; font-weight:600; line-height:1.35; color:var(--nr-primary-text); }
-.nr .nr-rule-example-slide .nr-takeaway { font-size:23px; }
+.nr .nr-rule-example-slide .nr-takeaway { font-size:22px; }
 .nr-quality-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:30px; }
-.nr-quality-grid section { position:relative; background:var(--nr-bg-alt); border-top:3px solid var(--nr-primary); padding:24px; }
+.nr-quality-grid section { position:relative; background:var(--nr-bg-alt); border-top:3px solid var(--nr-primary); padding:20px; }
 .nr-quality-grid .nr-pictogram { position:absolute; top:20px; right:24px; width:40px; height:40px; }
-.nr .nr-quality-grid h2 { font-size:29px!important; margin-bottom:22px!important; }
-.nr .nr-quality-grid p { font-size:24px; line-height:1.35; min-height:96px; max-width:490px; }
+.nr .nr-quality-grid h2 { font-size:29px!important; margin-bottom:16px!important; }
+.nr .nr-quality-grid p { font-size:24px; line-height:1.35; min-height:72px; max-width:490px; }
 .nr-proof-result { border-top:1px solid var(--nr-border); padding-top:18px; display:flex; flex-direction:column; gap:7px; }
 .nr-proof-result strong { font-size:26px; color:var(--nr-primary-text); }
 .nr-proof-result span { font-size:22px; }
-.nr-proof-caution strong { color:#9A2E00; }
-.nr .nr-quality-slide .nr-takeaway { font-size:24px; }
+.nr-proof-caution strong { color:var(--nr-primary-text); }
+.nr .nr-quality-slide .nr-takeaway { font-size:22px; margin-top:16px!important; }
 .nr .nr-quality-slide .nr-limit { margin-top:12px!important; }
 .nr .nr-editor-demos { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
 .nr-editor-demos figure { margin:0!important; min-width:0; }
 .nr .nr-editor-demos h2 { font-size:27px!important; margin-bottom:16px!important; }
-.nr .nr-editor-demos .nr-screenshot { height:305px; object-position:left top; background:var(--nr-bg-alt); }
-.nr-editor-demos figcaption { font-size:17px; line-height:1.3; min-height:55px; padding-top:12px; }
+.nr .nr-editor-demos .nr-screenshot { height:260px; object-position:left top; background:var(--nr-bg-alt); }
+.nr-editor-demos figcaption { font-size:20px; line-height:1.3; height:96px; padding-top:12px; }
 .nr-editor-demos .nr-action-links { margin-top:14px; }
 .nr .nr-ecosystem-grid { margin-top:24px; gap:42px; }
 .nr .nr-ecosystem-grid .nr-resource-description { font-size:23px; min-height:61px; margin-bottom:17px!important; }
@@ -73,8 +73,8 @@
 .nr-foundation-table th:first-child { width:26%; }
 .nr-foundation-table th:nth-child(2) { width:37%; }
 .nr-foundation-table a { text-decoration:underline!important; text-underline-offset:3px; }
-.nr.nr-foundation-comparison h1 { font-size:37px!important; margin-bottom:20px!important; }
-.nr.nr-foundation-comparison .nr-takeaway { font-size:21px; margin-top:14px!important; }
+.nr.nr-foundation-comparison h1 { font-size:40px!important; margin-bottom:20px!important; }
+.nr.nr-foundation-comparison .nr-takeaway { font-size:22px; margin-top:14px!important; }
 
 .nr.nr-foundation-map .nr-ecosystem-grid { margin-top:20px; }
 .nr.nr-foundation-map .nr-ecosystem-grid section { padding-top:16px; }
@@ -82,13 +82,11 @@
 .nr.nr-foundation-map .nr-ecosystem-grid .nr-resource-description { min-height:0; font-size:22px; margin-bottom:14px!important; }
 .nr.nr-foundation-map .nr-ecosystem-grid .nr-resource-links { gap:10px; }
 .nr.nr-foundation-map .nr-takeaway { margin-top:18px!important; padding:12px 16px; }
-.slidev-layout.nr.nr-foundation-comparison h1 { font-size:37px!important; margin-bottom:20px!important; }
-.nr.nr-foundation-comparison .nr-takeaway { font-size:21px; margin-top:12px!important; }
-.nr.nr-editor-slide figcaption { font-size:17px; min-height:55px; max-height:none; }
+.slidev-layout.nr.nr-foundation-comparison h1 { font-size:40px!important; margin-bottom:20px!important; }
+.nr.nr-foundation-comparison .nr-takeaway { font-size:22px; margin-top:12px!important; }
+.nr.nr-editor-slide figcaption { font-size:20px; min-height:96px; max-height:none; }
 
-.nr.nr-editor-slide figure:nth-child(2) .nr-screenshot { height:190px; }
-.nr.nr-editor-slide figure:nth-child(2) figcaption { height:170px; padding:24px; background:#eef6f7; color:var(--nr-primary-text); font-size:26px; line-height:1.3; }
-.nr.nr-editor-slide figcaption small { display:block; font-size:17px; color:var(--nr-text-secondary); margin-top:16px; }
+.nr.nr-editor-slide figcaption small { display:block; font-size:17px; color:var(--nr-text-secondary); margin-top:8px; }
 
 /* The policy matrix is evidence for the data-flow explanation. */
 .nr .nr-policy-table { width:100%; border-collapse:collapse; margin-top:20px; font-size:21px; line-height:1.25; }
@@ -96,4 +94,4 @@
 .nr-policy-table th:first-child,.nr-policy-table td:first-child { text-align:left; width:34%; }
 .nr-policy-table th { background:#eef6f7; color:var(--nr-primary-text); }
 .nr.nr-policy-slide .nr-flow-note { margin-top:18px!important; font-size:22px; }
-.nr.nr-policy-slide .nr-limit { font-size:19px; margin-top:12px!important; }
+.nr.nr-policy-slide .nr-limit { font-size:20px; margin-top:12px!important; }

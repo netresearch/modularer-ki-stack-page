@@ -31,7 +31,7 @@ for (let i = 1; i + 1 < chunks.length; i += 2) {
     assert(raw !== undefined, `Missing ${key} in slide metadata`);
     try { return JSON.parse(raw); } catch { return raw; }
   };
-  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), sectionTitle: value('sectionTitle'), divider: value('sectionDivider'), body: chunks[i + 1], screenshots: [...chunks[i + 1].matchAll(/<NrImage file="([^"]+)"/g)].map(match => match[1]), jumps: [...chunks[i + 1].matchAll(/<NrJump\b[^>]*:page="(\d+)"/g)].map(match => Number(match[1])), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
+  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), sectionTitle: value('sectionTitle'), divider: value('sectionDivider'), body: chunks[i + 1], screenshots: [...chunks[i + 1].matchAll(/<NrImage\b[^>]*\bfile="([^"]+)"/g)].map(match => match[1]), jumps: [...chunks[i + 1].matchAll(/<NrJump\b[^>]*:page="(\d+)"/g)].map(match => Number(match[1])), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
 }
 const titles = slides.map((slide) => slide.title);
 const talkTotal = slides.filter((slide) => !slide.appendix).length;
@@ -64,6 +64,34 @@ const pageOf = (title) => {
   return number;
 };
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2', '.pdf': 'application/pdf' };
+// Run in the page after fonts, images and layout have settled. A text-only
+// overflow check misses a quiet detail link covering an otherwise valid button.
+function inspectControlGeometry() {
+  const slide = [...document.querySelectorAll('.slidev-layout')].find(node => node.checkVisibility());
+  const content = slide.querySelector('.nr-content');
+  const footerTop = slide.querySelector('.nr-footer').getBoundingClientRect().top;
+  const visible = node => node.checkVisibility() && [...node.getClientRects()].some(rect => rect.width && rect.height);
+  const label = node => `${node.tagName}.${node.className}: ${node.textContent.trim().replace(/\s+/g, ' ').slice(0, 100)}`;
+  const overlaps = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 2
+    && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 2;
+  const details = [...content.querySelectorAll('.nr-detail-links')].filter(visible);
+  const contentNodes = [...content.querySelectorAll('h1,h2,p,li,dt,dd,figcaption,blockquote,table,.nr-takeaway,.nr-limit,.nr-code-result,.nr-overview-limit,.nr-project-decision,a[href],button')]
+    .filter(node => visible(node) && !node.closest('.nr-detail-links'));
+  const detailCollisions = details.flatMap(detail => {
+    const rect = detail.getBoundingClientRect();
+    return contentNodes.filter(node => overlaps(node.getBoundingClientRect(), rect)).map(label);
+  });
+  const controls = [...content.querySelectorAll('a[href],button')].filter(visible);
+  const blockedControls = controls.flatMap(node => {
+    // An inline link can wrap. Test the center of its largest actual line box,
+    // not the whitespace between lines in its enclosing bounding rectangle.
+    const rect = [...node.getClientRects()].sort((a, b) => b.width * b.height - a.width * a.height)[0];
+    const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    return hit && (hit === node || node.contains(hit)) ? [] : [{ control: label(node), hit: hit ? label(hit) : null }];
+  });
+  const footerCollisions = controls.filter(node => node.getBoundingClientRect().bottom > footerTop + 2).map(label);
+  return { detailCollisions, blockedControls, footerCollisions, controls: controls.length };
+}
 const server = createServer(async (req, res) => {
   try {
     const path = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -214,7 +242,7 @@ try {
     localLinks.add(thumbnail.src);
     imageChecks++;
   }
-  let mainJumpChecks = 0;
+  let mainJumpChecks = 0, controlChecks = 0;
   for (let number = 1; number <= titles.length; number++) {
     await show(number);
     const result = await page.evaluate((title) => {
@@ -233,6 +261,11 @@ try {
     }, titles[number - 1]);
     assert.deepEqual(result.overflow, [], `Slide ${number}: overflow`);
     assert.deepEqual(result.broken, [], `Slide ${number}: images`);
+    const controls = await page.evaluate(inspectControlGeometry);
+    assert.deepEqual(controls.detailCollisions, [], `Slide ${number}: content or action overlaps the detail navigation`);
+    assert.deepEqual(controls.blockedControls, [], `Slide ${number}: a control is covered at its click target`);
+    assert.deepEqual(controls.footerCollisions, [], `Slide ${number}: a control overlaps the footer`);
+    controlChecks += controls.controls;
     const metadata = slides[number - 1];
     assert.equal(result.max, String(talkTotal));
     assert(result.footer.includes(metadata.appendix ? 'Anhang · nicht mitgezählt' : `Folie ${metadata.talkPage}/${talkTotal}`), `Slide ${number}: footer`);
@@ -284,24 +317,37 @@ try {
     }
   }
   assert.equal(imageChecks, slides.reduce((total, slide) => total + slide.screenshots.length, 0), 'Not every screenshot was checked');
-  // The proof page displays a recorded PHP run, including the accepted false claim.
-  const proof = JSON.parse(await readFile(resolve(site, 'pruefbeispiel/quality-proof.json'), 'utf8'));
-  await page.goto(url + 'pruefbeispiel/index.html', { waitUntil: 'networkidle0' });
-  for (const example of proof.cases) {
-    await page.click(`button[data-case="${example.id}"]`);
-    assert.equal(await page.$eval('#input-json', (node) => node.textContent), JSON.stringify(example.input, null, 2));
-    assert.equal(await page.$eval('#boolean', (node) => node.textContent), String(example.actualValid));
-  }
-  localLinks.add(url + 'pruefbeispiel/quality-proof.zip');
-  localLinks.add(url + 'pruefbeispiel/quality-proof.json');
-  await page.click('a.back');
-  // A committed URL precedes Slidev mounting after this full-page navigation.
-  // Verify the returned slide before issuing the next hash navigation.
+  // Reach the proof through its actual main-slide control. A direct page.goto
+  // would not notice an appendix link intercepting clicks on this button.
   const proofOwners = slides.flatMap((slide, index) => !slide.appendix && slide.body.includes('href="pruefbeispiel/index.html"') ? [index + 1] : []);
   assert.equal(proofOwners.length, 1, 'The proof example needs one main-slide return target');
   const proofPage = proofOwners[0];
-  await page.waitForFunction(({ number, title }) => location.hash === `#/${number}`
+  await show(proofPage);
+  const proofButton = (await page.evaluateHandle(() => [...document.querySelectorAll('.slidev-layout a[href]')].find(link => link.checkVisibility() && new URL(link.href).pathname.endsWith('/pruefbeispiel/index.html')))).asElement();
+  assert(proofButton, 'The proof example needs a visible slide control');
+  const proofUrl = url + 'pruefbeispiel/index.html';
+  const proofTarget = browser.waitForTarget(target => target.type() === 'page' && target.url() === proofUrl);
+  await proofButton.click();
+  const proofView = await (await proofTarget).page();
+  assert(proofView && proofView !== page, 'The schema button did not open its example in a separate tab');
+  await proofView.waitForFunction(() => document.readyState === 'complete');
+  assert.equal(proofView.url(), proofUrl, 'The schema button opened the wrong target');
+  assert.equal(page.url(), `${url}#/${proofPage}`, 'Opening the proof changed the underlying slide');
+  // The proof page displays a recorded PHP run, including the accepted false claim.
+  const proof = JSON.parse(await readFile(resolve(site, 'pruefbeispiel/quality-proof.json'), 'utf8'));
+  for (const example of proof.cases) {
+    await proofView.click(`button[data-case="${example.id}"]`);
+    assert.equal(await proofView.$eval('#input-json', (node) => node.textContent), JSON.stringify(example.input, null, 2));
+    assert.equal(await proofView.$eval('#boolean', (node) => node.textContent), String(example.actualValid));
+  }
+  localLinks.add(url + 'pruefbeispiel/quality-proof.zip');
+  localLinks.add(url + 'pruefbeispiel/quality-proof.json');
+  await proofView.click('a.back');
+  // A committed URL precedes Slidev mounting after this full-page navigation.
+  // Verify the returned slide before issuing the next hash navigation.
+  await proofView.waitForFunction(({ number, title }) => location.hash === `#/${number}`
     && [...document.querySelectorAll('.slidev-layout h1')].some((node) => node.textContent === title && node.checkVisibility()), {}, { number: proofPage, title: titles[proofPage - 1] });
+  await proofView.close();
   await show(1);
   // Check the fonts actually used for glyphs, not just declared CSS families.
   const cdp = await page.createCDPSession();
@@ -353,7 +399,7 @@ try {
     }
   }
   assert.deepEqual(failures, [], 'Browser or network errors');
-  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, navigation and ${localLinks.size} local links/downloads`);
+  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${controlChecks} unobstructed controls, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, schema-button navigation and ${localLinks.size} local links/downloads`);
 } finally {
   await browser?.close(); await new Promise((done) => server.close(done));
   await rm(downloadsDir, { recursive: true, force: true });

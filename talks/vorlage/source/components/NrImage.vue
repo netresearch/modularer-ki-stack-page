@@ -1,6 +1,11 @@
 <script setup>
 import { useNav } from '@slidev/client'
-const props = defineProps({ file: String, alt: String })
+const props = defineProps({
+  file: String,
+  alt: String,
+  zoom: { type: Number, default: 1 },
+  focus: { type: String, default: '50% 50%' },
+})
 const { isPrintMode } = useNav()
 const base = import.meta.env.BASE_URL
 
@@ -17,10 +22,10 @@ function allowSlideNavigation(event) {
 </script>
 
 <template>
-  <span v-if="isPrintMode" class="nr-original">
+  <span v-if="isPrintMode" class="nr-original" :class="{ 'nr-focused-image': zoom > 1 }" :style="{ '--nr-image-zoom': zoom, '--nr-image-focus': focus }">
     <img draggable="false" class="nr-screenshot" :src="base + file" :alt="alt" />
   </span>
-  <button v-else type="button" class="nr-original" aria-haspopup="dialog" :aria-label="alt + ' – Bild vergrößern'" @click.stop="openImage" @keydown="allowSlideNavigation">
+  <button v-else type="button" class="nr-original" :class="{ 'nr-focused-image': zoom > 1 }" :style="{ '--nr-image-zoom': zoom, '--nr-image-focus': focus }" aria-haspopup="dialog" :aria-label="alt + ' – Bild vergrößern'" @click.stop="openImage" @keydown="allowSlideNavigation">
     <img draggable="false" class="nr-screenshot" :src="base + file" :alt="alt" />
   </button>
 </template>

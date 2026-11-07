@@ -70,7 +70,7 @@ title: "Was euch heute erwartet"
 
 # Was euch heute erwartet
 
-<ul class="nr-points"><li><span class="nr-number">01</span><span>Möglichkeiten: fünf Anwendungen erleben</span></li><li><span class="nr-number">02</span><span>Fragen zum KI-Einsatz: Daten, Vorgaben, Aufwand und Kontrolle</span></li><li><span class="nr-number">03</span><span>Antworten und Grenzen: am Beispiel nr-llm</span></li><li><span class="nr-number">04</span><span>Agentenwege: intern und extern vergleichen</span></li><li><span class="nr-number">05</span><span>Einordnung: andere Grundlagen und Austausch</span></li></ul>
+<ul class="nr-points"><li><span class="nr-number">01</span><span>Möglichkeiten: fünf Anwendungen erleben</span></li><li><span class="nr-number">02</span><span>Fragen zum KI-Einsatz: Qualität, Aufwand, Daten und Verantwortung</span></li><li><span class="nr-number">03</span><span>Antworten und Grenzen: am Beispiel nr-llm</span></li><li><span class="nr-number">04</span><span>Agentenwege: intern und extern vergleichen</span></li><li><span class="nr-number">05</span><span>Einordnung: andere Grundlagen und Austausch</span></li></ul>
 
 <div class="nr-controls"></div>
 
@@ -124,7 +124,7 @@ title: "Antworten aus Website-Inhalten"
 
 # Antworten aus Website-Inhalten
 
-<div class="nr-demo"><figure><NrImage file="screens/04-ai-search-02-antwort-quellen.png" alt="Antwort mit Quelltreffern · Aufnahme vom 2.11.2026"/><figcaption>Antwort mit Quelltreffern · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Antwort mit Quelle nachvollziehen</span></li><li><span class="nr-number">02</span><span>Quelltreffer öffnen</span></li><li><span class="nr-number">03</span><span>Zeigen, wenn die Quellen keine Antwort liefern</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/extensions/ai-search">AI Search · Vorschau</NrLink><NrLink href="./screens/04-ai-search-02-antwort-quellen.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage :zoom="2.28" focus="33% 86%" file="screens/04-ai-search-02-antwort-quellen.png" alt="Antwort mit Quelltreffern · Aufnahme vom 2.11.2026"/><figcaption>Antwort mit Quelltreffern · Ausschnitt vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Antwort mit Quelle nachvollziehen</span></li><li><span class="nr-number">02</span><span>Quelltreffer öffnen</span></li><li><span class="nr-number">03</span><span>Zeigen, wenn die Quellen keine Antwort liefern</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/extensions/ai-search">AI Search · Vorschau</NrLink><NrLink href="./screens/04-ai-search-02-antwort-quellen.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -178,7 +178,7 @@ title: "Vom Briefing zum Seitenentwurf"
 
 # Vom Briefing zum Seitenentwurf
 
-<div class="nr-demo"><figure><NrImage file="screens/07-landingpage-07-ergebnis-vorschau-10110.png" alt="Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026"/><figcaption>Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Briefing und Struktur vorgeben</span></li><li><span class="nr-number">02</span><span>Generierte Seite als Entwurf prüfen</span></li><li><span class="nr-number">03</span><span>Auch Metadaten brauchen Kontrolle</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Entwurf in Vorschau</NrLink><NrLink href="./screens/07-landingpage-07-ergebnis-vorschau-10110.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage :zoom="1.58" focus="50% 74%" file="screens/07-landingpage-07-ergebnis-vorschau-10110.png" alt="Oberer Seitenbereich des Demo-Entwurfs · 2.11.2026"/><figcaption>Seitenentwurf · Ausschnitt vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Briefing und Struktur vorgeben</span></li><li><span class="nr-number">02</span><span>Generierte Seite als Entwurf prüfen</span></li><li><span class="nr-number">03</span><span>Auch Metadaten brauchen Kontrolle</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Entwurf in Vorschau</NrLink><NrLink href="./screens/07-landingpage-07-ergebnis-vorschau-10110.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -190,11 +190,11 @@ sectionDivider: true
 talkPage: 9
 talkTotal: 32
 appendix: ""
-title: "Was müssen wir für den KI-Einsatz klären?"
+title: "Fragen zum KI-Einsatz"
 ---
 <div class="nr-section-number" aria-label="Abschnitt 2">02</div>
 
-# Was müssen wir für den KI-Einsatz klären?
+# Fragen zum KI-Einsatz
 
 
 ---
@@ -227,16 +227,16 @@ sectionDivider: false
 talkPage: 11
 talkTotal: 32
 appendix: ""
-title: "Welche Fragen müssen wir beantworten?"
+title: "Vier Felder für unsere Fragen"
 ---
 <div class="nr-kicker">Fragen zum KI-Einsatz · Vier Felder für die Diskussion</div>
 
-# Welche Fragen müssen wir beantworten?
+# Vier Felder für unsere Fragen
 
 <div class="nr-question-grid">
-<section><NrIcon name="data"/><h2>Daten und Vorgaben</h2><p>Welche Inhalte dürfen wohin? Welche rechtlichen und betrieblichen Vorgaben gelten?</p></section>
-<section><NrIcon name="operations"/><h2>Aufwand und Betrieb</h2><p>Was müssen wir integrieren und betreiben? Was kostet das?</p></section>
 <section><NrIcon name="quality"/><h2>Qualität</h2><p>Welche Fehler lassen sich automatisch erkennen? Was müssen Menschen prüfen?</p></section>
+<section><NrIcon name="operations"/><h2>Aufwand und Betrieb</h2><p>Was müssen wir integrieren und betreiben? Was kostet das?</p></section>
+<section><NrIcon name="data"/><h2>Daten und Vorgaben</h2><p>Welche Inhalte dürfen wohin? Welche rechtlichen und betrieblichen Vorgaben gelten?</p></section>
 <section><NrIcon name="responsibility"/><h2>Kontrolle und Verantwortung</h2><p>Wer darf ändern, wer gibt frei und wer verantwortet das Ergebnis?</p></section>
 </div>
 
@@ -270,7 +270,7 @@ talkTotal: 32
 appendix: ""
 title: "Die KI-Anbindung in jeder Extension neu bauen?"
 ---
-<div class="nr-kicker">Aufwand · Gemeinsame Aufgaben einmal lösen</div>
+<div class="nr-kicker">Gemeinsame Grundlage · Für unsere vier Fragenfelder</div>
 
 # Die KI-Anbindung in jeder Extension neu bauen?
 
@@ -302,7 +302,7 @@ title: "Modell wechseln, ohne die Anwendung neu zu bauen?"
 
 <div class="nr-config-chain">
 <section><span class="nr-step-label">Anwendung</span><h2>SEO-Text erzeugen</h2><p>Ruft eine benannte Konfiguration auf.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
-<section class="nr-emphasis"><span class="nr-step-label">Konfiguration</span><h2>Aufgabe festlegen</h2><p>Vorgaben, Parameter und Modellwahl.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
+<section class="nr-emphasis"><span class="nr-step-label">Konfiguration</span><h2>Vorgaben festlegen</h2><p>Vorgaben, Parameter und Modellwahl.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
 <section><span class="nr-step-label">Modell</span><h2>Fähigkeiten wählen</h2><p>Passend zur Aufgabe.</p></section><span class="nr-flow-arrow" aria-hidden="true">→</span>
 <section><span class="nr-step-label">Provider</span><h2>Dienst anbinden</h2><p>Endpunkt und Zugang.</p></section>
 </div>
@@ -380,9 +380,9 @@ title: "Was lässt sich automatisch prüfen?"
 
 # Was lässt sich automatisch prüfen?
 
-<div class="nr-quality-grid"><section><NrIcon name="quality"/><h2>Schema prüfen</h2><p>Erlaubte Statuswerte und maximal 160 Zeichen prüfen.</p><div class="nr-proof-result"><strong>Im Beispiel ausgeführt</strong><span>Eine erfundene Frist ist formal gültig.</span></div></section><section><NrIcon name="responsibility"/><h2>Quellen abgleichen</h2><p>Zusätzlich bewerten: Ist der genannte Anmeldeschluss im Briefing belegt?</p><div class="nr-proof-result nr-proof-caution"><strong>nr-llm: DecisionService</strong><span>Auftrag, Entwurf und Quellen mitgeben.</span></div></section></div>
+<div class="nr-quality-grid"><section><h2>Schema prüfen</h2><p>Erlaubte Statuswerte und maximal 160 Zeichen prüfen.</p><div class="nr-proof-result"><strong>Im Beispiel ausgeführt</strong><span>Eine erfundene Frist ist formal gültig.</span></div></section><section><h2>Quellen abgleichen</h2><p>DecisionService: Ist der Anmeldeschluss im Briefing belegt?</p><div class="nr-proof-result"><strong>Zusätzliche Bewertung</strong><span>Auftrag, Entwurf und Quellen mitgeben.</span></div></section></div>
 
-<p class="nr-takeaway">Form und Quellentreue getrennt prüfen; das Ergebnis fachlich freigeben.</p><p class="nr-limit">Das Beispiel führt nur das Schema aus. Eine Modellbewertung muss die Anwendung zusätzlich aufrufen; sie kann irren.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Schema-Beispiel</NrLink></div></div>
+<p class="nr-takeaway">Form und Quellentreue getrennt prüfen; das Ergebnis fachlich freigeben.</p><p class="nr-limit">Hier ist nur das Schema ausgeführt. Die Anwendung muss die Quellenbewertung aufrufen; sie kann irren.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Schema-Beispiel</NrLink></div></div>
 
 <div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="53">Wie Quellenprüfung ergänzt wird</NrJump></div>
 
@@ -402,11 +402,11 @@ title: "Welche Prüfungen ergänzen sich?"
 
 # Welche Prüfungen ergänzen sich?
 
-<dl class="nr-feature-overview"><div><dt>Schema</dt><dd>Struktur, Pflichtfelder und erlaubte Werte prüfen.</dd></div><div><dt>Begriffslisten</dt><dd>Konfigurationsgebundene Sperr- und Pflichtwörter prüfen.</dd></div><div><dt>DecisionService</dt><dd>Entwürfe anhand mitgegebener Quellen und Prüffragen bewerten.</dd></div><div><dt>Evaluation</dt><dd>Varianten an festen Beispielaufgaben vergleichen.</dd></div><div><dt>Fachliche Freigabe</dt><dd>Menschen prüfen in der Anwendung das fertige Ergebnis.</dd></div></dl>
+<dl class="nr-feature-overview"><div><dt>Struktur prüfen</dt><dd>Struktur, Pflichtfelder und erlaubte Werte prüfen.</dd></div><div><dt>Begriffe prüfen</dt><dd>Konfigurationsgebundene Sperr- und Pflichtwörter prüfen.</dd></div><div><dt>Quellen bewerten</dt><dd>DecisionService: Entwürfe mit Quellen und Prüffragen bewerten.</dd></div><div><dt>Varianten vergleichen</dt><dd>Varianten an festen Beispielaufgaben vergleichen.</dd></div><div><dt>Fachlich freigeben</dt><dd>Menschen prüfen in der Anwendung das fertige Ergebnis.</dd></div></dl>
 
-<p class="nr-overview-limit">Begriffslisten erkennen keine Umschreibungen; Modellurteile und Stichproben können irren.</p>
+<p class="nr-overview-limit">Welche Prüfungen laufen, hängt von der Anwendung ab. Modellurteile und Stichproben können irren.</p>
 <p class="nr-project-decision">Im Projekt festlegen: Was muss vor Verwendung oder Veröffentlichung ein Mensch prüfen?</p>
-<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="36">Schema</NrJump><NrJump :page="53">Quellenprüfung</NrJump><NrJump :page="37">Evaluation</NrJump><NrJump :page="56">Anwendung</NrJump></div>
+<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="36">Schema</NrJump><NrJump :page="57">Begriffe</NrJump><NrJump :page="53">Quellenprüfung</NrJump><NrJump :page="37">Evaluation</NrJump><NrJump :page="56">Anwendung</NrJump></div>
 
 
 ---
@@ -420,11 +420,11 @@ talkTotal: 32
 appendix: ""
 title: "Wie behalten wir Verbrauch und Kosten im Blick?"
 ---
-<div class="nr-kicker">Betrieb</div>
+<div class="nr-kicker">Aufwand und Betrieb · Ein konkretes Beispiel</div>
 
 # Wie behalten wir Verbrauch und Kosten im Blick?
 
-<div class="nr-demo"><figure><NrImage file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Historische Analyse der Demo-Instanz · 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Konfigurierte Budgets vor weiteren Aufrufen prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage :zoom="1.55" focus="66% 100%" file="screens/17-nr-llm-07-analyse-kosten.png" alt="Historische Analyse der Demo-Instanz · 2.11.2026"/><figcaption>Kennzahlen und Kosten · Ausschnitt vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Aufrufe und Tokens aufschlüsseln</span></li><li><span class="nr-number">02</span><span>Kosten anhand hinterlegter Preise schätzen</span></li><li><span class="nr-number">03</span><span>Konfigurierte Budgets vor weiteren Aufrufen prüfen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/analytics">Kostenübersicht öffnen</NrLink><NrLink href="./screens/17-nr-llm-07-analyse-kosten.png">Bild vergrößern</NrLink></div></div></div>
 
 <div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="48">Budgetgrenzen</NrJump></div>
 
@@ -444,11 +444,11 @@ title: "Welche Dienste unterstützen den Betrieb?"
 
 # Welche Dienste unterstützen den Betrieb?
 
-<dl class="nr-feature-overview"><div><dt>Gemeinsame Anbindung</dt><dd>Provider und Konfigurationen in mehreren Anwendungen nutzen.</dd></div><div><dt>Circuit Breaker</dt><dd>Nach wiederholten Anbieterfehlern vorübergehend schnell abbrechen.</dd></div><div><dt>Fallback</dt><dd>Konfigurierte Ausweichziele bei geeigneten Fehlern versuchen.</dd></div><div><dt>Budgets</dt><dd>Konfigurierte Grenzen vor weiteren Anfragen prüfen.</dd></div><div><dt>Nutzungsübersicht</dt><dd>Aufrufe und Tokens erfassen; Kosten anhand hinterlegter Preise schätzen.</dd></div></dl>
+<dl class="nr-feature-overview"><div><dt>Anbindung teilen</dt><dd>Provider und Konfigurationen in mehreren Anwendungen nutzen.</dd></div><div><dt>Fehlerpause</dt><dd>Circuit Breaker: Nach wiederholten Anbieterfehlern vorübergehend abbrechen.</dd></div><div><dt>Ausweichziel</dt><dd>Fallback: Konfigurierte Ausweichziele bei geeigneten Fehlern versuchen.</dd></div><div><dt>Budgets prüfen</dt><dd>Konfigurierte Grenzen vor weiteren Anfragen prüfen.</dd></div><div><dt>Verbrauch auswerten</dt><dd>Aufrufe und Tokens erfassen; Kosten anhand hinterlegter Preise schätzen.</dd></div></dl>
 
 <p class="nr-overview-limit">Parallele Aufrufe können Budgetgrenzen überschreiten. Kosten bleiben Schätzwerte.</p>
 <p class="nr-project-decision">Im Pilot messen: Integration, laufende Betreuung, Ergebnisqualität und Nacharbeit.</p>
-<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="41">Integration</NrJump><NrJump :page="43">Fehlerfälle</NrJump><NrJump :page="47">Nutzen und Aufwand</NrJump><NrJump :page="48">Budgets</NrJump></div>
+<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="41">Integration</NrJump><NrJump :page="58">Ausfälle</NrJump><NrJump :page="47">Nutzen und Aufwand</NrJump><NrJump :page="48">Budgets</NrJump></div>
 
 
 ---
@@ -488,11 +488,11 @@ title: "Was schützt Daten zusätzlich?"
 
 # Was schützt Daten zusätzlich?
 
-<dl class="nr-feature-overview"><div><dt>Schlüssel maskieren</dt><dd>Erkennbare Geheimnismuster in Prompt- und Antworttext ersetzen.</dd></div><div><dt>nr-vault nutzen</dt><dd>Eingerichtete API-Zugänge über geschützte Referenzen beziehen.</dd></div><div><dt>Web-Werkzeug absichern</dt><dd>Ziele und Weiterleitungen prüfen; standardmäßig Zustimmung verlangen.</dd></div><div><dt>Werkzeugzugriff begrenzen</dt><dd>Gruppen, einzelne Werkzeuge und Nutzerrechte einschränken.</dd></div><div><dt>Run-Protokolle begrenzen</dt><dd>Speicherumfang und Fristen wählen; Löschlauf einrichten.</dd></div></dl>
+<dl class="nr-feature-overview"><div><dt>Schlüssel maskieren</dt><dd>Erkennbare Geheimnismuster in Prompt- und Antworttext ersetzen.</dd></div><div><dt>Zugänge schützen</dt><dd>nr-vault: API-Zugänge über geschützte Referenzen beziehen.</dd></div><div><dt>Web-Werkzeug absichern</dt><dd>Ziele und Weiterleitungen prüfen; standardmäßig Zustimmung verlangen.</dd></div><div><dt>Werkzeugzugriff begrenzen</dt><dd>Gruppen, einzelne Werkzeuge und Nutzerrechte einschränken.</dd></div><div><dt>Run-Protokolle begrenzen</dt><dd>Speicherumfang und Fristen wählen; Löschlauf einrichten.</dd></div></dl>
 
-<p class="nr-overview-limit">Maskierung ist keine allgemeine Erkennung sensibler Inhalte; Toolargumente und Embeddings sind ausgenommen.</p>
+<p class="nr-overview-limit">Maskierung erkennt keine beliebigen sensiblen Inhalte. Toolargumente und Embeddings sind ausgenommen.</p>
 <p class="nr-project-decision">Im Projekt klären: erlaubte Nutzung, Anbietervereinbarungen und Aufbewahrung.</p>
-<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="54">Datenklassen</NrJump><NrJump :page="55">Grenzen</NrJump><NrJump :page="45">Werkzeugrechte</NrJump><NrJump :page="46">Aufbewahrung</NrJump></div>
+<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="54">Datenklassen</NrJump><NrJump :page="55">Grenzen</NrJump><NrJump :page="59">Geheimnisse</NrJump><NrJump :page="60">Web-Werkzeug</NrJump><NrJump :page="45">Werkzeugrechte</NrJump><NrJump :page="46">Aufbewahrung</NrJump></div>
 
 
 ---
@@ -506,11 +506,11 @@ talkTotal: 32
 appendix: ""
 title: "Wer darf Änderungen ausführen?"
 ---
-<div class="nr-kicker">Kontrolle</div>
+<div class="nr-kicker">Kontrolle und Verantwortung · Änderung erlauben</div>
 
 # Wer darf Änderungen ausführen?
 
-<div class="nr-demo"><figure><NrImage file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026"/><figcaption>Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Backend-Agent: konkrete Änderung vorab freigeben</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage :zoom="1.94" focus="76% 58%" file="screens/06-agent-03-schreiben-b-freigabekarte.png" alt="Schreibfreigabe im Backend-Agenten · Aufnahme vom 2.11.2026"/><figcaption>Schreibfreigabe · Ausschnitt vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Lesende und schreibende Werkzeuge unterscheiden</span></li><li><span class="nr-number">02</span><span>Backend-Agent: konkrete Änderung vorab freigeben</span></li><li><span class="nr-number">03</span><span>Schreibende Standardwerkzeuge prüfen TYPO3-Rechte</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nrllm/tools">Werkzeuge öffnen</NrLink><NrLink href="./screens/06-agent-03-schreiben-b-freigabekarte.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -524,11 +524,11 @@ talkTotal: 32
 appendix: ""
 title: "Was hat der Agent tatsächlich getan?"
 ---
-<div class="nr-kicker">Audit und Fehleranalyse</div>
+<div class="nr-kicker">Kontrolle und Verantwortung · Ausführung nachvollziehen</div>
 
 # Was hat der Agent tatsächlich getan?
 
-<div class="nr-demo"><figure><NrImage file="screens/20-agent-02-lesen-c-aktivitaet.png" alt="Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026"/><figcaption>Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Werkzeug, Argumente und Ergebnis ansehen</span></li><li><span class="nr-number">02</span><span>Freigaben und ausgeführte Schritte nachvollziehen</span></li><li><span class="nr-number">03</span><span>Aus Protokollen gezielt Fehler untersuchen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nr/mcp/agent/chat/conversation">KI-Chat öffnen</NrLink><NrLink href="./screens/20-agent-02-lesen-c-aktivitaet.png">Bild vergrößern</NrLink></div></div></div>
+<div class="nr-demo"><figure><NrImage :zoom="1.94" focus="77% 11%" file="screens/20-agent-02-lesen-c-aktivitaet.png" alt="Lesender Werkzeugverlauf · Aufnahme vom 2.11.2026"/><figcaption>Antwort und Werkzeugaktivität · Ausschnitt vom 2.11.2026</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Werkzeug, Argumente und Ergebnis ansehen</span></li><li><span class="nr-number">02</span><span>Freigaben und ausgeführte Schritte nachvollziehen</span></li><li><span class="nr-number">03</span><span>Aus Protokollen gezielt Fehler untersuchen</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/module/nr/mcp/agent/chat/conversation">KI-Chat öffnen</NrLink><NrLink href="./screens/20-agent-02-lesen-c-aktivitaet.png">Bild vergrößern</NrLink></div></div></div>
 
 
 ---
@@ -546,11 +546,11 @@ title: "Welche Sicherungen ergänzen die Freigabe?"
 
 # Welche Sicherungen ergänzen die Freigabe?
 
-<dl class="nr-feature-overview"><div><dt>Nutzerrechte</dt><dd>Eingebaute Werkzeuge prüfen die Rechte des handelnden Nutzers.</dd></div><div><dt>Vieraugenregel</dt><dd>Optional einen anderen Backend-Nutzer freigeben lassen.</dd></div><div><dt>Gebundene Freigabe</dt><dd>Aufruf und angezeigte Werkzeugvorschau vor Ausführung erneut prüfen.</dd></div><div><dt>Audit</dt><dd>Schreibfreigaben nur mit gespeichertem Freigabeereignis ausführen.</dd></div><div><dt>Eigene Regeln</dt><dd>Fachliche Bedingungen unmittelbar vor Werkzeugaufrufen prüfen.</dd></div></dl>
+<dl class="nr-feature-overview"><div><dt>Rechte prüfen</dt><dd>Eingebaute Werkzeuge prüfen die Rechte des handelnden Nutzers.</dd></div><div><dt>Vieraugenfreigabe</dt><dd>Optional einen anderen Backend-Nutzer freigeben lassen.</dd></div><div><dt>Vorschau binden</dt><dd>Aufruf und angezeigte Werkzeugvorschau vor Ausführung erneut prüfen.</dd></div><div><dt>Freigabe protokollieren</dt><dd>Schreibfreigaben nur mit gespeichertem Freigabeereignis ausführen.</dd></div><div><dt>Eigene Regeln</dt><dd>Fachliche Bedingungen unmittelbar vor Werkzeugaufrufen prüfen.</dd></div></dl>
 
 <p class="nr-overview-limit">Die Zustandsbindung braucht eine erfolgreiche Vorschau; eigene Regeln ergänzt die Anwendung.</p>
-<p class="nr-project-decision">Im Projekt trennen: Aktion erlauben, Ergebnis prüfen und Veröffentlichung freigeben.</p>
-<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="40">Agentenablauf</NrJump><NrJump :page="45">Werkzeugrechte</NrJump><NrJump :page="46">Protokolle</NrJump><NrJump :page="49">Produktivstart</NrJump></div>
+<p class="nr-project-decision">Im Projekt festlegen: Wer erlaubt Aktionen, prüft Ergebnisse und verantwortet die Veröffentlichung?</p>
+<div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="45">Werkzeugrechte</NrJump><NrJump :page="61">Freigaben</NrJump><NrJump :page="62">Eigene Regeln</NrJump><NrJump :page="46">Protokolle</NrJump><NrJump :page="49">Produktivstart</NrJump></div>
 
 
 ---
@@ -584,9 +584,10 @@ title: "Wie kann ein Agent mit TYPO3 arbeiten?"
 
 # Wie kann ein Agent mit TYPO3 arbeiten?
 
-<div class="nr-columns nr-columns-2"><section><h2>Im TYPO3-Backend</h2><p>Auftrag im Backend<br>↓<br>Agent in TYPO3<br>↓<br>TYPO3-Werkzeuge</p></section><section><h2>Aus einem externen Assistenten</h2><p>Auftrag im eigenen Assistenten<br>↓<br>Externer Agent → TYPO3-MCP-Server<br>↓<br>TYPO3-Werkzeuge</p></section></div>
+<div class="nr-columns nr-columns-2"><section><h2>Im TYPO3-Backend</h2><p>Auftrag im Backend<br>↓ Agent in TYPO3<br>↓ TYPO3-Werkzeuge</p><p class="nr-limit">Für Arbeit direkt in TYPO3.</p></section><section><h2>Im eigenen Assistenten</h2><p>Auftrag im externen Assistenten<br>↓ Agent und TYPO3-MCP-Server<br>↓ TYPO3-Werkzeuge</p><p class="nr-limit">Für Abläufe im vorhandenen Assistenten.</p></section></div>
 
-<ul class="nr-points"><li><span class="nr-number">01</span><span>MCP verbindet Agenten und Werkzeuge nach einem gemeinsamen Standard. Rechte und Freigaben bleiben nötig.</span></li></ul>
+<p class="nr-takeaway">MCP standardisiert den Werkzeugzugriff.</p>
+<p class="nr-limit">Welche Rechte und Freigaben greifen, hängt von Agent und MCP-Server ab.</p>
 
 <div class="nr-controls"><div class="nr-action-links"><NrLink href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture">MCP-Architektur nachlesen</NrLink><NrLink href="https://github.com/hauptsacheNet/typo3-mcp-server">Beispiel: TYPO3 MCP Server</NrLink></div></div>
 
@@ -657,20 +658,21 @@ title: "Welche weiteren Grundlagen gibt es für TYPO3?"
 
 ---
 layout: nr
-class: nr-flow-slide
+class: nr-technical-slide nr-closing-slide
 section: 5
 sectionTitle: "Einordnung & Austausch"
 sectionDivider: false
 talkPage: 31
 talkTotal: 32
 appendix: ""
-title: "Eine Aufgabe wählen und ihren Nutzen prüfen"
+title: "Vier Antworten für den eigenen Einstieg"
 ---
 <div class="nr-kicker">Vom Vortrag ins eigene Projekt</div>
 
-# Eine Aufgabe wählen und ihren Nutzen prüfen
+# Vier Antworten für den eigenen Einstieg
 
-<ol class="nr-flow" style="--steps:4"><li><span class="nr-flow-number">01</span><h2>Aufgabe wählen</h2><p>Einen konkreten Arbeitsablauf für den Einstieg auswählen.</p></li><li><span class="nr-flow-number">02</span><h2>Maßstab festlegen</h2><p>Beispielinputs und passende Qualitätskriterien vorbereiten.</p></li><li><span class="nr-flow-number">03</span><h2>Einsatz klären</h2><p>Datenweg, Kosten und Freigaben prüfen.</p></li><li><span class="nr-flow-number">04</span><h2>Nutzen bewerten</h2><p>Ergebnisse und Nacharbeit bewerten, dann gezielt erweitern.</p></li></ol>
+<div class="nr-columns nr-columns-4"><section><h2>Qualität</h2><p>Automatische Prüfungen und menschliche Freigabe kombinieren. Kriterien je Aufgabe festlegen.</p></section><section><h2>Aufwand und Betrieb</h2><p>Integration, Betrieb und Nacharbeit im Pilot messen. Tokenkosten sind nur ein Teil.</p></section><section><h2>Daten und Vorgaben</h2><p>Erlaubte Datenwege, Anbieter und Aufbewahrung festlegen. Technische Sperren gezielt nutzen.</p></section><section><h2>Kontrolle und Verantwortung</h2><p>Rechte und Freigaben festlegen. Verantwortliche für Ergebnis und Veröffentlichung benennen.</p></section></div>
+<p class="nr-takeaway">Eine Aufgabe wählen, mit Beispielen prüfen und erst bei messbarem Nutzen erweitern.</p>
 
 
 
@@ -694,7 +696,7 @@ title: "Welche Fragen sind noch offen?"
 
 
 
-<ul class="nr-points"><li><span class="nr-number">01</span><span>Welche unserer Fragen sind beantwortet?</span></li><li><span class="nr-number">02</span><span>Wo bleiben Zweifel oder konkrete Hürden?</span></li><li><span class="nr-number">03</span><span>Welche Aufgabe würdet ihr als Erstes ausprobieren?</span></li></ul>
+<ul class="nr-points"><li><span class="nr-number">01</span><span>Welche eurer gesammelten Fragen ist noch offen?</span></li><li><span class="nr-number">02</span><span>Wo bleiben Zweifel oder konkrete Hürden?</span></li><li><span class="nr-number">03</span><span>Welche Aufgabe würdet ihr als Erstes ausprobieren?</span></li></ul>
 
 
 
@@ -752,7 +754,7 @@ title: "Rückfragen: die passende Erklärung öffnen"
 
 # Rückfragen: die passende Erklärung öffnen
 
-<div class="nr-reserve-menu"><section><h2>Entwicklung</h2><ul><li><NrJump :page="36" print-label>Formale Vorgaben prüfen</NrJump><span class="nr-reserve-page">36</span></li><li><NrJump :page="53" print-label>Quellen inhaltlich prüfen</NrJump><span class="nr-reserve-page">53</span></li><li><NrJump :page="38" print-label>Skills einbinden</NrJump><span class="nr-reserve-page">38</span></li><li><NrJump :page="40" print-label>Agentenablauf verstehen</NrJump><span class="nr-reserve-page">40</span></li><li><NrJump :page="41" print-label>Eigene Extension anbinden</NrJump><span class="nr-reserve-page">41</span></li><li><NrJump :page="42" print-label>Kontext und Wissen liefern</NrJump><span class="nr-reserve-page">42</span></li><li><NrJump :page="43" print-label>Fehler und Kontextgrenzen</NrJump><span class="nr-reserve-page">43</span></li><li><NrJump :page="52" print-label>Such- und RAG-Grundlagen</NrJump><span class="nr-reserve-page">52</span></li></ul></section><section><h2>Integration</h2><ul><li><NrJump :page="39" print-label>MCP-Werkzeuge anbinden</NrJump><span class="nr-reserve-page">39</span></li><li><NrJump :page="44" print-label>Anbieter und Modell wechseln</NrJump><span class="nr-reserve-page">44</span></li><li><NrJump :page="45" print-label>Werkzeugrechte begrenzen</NrJump><span class="nr-reserve-page">45</span></li><li><NrJump :page="54" print-label>Datenklassen und Codezugriff</NrJump><span class="nr-reserve-page">54</span></li><li><NrJump :page="55" print-label>Grenzen der Datenprüfung</NrJump><span class="nr-reserve-page">55</span></li><li><NrJump :page="46" print-label>Protokolle und Löschfristen</NrJump><span class="nr-reserve-page">46</span></li><li><NrJump :page="50" print-label>KI-Schichten vergleichen</NrJump><span class="nr-reserve-page">50</span></li><li><NrJump :page="51" print-label>TYPO3-MCP-Server vergleichen</NrJump><span class="nr-reserve-page">51</span></li></ul></section><section><h2>Entscheidung</h2><ul><li><NrJump :page="37" print-label>Qualität an Beispielen testen</NrJump><span class="nr-reserve-page">37</span></li><li><NrJump :page="56" print-label>AI Search und Repurpose</NrJump><span class="nr-reserve-page">56</span></li><li><NrJump :page="47" print-label>Nutzen und Aufwand abwägen</NrJump><span class="nr-reserve-page">47</span></li><li><NrJump :page="48" print-label>Kosten und Budgets begrenzen</NrJump><span class="nr-reserve-page">48</span></li><li><NrJump :page="49" print-label>Produktivstart vorbereiten</NrJump><span class="nr-reserve-page">49</span></li></ul></section></div>
+<div class="nr-reserve-menu"><section><h2>Entwicklung</h2><ul><li><NrJump :page="36" print-label>Formale Vorgaben</NrJump><span class="nr-reserve-page">36</span></li><li><NrJump :page="53" print-label>Quellenprüfung</NrJump><span class="nr-reserve-page">53</span></li><li><NrJump :page="57" print-label>Begriffslisten</NrJump><span class="nr-reserve-page">57</span></li><li><NrJump :page="38" print-label>Skills einbinden</NrJump><span class="nr-reserve-page">38</span></li><li><NrJump :page="41" print-label>Eigene Extension</NrJump><span class="nr-reserve-page">41</span></li><li><NrJump :page="42" print-label>Kontext und Wissen</NrJump><span class="nr-reserve-page">42</span></li><li><NrJump :page="44" print-label>Modellwechsel</NrJump><span class="nr-reserve-page">44</span></li><li><NrJump :page="52" print-label>Such- und RAG-Grundlagen</NrJump><span class="nr-reserve-page">52</span></li><li><NrJump :page="56" print-label>AI Search und Repurpose</NrJump><span class="nr-reserve-page">56</span></li></ul></section><section><h2>Integration</h2><ul><li><NrJump :page="39" print-label>MCP-Werkzeuge</NrJump><span class="nr-reserve-page">39</span></li><li><NrJump :page="43" print-label>Fehler und Kontextgrenzen</NrJump><span class="nr-reserve-page">43</span></li><li><NrJump :page="58" print-label>Circuit Breaker und Fallback</NrJump><span class="nr-reserve-page">58</span></li><li><NrJump :page="54" print-label>Datenklassen</NrJump><span class="nr-reserve-page">54</span></li><li><NrJump :page="55" print-label>Grenzen der Datenprüfung</NrJump><span class="nr-reserve-page">55</span></li><li><NrJump :page="59" print-label>Maskierung und Vault</NrJump><span class="nr-reserve-page">59</span></li><li><NrJump :page="60" print-label>Web-Werkzeug</NrJump><span class="nr-reserve-page">60</span></li><li><NrJump :page="46" print-label>Protokolle und Löschfristen</NrJump><span class="nr-reserve-page">46</span></li><li><NrJump :page="50" print-label>KI-Schichten vergleichen</NrJump><span class="nr-reserve-page">50</span></li></ul></section><section><h2>Entscheidung</h2><ul><li><NrJump :page="37" print-label>Qualität evaluieren</NrJump><span class="nr-reserve-page">37</span></li><li><NrJump :page="40" print-label>Agentenablauf</NrJump><span class="nr-reserve-page">40</span></li><li><NrJump :page="45" print-label>Werkzeugrechte</NrJump><span class="nr-reserve-page">45</span></li><li><NrJump :page="61" print-label>Gebundene Freigaben</NrJump><span class="nr-reserve-page">61</span></li><li><NrJump :page="62" print-label>Eigene Regeln</NrJump><span class="nr-reserve-page">62</span></li><li><NrJump :page="47" print-label>Nutzen und Aufwand</NrJump><span class="nr-reserve-page">47</span></li><li><NrJump :page="48" print-label>Kosten und Budgets</NrJump><span class="nr-reserve-page">48</span></li><li><NrJump :page="49" print-label>Produktivstart</NrJump><span class="nr-reserve-page">49</span></li><li><NrJump :page="51" print-label>MCP-Server vergleichen</NrJump><span class="nr-reserve-page">51</span></li></ul></section></div>
 
 
 
@@ -1227,3 +1229,128 @@ title: "Wie nutzen Anwendungen die Quellenprüfung?"
 <p class="nr-flow-note">Im veröffentlichten Repurpose 0.14.0 fehlt der semantische Quellenabgleich. PR 205 implementiert ihn, ist aber noch nicht zusammengeführt oder veröffentlicht.</p>
 <p class="nr-takeaway">„Nicht geprüft“ und „Prüfung fehlgeschlagen“ dürfen nicht wie ein bestandenes Ergebnis erscheinen.</p>
 <div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-repurpose/tree/09bc94e4deae0870b76671647b15cddf94998fb5">Repurpose 0.14.0 · geprüfter Stand</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-repurpose/pull/205">PR 205 · Implementierung</NrLink></div><div class="nr-jump-links"><NrJump :page="53">Bewertungsdienst</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
+
+---
+layout: nr
+class: nr-technical-slide
+section: 5
+sectionTitle: "Einordnung & Austausch"
+sectionDivider: false
+talkPage: 32
+talkTotal: 32
+appendix: "technical"
+title: "Was können Begriffslisten prüfen?"
+---
+<div class="nr-kicker">Reserve · Qualität · nr-llm 0.43.19</div>
+
+# Was können Begriffslisten prüfen?
+
+<div class="nr-columns nr-columns-3"><section><h2>Geltung festlegen</h2><p>Listen den gewünschten Konfigurationen zuordnen. Ohne Zuordnung prüft diese Liste den Aufruf nicht.</p></section><section><h2>Begriffe abgleichen</h2><p>Sperrbegriffe dürfen nicht vorkommen. Pflichtbegriffe müssen in geeigneten Textantworten enthalten sein.</p></section><section><h2>Ausgabe stoppen</h2><p>Ein Verstoß blockiert die geprüfte Ausgabe. Im Agentenlauf wird ein betroffener Schreibaufruf nicht angeboten oder ausgeführt.</p></section></div>
+<p class="nr-flow-note">Beispiel: „Rabatt*“ erfasst auch „Rabattaktion“. Pflichtwörter gelten nicht für Kurztexte unter 30 Wörtern oder JSON.</p>
+<p class="nr-limit">Grenze: Keine Erkennung von Umschreibungen. Im Agentenlauf werden Schreibargumente geprüft; Chattext und Pflichtwörter sind ausgenommen.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/TermLists.rst">Begriffslisten und Ausnahmen</NrLink></div><div class="nr-jump-links"><NrJump :page="18">Zur Qualitätsübersicht</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
+
+
+---
+layout: nr
+class: nr-technical-slide
+section: 5
+sectionTitle: "Einordnung & Austausch"
+sectionDivider: false
+talkPage: 32
+talkTotal: 32
+appendix: "technical"
+title: "Was passiert, wenn ein Anbieter ausfällt?"
+---
+<div class="nr-kicker">Reserve · Aufwand und Betrieb · nr-llm 0.43.19</div>
+
+# Was passiert, wenn ein Anbieter ausfällt?
+
+<div class="nr-columns nr-columns-3"><section><h2>Fehlerpause</h2><p>Der Circuit Breaker zählt geeignete Anbieterfehler. Nach der eingestellten Schwelle brechen weitere Aufrufe vorübergehend schnell ab.</p></section><section><h2>Ersatzweg</h2><p>Ein konfigurierter Fallback versucht ein anderes Ziel bei Verbindungsfehlern, Überlastung, Serverfehlern oder offenem Circuit Breaker.</p></section><section><h2>Erholung prüfen</h2><p>Nach der Pause wird ein Probeaufruf zugelassen. Erfolg schließt die Sperre; ein erneuter Fehler öffnet sie wieder.</p></section></div>
+<p class="nr-flow-note">Voreinstellung: nach fünf passenden Fehlern eine Pause von 30 Sekunden. Ausweichziele müssen eingerichtet sein.</p>
+<p class="nr-limit">Grenze: Keine Verfügbarkeitsgarantie. Anmelde- und Konfigurationsfehler lösen keinen automatischen Ersatzweg aus.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr063ProviderResilience.rst">Circuit Breaker und Fallback</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/ext_conf_template.txt">Voreinstellungen</NrLink></div><div class="nr-jump-links"><NrJump :page="20">Zur Betriebsübersicht</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
+
+
+---
+layout: nr
+class: nr-technical-slide
+section: 5
+sectionTitle: "Einordnung & Austausch"
+sectionDivider: false
+talkPage: 32
+talkTotal: 32
+appendix: "technical"
+title: "Wie werden Zugangsdaten geschützt?"
+---
+<div class="nr-kicker">Reserve · Daten und Vorgaben · nr-llm 0.43.19</div>
+
+# Wie werden Zugangsdaten geschützt?
+
+<div class="nr-columns nr-columns-3"><section><h2>Im Vault ablegen</h2><p>Eingerichtete API-Zugänge verweisen auf ein Geheimnis in nr-vault. In der Konfiguration steht dessen Kennung.</p></section><section><h2>Beim Aufruf einsetzen</h2><p>Der sichere HTTP-Client setzt den Zugang für den Dienstaufruf ein. Der Schlüssel gehört nicht in die Modellanweisung.</p></section><section><h2>Text maskieren</h2><p>nr-llm ersetzt erkennbare Geheimnismuster in Prompt, Antwort und Thinking. Diese Maskierung ist verpflichtend.</p></section></div>
+<p class="nr-flow-note">Beispiel: Den API-Schlüssel als Vault-Referenz hinterlegen, statt ihn in den Systemprompt zu kopieren.</p>
+<p class="nr-limit">Grenze: Nur bekannte Muster werden erkannt. Toolargumente und Embeddings sind ausgenommen; personenbezogene Inhalte werden nicht allgemein erkannt.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr030SpecializedServicesVaultMigration.rst">Zugänge über nr-vault</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr089GuardrailBoundaryCompleteness.rst">Maskierung und Grenzen</NrLink></div><div class="nr-jump-links"><NrJump :page="22">Zur Datenübersicht</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
+
+
+---
+layout: nr
+class: nr-technical-slide
+section: 5
+sectionTitle: "Einordnung & Austausch"
+sectionDivider: false
+talkPage: 32
+talkTotal: 32
+appendix: "technical"
+title: "Wie liest der Agent eine externe Webseite?"
+---
+<div class="nr-kicker">Reserve · Daten und Vorgaben · nr-llm 0.43.19</div>
+
+# Wie liest der Agent eine externe Webseite?
+
+<div class="nr-columns nr-columns-3"><section><h2>Bewusst aktivieren</h2><p>Das Web-Werkzeug ist zunächst ausgeschaltet. Nach Aktivierung verlangt ein Aufruf standardmäßig menschliche Zustimmung.</p></section><section><h2>Adresse prüfen</h2><p>Startadresse und jede Weiterleitung durchlaufen die Adressprüfung. Private Zieladressen werden auch mit Hostfreigabe abgewiesen.</p></section><section><h2>Text begrenzen</h2><p>Das Werkzeug liefert begrenzten Text und kennzeichnet ihn als nicht vertrauenswürdiges Material. Es führt kein Webseiten-JavaScript aus.</p></section></div>
+<p class="nr-flow-note">Beispiel: Eine öffentliche Produktseite lesen; deren Weiterleitung auf eine private Netzwerkadresse wird abgewiesen.</p>
+<p class="nr-limit">Grenze: Auch URL-Parameter können Daten übertragen. Öffentlich erreichbare interne Dienste brauchen zusätzliche Sperrregeln; der Schutz gilt für dieses Werkzeug.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr202APublicWebPageThroughAnAddressGuard.rst">Web-Werkzeug und Adressprüfung</NrLink></div><div class="nr-jump-links"><NrJump :page="22">Zur Datenübersicht</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
+
+
+---
+layout: nr
+class: nr-technical-slide
+section: 5
+sectionTitle: "Einordnung & Austausch"
+sectionDivider: false
+talkPage: 32
+talkTotal: 32
+appendix: "technical"
+title: "Woran ist eine Schreibfreigabe gebunden?"
+---
+<div class="nr-kicker">Reserve · Kontrolle und Verantwortung · nr-llm 0.43.19</div>
+
+# Woran ist eine Schreibfreigabe gebunden?
+
+<div class="nr-columns nr-columns-3"><section><h2>Andere Person</h2><p>Bei aktivierter Vieraugenregel darf der auslösende Backend-Nutzer nicht selbst freigeben. Das gilt auch für Administratoren.</p></section><section><h2>Geprüfter Stand</h2><p>Die Freigabe muss zu den anstehenden Aufrufen passen. Eine inzwischen geänderte Vorschau verlangt eine neue Entscheidung.</p></section><section><h2>Gespeicherter Nachweis</h2><p>Vor einem Schreibschritt muss das Freigabeereignis gespeichert sein. Misslingt das, wird der freigegebene Schritt nicht ausgeführt.</p></section></div>
+<p class="nr-flow-note">Beispiel: Ein angezeigter Ausgangswert ändert sich während der Freigabe. Der Agent wartet mit einer neuen Vorschau erneut.</p>
+<p class="nr-limit">Grenze: Vieraugen gilt für Backend-Nutzer. Die Zustandsbindung braucht eine erfolgreiche Werkzeugvorschau; Freigabe ersetzt keine fachliche Prüfung.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr172FourEyesApprovalPerConfiguration.rst">Vieraugenregel</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr184ApprovalBindsToTheStateItShowed.rst">Vorschaubindung</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr132ApprovalAuditAndTurnBinding.rst">Aufruf und Audit</NrLink></div><div class="nr-jump-links"><NrJump :page="25">Zur Kontrollübersicht</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
+
+
+---
+layout: nr
+class: nr-technical-slide
+section: 5
+sectionTitle: "Einordnung & Austausch"
+sectionDivider: false
+talkPage: 32
+talkTotal: 32
+appendix: "technical"
+title: "Wie ergänzt das Projekt eigene Werkzeugregeln?"
+---
+<div class="nr-kicker">Reserve · Kontrolle und Verantwortung · nr-llm 0.43.19</div>
+
+# Wie ergänzt das Projekt eigene Werkzeugregeln?
+
+<ol class="nr-flow" style="--steps:3"><li><span class="nr-flow-number">01</span><h2>Regel entwickeln</h2><p>Die Anwendung implementiert eine eigene fachliche Bedingung über die Schnittstelle für Werkzeugregeln.</p></li><li><span class="nr-flow-number">02</span><h2>Vor Ausführung prüfen</h2><p>Die Regel bewertet endgültige Argumente, handelnden Nutzer und Ziel. Auch nach menschlicher Freigabe wird erneut geprüft.</p></li><li><span class="nr-flow-number">03</span><h2>Entscheidung anwenden</h2><p>Eine ablehnende Regel verhindert den Aufruf. Fehler in einer Regel führen ebenfalls zur Ablehnung.</p></li></ol>
+<p class="nr-flow-note">Projektbeispiel: Diese Automatisierung darf nur Datensätze im freigegebenen Seitenbereich ändern.</p>
+<p class="nr-limit">Grenze: Ohne eigene Regel entsteht keine zusätzliche Fachprüfung. Benötigte, aber fehlende Zielangaben muss die Regel ausdrücklich ablehnen.</p>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/ToolInvocationPolicy.rst">Eigene Werkzeugregeln</NrLink></div><div class="nr-jump-links"><NrJump :page="25">Zur Kontrollübersicht</NrJump><NrJump :page="35">Themenübersicht</NrJump></div></div>
