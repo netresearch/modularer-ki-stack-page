@@ -3,12 +3,12 @@ import { useNav } from '@slidev/client'
 
 const sessions = new WeakMap()
 
-// A visit updates only its own section. Appendix and introduction pages do not
-// imply that any other part of the talk has been visited or completed.
+// Section positions are keyboard-navigation targets, not displayed progress.
+// Remember every main page, including the intro, for an appendix detour.
 export function recordProgressVisit(state, sections, page) {
+  if (!Number.isInteger(page) || page < 1 || page > sections.at(-1).end) return
   const section = sections.find(item => page >= item.start && page <= item.end)
-  if (!Number.isInteger(page) || !section) return
-  if (state.positions.value[section.number] !== page)
+  if (section && state.positions.value[section.number] !== page)
     state.positions.value = { ...state.positions.value, [section.number]: page }
   state.lastMainPage.value = page
 }

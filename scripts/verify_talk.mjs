@@ -37,6 +37,13 @@ const titles = slides.map((slide) => slide.title);
 const talkTotal = slides.filter((slide) => !slide.appendix).length;
 const dividers = slides.flatMap((slide, i) => slide.divider ? [i + 1] : []);
 const sections = JSON.parse(await readFile(resolve(talk, 'source/progress-sections.json'), 'utf8'));
+function assertProgressFills(fills, page, context) {
+  for (const [index, section] of sections.entries()) {
+    const expected = page < section.start ? 0 : page >= section.end ? 100
+      : (page - section.start + 1) / (section.end - section.start + 1) * 100;
+    assert(Math.abs(parseFloat(fills[index]) - expected) < .001, `${context}: section ${section.number} shows a previous visit instead of the current position`);
+  }
+}
 assert.deepEqual(sections.map(section => section.number), [1, 2, 3, 4, 5], 'Only the five main sections get progress segments');
 assert.deepEqual(slides.filter(slide => !slide.appendix && slide.section === 0).map(slide => slide.title), ['KI in TYPO3', 'Was euch heute erwartet'], 'Title and agenda form the unnumbered introduction');
 assert(slides.slice(0, 2).every(slide => slide.section === 0 && !slide.divider && !slide.appendix), 'The introduction must precede the first section');
@@ -315,11 +322,12 @@ try {
     assert.equal(result.progressControls, sections.length, 'Every main section needs one navigation control');
     assert.equal(result.cursorCount, result.current.length, 'Only the active section may display a position marker');
     assert(result.cursorCount <= 1, 'The presentation has more than one active position marker');
+    if (!metadata.appendix) assertProgressFills(result.fills, number, `Slide ${number}`);
     assert(metadata.appendix ? /Reserve für Rückfragen|Links & Quellen/.test(result.footer) : result.footer.includes(`Folie ${metadata.talkPage}/${talkTotal}`), `Slide ${number}: footer`);
     assert.deepEqual(result.segmentLabels, sections.map(section => `${section.number} ${section.label}`), `Slide ${number}: visible section labels`);
     if (metadata.appendix) {
       assert(result.current.length <= 1, `Slide ${number}: appendix invented multiple active sections`);
-      assert(result.fills.every(fill => parseFloat(fill) >= 0 && parseFloat(fill) <= 100), `Slide ${number}: invalid remembered progress`);
+      assert(result.fills.every(fill => parseFloat(fill) >= 0 && parseFloat(fill) <= 100), `Slide ${number}: invalid frozen progress`);
     } else if (metadata.section === 0) {
       assert.deepEqual(result.current, [], `Slide ${number}: introduction must not activate section 1`);
       assert(result.fills.every(fill => fill === '0%'), `Slide ${number}: no main section has started`);
@@ -562,6 +570,16 @@ try {
       return [...slide.querySelectorAll('.nr-progress-segment')].map(segment => ({ section: Number(segment.dataset.section), lastPage: Number(segment.dataset.lastPage) || null, fill: parseFloat(segment.querySelector('.nr-progress-fill').style.width), current: segment.classList.contains('is-current'), cursor: Boolean(segment.querySelector('.nr-progress-cursor')), cursorPosition: segment.querySelector('.nr-progress-cursor') ? parseFloat(segment.querySelector('.nr-progress-cursor').style.left) : null }));
     });
   }
+  async function visiblePositionIs(number) {
+    const snapshot = await progressSnapshot(), section = slides[number - 1].section;
+    assert(!slides[number - 1].appendix, 'Visible-position checks need a main or introduction slide');
+    const active = section > 0 ? [section] : [];
+    assert.deepEqual(snapshot.filter(state => state.current).map(state => state.section), active, `Slide ${number}: wrong active section`);
+    assert.deepEqual(snapshot.filter(state => state.cursor).map(state => state.section), active, `Slide ${number}: stale or duplicate position markers`);
+    assertProgressFills(snapshot.map(state => state.fill), number, `Slide ${number}`);
+    for (const state of snapshot.filter(state => state.cursor)) assert(Math.abs(state.cursorPosition - state.fill) < .001, 'Marker is not at the current main position');
+    return snapshot;
+  }
   async function progressControl(section) {
     const control = (await page.evaluateHandle(number => [...document.querySelectorAll(`button.nr-progress-control[data-section="${number}"]`)].find(node => node.checkVisibility()), section.number)).asElement();
     assert(control, `Missing progress control ${section.number}`);
@@ -597,25 +615,22 @@ try {
   const remembered = new Map();
   for (const section of sections) {
     const target = section.start + Math.floor((section.end - section.start) / 2);
-    // Check both boundaries as well as a real interior target; hover never
-    // completes or visits a section on the audience's behalf.
+    // Hover previews do not navigate. A confirmed jump redraws the whole
+    // timeline while retaining separate saved targets for keyboard navigation.
     await pointAtProgress(section, section.start);
     await pointAtProgress(section, section.end);
     await pointAtProgress(section, target, true);
     remembered.set(section.number, target);
-    const snapshot = await progressSnapshot();
+    const snapshot = await visiblePositionIs(target);
     for (const state of snapshot) {
-      const own = sections.find(item => item.number === state.section), saved = remembered.get(state.section) || null;
+      const saved = remembered.get(state.section) || null;
       assert.equal(state.lastPage, saved, `Section ${state.section}: last position was overwritten by another section`);
       assert.equal(state.cursor, state.section === section.number, 'Remembered sections must not display additional active markers');
       if (state.cursor) assert(Math.abs(state.cursorPosition - state.fill) < .001, 'Active marker differs from the latest main position');
       assert.equal(state.current, state.section === section.number, 'Exactly the latest main section remains active');
-      const expectedFill = saved ? (saved - own.start + 1) / (own.end - own.start + 1) * 100 : 0;
-      assert(Math.abs(state.fill - expectedFill) < .001, `Section ${state.section}: displayed position differs from its visit`);
     }
   }
-  // Preserve every section's position and the active marker during an appendix
-  // excursion, including linear movement within the appendix and its return.
+  // Only an appendix excursion freezes the visible main-talk position.
   await pointAtProgress(nestedSection, nestedOrigin, true);
   const frozenProgress = await progressSnapshot();
   await jump(nestedOrigin, nestedDetail);
@@ -628,43 +643,62 @@ try {
   await fresh(nestedDetail);
   assert((await progressSnapshot()).every(state => state.lastPage === null && state.fill === 0 && !state.current && !state.cursor), 'A direct appendix link must not invent a completed presentation');
 
-  // Reproduce the audience's actual path: advance through several sections,
-  // backtrack into the introduction, then enter the talk again. Remembered
-  // fills survive; the single active marker disappears on title and agenda.
-  async function activePositionIs(number) {
-    const snapshot = await progressSnapshot(), section = slides[number - 1].section;
-    const active = section > 0 ? [section] : [];
-    assert.deepEqual(snapshot.filter(state => state.current).map(state => state.section), active, `Slide ${number}: active section survived the return to the introduction`);
-    assert.deepEqual(snapshot.filter(state => state.cursor).map(state => state.section), active, `Slide ${number}: stale or duplicate position markers`);
-    for (const state of snapshot.filter(state => state.cursor)) assert(Math.abs(state.cursorPosition - state.fill) < .001, 'Marker is not at the latest main position');
-    return snapshot;
-  }
+  // A direct main link represents its position in the whole talk, even when
+  // earlier sections have not been visited in this browser session.
+  const directMainPage = Math.min(sections[2].start + 6, sections[2].end);
+  await fresh(directMainPage);
+  await visiblePositionIs(directMainPage);
+
+  // Reproduce the audience's actual path: 2 → 14 → 7 → 2 → 1 → 7.
+  // Future sections must empty again while backtracking; the introduction
+  // displays no progress. Saved keyboard targets are separate from the fill.
   await fresh(agendaPage);
   const turnaroundPage = Math.min(sections[2].start + 1, sections[2].end);
   for (let number = agendaPage + 1; number <= turnaroundPage; number++) {
     await page.keyboard.press('ArrowRight'); await waitForPage(number);
-    await activePositionIs(number);
+    await visiblePositionIs(number);
   }
   for (let number = turnaroundPage - 1; number >= agendaPage; number--) {
     await page.keyboard.press('ArrowLeft'); await waitForPage(number);
-    await activePositionIs(number);
+    await visiblePositionIs(number);
   }
   const introProgress = await progressSnapshot();
-  assert(introProgress.filter(state => state.lastPage !== null && state.fill > 0).length >= 3, 'Returning to the introduction erased remembered section positions');
+  assert(introProgress.filter(state => state.lastPage !== null).length >= 3, 'Returning to the introduction erased saved keyboard targets');
+  assert(introProgress.every(state => state.fill === 0), 'Returning to the introduction left stale progress fills');
+  const savedTargets = snapshot => snapshot.map(({ section, lastPage }) => ({ section, lastPage }));
   for (let number = agendaPage - 1; number >= 1; number--) {
     await page.keyboard.press('ArrowLeft'); await waitForPage(number);
-    await activePositionIs(number);
-    assert.deepEqual(await progressSnapshot(), introProgress, 'Title navigation changed remembered progress');
+    const snapshot = await visiblePositionIs(number);
+    assert.deepEqual(savedTargets(snapshot), savedTargets(introProgress), 'Title navigation changed saved keyboard targets');
   }
+
+  // Entering the appendix from the title must freeze the empty introduction,
+  // rather than revive an older main-slide position.
+  await show(nestedDetail);
+  const appendixFromIntro = await progressSnapshot();
+  assert(appendixFromIntro.every(state => state.fill === 0 && !state.current && !state.cursor), 'An appendix opened from the introduction revived old progress');
+  assert.deepEqual(savedTargets(appendixFromIntro), savedTargets(introProgress), 'The appendix changed saved keyboard targets');
+  await page.goBack(); await waitForPage(1); await visiblePositionIs(1);
+
   for (let number = 2; number <= agendaPage; number++) {
     await page.keyboard.press('ArrowRight'); await waitForPage(number);
-    await activePositionIs(number);
-    assert.deepEqual(await progressSnapshot(), introProgress, 'Agenda navigation changed remembered progress');
+    const snapshot = await visiblePositionIs(number);
+    assert.deepEqual(savedTargets(snapshot), savedTargets(introProgress), 'Agenda navigation changed saved keyboard targets');
   }
-  await page.keyboard.press('ArrowRight'); await waitForPage(agendaPage + 1);
-  const resumedProgress = await activePositionIs(agendaPage + 1);
-  const rememberedPositions = snapshot => snapshot.map(({ section, lastPage, fill }) => ({ section, lastPage, fill }));
-  assert.deepEqual(rememberedPositions(resumedProgress), rememberedPositions(introProgress), 'Re-entering the talk overwrote other sections');
+  await show(nestedDetail);
+  assert((await progressSnapshot()).every(state => state.fill === 0 && !state.current && !state.cursor), 'An appendix opened from the agenda revived old progress');
+  await page.goBack(); await waitForPage(agendaPage); await visiblePositionIs(agendaPage);
+  const resumedPage = Math.min(sections[0].start + 4, sections[0].end);
+  for (let number = agendaPage + 1; number <= resumedPage; number++) {
+    await page.keyboard.press('ArrowRight'); await waitForPage(number);
+    await visiblePositionIs(number);
+  }
+  const resumedProgress = await progressSnapshot();
+  assert.deepEqual(savedTargets(resumedProgress).slice(1), savedTargets(introProgress).slice(1), 'Re-entering section 1 overwrote other keyboard targets');
+  await show(nestedDetail);
+  assert.deepEqual(await progressSnapshot(), resumedProgress, 'The appendix did not freeze the position after backtracking and re-entry');
+  await page.goBack(); await waitForPage(resumedPage);
+  await visiblePositionIs(resumedPage);
 
   await fresh(agendaPage);
   const keyboardSection = sections[0];
@@ -676,14 +710,14 @@ try {
     assert.equal(page.url(), keyboardOrigin, `${key} navigated before confirming the preview`);
     assert.deepEqual(await progressSnapshot(), keyboardProgress, 'Keyboard preview changed remembered progress');
   }
-  await page.keyboard.press('Enter'); await waitForPage(keyboardSection.end);
-  await page.keyboard.press('ArrowRight'); await waitForPage(keyboardSection.end + 1);
+  await page.keyboard.press('Enter'); await waitForPage(keyboardSection.end); await visiblePositionIs(keyboardSection.end);
+  await page.keyboard.press('ArrowRight'); await waitForPage(keyboardSection.end + 1); await visiblePositionIs(keyboardSection.end + 1);
   progressButton = await progressControl(keyboardSection);
   await page.mouse.move(1590, 5); await progressButton.focus();
   await previewIs(progressButton, keyboardSection.end);
   await page.keyboard.press('Home'); await previewIs(progressButton, keyboardSection.start);
-  await page.keyboard.press('Space'); await waitForPage(keyboardSection.start);
-  await page.keyboard.press('ArrowRight'); await waitForPage(keyboardSection.start + 1);
+  await page.keyboard.press('Space'); await waitForPage(keyboardSection.start); await visiblePositionIs(keyboardSection.start);
+  await page.keyboard.press('ArrowRight'); await waitForPage(keyboardSection.start + 1); await visiblePositionIs(keyboardSection.start + 1);
   // Mixed pointer/keyboard use must confirm the target that the focused
   // control exposes, rather than a stale hover or another section's preview.
   const hoveredPage = keyboardSection.end - 1;
@@ -737,7 +771,7 @@ try {
     }
   }
   assert.deepEqual(failures, [], 'Browser or network errors');
-  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${controlChecks} unobstructed controls, consistent destination labels/action styles, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${sections.length} quiet agenda links, nested/contextual/browser-history returns, interactive per-section progress and appendix freeze, ${imageChecks} in-page image viewers, schema-button navigation and ${localLinks.size} local links/downloads`);
+  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${controlChecks} unobstructed controls, consistent destination labels/action styles, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${sections.length} quiet agenda links, nested/contextual/browser-history returns, current-position progress through backtracking and appendix-only freeze, ${imageChecks} in-page image viewers, schema-button navigation and ${localLinks.size} local links/downloads`);
 } finally {
   await browser?.close(); await new Promise((done) => server.close(done));
   await rm(downloadsDir, { recursive: true, force: true });

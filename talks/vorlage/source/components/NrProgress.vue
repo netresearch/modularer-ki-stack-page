@@ -28,6 +28,12 @@ const rawPage = computed(() => Number(frontmatter.value.talkPage ?? unref($page)
 const isAppendix = computed(() => Boolean(frontmatter.value.appendix) || rawPage.value > talkTotal.value)
 const isIntro = computed(() => !isAppendix.value && Number(frontmatter.value.section) === 0)
 const talkPage = computed(() => Math.max(1, Math.min(rawPage.value, talkTotal.value)))
+// Main slides follow the visible position. Only an appendix detour freezes it.
+const progressPage = computed(() => {
+  if (isIntro.value) return 0
+  if (!isAppendix.value) return talkPage.value
+  return isPrintMode.value ? talkTotal.value : lastMainPage.value ?? 0
+})
 const currentSection = computed(() => props.sections.find(section => talkPage.value >= section.start && talkPage.value <= section.end))
 const appendixLabel = computed(() => frontmatter.value.appendix === 'technical' ? 'Reserve für Rückfragen' : 'Links & Quellen')
 const progressLabel = computed(() => isAppendix.value
@@ -37,19 +43,16 @@ const progressLabel = computed(() => isAppendix.value
 const segments = computed(() => props.sections.map(section => {
   const length = section.end - section.start + 1
   const savedPage = positions.value[section.number]
-  const current = isPrintMode.value
-    ? !isAppendix.value && !isIntro.value && section.number === currentSection.value?.number
-    : !isIntro.value && lastMainPage.value >= section.start && lastMainPage.value <= section.end
+  const current = !(isPrintMode.value && isAppendix.value)
+    && progressPage.value >= section.start && progressPage.value <= section.end
   return {
     ...section,
     length,
     savedPage,
-    fill: isPrintMode.value
-      ? isAppendix.value ? 100 : isIntro.value ? 0 : Math.max(0, Math.min(100, (talkPage.value - section.start + 1) / length * 100))
-      : savedPage ? (savedPage - section.start + 1) / length * 100 : 0,
+    fill: Math.max(0, Math.min(100, (progressPage.value - section.start + 1) / length * 100)),
     current,
     marker: current,
-    complete: isPrintMode.value ? isAppendix.value || !isIntro.value && talkPage.value > section.end : savedPage === section.end,
+    complete: (isPrintMode.value && isAppendix.value) || progressPage.value > section.end,
   }
 }))
 

@@ -144,9 +144,11 @@ and the proof example's return link are derived from slide metadata.
 The agenda links quietly to its sections. Internal jumps offer a contextual
 return link, while destination labels distinguish demo pages, GitHub,
 documentation and other external links. Images open from a single accessible
-image button with a magnifier hint. The interactive progress bar remembers each
-section's last visited position during appendix detours; hover or keyboard focus
-previews a destination before activating it. PDF progress remains static.
+image button with a magnifier hint. The interactive progress bar follows the
+current main slide in either direction and freezes only during appendix detours.
+The introduction shows no progress. Hover or keyboard focus previews a
+destination before activating it; section positions are retained as keyboard
+navigation targets. PDF progress remains static.
 Public source and builds exclude speaker notes. Fonts and demo
 screenshots are local and unchanged. Captions explain the image to the audience;
 capture dates and image provenance are documented in `talks/vorlage/QUELLEN.md`
