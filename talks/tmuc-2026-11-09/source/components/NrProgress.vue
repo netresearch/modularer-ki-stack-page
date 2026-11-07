@@ -39,7 +39,7 @@ const segments = computed(() => props.sections.map(section => {
   const savedPage = positions.value[section.number]
   const current = isPrintMode.value
     ? !isAppendix.value && !isIntro.value && section.number === currentSection.value?.number
-    : lastMainPage.value >= section.start && lastMainPage.value <= section.end
+    : !isIntro.value && lastMainPage.value >= section.start && lastMainPage.value <= section.end
   return {
     ...section,
     length,
@@ -48,7 +48,7 @@ const segments = computed(() => props.sections.map(section => {
       ? isAppendix.value ? 100 : isIntro.value ? 0 : Math.max(0, Math.min(100, (talkPage.value - section.start + 1) / length * 100))
       : savedPage ? (savedPage - section.start + 1) / length * 100 : 0,
     current,
-    marker: isPrintMode.value ? current : Boolean(savedPage),
+    marker: current,
     complete: isPrintMode.value ? isAppendix.value || !isIntro.value && talkPage.value > section.end : savedPage === section.end,
   }
 }))

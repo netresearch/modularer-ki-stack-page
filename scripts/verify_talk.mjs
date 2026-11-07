@@ -267,7 +267,7 @@ try {
       const styleKeys = ['fontFamily', 'fontSize', 'lineHeight', 'fontWeight', 'color', 'backgroundColor', 'borderTopWidth', 'borderTopStyle', 'borderTopColor', 'borderRadius', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'textDecorationLine'];
       const normalActions = [...slide.querySelectorAll('.nr-action-links a.nr-link,.nr-jump-links a.nr-jump')].filter(node => node.checkVisibility()).map(node => ({ href: node.getAttribute('href'), kind: node.querySelector('.nr-link-kind')?.textContent.trim(), style: Object.fromEntries(styleKeys.map(key => [key, getComputedStyle(node)[key]])) }));
       const progress = footer.querySelector('.nr-progress');
-      return { overflow, destinationLinks, internalLinks, normalActions, duplicateImageActions: slide.querySelectorAll('.nr-action-links .nr-image-link').length, divider: slide.classList.contains('nr-section-divider'), content: slide.querySelector('.nr-content').innerText.replace(/\s+/g, ' ').trim(), dividerExtras: slide.querySelectorAll('.nr-content img,.nr-content ul,.nr-content ol,.nr-content button,.nr-content a,.nr-content .nr-controls').length, broken: [...slide.querySelectorAll('img')].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src), footer: footer.innerText, max: progress.dataset.talkTotal, progressRole: progress.getAttribute('role'), progressControls: footer.querySelectorAll('button.nr-progress-control').length, progressText: progress.getAttribute('aria-label'), sectionText: footer.querySelector('.nr-section-progress')?.textContent || '', segmentLabels: [...footer.querySelectorAll('.nr-progress-label')].map(node => node.textContent), current: [...footer.querySelectorAll('.is-current .nr-progress-label')].map(node => node.textContent), fills: [...footer.querySelectorAll('.nr-progress-fill')].map(node => node.style.width), links: [...slide.querySelectorAll('a[href]')].map((link) => link.href) };
+      return { overflow, destinationLinks, internalLinks, normalActions, duplicateImageActions: slide.querySelectorAll('.nr-action-links .nr-image-link').length, divider: slide.classList.contains('nr-section-divider'), content: slide.querySelector('.nr-content').innerText.replace(/\s+/g, ' ').trim(), dividerExtras: slide.querySelectorAll('.nr-content img,.nr-content ul,.nr-content ol,.nr-content button,.nr-content a,.nr-content .nr-controls').length, broken: [...slide.querySelectorAll('img')].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src), footer: footer.innerText, max: progress.dataset.talkTotal, progressRole: progress.getAttribute('role'), progressControls: footer.querySelectorAll('button.nr-progress-control').length, cursorCount: footer.querySelectorAll('.nr-progress-cursor').length, progressText: progress.getAttribute('aria-label'), sectionText: footer.querySelector('.nr-section-progress')?.textContent || '', segmentLabels: [...footer.querySelectorAll('.nr-progress-label')].map(node => node.textContent), current: [...footer.querySelectorAll('.is-current .nr-progress-label')].map(node => node.textContent), fills: [...footer.querySelectorAll('.nr-progress-fill')].map(node => node.style.width), links: [...slide.querySelectorAll('a[href]')].map((link) => link.href) };
     }, titles[number - 1]);
     assert.deepEqual(result.overflow, [], `Slide ${number}: overflow`);
     assert.deepEqual(result.broken, [], `Slide ${number}: images`);
@@ -313,6 +313,8 @@ try {
     assert.equal(result.max, String(talkTotal));
     assert.equal(result.progressRole, 'group', 'Interactive sections need group semantics');
     assert.equal(result.progressControls, sections.length, 'Every main section needs one navigation control');
+    assert.equal(result.cursorCount, result.current.length, 'Only the active section may display a position marker');
+    assert(result.cursorCount <= 1, 'The presentation has more than one active position marker');
     assert(metadata.appendix ? /Reserve für Rückfragen|Links & Quellen/.test(result.footer) : result.footer.includes(`Folie ${metadata.talkPage}/${talkTotal}`), `Slide ${number}: footer`);
     assert.deepEqual(result.segmentLabels, sections.map(section => `${section.number} ${section.label}`), `Slide ${number}: visible section labels`);
     if (metadata.appendix) {
@@ -557,7 +559,7 @@ try {
   async function progressSnapshot() {
     return page.evaluate(() => {
       const slide = [...document.querySelectorAll('.slidev-layout')].find(node => node.checkVisibility());
-      return [...slide.querySelectorAll('.nr-progress-segment')].map(segment => ({ section: Number(segment.dataset.section), lastPage: Number(segment.dataset.lastPage) || null, fill: parseFloat(segment.querySelector('.nr-progress-fill').style.width), current: segment.classList.contains('is-current'), cursor: Boolean(segment.querySelector('.nr-progress-cursor')) }));
+      return [...slide.querySelectorAll('.nr-progress-segment')].map(segment => ({ section: Number(segment.dataset.section), lastPage: Number(segment.dataset.lastPage) || null, fill: parseFloat(segment.querySelector('.nr-progress-fill').style.width), current: segment.classList.contains('is-current'), cursor: Boolean(segment.querySelector('.nr-progress-cursor')), cursorPosition: segment.querySelector('.nr-progress-cursor') ? parseFloat(segment.querySelector('.nr-progress-cursor').style.left) : null }));
     });
   }
   async function progressControl(section) {
@@ -605,7 +607,8 @@ try {
     for (const state of snapshot) {
       const own = sections.find(item => item.number === state.section), saved = remembered.get(state.section) || null;
       assert.equal(state.lastPage, saved, `Section ${state.section}: last position was overwritten by another section`);
-      assert.equal(state.cursor, saved !== null, 'Only visited sections get a remembered marker');
+      assert.equal(state.cursor, state.section === section.number, 'Remembered sections must not display additional active markers');
+      if (state.cursor) assert(Math.abs(state.cursorPosition - state.fill) < .001, 'Active marker differs from the latest main position');
       assert.equal(state.current, state.section === section.number, 'Exactly the latest main section remains active');
       const expectedFill = saved ? (saved - own.start + 1) / (own.end - own.start + 1) * 100 : 0;
       assert(Math.abs(state.fill - expectedFill) < .001, `Section ${state.section}: displayed position differs from its visit`);
@@ -624,6 +627,44 @@ try {
   assert.deepEqual(await progressSnapshot(), frozenProgress, 'Returning from the appendix changed another section');
   await fresh(nestedDetail);
   assert((await progressSnapshot()).every(state => state.lastPage === null && state.fill === 0 && !state.current && !state.cursor), 'A direct appendix link must not invent a completed presentation');
+
+  // Reproduce the audience's actual path: advance through several sections,
+  // backtrack into the introduction, then enter the talk again. Remembered
+  // fills survive; the single active marker disappears on title and agenda.
+  async function activePositionIs(number) {
+    const snapshot = await progressSnapshot(), section = slides[number - 1].section;
+    const active = section > 0 ? [section] : [];
+    assert.deepEqual(snapshot.filter(state => state.current).map(state => state.section), active, `Slide ${number}: active section survived the return to the introduction`);
+    assert.deepEqual(snapshot.filter(state => state.cursor).map(state => state.section), active, `Slide ${number}: stale or duplicate position markers`);
+    for (const state of snapshot.filter(state => state.cursor)) assert(Math.abs(state.cursorPosition - state.fill) < .001, 'Marker is not at the latest main position');
+    return snapshot;
+  }
+  await fresh(agendaPage);
+  const turnaroundPage = Math.min(sections[2].start + 1, sections[2].end);
+  for (let number = agendaPage + 1; number <= turnaroundPage; number++) {
+    await page.keyboard.press('ArrowRight'); await waitForPage(number);
+    await activePositionIs(number);
+  }
+  for (let number = turnaroundPage - 1; number >= agendaPage; number--) {
+    await page.keyboard.press('ArrowLeft'); await waitForPage(number);
+    await activePositionIs(number);
+  }
+  const introProgress = await progressSnapshot();
+  assert(introProgress.filter(state => state.lastPage !== null && state.fill > 0).length >= 3, 'Returning to the introduction erased remembered section positions');
+  for (let number = agendaPage - 1; number >= 1; number--) {
+    await page.keyboard.press('ArrowLeft'); await waitForPage(number);
+    await activePositionIs(number);
+    assert.deepEqual(await progressSnapshot(), introProgress, 'Title navigation changed remembered progress');
+  }
+  for (let number = 2; number <= agendaPage; number++) {
+    await page.keyboard.press('ArrowRight'); await waitForPage(number);
+    await activePositionIs(number);
+    assert.deepEqual(await progressSnapshot(), introProgress, 'Agenda navigation changed remembered progress');
+  }
+  await page.keyboard.press('ArrowRight'); await waitForPage(agendaPage + 1);
+  const resumedProgress = await activePositionIs(agendaPage + 1);
+  const rememberedPositions = snapshot => snapshot.map(({ section, lastPage, fill }) => ({ section, lastPage, fill }));
+  assert.deepEqual(rememberedPositions(resumedProgress), rememberedPositions(introProgress), 'Re-entering the talk overwrote other sections');
 
   await fresh(agendaPage);
   const keyboardSection = sections[0];
