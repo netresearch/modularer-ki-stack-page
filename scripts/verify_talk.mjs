@@ -31,7 +31,7 @@ for (let i = 1; i + 1 < chunks.length; i += 2) {
     assert(raw !== undefined, `Missing ${key} in slide metadata`);
     try { return JSON.parse(raw); } catch { return raw; }
   };
-  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), sectionTitle: value('sectionTitle'), divider: value('sectionDivider'), body: chunks[i + 1], screenshots: [...chunks[i + 1].matchAll(/<NrImage\b[^>]*\bfile="([^"]+)"/g)].map(match => match[1]), jumps: [...chunks[i + 1].matchAll(/<NrJump\b[^>]*:page="(\d+)"/g)].map(match => Number(match[1])), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
+  slides.push({ title: value('title'), talkPage: value('talkPage'), talkTotal: value('talkTotal'), appendix: value('appendix'), section: value('section'), sectionTitle: value('sectionTitle'), divider: value('sectionDivider'), body: chunks[i + 1], screenshots: [...chunks[i + 1].matchAll(/<NrImage\b[^>]*\bfile="([^"]+)"/g)].map(match => match[1]), jumps: [...chunks[i + 1].matchAll(/<NrJump\b[^>]*:page="(\d+)"/g)].map(match => Number(match[1])), backTargets: [...chunks[i + 1].matchAll(/<NrJump\b(?=[^>]*\bback\b)[^>]*:page="(\d+)"/g)].map(match => Number(match[1])), menuTargets: [...chunks[i + 1].matchAll(/<NrJump :page="(\d+)" print-label>/g)].map((match) => Number(match[1])) });
 }
 const titles = slides.map((slide) => slide.title);
 const talkTotal = slides.filter((slide) => !slide.appendix).length;
@@ -51,6 +51,7 @@ for (const slide of slides) for (const target of slide.jumps) assert(target >= 1
 assert(slides.every((slide) => slide.talkTotal === talkTotal), 'Inconsistent main-slide total');
 assert.match(source, /^presenter: false$/m, 'Public presenter mode must remain disabled');
 assert(!source.includes('<!--'), 'Public source contains speaker notes');
+assert(!/Bild vergrößern/.test(source), 'Duplicate image-opening links must be removed; the screenshot itself opens the viewer');
 assert(!source.includes('/typo3/main?redirect='), 'Legacy backend redirects open the dashboard; use verified native module/record paths');
 for (const file of await readdir(resolve(site, 'assets'), { recursive: true })) {
   if (file.endsWith('.js')) {
@@ -221,12 +222,13 @@ try {
     else if (imageChecks % 3 === 1) await page.click(`${dialog} button[aria-label="Bild schließen"]`);
     else await page.mouse.click(2, 2);
     await closed();
-    const second = (await trigger.evaluateHandle((button) => (button.closest('figure').querySelector('.nr-action-links button.nr-image-link') || button.closest('.slidev-layout').querySelector('.nr-action-links button.nr-image-link')))).asElement();
-    assert(second, 'Screenshot action button missing');
-    await second.click(); await opened();
-    await page.keyboard.press('Escape'); await page.waitForSelector(dialog, { hidden: true });
-    assert(await second.evaluate((button) => document.activeElement === button), 'Image action did not regain focus');
-    assert.equal(page.url(), initialUrl);
+    // The thumbnail is the only image-opening control. Verify both keyboard
+    // activation keys on every image, with Escape restoring that same trigger.
+    if (imageChecks === 1) { await trigger.click(); await opened(); await page.keyboard.press('Escape'); await closed(); }
+    for (const key of ['Enter', 'Space']) {
+      await trigger.focus(); await page.keyboard.press(key); await opened();
+      await page.keyboard.press('Escape'); await closed();
+    }
     if (imageChecks === 0) {
       await trigger.focus(); await page.keyboard.press('Enter'); await opened();
       for (const key of ['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', 'Home', 'End']) await page.keyboard.press(key);
@@ -242,9 +244,13 @@ try {
     localLinks.add(thumbnail.src);
     imageChecks++;
   }
-  let mainJumpChecks = 0, controlChecks = 0;
+  let mainJumpChecks = 0, controlChecks = 0, normalActionStyle;
+  const destinationKinds = new Map();
+  const mixedActionPage = slides.findIndex(slide => slide.appendix === 'technical' && slide.body.includes('href="pruefbeispiel/index.html"')) + 1;
+  assert(mixedActionPage > 0, 'Need a representative slide with local, external and internal destinations');
   for (let number = 1; number <= titles.length; number++) {
     await show(number);
+    await page.mouse.move(1590, 5);
     const result = await page.evaluate((title) => {
       const heading = [...document.querySelectorAll('.slidev-layout h1')].find((node) => node.textContent === title && node.checkVisibility());
       const slide = heading.closest('.slidev-layout'), box = slide.getBoundingClientRect();
@@ -256,11 +262,48 @@ try {
         return rect.left < box.left - 2 || rect.right > box.right + 2 || rect.bottom > footerTop + 2
           || (!connector && (node.scrollHeight > node.clientHeight + 4 || node.scrollWidth > node.clientWidth + 4));
       }).map((node) => node.className || node.tagName);
-      const progress = footer.querySelector('[role="progressbar"]');
-      return { overflow, divider: slide.classList.contains('nr-section-divider'), content: slide.querySelector('.nr-content').innerText.replace(/\s+/g, ' ').trim(), dividerExtras: slide.querySelectorAll('.nr-content img,.nr-content ul,.nr-content ol,.nr-content button,.nr-content a,.nr-content .nr-controls').length, broken: [...slide.querySelectorAll('img')].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src), footer: footer.innerText, max: progress.getAttribute('aria-valuemax'), progressText: progress.getAttribute('aria-valuetext'), sectionText: footer.querySelector('.nr-section-progress').textContent, segmentLabels: [...footer.querySelectorAll('.nr-progress-label')].map(node => node.textContent), current: [...footer.querySelectorAll('.is-current .nr-progress-label')].map(node => node.textContent), fills: [...footer.querySelectorAll('.nr-progress-fill')].map(node => node.style.width), links: [...slide.querySelectorAll('a[href]')].map((link) => link.href) };
+      const destinationLinks = [...slide.querySelectorAll('.nr-content a.nr-link')].filter(node => node.checkVisibility()).map(node => ({ href: node.href, kind: node.querySelector('.nr-link-kind')?.textContent.trim(), label: node.querySelector('.nr-link-label')?.textContent.trim(), target: node.target, rel: node.rel, marker: node.querySelector('.nr-link-external')?.textContent.trim(), markerHidden: node.querySelector('.nr-link-external')?.getAttribute('aria-hidden'), note: node.querySelector('.nr-link-note')?.textContent.trim() }));
+      const internalLinks = [...slide.querySelectorAll('.nr-content a.nr-jump:not(.nr-link):not(.nr-jump-quiet)')].filter(node => node.checkVisibility()).map(node => ({ href: node.getAttribute('href'), target: node.target, kind: node.querySelector('.nr-link-kind')?.textContent.trim(), marker: node.querySelector('.nr-jump-arrow')?.textContent.trim() }));
+      const styleKeys = ['fontFamily', 'fontSize', 'lineHeight', 'fontWeight', 'color', 'backgroundColor', 'borderTopWidth', 'borderTopStyle', 'borderTopColor', 'borderRadius', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'textDecorationLine'];
+      const normalActions = [...slide.querySelectorAll('.nr-action-links a.nr-link,.nr-jump-links a.nr-jump')].filter(node => node.checkVisibility()).map(node => ({ href: node.getAttribute('href'), kind: node.querySelector('.nr-link-kind')?.textContent.trim(), style: Object.fromEntries(styleKeys.map(key => [key, getComputedStyle(node)[key]])) }));
+      const progress = footer.querySelector('.nr-progress');
+      return { overflow, destinationLinks, internalLinks, normalActions, duplicateImageActions: slide.querySelectorAll('.nr-action-links .nr-image-link').length, divider: slide.classList.contains('nr-section-divider'), content: slide.querySelector('.nr-content').innerText.replace(/\s+/g, ' ').trim(), dividerExtras: slide.querySelectorAll('.nr-content img,.nr-content ul,.nr-content ol,.nr-content button,.nr-content a,.nr-content .nr-controls').length, broken: [...slide.querySelectorAll('img')].filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.src), footer: footer.innerText, max: progress.dataset.talkTotal, progressRole: progress.getAttribute('role'), progressControls: footer.querySelectorAll('button.nr-progress-control').length, progressText: progress.getAttribute('aria-label'), sectionText: footer.querySelector('.nr-section-progress')?.textContent || '', segmentLabels: [...footer.querySelectorAll('.nr-progress-label')].map(node => node.textContent), current: [...footer.querySelectorAll('.is-current .nr-progress-label')].map(node => node.textContent), fills: [...footer.querySelectorAll('.nr-progress-fill')].map(node => node.style.width), links: [...slide.querySelectorAll('a[href]')].map((link) => link.href) };
     }, titles[number - 1]);
     assert.deepEqual(result.overflow, [], `Slide ${number}: overflow`);
     assert.deepEqual(result.broken, [], `Slide ${number}: images`);
+    assert.equal(result.duplicateImageActions, 0, 'Image viewer must be opened through its thumbnail, without duplicate action links');
+    for (const link of result.destinationLinks) {
+      assert(link.kind && link.label, `Slide ${number}: destination type or independent link label missing`);
+      assert.equal(link.target, '_blank');
+      assert(link.rel.split(/\s+/).includes('noopener'));
+      assert.equal(link.marker, '↗');
+      assert.equal(link.markerHidden, 'true');
+      assert(link.note.includes('öffnet in einem neuen Tab'), 'External navigation needs an accessible new-tab indication');
+      destinationKinds.set(link.href, link.kind);
+    }
+    for (const link of result.internalLinks) {
+      assert.match(link.href, /^#\/\d+$/, 'Internal link must expose its slide target');
+      assert.equal(link.target, '', 'Internal slide navigation must stay in the same tab');
+      assert.equal(link.kind, 'Folie');
+      assert.equal(link.marker, '→');
+    }
+    for (const action of result.normalActions) {
+      normalActionStyle ??= action.style;
+      assert.deepEqual(action.style, normalActionStyle, `Slide ${number}: ordinary actions have inconsistent visual priority`);
+      assert.equal(action.style.fontSize, '18px');
+      assert.equal(action.style.lineHeight, '22px');
+      assert.equal(action.style.fontWeight, '600');
+      assert.equal(action.style.backgroundColor, 'rgb(255, 255, 255)', 'An arbitrary first action still has a filled background');
+      assert.equal(action.style.borderTopWidth, '1px');
+      assert.equal(action.style.borderTopStyle, 'solid');
+      assert.equal(action.style.borderRadius, '6px');
+      assert.equal(action.style.textDecorationLine, 'none');
+    }
+    if (number === mixedActionPage) {
+      assert(result.normalActions.length >= 4, 'Representative appendix slide lost one of its action types');
+      for (const kind of ['Beispiel', 'GitHub', 'Folie']) assert(result.normalActions.some(action => action.kind === kind), `Representative appendix slide needs ${kind} navigation`);
+    }
+
     const controls = await page.evaluate(inspectControlGeometry);
     assert.deepEqual(controls.detailCollisions, [], `Slide ${number}: content or action overlaps the detail navigation`);
     assert.deepEqual(controls.blockedControls, [], `Slide ${number}: a control is covered at its click target`);
@@ -268,11 +311,13 @@ try {
     controlChecks += controls.controls;
     const metadata = slides[number - 1];
     assert.equal(result.max, String(talkTotal));
-    assert(result.footer.includes(metadata.appendix ? 'Anhang · nicht mitgezählt' : `Folie ${metadata.talkPage}/${talkTotal}`), `Slide ${number}: footer`);
+    assert.equal(result.progressRole, 'group', 'Interactive sections need group semantics');
+    assert.equal(result.progressControls, sections.length, 'Every main section needs one navigation control');
+    assert(metadata.appendix ? /Reserve für Rückfragen|Links & Quellen/.test(result.footer) : result.footer.includes(`Folie ${metadata.talkPage}/${talkTotal}`), `Slide ${number}: footer`);
     assert.deepEqual(result.segmentLabels, sections.map(section => `${section.number} ${section.label}`), `Slide ${number}: visible section labels`);
     if (metadata.appendix) {
-      assert.deepEqual(result.current, [], `Slide ${number}: appendix must not mark an active section`);
-      assert(result.fills.every(fill => fill === '100%'), `Slide ${number}: completed presentation`);
+      assert(result.current.length <= 1, `Slide ${number}: appendix invented multiple active sections`);
+      assert(result.fills.every(fill => parseFloat(fill) >= 0 && parseFloat(fill) <= 100), `Slide ${number}: invalid remembered progress`);
     } else if (metadata.section === 0) {
       assert.deepEqual(result.current, [], `Slide ${number}: introduction must not activate section 1`);
       assert(result.fills.every(fill => fill === '0%'), `Slide ${number}: no main section has started`);
@@ -303,9 +348,9 @@ try {
       await show(number);
       const button = (await page.evaluateHandle(({ title, index }) => {
         const heading = [...document.querySelectorAll('.slidev-layout h1')].find(node => node.textContent === title && node.checkVisibility());
-        return heading.closest('.slidev-layout').querySelectorAll('button.nr-jump')[index];
+        return heading.closest('.slidev-layout').querySelectorAll('a.nr-jump,button.nr-jump')[index];
       }, { title: metadata.title, index })).asElement();
-      assert(button, `Slide ${number}: missing jump button ${index}`);
+      assert(button, `Slide ${number}: missing jump control ${index}`);
       if (mainJumpChecks === 0) { await button.focus(); await page.keyboard.press('Enter'); }
       else await button.click();
       await page.waitForFunction(({ target, title }) => location.hash === `#/${target}` && [...document.querySelectorAll('.slidev-layout h1')].some(node => node.textContent === title && node.checkVisibility()), {}, { target, title: titles[target - 1] });
@@ -317,6 +362,21 @@ try {
     }
   }
   assert.equal(imageChecks, slides.reduce((total, slide) => total + slide.screenshots.length, 0), 'Not every screenshot was checked');
+  // Representative destinations form a small product contract; this does not
+  // duplicate NrLink's classification algorithm or depend on its label wording.
+  for (const [href, kind] of [
+    ['https://typo3-demo.netresearch.de/extensions/ai-search', 'Demo'],
+    ['https://github.com/netresearch/t3x-nr-llm', 'GitHub'],
+    ['https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture', 'Doku'],
+    ['https://symfony.com/doc/current/ai/components/platform.html', 'Doku'],
+    ['https://docs.typo3.org/p/nitsan/ns-t3af/main/en-us/Index.html', 'Doku'],
+    [url + 'pruefbeispiel/index.html', 'Beispiel'],
+    ['https://www.netresearch.de/blog/ki-kennzeichnung-auf-websites-was-jetzt-wirklich-gekennzeichnet-werden-muss/', 'Artikel'],
+    ['https://netresearch.github.io/modularer-ki-stack-page/', 'Projekt'],
+    ['https://www.louis.info/leistungen/technologien/typo3-extensions/', 'Web'],
+  ]) assert.equal(destinationKinds.get(href), kind, `Wrong destination label for ${href}`);
+  assert([...destinationKinds].some(([href, kind]) => /^https:\/\/netresearch\.github\.io\/modularer-ki-stack-page\/vortraege\/(?:vorlage|tmuc-2026-11-09)\/$/.test(href) && kind === 'Vortrag'), 'A presentation link must be labeled as Vortrag');
+
   // Reach the proof through its actual main-slide control. A direct page.goto
   // would not notice an appendix link intercepting clicks on this button.
   const proofOwners = slides.flatMap((slide, index) => !slide.appendix && slide.body.includes('href="pruefbeispiel/index.html"') ? [index + 1] : []);
@@ -372,13 +432,250 @@ try {
   await show(indexPage);
   for (const [index, number] of menuTargets.entries()) {
     assert(slides[number - 1]?.appendix === 'technical', 'Reserve target outside technical appendix');
-    await page.evaluate((index) => [...document.querySelectorAll('.nr-reserve-menu button')].filter((button) => button.checkVisibility())[index].click(), index);
+    await page.evaluate((index) => [...document.querySelectorAll('.nr-reserve-menu a.nr-jump,.nr-reserve-menu button.nr-jump')].filter((button) => button.checkVisibility())[index].click(), index);
     await page.waitForFunction((number) => location.hash === `#/${number}`, {}, number);
     await page.waitForFunction((title) => [...document.querySelectorAll('.slidev-layout h1')].some((node) => node.textContent === title && node.checkVisibility()), {}, titles[number - 1]);
-    await page.evaluate(() => [...document.querySelectorAll('button.nr-jump')].find((button) => button.checkVisibility() && button.textContent === 'Themenübersicht').click());
+    await page.evaluate((target) => [...document.querySelectorAll('a.nr-jump,button.nr-jump')].find((control) => control.checkVisibility() && control.getAttribute('href') === `#/${target}`).click(), indexPage);
     await page.waitForFunction((number) => location.hash === `#/${number}`, {}, indexPage);
-    await page.waitForFunction(() => [...document.querySelectorAll('.nr-reserve-menu button')].some((button) => button.checkVisibility()));
+    await page.waitForFunction(() => [...document.querySelectorAll('.nr-reserve-menu a.nr-jump,.nr-reserve-menu button.nr-jump')].some((button) => button.checkVisibility()));
   }
+  // Test the actual navigation controls with fresh sessions so prior verifier
+  // navigation cannot manufacture a contextual return for a direct hash URL.
+  async function waitForPage(number) {
+    await page.waitForFunction(({ number, title }) => location.hash === `#/${number}` && [...document.querySelectorAll('.slidev-layout h1')].some(node => node.checkVisibility() && node.textContent === title), {}, { number, title: titles[number - 1] });
+    await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
+  }
+  async function fresh(number) {
+    await page.goto('about:blank');
+    await show(number);
+  }
+  async function jump(from, target, keyboard = false) {
+    const index = slides[from - 1].jumps.indexOf(target);
+    assert(index >= 0, `No declared jump ${from} → ${target}`);
+    const control = (await page.evaluateHandle(index => [...document.querySelectorAll('.slidev-layout')].find(node => node.checkVisibility()).querySelectorAll('a.nr-jump,button.nr-jump')[index], index)).asElement();
+    assert(control, `No rendered jump ${from} → ${target}`);
+    assert.equal(await control.evaluate(node => node.getAttribute('href')), `#/${target}`, 'Internal navigation needs a genuine, copyable anchor');
+    if (keyboard) { await control.focus(); await page.keyboard.press('Enter'); }
+    else await control.click();
+    await waitForPage(target);
+  }
+  async function returnTarget(expected) {
+    const state = await page.evaluate(() => {
+      const slide = [...document.querySelectorAll('.slidev-layout')].find(node => node.checkVisibility());
+      const link = slide.querySelector('.nr-footer .nr-return-link');
+      if (!link?.checkVisibility()) return null;
+      const rect = link.getBoundingClientRect(), footerRect = link.closest('.nr-footer').getBoundingClientRect();
+      const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      const overlaps = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 2 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 2;
+      const collisions = [], walker = document.createTreeWalker(link.closest('.nr-footer'), NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        if (!walker.currentNode.textContent.trim() || link.contains(walker.currentNode) || walker.currentNode.parentElement.closest('.nr-progress-sr-only')) continue;
+        const range = document.createRange(); range.selectNodeContents(walker.currentNode);
+        if ([...range.getClientRects()].some(box => overlaps(rect, box))) collisions.push(walker.currentNode.textContent.trim());
+      }
+      return { href: link.getAttribute('href'), text: link.textContent.trim(), clickable: hit === link || link.contains(hit), collisions, insideFooter: rect.left >= footerRect.left - 2 && rect.right <= footerRect.right + 2 && rect.top >= footerRect.top - 2 && rect.bottom <= footerRect.bottom + 2 };
+    });
+    if (expected === null) assert.equal(state, null, 'Return link invented an origin or bounced back to the detail');
+    else {
+      assert(state, `Missing contextual return to ${expected}`);
+      assert.equal(state.href, `#/${expected}`);
+      assert(state.text.includes(`Folie ${expected}`), 'Return control must name its destination');
+      assert(state.clickable && state.insideFooter, 'Return control is covered or clipped');
+      assert.deepEqual(state.collisions, [], 'Return control overlaps footer text');
+    }
+  }
+  async function returnTo(target, keyboard = false) {
+    await returnTarget(target);
+    const link = (await page.evaluateHandle(() => [...document.querySelectorAll('.nr-footer .nr-return-link')].find(node => node.checkVisibility()))).asElement();
+    if (keyboard) { await link.focus(); await page.keyboard.press('Enter'); }
+    else await link.click();
+    await waitForPage(target);
+  }
+  const agendaPage = pageOf('Was euch heute erwartet');
+  assert.deepEqual(slides[agendaPage - 1].jumps, sections.map(section => section.start), 'Every agenda topic must link to its section divider');
+  for (const [index, section] of sections.entries()) {
+    await fresh(agendaPage);
+    await returnTarget(null);
+    const link = (await page.evaluateHandle(target => [...document.querySelectorAll('.slidev-layout a.nr-jump-quiet')].find(node => node.checkVisibility() && node.getAttribute('href') === `#/${target}`), section.start)).asElement();
+    assert(link, `Agenda section ${section.number} is not a quiet anchor`);
+    async function quietAppearance() {
+      const style = await link.evaluate(node => {
+        const own = getComputedStyle(node), parent = getComputedStyle(node.parentElement);
+        return { color: own.color, inheritedColor: parent.color, fontSize: own.fontSize, inheritedFontSize: parent.fontSize, textDecoration: own.textDecorationLine, background: own.backgroundColor, borderWidths: ['Top', 'Right', 'Bottom', 'Left'].map(side => own[`border${side}Width`]), marker: getComputedStyle(node, 'after').content, visibleMarkers: [...node.querySelectorAll('[aria-hidden="true"]')].filter(child => child.checkVisibility()).map(child => child.textContent.trim()) };
+      });
+      assert.equal(style.color, style.inheritedColor, 'Agenda links changed the text color');
+      assert.equal(style.fontSize, style.inheritedFontSize, 'Agenda links changed the text size');
+      assert.equal(style.textDecoration, 'none', 'Agenda link has a visible underline');
+      assert.equal(style.background, 'rgba(0, 0, 0, 0)', 'Agenda link has button styling');
+      assert(style.borderWidths.every(width => parseFloat(width) === 0), 'Agenda link has a visible border');
+      assert(['none', 'normal', '""'].includes(style.marker), 'Agenda link has a decorative link marker');
+      assert.deepEqual(style.visibleMarkers, [], 'Agenda link gained a visible navigation marker');
+    }
+    await page.mouse.move(1590, 5); await quietAppearance();
+    await link.hover(); await quietAppearance();
+    await link.focus(); await page.keyboard.press('Tab');
+    await page.keyboard.down('Shift'); await page.keyboard.press('Tab'); await page.keyboard.up('Shift');
+    assert(await link.evaluate(node => document.activeElement === node && node.matches(':focus-visible') && getComputedStyle(node).outlineStyle !== 'none' && parseFloat(getComputedStyle(node).outlineWidth) > 0), 'Agenda link lacks visible keyboard focus');
+    await jump(agendaPage, section.start, index % 2 === 1);
+    await returnTo(agendaPage, index % 2 === 0);
+    await returnTarget(null);
+  }
+
+  // Agenda → section, then linear navigation → detail is a real nested route.
+  // Both return levels and the browser's own Back/Forward must preserve origins.
+  const nestedOrigin = slides.findIndex((slide, index) => !slide.appendix && slide.section > 0 && sections.find(section => section.number === slide.section).start < index + 1 && slide.jumps.some(target => target > talkTotal)) + 1;
+  assert(nestedOrigin > 0, 'Need a main-slide detail link after a section divider');
+  const nestedSection = sections.find(section => section.number === slides[nestedOrigin - 1].section);
+  const nestedDetail = slides[nestedOrigin - 1].jumps.find(target => target > talkTotal);
+  await fresh(agendaPage);
+  await jump(agendaPage, nestedSection.start);
+  for (let number = nestedSection.start; number < nestedOrigin; number++) { await page.keyboard.press('ArrowRight'); await waitForPage(number + 1); }
+  await returnTarget(agendaPage);
+  await jump(nestedOrigin, nestedDetail, true);
+  await returnTarget(nestedOrigin);
+  await page.goBack(); await waitForPage(nestedOrigin); await returnTarget(agendaPage);
+  await page.goForward(); await waitForPage(nestedDetail); await returnTarget(nestedOrigin);
+  await returnTo(nestedOrigin, true); await returnTarget(agendaPage);
+  await returnTo(agendaPage); await returnTarget(null);
+  await page.goBack(); await waitForPage(nestedOrigin); await returnTarget(agendaPage);
+  await page.goForward(); await waitForPage(agendaPage); await returnTarget(null);
+  await page.keyboard.press('ArrowRight'); await waitForPage(agendaPage + 1); await returnTarget(null);
+  await fresh(nestedDetail); await returnTarget(null);
+  // An explicit authored return must consume the excursion, not create its
+  // reverse and invite an endless detail/main/detail ping-pong.
+  const authoredBackPair = slides.flatMap((slide, index) => slide.appendix ? [] : slide.jumps.filter(target => slides[target - 1].backTargets.includes(index + 1)).map(target => [index + 1, target]))[0];
+  assert(authoredBackPair, 'Need an authored main/detail return path');
+  const [authoredOrigin, authoredDetail] = authoredBackPair;
+  await fresh(authoredOrigin); await jump(authoredOrigin, authoredDetail);
+  await jump(authoredDetail, authoredOrigin); await returnTarget(null);
+  await page.keyboard.press('ArrowRight'); await waitForPage(authoredOrigin + 1); await returnTarget(null);
+  const explicitExitRoute = slides.flatMap((slide, index) => slide.appendix ? [] : slide.jumps.filter(target => slides[target - 1].appendix).flatMap(detail => slides[detail - 1].backTargets.filter(exit => exit !== index + 1).map(exit => [index + 1, detail, exit])))[0];
+  assert(explicitExitRoute, 'Need an explicit appendix exit to another target');
+  const [exitOrigin, exitDetail, explicitExit] = explicitExitRoute;
+  await fresh(exitOrigin); await jump(exitOrigin, exitDetail);
+  await jump(exitDetail, explicitExit); await returnTarget(null);
+  async function progressSnapshot() {
+    return page.evaluate(() => {
+      const slide = [...document.querySelectorAll('.slidev-layout')].find(node => node.checkVisibility());
+      return [...slide.querySelectorAll('.nr-progress-segment')].map(segment => ({ section: Number(segment.dataset.section), lastPage: Number(segment.dataset.lastPage) || null, fill: parseFloat(segment.querySelector('.nr-progress-fill').style.width), current: segment.classList.contains('is-current'), cursor: Boolean(segment.querySelector('.nr-progress-cursor')) }));
+    });
+  }
+  async function progressControl(section) {
+    const control = (await page.evaluateHandle(number => [...document.querySelectorAll(`button.nr-progress-control[data-section="${number}"]`)].find(node => node.checkVisibility()), section.number)).asElement();
+    assert(control, `Missing progress control ${section.number}`);
+    assert(await control.evaluate(node => !node.disabled && !node.closest('[aria-hidden="true"]')), 'Progress control is unavailable to keyboard or assistive technology');
+    return control;
+  }
+  async function controlPreviewIs(control, target) {
+    await page.waitForFunction(({ section, target }) => [...document.querySelectorAll(`.nr-progress-control[data-section="${section}"]`)].some(node => node.checkVisibility() && Number(node.dataset.previewPage) === target), {}, { section: await control.evaluate(node => node.dataset.section), target });
+    assert((await control.evaluate(node => node.getAttribute('aria-label'))).includes(`Folie ${target}: ${titles[target - 1]}`), 'Announced and selected progress targets differ');
+  }
+  async function previewIs(control, target) {
+    await controlPreviewIs(control, target);
+    const tooltip = await page.$eval('.nr-progress-tooltip', node => ({ text: node.textContent.trim(), visible: node.checkVisibility(), pointerEvents: getComputedStyle(node).pointerEvents }));
+    assert(tooltip.visible, 'Progress target tooltip is hidden');
+    assert.equal(tooltip.text, `Folie ${target}: ${titles[target - 1]}`, 'Progress tooltip must identify the exact slide');
+    assert.equal(tooltip.pointerEvents, 'none', 'Progress preview blocks its target');
+  }
+  async function pointAtProgress(section, target, click = false) {
+    const control = await progressControl(section);
+    const point = await control.evaluate((node, { start, length, target }) => {
+      const rect = node.getBoundingClientRect();
+      return { x: rect.left + (target - start + .5) / length * rect.width, y: rect.top + rect.height / 2 };
+    }, { start: section.start, length: section.end - section.start + 1, target });
+    const beforeUrl = page.url(), before = await progressSnapshot();
+    await page.mouse.move(point.x, point.y);
+    await previewIs(control, target);
+    assert.equal(page.url(), beforeUrl, 'Hovering the progress bar navigated');
+    assert.deepEqual(await progressSnapshot(), before, 'Hovering changed remembered progress');
+    assert(await control.evaluate((node, point) => document.elementFromPoint(point.x, point.y) === node, point), 'Progress control is covered');
+    if (click) { await page.mouse.click(point.x, point.y); await waitForPage(target); }
+  }
+  await fresh(agendaPage);
+  const remembered = new Map();
+  for (const section of sections) {
+    const target = section.start + Math.floor((section.end - section.start) / 2);
+    // Check both boundaries as well as a real interior target; hover never
+    // completes or visits a section on the audience's behalf.
+    await pointAtProgress(section, section.start);
+    await pointAtProgress(section, section.end);
+    await pointAtProgress(section, target, true);
+    remembered.set(section.number, target);
+    const snapshot = await progressSnapshot();
+    for (const state of snapshot) {
+      const own = sections.find(item => item.number === state.section), saved = remembered.get(state.section) || null;
+      assert.equal(state.lastPage, saved, `Section ${state.section}: last position was overwritten by another section`);
+      assert.equal(state.cursor, saved !== null, 'Only visited sections get a remembered marker');
+      assert.equal(state.current, state.section === section.number, 'Exactly the latest main section remains active');
+      const expectedFill = saved ? (saved - own.start + 1) / (own.end - own.start + 1) * 100 : 0;
+      assert(Math.abs(state.fill - expectedFill) < .001, `Section ${state.section}: displayed position differs from its visit`);
+    }
+  }
+  // Preserve every section's position and the active marker during an appendix
+  // excursion, including linear movement within the appendix and its return.
+  await pointAtProgress(nestedSection, nestedOrigin, true);
+  const frozenProgress = await progressSnapshot();
+  await jump(nestedOrigin, nestedDetail);
+  assert.deepEqual(await progressSnapshot(), frozenProgress, 'Entering the appendix rewrote progress');
+  const adjacentDetail = nestedDetail < titles.length ? nestedDetail + 1 : nestedDetail - 1;
+  await page.keyboard.press(nestedDetail < titles.length ? 'ArrowRight' : 'ArrowLeft'); await waitForPage(adjacentDetail);
+  assert.deepEqual(await progressSnapshot(), frozenProgress, 'Moving in the appendix changed the main-talk position');
+  await returnTo(nestedOrigin);
+  assert.deepEqual(await progressSnapshot(), frozenProgress, 'Returning from the appendix changed another section');
+  await fresh(nestedDetail);
+  assert((await progressSnapshot()).every(state => state.lastPage === null && state.fill === 0 && !state.current && !state.cursor), 'A direct appendix link must not invent a completed presentation');
+
+  await fresh(agendaPage);
+  const keyboardSection = sections[0];
+  let progressButton = await progressControl(keyboardSection);
+  await page.mouse.move(1590, 5); await progressButton.focus();
+  const keyboardOrigin = page.url(), keyboardProgress = await progressSnapshot();
+  for (const [key, target] of [['End', keyboardSection.end], ['Home', keyboardSection.start], ['ArrowRight', keyboardSection.start + 1], ['ArrowLeft', keyboardSection.start], ['ArrowUp', keyboardSection.start + 1], ['ArrowDown', keyboardSection.start], ['End', keyboardSection.end]]) {
+    await page.keyboard.press(key); await previewIs(progressButton, target);
+    assert.equal(page.url(), keyboardOrigin, `${key} navigated before confirming the preview`);
+    assert.deepEqual(await progressSnapshot(), keyboardProgress, 'Keyboard preview changed remembered progress');
+  }
+  await page.keyboard.press('Enter'); await waitForPage(keyboardSection.end);
+  await page.keyboard.press('ArrowRight'); await waitForPage(keyboardSection.end + 1);
+  progressButton = await progressControl(keyboardSection);
+  await page.mouse.move(1590, 5); await progressButton.focus();
+  await previewIs(progressButton, keyboardSection.end);
+  await page.keyboard.press('Home'); await previewIs(progressButton, keyboardSection.start);
+  await page.keyboard.press('Space'); await waitForPage(keyboardSection.start);
+  await page.keyboard.press('ArrowRight'); await waitForPage(keyboardSection.start + 1);
+  // Mixed pointer/keyboard use must confirm the target that the focused
+  // control exposes, rather than a stale hover or another section's preview.
+  const hoveredPage = keyboardSection.end - 1;
+  assert(hoveredPage > keyboardSection.start + 1, 'Need distinct saved and hovered positions');
+  for (const savedPage of [null, keyboardSection.start + 1]) {
+    await fresh(savedPage ?? agendaPage);
+    if (savedPage) await show(sections[1].start);
+    progressButton = await progressControl(keyboardSection);
+    await pointAtProgress(keyboardSection, hoveredPage);
+    await progressButton.focus();
+    const focusTarget = savedPage ?? keyboardSection.start;
+    await previewIs(progressButton, focusTarget);
+    await page.keyboard.press('Enter'); await waitForPage(focusTarget);
+  }
+  for (const key of ['Enter', 'Space']) {
+    await fresh(agendaPage);
+    progressButton = await progressControl(keyboardSection);
+    await page.mouse.move(1590, 5); await progressButton.focus();
+    await previewIs(progressButton, keyboardSection.start);
+    await pointAtProgress(keyboardSection, hoveredPage);
+    await previewIs(progressButton, hoveredPage);
+    assert(await progressButton.evaluate(node => document.activeElement === node), 'Hovering the focused section stole keyboard focus');
+    await page.keyboard.press(key); await waitForPage(hoveredPage);
+  }
+  await fresh(agendaPage);
+  progressButton = await progressControl(keyboardSection);
+  await page.mouse.move(1590, 5); await progressButton.focus();
+  await page.keyboard.press('End'); await previewIs(progressButton, keyboardSection.end);
+  const otherSection = sections[2];
+  await pointAtProgress(otherSection, otherSection.start);
+  await controlPreviewIs(progressButton, keyboardSection.end);
+  assert(await progressButton.evaluate(node => document.activeElement === node), 'Hovering another section stole keyboard focus');
+  await page.keyboard.press('Enter'); await waitForPage(keyboardSection.end);
   await cdp.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadsDir });
   await page.$eval('button[title="Download as PDF"]', (button) => button.click());
   const expectedPdf = await readFile(resolve(talk, 'source/public', pdfName));
@@ -399,7 +696,7 @@ try {
     }
   }
   assert.deepEqual(failures, [], 'Browser or network errors');
-  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${controlChecks} unobstructed controls, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${imageChecks} in-page image viewers, schema-button navigation and ${localLinks.size} local links/downloads`);
+  console.log(`Talk ${slug} verified${frozen ? ' from frozen snapshot' : ''}: ${titles.length} slides, ${talkTotal}-slide progress, unnumbered intro, ${dividers.length} quiet dividers, appendix, local images/fonts, ${controlChecks} unobstructed controls, consistent destination labels/action styles, ${mainJumpChecks} main jumps, ${menuTargets.length} reserve jumps, ${sections.length} quiet agenda links, nested/contextual/browser-history returns, interactive per-section progress and appendix freeze, ${imageChecks} in-page image viewers, schema-button navigation and ${localLinks.size} local links/downloads`);
 } finally {
   await browser?.close(); await new Promise((done) => server.close(done));
   await rm(downloadsDir, { recursive: true, force: true });

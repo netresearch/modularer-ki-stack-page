@@ -141,8 +141,16 @@ bound approvals and application-specific rules. Screenshot details are enlarged
 in the slide while the viewer retains the original image. The final recap
 closes the four questions with explicit project decisions. Progress ranges
 and the proof example's return link are derived from slide metadata.
+The agenda links quietly to its sections. Internal jumps offer a contextual
+return link, while destination labels distinguish demo pages, GitHub,
+documentation and other external links. Images open from a single accessible
+image button with a magnifier hint. The interactive progress bar remembers each
+section's last visited position during appendix detours; hover or keyboard focus
+previews a destination before activating it. PDF progress remains static.
 Public source and builds exclude speaker notes. Fonts and demo
-screenshots are local; screenshots retain their historical capture dates.
+screenshots are local and unchanged. Captions explain the image to the audience;
+capture dates and image provenance are documented in `talks/vorlage/QUELLEN.md`
+and linked from the appendix.
 See `talks/vorlage/QUELLEN.md` for the reviewed nr-llm release, limitations and
 source-refresh procedure. The landing page's automatically refreshed release
 facts do not update presentation claims or recorded demonstrations.

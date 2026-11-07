@@ -25,7 +25,13 @@ function allowSlideNavigation(event) {
   <span v-if="isPrintMode" class="nr-original" :class="{ 'nr-focused-image': zoom > 1 }" :style="{ '--nr-image-zoom': zoom, '--nr-image-focus': focus }">
     <img draggable="false" class="nr-screenshot" :src="base + file" :alt="alt" />
   </span>
-  <button v-else type="button" class="nr-original" :class="{ 'nr-focused-image': zoom > 1 }" :style="{ '--nr-image-zoom': zoom, '--nr-image-focus': focus }" aria-haspopup="dialog" :aria-label="alt + ' – Bild vergrößern'" @click.stop="openImage" @keydown="allowSlideNavigation">
+  <button v-else type="button" class="nr-original" :class="{ 'nr-focused-image': zoom > 1 }" :style="{ '--nr-image-zoom': zoom, '--nr-image-focus': focus }" aria-haspopup="dialog" :aria-label="alt ? 'Bild vergrößern: ' + alt : 'Bild vergrößern'" title="Bild vergrößern" @click.stop="openImage" @keydown="allowSlideNavigation">
     <img draggable="false" class="nr-screenshot" :src="base + file" :alt="alt" />
+    <span class="nr-image-zoom-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m16 16 5 5M10.5 7.5v6M7.5 10.5h6" />
+      </svg>
+    </span>
   </button>
 </template>
