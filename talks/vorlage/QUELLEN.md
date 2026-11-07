@@ -279,16 +279,20 @@ dessen Update-Deployment am 7. November 2026 erfolgreich abgeschlossen wurde.
 Die Originalbilder wurden nicht verändert. Die Bildunterschriften und Alttexte
 beschreiben den sichtbaren Inhalt; Aufnahmedaten und Ausschnittangaben stehen
 hier getrennt davon. Die folgende Übersicht gilt für Vorlage und TMUC. Die
-Bildansicht öffnet jeweils das vollständige Original. Die Aufnahmen sind
-keine neuen Ausführungstests und kein Nachweis des heute installierten Stands.
+Bildansicht öffnet jeweils die vollständige verwendete Bilddatei. Die älteren
+Aufnahmen belegen historische Anzeigen. Für die SEO-Aufnahme vom 7. November
+wurden neue Vorschläge in der laufenden Demo angefordert; die Schritte sind
+unten dokumentiert. Keine der Aufnahmen belegt allein den installierten
+Versionsstand oder die allgemeine Wirksamkeit einer Sicherheitsfunktion.
 
 | Folie | Bild / Original | Aufnahme | Darstellung auf der Folie |
 |---|---|---|---|
 | 4 | [KI-Werkzeuge in der Symbolleiste des Texteditors](source/public/screens/cowriter-ckeditor-toolbar-2026-11-05.png) | 5.11.2026 | Vollständige Aufnahme |
-| 4 | [KI-Aktionen an den Feldern für SEO-Titel und Beschreibung](source/public/screens/cowriter-page-seo-2026-11-05.png) | 5.11.2026 | Vollständige Aufnahme |
+| 4 | [Drei deutsche KI-Vorschläge für den SEO-Titel](source/public/screens/cowriter-seo-vorschlaege-2026-11-07.png) | 7.11.2026, 11:31 MEZ | Browser-Elementaufnahme, vergrößerter Ausschnitt der Vorschlagsliste |
 | 5 | [Suchantwort mit einem Link zur verwendeten Website-Quelle](source/public/screens/04-ai-search-02-antwort-quellen.png) | 2.11.2026 | Vergrößerter Ausschnitt |
 | 6 | [Repurpose-Auftrag mit Ausgangsquelle, Podcast und Schaubild](source/public/screens/05-repurpose-job-3-detail.png) | 2.11.2026 | Vollständige Aufnahme |
 | 7 | [Chatverlauf mit einem Auftrag für einen Seitenentwurf und der Rückmeldung des Agenten](source/public/screens/agent-chat-2026-11-05.png) | 5.11.2026 | Vollständige Aufnahme |
+| 8 | [Landingpage-Assistent mit vorgeschlagenem Seitentitel und SEO-Metadaten](source/public/screens/16-landingpage-03-seitenfelder.png) | 2.11.2026 | Vergrößerter Ausschnitt des Dialogs |
 | 8 | [Vorschau des oberen Seitenbereichs eines generierten Entwurfs](source/public/screens/07-landingpage-07-ergebnis-vorschau-10110.png) | 2.11.2026 | Vergrößerter Ausschnitt |
 | 20 | [Kostenübersicht mit Anfragen, Tokenverbrauch und geschätzten Kosten](source/public/screens/17-nr-llm-07-analyse-kosten.png) | 2.11.2026 | Vergrößerter Ausschnitt |
 | 24 | [Freigabekarte für die geplante Seitenanlage durch den Agenten](source/public/screens/06-agent-03-schreiben-b-freigabekarte.png) | 2.11.2026 | Vergrößerter Ausschnitt |
@@ -298,3 +302,22 @@ Beim Chatbild auf Folie 7 ist ein vorhandener Gesprächsverlauf abgebildet.
 Der Repurpose-Auftrag auf Folie 6 zeigt erzeugte Artefakte, deren fachliche
 Freigabe in der Aufnahme noch aussteht. Die Kosten auf Folie 20 sind eine
 historische Anzeige mit Schätzwerten.
+
+Auf Folie 8 stehen der Assistent mit generierten Seitenfeldern und die Vorschau
+des fiktiven Veranstaltungsentwurfs nebeneinander. Beide zeigen denselben
+Veranstaltungstitel; die Aufnahmen allein belegen keinen identischen
+Generierungslauf. Die Metadaten enthalten noch die erfundene Frist „bis 4.
+November“. Die Vorschau zeigt dagegen bereits einen redaktionell bearbeiteten
+Entwurf mit Platzhaltern. Die Gegenüberstellung illustriert zwei Prüfstellen,
+keinen ungeprüft veröffentlichten Modelloutput.
+
+Die SEO-Aufnahme auf Folie 4 wurde am 7. November 2026 um 11:31:51–11:31:52
+MEZ im laufenden Demo-Backend erstellt. Sie zeigt die deutsche Seite
+„KI-Cowriter“ (UID 9102, Übersetzung von UID 103). Über die Glühbirnen an den
+SEO-Feldern wurden neue Vorschläge für Titel und Beschreibung angefordert.
+Die Folie konzentriert sich auf die drei Titelvorschläge; die
+[vollständige Browseraufnahme](source/public/screens/cowriter-seo-vorschlaege-original-2026-11-07.png)
+zeigt beide Listen. Es wurde kein Vorschlag übernommen und keine Seitenänderung
+gespeichert. Nach dem Schließen und erneuten Öffnen waren beide Felder weiterhin
+leer. Der Vortrag verlinkt deshalb nun direkt auf Seite 9102. Die sichtbaren
+Vorschläge belegen diesen UI-Ablauf, keine allgemeine Qualitätsgarantie.

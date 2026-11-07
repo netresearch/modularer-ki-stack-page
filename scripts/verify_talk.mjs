@@ -151,12 +151,32 @@ try {
     const thumbnail = await trigger.evaluate((button) => ({ src: button.querySelector('img').src, alt: button.querySelector('img').alt }));
     const initialUrl = page.url(), initialPages = (await browser.pages()).length;
     const dialog = 'dialog.nr-image-viewer[open]';
+    async function fillsAvailableSpace(view = page) {
+      const geometry = await view.$eval(`${dialog} .nr-image-viewer-image`, (area) => {
+        const image = area.querySelector('img'), available = area.getBoundingClientRect(), rect = image.getBoundingClientRect();
+        const fit = Math.min(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+        const ideal = Math.min(available.width / image.naturalWidth, available.height / image.naturalHeight);
+        const width = image.naturalWidth * fit, height = image.naturalHeight * fit;
+        const left = rect.left + (rect.width - width) / 2, top = rect.top + (rect.height - height) / 2;
+        const close = area.closest('dialog').querySelector('.nr-image-viewer-close').getBoundingClientRect();
+        return { width, height, idealWidth: image.naturalWidth * ideal, idealHeight: image.naturalHeight * ideal,
+          objectFit: getComputedStyle(image).objectFit, centered: getComputedStyle(image).objectPosition === '50% 50%',
+          contained: left >= available.left - 1 && top >= available.top - 1 && left + width <= available.right + 1 && top + height <= available.bottom + 1,
+          closeVisible: close.left >= 0 && close.top >= 0 && close.right <= innerWidth && close.bottom <= innerHeight };
+      });
+      assert.equal(geometry.objectFit, 'contain', 'Image enlargement must preserve the complete image');
+      assert(geometry.centered && geometry.contained, 'Enlarged image is cropped or off-center');
+      assert(Math.abs(geometry.width - geometry.idealWidth) < 1 && Math.abs(geometry.height - geometry.idealHeight) < 1,
+        `Image remains smaller than the available proportional fit: ${JSON.stringify(geometry)}`);
+      assert(geometry.closeVisible, 'Image enlargement moved its close button outside the viewport');
+    }
     async function opened() {
       await page.waitForSelector(dialog, { visible: true });
       await page.$eval(`${dialog} img`, (image) => image.decode());
       assert.equal(await page.$eval(`${dialog} img`, (image) => image.src), thumbnail.src);
       assert.equal(page.url(), initialUrl, 'Opening screenshot changed the slide');
       assert.equal((await browser.pages()).length, initialPages, 'Screenshot opened another tab');
+      await fillsAvailableSpace();
     }
     async function closed() {
       await page.waitForSelector(dialog, { hidden: true });
@@ -190,6 +210,31 @@ try {
     else await trigger.click();
     await opened();
     if (imageChecks === 1) {
+      // Puppeteer's viewport emulation resets fine-pointer media capabilities
+      // in headless Chrome. Isolate resize checks from the desktop/mouse gate.
+      const resizePage = await browser.newPage();
+      try {
+        await resizePage.goto(initialUrl, { waitUntil: 'networkidle0' });
+        const resizeTrigger = (await resizePage.evaluateHandle(src => [...document.querySelectorAll('button.nr-original')]
+          .find(button => button.checkVisibility() && button.querySelector('img').src === src), thumbnail.src)).asElement();
+        assert(resizeTrigger, 'Resize check could not find its screenshot trigger');
+        await resizeTrigger.click();
+        await resizePage.waitForSelector(dialog, { visible: true });
+        await resizePage.$eval(`${dialog} img`, image => image.decode());
+        for (const size of [{ width: 3140, height: 1312 }, { width: 390, height: 844 }]) {
+          await resizePage.setViewport(size);
+          await resizePage.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+          await fillsAvailableSpace(resizePage);
+          assert.equal(resizePage.url(), initialUrl, 'Resizing image enlargement changed the slide');
+        }
+        await resizePage.keyboard.press('Escape');
+        await resizePage.waitForSelector(dialog, { hidden: true });
+        assert(await resizeTrigger.evaluate(button => document.activeElement === button), 'Resized viewer did not restore focus');
+      } finally {
+        await resizePage.close();
+      }
+      await page.bringToFront();
+      assert(await page.evaluate(() => matchMedia('(any-hover: hover) and (any-pointer: fine)').matches), 'Desktop lens checks lost their mouse emulation');
       // Changing modal src reuses its <img>. Do not hover the new thumbnail:
       // a texture cache keyed only by element identity would still paint slide 3.
       await page.hover(`${dialog} img`);
@@ -204,8 +249,13 @@ try {
         const expectedContext = expectedCanvas.getContext('2d');
         const lens = document.querySelector('dialog[open] .nr-image-lens'), lensRect = lens.getBoundingClientRect();
         const img = document.querySelector('dialog[open] .nr-image-viewer-image img'), rect = img.getBoundingClientRect();
+        // The image element fills the available area; contain can letterbox its
+        // actual pixels. The magnifier must use that painted rectangle.
+        const fit = Math.min(rect.width / img.naturalWidth, rect.height / img.naturalHeight);
+        const width = img.naturalWidth * fit, height = img.naturalHeight * fit;
+        const left = rect.left + (rect.width - width) / 2, top = rect.top + (rect.height - height) / 2;
         const zoom = Number(lens.dataset.lensZoom), cx = lensRect.left + lensRect.width / 2, cy = lensRect.top + lensRect.height / 2;
-        expectedContext.drawImage(img, cx + (rect.left - cx) * zoom, cy + (rect.top - cy) * zoom, rect.width * zoom, rect.height * zoom);
+        expectedContext.drawImage(img, cx + (left - cx) * zoom, cy + (top - cy) * zoom, width * zoom, height * zoom);
         const actual = actualContext.getImageData(Math.round(cx - 100), Math.round(cy - 50), 200, 100).data;
         const expected = expectedContext.getImageData(Math.round(cx - 100), Math.round(cy - 50), 200, 100).data;
         let error = 0;

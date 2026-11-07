@@ -106,7 +106,7 @@ title: "KI direkt beim Bearbeiten nutzen"
 
 # KI direkt beim Bearbeiten nutzen
 
-<div class="nr-editor-demos"><figure><h2>Im Editor</h2><NrImage file="screens/cowriter-ckeditor-toolbar-2026-11-05.png" alt="KI-Werkzeuge in der Symbolleiste des Texteditors"/><figcaption>Die KI-Werkzeuge lassen sich direkt im Texteditor aufrufen.</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/record/edit?edit%5Btt_content%5D%5B30%5D=edit">Editor öffnen</NrLink></div></figure><figure><h2>An Seitenfeldern</h2><NrImage file="screens/cowriter-page-seo-2026-11-05.png" alt="KI-Aktionen an den Feldern für SEO-Titel und Beschreibung"/><figcaption>SEO-Titel und Beschreibung lassen sich direkt am Feld vorschlagen.</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/record/edit?edit%5Bpages%5D%5B10077%5D=edit">Seitenfelder öffnen</NrLink></div></figure></div>
+<div class="nr-editor-demos"><figure><h2>Im Editor</h2><NrImage file="screens/cowriter-ckeditor-toolbar-2026-11-05.png" alt="KI-Werkzeuge in der Symbolleiste des Texteditors"/><figcaption>Die KI-Werkzeuge lassen sich direkt im Texteditor aufrufen.</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/record/edit?edit%5Btt_content%5D%5B30%5D=edit">Editor öffnen</NrLink></div></figure><figure><h2>An Seitenfeldern</h2><NrImage :zoom="2" focus="0% 0%" file="screens/cowriter-seo-vorschlaege-2026-11-07.png" alt="Drei deutsche KI-Vorschläge für den SEO-Titel der Seite KI-Cowriter"/><figcaption>Für den SEO-Titel stehen mehrere Vorschläge zur Auswahl.</figcaption><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/typo3/record/edit?edit%5Bpages%5D%5B9102%5D=edit">Seitenfelder öffnen</NrLink></div></figure></div>
 
 
 ---
@@ -178,7 +178,8 @@ title: "Vom Briefing zum Seitenentwurf"
 
 # Vom Briefing zum Seitenentwurf
 
-<div class="nr-demo"><figure><NrImage :zoom="1.58" focus="50% 74%" file="screens/07-landingpage-07-ergebnis-vorschau-10110.png" alt="Vorschau des oberen Seitenbereichs eines generierten Entwurfs"/><figcaption>Der Seitenentwurf lässt sich in der Vorschau redaktionell prüfen.</figcaption></figure><div class="nr-demo-copy"><ul class="nr-points"><li><span class="nr-number">01</span><span>Briefing und Struktur vorgeben</span></li><li><span class="nr-number">02</span><span>Generierte Seite als Entwurf prüfen</span></li><li><span class="nr-number">03</span><span>Auch Metadaten brauchen Kontrolle</span></li></ul><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Entwurf in Vorschau</NrLink></div></div></div>
+<div class="nr-editor-demos" style="--nr-pair-image-height:300px"><figure><h2>Im Backend</h2><NrImage :zoom="2.2" focus="50% 18%" file="screens/16-landingpage-03-seitenfelder.png" alt="Landingpage-Assistent mit vorgeschlagenem Seitentitel und SEO-Metadaten"/><figcaption>Der Assistent schlägt Seitenfelder und Metadaten zur Prüfung vor.</figcaption></figure><figure><h2>In der Vorschau</h2><NrImage :zoom="1.2" focus="50% 100%" file="screens/07-landingpage-07-ergebnis-vorschau-10110.png" alt="Vorschau des oberen Seitenbereichs eines generierten Entwurfs"/><figcaption>Die Vorschau macht den Seitenentwurf redaktionell prüfbar.</figcaption></figure></div>
+<div class="nr-controls"><div class="nr-action-links"><NrLink href="https://typo3-demo.netresearch.de/?id=10110">Entwurf in Vorschau</NrLink></div></div>
 
 
 ---
