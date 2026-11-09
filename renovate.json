@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>netresearch/renovate-config"
+  ],
+  "packageRules": [
+    {
+      "description": "Preserve the checksum-protected TUGLE archive; update the active template instead.",
+      "matchFileNames": [
+        "talks/tugle-2026-11-03/**"
+      ],
+      "enabled": false
+    }
   ]
 }
