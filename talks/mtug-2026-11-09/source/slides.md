@@ -11,7 +11,7 @@ appendix: ""
 title: "KI in TYPO3"
 author: "Sebastian Mendel · Netresearch"
 info: |
-  KI in TYPO3: Anwendungen, gemeinsame KI-Grundlagen und Agenten. TMUC · TYPO3 User Group München · 9. November 2026.
+  KI in TYPO3: Anwendungen, gemeinsame KI-Grundlagen und Agenten. MTUG · TYPO3 User Group München · 9. November 2026.
 aspectRatio: 16/9
 canvasWidth: 1280
 colorSchema: light
@@ -24,7 +24,7 @@ fonts:
 lang: de
 favicon: ./netresearch-symbol.svg
 presenter: false
-download: ./TMUC-KI-in-TYPO3.pdf
+download: ./MTUG-KI-in-TYPO3.pdf
 browserExporter: dev
 record: false
 wakeLock: false
@@ -36,13 +36,13 @@ routerMode: hash
 transition: none
 duration: 45min
 timer: countdown
-exportFilename: TMUC-KI-in-TYPO3
+exportFilename: MTUG-KI-in-TYPO3
 export:
   format: pdf
   withClicks: false
   timeout: 30000
 ---
-<div class="nr-kicker">TMUC · 9. November 2026</div>
+<div class="nr-kicker">MTUG · 9. November 2026</div>
 
 # KI in TYPO3
 
@@ -466,7 +466,7 @@ title: "Was lässt sich automatisch prüfen?"
 
 <div class="nr-quality-grid"><section><h2>Format prüfen</h2><p>Entspricht die Antwort der verlangten Struktur und Länge?</p><div class="nr-proof-result"><strong>Im Beispiel ausgeführt</strong><span>Eine erfundene Frist ist formal gültig.</span></div></section><section><h2>Aussagen abgleichen</h2><p>DecisionService: Ist der Anmeldeschluss im Briefing belegt?</p><div class="nr-proof-result"><strong>Zusätzliche Bewertung</strong><span>Auftrag, Entwurf und Quellen mitgeben.</span></div></section></div>
 
-<p class="nr-takeaway">Form und Quellentreue getrennt prüfen; das Ergebnis fachlich freigeben.</p><p class="nr-limit">Hier ist nur das Schema ausgeführt. Die Anwendung muss die Quellenbewertung aufrufen; sie kann irren.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Schema-Beispiel</NrLink></div>
+<p class="nr-takeaway">Form und Quellentreue getrennt prüfen; das Ergebnis fachlich freigeben.</p><p class="nr-limit">Hier ist nur das Schema ausgeführt. Die Anwendung muss die Quellenbewertung aufrufen; sie kann irren.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/mtug-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Schema-Beispiel</NrLink></div>
 <div class="nr-detail-links" aria-label="Detailfolien im Anhang"><NrJump :page="56">Wie Quellenprüfung ergänzt wird</NrJump></div></div>
 
 
@@ -863,7 +863,7 @@ title: "Formale Vorgaben werden maschinell geprüft"
 
 
 
-<p class="nr-takeaway">Ein gültiges Format belegt noch keine korrekte Aussage.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Prüfbeispiel</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Feature/CompletionService.php">Funktionsweise und Quellbeleg</NrLink></div><div class="nr-jump-links"><NrJump :page="38">Themenübersicht</NrJump><NrJump :page="35" back>Zur Diskussion</NrJump></div></div>
+<p class="nr-takeaway">Ein gültiges Format belegt noch keine korrekte Aussage.</p><div class="nr-controls"><div class="nr-action-links"><NrLink href="pruefbeispiel/index.html" print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/mtug-2026-11-09/pruefbeispiel/index.html">Ausgeführtes Prüfbeispiel</NrLink><NrLink href="https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Feature/CompletionService.php">Funktionsweise und Quellbeleg</NrLink></div><div class="nr-jump-links"><NrJump :page="38">Themenübersicht</NrJump><NrJump :page="35" back>Zur Diskussion</NrJump></div></div>
 
 
 ---

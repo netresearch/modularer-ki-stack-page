@@ -1,4 +1,4 @@
-"""Explicitly archive the reviewed TMUC build on or after its event date.
+"""Explicitly archive the reviewed MTUG build on or after its event date.
 
 This command never builds or publishes a talk. It needs PyYAML (already used by
 this repository) and pdfinfo from poppler-utils for an actual PDF parse.
@@ -21,9 +21,9 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EVENT = "tmuc-2026-11-09"
+EVENT = "mtug-2026-11-09"
 EVENT_DATE = date(2026, 11, 9)
-PDF = "TMUC-KI-in-TYPO3.pdf"
+PDF = "MTUG-KI-in-TYPO3.pdf"
 SOURCE_IGNORED = frozenset({"node_modules", ".slidev"})
 MARKERS = ("snapshot", "snapshot.sha256.json", "source.sha256.json")
 
@@ -80,14 +80,14 @@ def validate_source(source: Path) -> None:
     if metadata.get("download") not in (PDF, f"./{PDF}"):
         raise ValueError(f"Event download must name {PDF}")
     if metadata.get("exportFilename") != PDF.removesuffix(".pdf"):
-        raise ValueError("Event export filename does not match TMUC")
+        raise ValueError("Event export filename does not match MTUG")
     info = metadata.get("info", "")
-    if not isinstance(info, str) or not re.search(r"\bTMUC\b", info):
-        raise ValueError("Event information must identify TMUC")
+    if not isinstance(info, str) or not re.search(r"\bMTUG\b", info):
+        raise ValueError("Event information must identify MTUG")
     if not re.search(r"(?:\b0?9\.\s*November\s+2026\b|\b09\.11\.2026\b|\b2026-11-09\b)", info):
         raise ValueError("Event information must identify 9 November 2026")
     if re.search(r"\bTUGLE\b", info):
-        raise ValueError("TMUC event metadata still identifies TUGLE")
+        raise ValueError("MTUG event metadata still identifies TUGLE")
 
 
 def validate_pdf(path: Path) -> None:
@@ -126,7 +126,7 @@ def freeze_talk(event: str, root: Path = ROOT, *, now: datetime | None = None) -
     if current.tzinfo is None or current.utcoffset() is None:
         raise ValueError("The freeze clock must include a timezone")
     if current.astimezone(ZoneInfo("Europe/Berlin")).date() < EVENT_DATE:
-        raise ValueError("TMUC cannot be frozen before 9 November 2026 (Europe/Berlin)")
+        raise ValueError("MTUG cannot be frozen before 9 November 2026 (Europe/Berlin)")
 
     root = Path(root).absolute()
     _reject_redirected(root)

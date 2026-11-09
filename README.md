@@ -125,9 +125,13 @@ and short viewports against the actual built pages.
 ## Presentations
 
 The event-neutral [template](https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/)
-is maintained in `talks/vorlage/source/`. The upcoming TMUC edition is derived
+is maintained in `talks/vorlage/source/`. The upcoming MTUG edition is derived
 from it by `scripts/prepare_talks.py`. The TUGLE edition from 3 November is a
 frozen archive: never edit or rebuild its source, PDF or snapshot.
+
+The [MTUG edition](https://netresearch.github.io/modularer-ki-stack-page/vortraege/mtug-2026-11-09/)
+uses the corrected user-group abbreviation. Previously shared `tmuc-2026-11-09`
+links still work, including slide positions and PDF downloads.
 
 The active presentation has 35 main slides and 30 reference/appendix slides.
 Title and agenda form an unnumbered introduction (section 0);
@@ -169,7 +173,7 @@ After the landing-page gates pass:
 python3 scripts/prepare_talks.py
 node scripts/build_talks.mjs
 node scripts/verify_talk.mjs vorlage
-node scripts/verify_talk.mjs tmuc-2026-11-09
+node scripts/verify_talk.mjs mtug-2026-11-09
 python3 scripts/publish_talks.py
 ```
 

@@ -34,11 +34,11 @@ def pdf_fixture() -> bytes:
 SLIDES = """---
 title: KI in TYPO3
 info: |
-  KI in TYPO3: Anwendungen. TMUC · TYPO3 User Group München · 9. November 2026.
+  KI in TYPO3: Anwendungen. MTUG · TYPO3 User Group München · 9. November 2026.
 presenter: false
 record: false
-download: ./TMUC-KI-in-TYPO3.pdf
-exportFilename: TMUC-KI-in-TYPO3
+download: ./MTUG-KI-in-TYPO3.pdf
+exportFilename: MTUG-KI-in-TYPO3
 ---
 # KI in TYPO3
 """
@@ -55,7 +55,7 @@ class FreezeTalkTests(unittest.TestCase):
         self.source = self.event / "source"
         self.site.mkdir(parents=True)
         self.source.mkdir()
-        (self.site / "index.html").write_text("<html>Reviewed TMUC talk</html>")
+        (self.site / "index.html").write_text("<html>Reviewed MTUG talk</html>")
         (self.site / PDF).write_bytes(pdf_fixture())
         (self.source / "slides.md").write_text(SLIDES, encoding="utf-8")
         # Date/immutability/hash tests stay runnable without a system PDF parser.
@@ -73,7 +73,7 @@ class FreezeTalkTests(unittest.TestCase):
         self.assertFalse(list(self.event.glob(".freeze-stage-*")))
 
     def test_requires_explicit_supported_event(self):
-        for event in ("", "vorlage", "tugle-2026-11-03", "../tmuc-2026-11-09"):
+        for event in ("", "vorlage", "tugle-2026-11-03", "../mtug-2026-11-09"):
             with self.subTest(event=event), self.assertRaises(ValueError):
                 self.freeze(event=event)
         self.assert_unstarted()
@@ -94,7 +94,7 @@ class FreezeTalkTests(unittest.TestCase):
         (self.site / "assets").mkdir()
         (self.site / "assets" / "app.js").write_text("renderTalk()")
         (self.source / "components").mkdir()
-        (self.source / "components" / "Slide.vue").write_text("<template>TMUC</template>")
+        (self.source / "components" / "Slide.vue").write_text("<template>MTUG</template>")
         (self.source / ".npmrc").write_text("ignore-scripts=true\n")
         for ignored in ("node_modules", ".slidev"):
             (self.source / ignored).mkdir()
@@ -173,11 +173,11 @@ class FreezeTalkTests(unittest.TestCase):
     def test_source_metadata_and_public_notes_are_validated(self):
         for invalid in (
             SLIDES.replace("9. November 2026", "3. November 2026"),
-            SLIDES.replace("TMUC", "TUGLE"),
+            SLIDES.replace("MTUG", "TUGLE"),
             SLIDES.replace("presenter: false", "presenter: true"),
             SLIDES.replace("record: false", "record: true"),
-            SLIDES.replace("download: ./TMUC", "download: ./TUGLE"),
-            SLIDES.replace("exportFilename: TMUC", "exportFilename: TUGLE"),
+            SLIDES.replace("download: ./MTUG", "download: ./TUGLE"),
+            SLIDES.replace("exportFilename: MTUG", "exportFilename: TUGLE"),
             SLIDES + "\n<!-- Private speaker notes -->\n",
             SLIDES + "\nnotes: Private speaker notes\n",
         ):

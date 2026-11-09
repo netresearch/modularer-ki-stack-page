@@ -1,6 +1,10 @@
-# KI in TYPO3 – TMUC, 9. November 2026
+# KI in TYPO3 – MTUG, 9. November 2026
 
-[Veranstaltungsfassung](https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/)
+[Veranstaltungsfassung](https://netresearch.github.io/modularer-ki-stack-page/vortraege/mtug-2026-11-09/)
+
+Die korrigierte Abkürzung lautet **MTUG**. Bereits geteilte Links mit der alten
+Schreibweise `tmuc-2026-11-09` bleiben einschließlich Folienpositionen und
+PDF-Downloads erreichbar.
 
 Bis zum Vortrag wird diese Fassung aus `talks/vorlage/source/` abgeleitet.
 Inhaltliche Änderungen werden dort vorgenommen; `scripts/prepare_talks.py`
@@ -13,7 +17,7 @@ gewählten Zeitpunkt um Mitternacht.
 Nach dem letzten vollständigen Build und Browsercheck:
 
 ```sh
-python3 scripts/freeze_talk.py tmuc-2026-11-09
+python3 scripts/freeze_talk.py mtug-2026-11-09
 python3 scripts/publish_talks.py
 ```
 

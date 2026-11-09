@@ -1,12 +1,12 @@
 {
-  "name": "tmuc-2026-11-09-ki-in-typo3",
+  "name": "mtug-2026-11-09-ki-in-typo3",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "slidev slides.md --bind 127.0.0.1",
     "build": "slidev build slides.md --base ./ --without-notes --out ../site",
-    "export": "slidev export slides.md --output public/TMUC-KI-in-TYPO3.pdf"
+    "export": "slidev export slides.md --output public/MTUG-KI-in-TYPO3.pdf"
   },
   "devDependencies": {
     "@slidev/cli": "53.1.0",

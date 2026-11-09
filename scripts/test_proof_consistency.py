@@ -11,7 +11,7 @@ from zipfile import ZipFile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EDITIONS = ('vorlage', 'tmuc-2026-11-09')
+EDITIONS = ('vorlage', 'mtug-2026-11-09')
 UPSTREAM = 'https://github.com/netresearch/t3x-nr-llm'
 ORIGINALS = {
     'Classes/Service/Schema/StrictSchemaSubset.php',
@@ -99,8 +99,8 @@ class ProofConsistencyTests(unittest.TestCase):
         for edition in EDITIONS:
             with self.subTest(edition=edition):
                 states.append(verify_proof(ROOT / 'talks' / edition / 'source'))
-        if not (ROOT / 'talks/tmuc-2026-11-09/source.sha256.json').exists():
-            self.assertEqual(states[0], states[1], 'Prepare active TMUC from the current template')
+        if not (ROOT / 'talks/mtug-2026-11-09/source.sha256.json').exists():
+            self.assertEqual(states[0], states[1], 'Prepare active MTUG from the current template')
 
     def fixture(self):
         temporary = TemporaryDirectory()

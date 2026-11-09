@@ -29,18 +29,19 @@ This project is a static GitHub Pages site for the Netresearch modular AI stack 
 - `talks/tugle-2026-11-03/` is frozen. Never edit its source, PDF, snapshot,
   or checksum manifests. The only user-authorized addition was the small link
   to the current template; it is already included in the frozen snapshot.
-- `talks/tmuc-2026-11-09/source/` is derived from the master by
+- `talks/mtug-2026-11-09/source/` is derived from the master by
   `scripts/prepare_talks.py` until the 9 November event is frozen. Do not edit
-  the derived slides independently. The event name and URL are `TMUC` and
-  `tmuc-2026-11-09`, as specified by the user.
-- On or after 9 November, freeze the final reviewed TMUC edition explicitly
-  with `python3 scripts/freeze_talk.py tmuc-2026-11-09`. The date alone does
+  the derived slides independently. The event name and URL are `MTUG` and
+  `mtug-2026-11-09`, as specified by the user.
+- On or after 9 November, freeze the final reviewed MTUG edition explicitly
+  with `python3 scripts/freeze_talk.py mtug-2026-11-09`. The date alone does
   not choose the final presentation state. After freezing, it follows the
   same immutable-source and snapshot rules as TUGLE.
 - Never update an archive manifest to make a changed archive pass checks.
   New improvements belong to `vorlage`; a changed historical edition would
   require an explicit new user instruction.
 - CI prepares and builds active editions, then verifies and publishes all
-  three routes. Archived editions are copied from their verified snapshots
-  and never rebuilt.
+  three canonical routes. The former `tmuc-2026-11-09` address remains a
+  compatibility route for previously shared links and downloads. Archived
+  editions are copied from their verified snapshots and never rebuilt.
 

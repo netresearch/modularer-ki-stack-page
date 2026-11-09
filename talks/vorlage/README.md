@@ -20,13 +20,13 @@ Nach Änderungen aus dem Repository-Verzeichnis:
 python3 scripts/prepare_talks.py
 node scripts/build_talks.mjs
 node scripts/verify_talk.mjs vorlage
-node scripts/verify_talk.mjs tmuc-2026-11-09
+node scripts/verify_talk.mjs mtug-2026-11-09
 python3 scripts/publish_talks.py
 ```
 
 Der Build erstellt für jede aktive Fassung ein passendes PDF. Sprechernotizen
 gehören nicht in diese öffentlich veröffentlichte Quelle.
 
-Bis zum Freeze wird TMUC aus der Vorlage mit eigenem Veranstaltungstitel und
+Bis zum Freeze wird MTUG aus der Vorlage mit eigenem Veranstaltungstitel und
 Datum erzeugt. Das bereits eingefrorene TUGLE-Archiv wird weder verändert noch
 neu gebaut.

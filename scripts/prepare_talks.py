@@ -6,7 +6,7 @@ import re
 import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
-EVENT = 'tmuc-2026-11-09'
+EVENT = 'mtug-2026-11-09'
 MARKERS = ('snapshot', 'snapshot.sha256.json', 'source.sha256.json')
 SECTION_LABELS = {1: 'Möglichkeiten', 2: 'Fragen', 3: 'Antworten', 4: 'Agenten', 5: 'Einordnung'}
 
@@ -95,7 +95,7 @@ def prepare(root=ROOT):
     event = root / 'talks' / EVENT
     markers = [(event / name).exists() or (event / name).is_symlink() for name in MARKERS]
     if any(markers) and not all(markers):
-        raise ValueError('Incomplete frozen TMUC archive: refusing to regenerate its source')
+        raise ValueError('Incomplete frozen MTUG archive: refusing to regenerate its source')
     frozen = all(markers)
     master = root / 'talks/vorlage/source'
     target = event / 'source'
@@ -115,7 +115,7 @@ def prepare(root=ROOT):
     if frozen:
         for path, content in updates.items():
             path.write_text(content, encoding='utf-8')
-        print('Prepared master navigation; TMUC source is frozen and unchanged')
+        print('Prepared master navigation; MTUG source is frozen and unchanged')
         return
     package = json.loads((master / 'package.json').read_text())
     lock = json.loads((master / 'package-lock.json').read_text())
@@ -133,21 +133,21 @@ def prepare(root=ROOT):
         else:
             shutil.rmtree(entry)
     shutil.copytree(master, target, dirs_exist_ok=True, ignore=shutil.ignore_patterns('node_modules', '.slidev', '*.pdf'))
-    slides = slides.replace(old, 'TMUC · TYPO3 User Group München · 9. November 2026.')
-    slides = slides.replace('Anwendungen · Fragen · gemeinsame Grundlagen</div>', 'TMUC · 9. November 2026</div>', 1)
+    slides = slides.replace(old, 'MTUG · TYPO3 User Group München · 9. November 2026.')
+    slides = slides.replace('Anwendungen · Fragen · gemeinsame Grundlagen</div>', 'MTUG · 9. November 2026</div>', 1)
     slides = slides.replace('Sebastian Mendel · Netresearch</div>', 'Sebastian Mendel · Netresearch<br>9. November 2026</div>', 1)
-    slides = slides.replace('download: ./KI-in-TYPO3.pdf', 'download: ./TMUC-KI-in-TYPO3.pdf')
-    slides = slides.replace('exportFilename: KI-in-TYPO3', 'exportFilename: TMUC-KI-in-TYPO3')
+    slides = slides.replace('download: ./KI-in-TYPO3.pdf', 'download: ./MTUG-KI-in-TYPO3.pdf')
+    slides = slides.replace('exportFilename: KI-in-TYPO3', 'exportFilename: MTUG-KI-in-TYPO3')
     slides = slides.replace('print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/vorlage/',
-                            'print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/tmuc-2026-11-09/')
+                            'print-href="https://netresearch.github.io/modularer-ki-stack-page/vortraege/mtug-2026-11-09/')
     (target / 'slides.md').write_text(slides)
-    package['name'] = 'tmuc-2026-11-09-ki-in-typo3'
-    package['scripts']['export'] = 'slidev export slides.md --output public/TMUC-KI-in-TYPO3.pdf'
+    package['name'] = 'mtug-2026-11-09-ki-in-typo3'
+    package['scripts']['export'] = 'slidev export slides.md --output public/MTUG-KI-in-TYPO3.pdf'
     (target / 'package.json').write_text(json.dumps(package, indent=2) + '\n')
     lock['name'] = package['name']
     lock['packages']['']['name'] = package['name']
     (target / 'package-lock.json').write_text(json.dumps(lock, indent=2) + '\n')
-    print('Prepared TMUC edition from vorlage; no archive modified')
+    print('Prepared MTUG edition from vorlage; no archive modified')
 
 
 if __name__ == '__main__':

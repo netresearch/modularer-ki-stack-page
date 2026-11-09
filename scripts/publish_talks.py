@@ -8,11 +8,13 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = "vorlage"
 ARCHIVE = "tugle-2026-11-03"
-EVENT = "tmuc-2026-11-09"
+EVENT = "mtug-2026-11-09"
+LEGACY_EVENT = "tmuc-2026-11-09"
+LEGACY_PDF = "TMUC-KI-in-TYPO3.pdf"
 PDFS = {
     TEMPLATE: "KI-in-TYPO3.pdf",
     ARCHIVE: "TUGLE-KI-in-TYPO3.pdf",
-    EVENT: "TMUC-KI-in-TYPO3.pdf",
+    EVENT: "MTUG-KI-in-TYPO3.pdf",
 }
 FREEZE_PARTS = ("snapshot", "snapshot.sha256.json", "source.sha256.json")
 
@@ -107,13 +109,41 @@ def _prepare(root, slug):
 def publish(root=ROOT):
     root = Path(root).resolve()
     # Validate EVERY source and destination before changing ANY published talk.
-    prepared = [_prepare(root, slug) for slug in (TEMPLATE, ARCHIVE, EVENT)]
-    for source, target in prepared:
+    prepared = {slug: _prepare(root, slug) for slug in (TEMPLATE, ARCHIVE, EVENT)}
+    legacy_target = root / "public" / "vortraege" / LEGACY_EVENT
+    _reject_redirected(legacy_target)
+    if legacy_target.exists() and not legacy_target.is_dir():
+        raise ValueError(f"Expected a publication directory: {legacy_target}")
+    for source, target in prepared.values():
         target.parent.mkdir(parents=True, exist_ok=True)
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(source, target)
         print(f"Published talk into {target.relative_to(root)}; stack files retained")
+
+    # Keep previously shared PDF, proof-page and asset URLs working as well.
+    if legacy_target.exists():
+        shutil.rmtree(legacy_target)
+    shutil.copytree(prepared[EVENT][0], legacy_target)
+    shutil.copyfile(legacy_target / PDFS[EVENT], legacy_target / LEGACY_PDF)
+    (legacy_target / "index.html").write_text(f"""<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>MTUG – KI in TYPO3</title>
+  <link rel="canonical" href="../{EVENT}/">
+  <script>
+    const target = new URL("../{EVENT}/", location.href);
+    target.search = location.search;
+    target.hash = location.hash;
+    location.replace(target.href);
+  </script>
+  <noscript><meta http-equiv="refresh" content="0;url=../{EVENT}/"></noscript>
+</head>
+<body><p><a href="../{EVENT}/">Zur MTUG-Präsentation</a></p></body>
+</html>
+""", encoding="utf-8")
+    print(f"Retained compatibility links under {legacy_target.relative_to(root)}")
 
 
 if __name__ == "__main__":

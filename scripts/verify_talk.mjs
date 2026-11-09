@@ -8,9 +8,9 @@ import { tmpdir } from 'node:os';
 import puppeteer from 'puppeteer';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const decks = { vorlage: 'KI-in-TYPO3.pdf', 'tmuc-2026-11-09': 'TMUC-KI-in-TYPO3.pdf' };
+const decks = { vorlage: 'KI-in-TYPO3.pdf', 'mtug-2026-11-09': 'MTUG-KI-in-TYPO3.pdf' };
 const slug = process.argv[2] || 'vorlage';
-assert(Object.hasOwn(decks, slug) && process.argv.length <= 3, 'Usage: verify_talk.mjs [vorlage|tmuc-2026-11-09]');
+assert(Object.hasOwn(decks, slug) && process.argv.length <= 3, 'Usage: verify_talk.mjs [vorlage|mtug-2026-11-09]');
 const talk = resolve(root, 'talks', slug);
 const freezeParts = ['snapshot', 'snapshot.sha256.json', 'source.sha256.json'];
 const frozenParts = await Promise.all(freezeParts.map(async (name) => {
@@ -451,7 +451,7 @@ try {
     ['https://netresearch.github.io/modularer-ki-stack-page/', 'Projekt'],
     ['https://www.louis.info/leistungen/technologien/typo3-extensions/', 'Web'],
   ]) assert.equal(destinationKinds.get(href), kind, `Wrong destination label for ${href}`);
-  assert([...destinationKinds].some(([href, kind]) => /^https:\/\/netresearch\.github\.io\/modularer-ki-stack-page\/vortraege\/(?:vorlage|tmuc-2026-11-09)\/$/.test(href) && kind === 'Vortrag'), 'A presentation link must be labeled as Vortrag');
+  assert([...destinationKinds].some(([href, kind]) => /^https:\/\/netresearch\.github\.io\/modularer-ki-stack-page\/vortraege\/(?:vorlage|mtug-2026-11-09)\/$/.test(href) && kind === 'Vortrag'), 'A presentation link must be labeled as Vortrag');
 
   // Reach the proof through its actual main-slide control. A direct page.goto
   // would not notice an appendix link intercepting clicks on this button.

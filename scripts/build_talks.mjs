@@ -10,7 +10,7 @@ const env = { ...process.env };
 delete env.GITHUB_TOKEN;
 delete env.GH_TOKEN;
 const chrome = process.env.PUPPETEER_EXECUTABLE_PATH || await puppeteer.executablePath();
-for (const id of ['vorlage', 'tmuc-2026-11-09']) {
+for (const id of ['vorlage', 'mtug-2026-11-09']) {
   const talk = resolve(root, 'talks', id);
   const flags = ['snapshot', 'snapshot.sha256.json', 'source.sha256.json'].map(name => {
     try { lstatSync(resolve(talk, name)); return true; }
@@ -23,7 +23,7 @@ for (const id of ['vorlage', 'tmuc-2026-11-09']) {
     continue;
   }
   const source = resolve(talk, 'source');
-  const expectedPdf = id === 'vorlage' ? 'KI-in-TYPO3.pdf' : 'TMUC-KI-in-TYPO3.pdf';
+  const expectedPdf = id === 'vorlage' ? 'KI-in-TYPO3.pdf' : 'MTUG-KI-in-TYPO3.pdf';
   const markdown = readFileSync(resolve(source, 'slides.md'), 'utf8');
   if (!markdown.includes(`download: ./${expectedPdf}`)) throw new Error(`Wrong PDF metadata in ${id}`);
   // A complete lock-based installation preserves the security overrides.

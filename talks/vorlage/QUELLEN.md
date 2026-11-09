@@ -222,7 +222,7 @@ dass die dargestellte Instanz dieses Release verwendet.
 
 Der [erste TUGLE-Commit vom 3. November](https://github.com/netresearch/modularer-ki-stack-page/commit/4a1655f120d6dfe80e15d34281282cc78296bad3)
 legte v0.35.0 als Demo-Quellstand fest. Beim
-[Trennen von Archiv, Vorlage und TMUC am 4. November](https://github.com/netresearch/modularer-ki-stack-page/commit/9929b2a88039fe2ce73ac2e84baeca777b762fb9)
+[Trennen von Archiv, Vorlage und MTUG am 4. November](https://github.com/netresearch/modularer-ki-stack-page/commit/9929b2a88039fe2ce73ac2e84baeca777b762fb9)
 übernahm die aktive Vorlage diese Referenz. Die
 [Überarbeitung am 5. November](https://github.com/netresearch/modularer-ki-stack-page/commit/46973b0603372e4bc50a26e0d1a5ae7eb1ab27de)
 ergänzte ein neues Schema-Beispiel und die Erklärung zur Versandprüfung, ohne
@@ -231,7 +231,7 @@ die Quellenbasis zu aktualisieren.
 Damit wurde eine historische Demo-Referenz in der fortlaufenden Vorlage
 weitergeführt. Ein technischer Zwang zu v0.35.0 ist daraus nicht ersichtlich.
 Das eingefrorene TUGLE-Archiv behält seinen damaligen Stand; Aktualisierungen
-gehören in die aktive Vorlage und die daraus abgeleitete TMUC-Fassung.
+gehören in die aktive Vorlage und die daraus abgeleitete MTUG-Fassung.
 
 ## Aktualisierung vor der nächsten Verwendung
 
@@ -245,10 +245,10 @@ gehören in die aktive Vorlage und die daraus abgeleitete TMUC-Fassung.
    Originalquellen und Prüfsummen müssen denselben Lauf und Quellstand belegen.
    Ein Quellenabgleich mit einem Modell darf nur als ausgeführt bezeichnet
    werden, wenn dafür ein eigener nachvollziehbarer Lauf vorliegt.
-4. TMUC mit `python3 scripts/prepare_talks.py` aus der Vorlage ableiten. Beide
+4. MTUG mit `python3 scripts/prepare_talks.py` aus der Vorlage ableiten. Beide
    aktiven Fassungen mit `node scripts/build_talks.mjs` einschließlich ihrer PDFs
    bauen und mit `node scripts/verify_talk.mjs vorlage` sowie
-   `node scripts/verify_talk.mjs tmuc-2026-11-09` im Browser prüfen.
+   `node scripts/verify_talk.mjs mtug-2026-11-09` im Browser prüfen.
 5. Mit `python3 scripts/publish_talks.py` die Veröffentlichung zusammenstellen.
    Das eingefrorene TUGLE-Archiv einschließlich PDF und Prüfsummen unverändert
    lassen; seine Quellen und seinen Snapshot nicht neu erzeugen.

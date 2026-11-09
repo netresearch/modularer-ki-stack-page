@@ -61,7 +61,7 @@ jobs:
         && env -u GITHUB_TOKEN -u GH_TOKEN python3 scripts/prepare_talks.py
         && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/build_talks.mjs
         && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/verify_talk.mjs vorlage
-        && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/verify_talk.mjs tmuc-2026-11-09
+        && env -u GITHUB_TOKEN -u GH_TOKEN node scripts/verify_talk.mjs mtug-2026-11-09
         && env -u GITHUB_TOKEN -u GH_TOKEN python3 scripts/publish_talks.py
 
   deploy:
