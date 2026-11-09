@@ -48,6 +48,40 @@ Die kleinen Detailverweise im Hauptteil führen zu passenden bestehenden
 Reservefolien. Sie sind Bedienhilfen für den Vortrag und werden im PDF
 ausgeblendet; sie enthalten keine privaten Notizen.
 
+## Kontext: Anweisungen, Quellen und Werkzeuge
+
+Die am **9. November 2026** ergänzte Kontextübersicht verwendet denselben
+gepinnten nr-llm-Quellstand. Die fünf Einträge unterscheiden drei Aufgaben:
+Anweisungen beschreiben die Arbeitsweise, ausgewählte oder nachgeladene Quellen
+liefern Inhalt, Werkzeuge ermöglichen erlaubte Zugriffe.
+
+- **Prompt-Snippets:** [Wiederverwendbare Prompttexte](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/PromptSnippets.rst)
+  werden beispielsweise über Tags in Konfigurationen eingebunden. Ein eigener
+  System-Prompt des Aufrufers ersetzt grundsätzlich den Konfigurations-Prompt
+  samt Snippets; die dokumentierte Ausnahme braucht ausdrücklich markierte
+  Snippets und eine dafür freigeschaltete Konfiguration.
+- **Skills:** [Aufgabenbezogene Skilltexte und Freigaben](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/Skills.rst)
+  können an Aufgaben oder Konfigurationen hängen. Aktivierung und Freigabe als
+  System-Anweisung sind unterschiedliche Schritte. Nur freigegebene, dafür
+  zugeordnete Skills können in Agentenläufen bei Bedarf geladen werden;
+  Einmalaufrufe laden sie nicht auf diesem Weg. Skill-Skripte und referenzierte
+  Begleitdateien werden nicht ausgeführt oder automatisch nachgeladen.
+- **Ausgewählte Inhalte und Wissenssuche:** Die Anwendung stellt ihre Eingabe
+  zusammen. Das vorhandene Werkzeug
+  [site_rag_query](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Tool/Builtin/SiteRagQueryTool.php)
+  liefert Quellenauszüge aus öffentlichen Website-Inhalten über vorhandene
+  Suchindizes oder einen Datenbank-Fallback. Das ist kein automatischer Zugriff
+  auf sämtliche TYPO3-Daten und keine eigenständige Pflege eines Wissensindex.
+- **MCP-Werkzeuge:** [Externe Server anbinden und Werkzeuge importieren](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/McpServers.rst)
+  erfordert Einrichtung, Katalogimport und die Freischaltung einzelner
+  Werkzeuge. Importierte Werkzeuge starten deaktiviert. Die Folie nennt das
+  Abfragen als Beispiel; MCP ist weder selbst eine Wissensquelle noch eine
+  automatische Berechtigung zum Zugriff auf externe Systeme.
+
+Die Detailverweise führen zu den vorhandenen Vertiefungen über Skills,
+Kontext und Wissen sowie MCP. Die neue Übersicht ergänzt die vier bisherigen
+Themenübersichten; sie eröffnet kein fünftes Sicherheitsfragenfeld.
+
 ## Formale und inhaltliche Prüfung
 
 Ein JSON-Schema prüft Struktur, Datentypen, erlaubte Werte und unterstützte
@@ -206,37 +240,37 @@ gehören in die aktive Vorlage und die daraus abgeleitete TMUC-Fassung.
 Die folgenden sechs Reservefolien ergänzen die Übersichten. Alle Belege wurden
 im oben genannten Quellstand geprüft.
 
-### 58: Begriffslisten
+### 59: Begriffslisten
 
 Quelle: [TermLists.rst](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/TermLists.rst).
 
 Die zugeordnete Konfiguration bestimmt die Geltung; Fallback ändert diese ursprüngliche Zuordnung nicht. Ein Verstoß blockiert Ausgabe, Cache und betroffenen Werkzeugaufruf. „Rabatt*“ ist das dokumentierte Beispiel für das Sternsuffix. Synonyme, Schreibfehler und Umschreibungen werden nicht erkannt. Pflichtwörter gelten u. a. nicht für Antworten unter 30 Wörtern, JSON oder Agentenläufe. Agentenläufe prüfen Sperrbegriffe in Schreibargumenten; der Chattext bleibt frei. Ein importiertes MCP-Werkzeug zählt in diesem Mechanismus als schreibend, auch wenn es eine Suche anbietet. Optionaler Site-/Sprachbezug hat weitere dokumentierte Metadatenregeln. Bei noch fehlender Datenbanktabelle wird die Prüfung mit Warnung übergangen; andere Prüfungsfehler blockieren. Diese seltenen Betriebsausnahmen sind nicht als universelle Garantie auf der Folie verallgemeinert.
 
-### 59: Circuit Breaker und Fallback
+### 60: Circuit Breaker und Fallback
 
 Quellen: [ADR-063](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr063ProviderResilience.rst), [Voreinstellungen](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/ext_conf_template.txt), [gemeinsamer FailureClassifier](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Provider/Middleware/FailureClassifier.php), [FallbackMiddleware](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Provider/Middleware/FallbackMiddleware.php).
 
 `circuitBreaker.enabled=1`, Fehlergrenze 5, Pause 30 Sekunden. Verbindungsfehler, 429 und 5xx sind relevante Ausfallklassen; ein offener Circuit Breaker ist für Fallback geeignet. Anmelde- und Konfigurationsfehler rechtfertigen keinen Fallback. Der Breaker sitzt innerhalb der Fallback-Schleife. Die Probe nach der Pause ist cachebasiert, Fehlerzählung und Probezugang sind nicht atomar: parallele Fehler können den Zeitpunkt verschieben und mehrere Proben zulassen. Die Folie nennt daher Voreinstellungen und keine harte Verfügbarkeits- oder Zählgarantie. Die gesundheitsabhängige Umsortierung von Fallbacks ist gesondert optional und standardmäßig aus; sie wird nicht als automatische Voreinstellung behauptet.
 
-### 60: Geheimnismaskierung und nr-vault
+### 61: Geheimnismaskierung und nr-vault
 
 Quellen: [Vault-Einbindung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr030SpecializedServicesVaultMigration.rst), [SecretRedactionInputGuardrail](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionInputGuardrail.php), [SecretRedactionGuardrail](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionGuardrail.php), [Grenzen der Maskierung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr089GuardrailBoundaryCompleteness.rst), [Musterkatalog und Fehlerverhalten](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr123OneSecretShapeCatalogue.rst).
 
 Zugänge werden über Vault-Kennungen konfiguriert und für HTTP-Aufrufe eingebunden. Ein- und ausgehende Geheimnismaskierung erklären sich als verpflichtend; die Ausgabeseite erfasst Antwort und Thinking, ausdrücklich nicht Toolargumente. Embeddings sind ebenfalls ausgenommen. Die Maskierung erkennt Muster, keine beliebigen vertraulichen oder personenbezogenen Inhalte. Der Musterkatalog beschreibt die Textmaskierung als Best Effort und bei Regexfehlern als offen; die Folie behauptet keine lückenlose Verhinderung von Geheimnisabfluss. Vault-Speicherung und Textmaskierung sind verschiedene Schutzmechanismen.
 
-### 61: Externe Webseiten
+### 62: Externe Webseiten
 
 Quelle: [ADR-202](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr202APublicWebPageThroughAnAddressGuard.rst).
 
 `fetch_external_url` ist standardmäßig deaktiviert. Nach Aktivierung fordert jeder Aufruf grundsätzlich Zustimmung; nur eine ausdrücklich konfigurierte Ausnahme mit nicht leerer Allowlist hebt sie auf. Start-URL und jeder Redirect durchlaufen die Adressprüfung, eine Host-Allowlist hebt die Privatrangensperre nicht auf. Die normalen Verbindungen werden an geprüfte Adressen gebunden; die explizite Proxy-Ausnahme hat einen anderen Vertrauensbereich. Rückgabe: begrenzter Text, als nicht vertrauenswürdig gekennzeichnet; keine JavaScript-Ausführung, keine Formulare oder übertragenen Zugangsdaten. Eine zugelassene URL kann über Query-Parameter Informationen nach außen tragen. Öffentlich adressierte interne Dienste bleiben Betreiberaufgabe und brauchen gezielte Listenregeln. Die Folie verspricht keine allgemeine Absicherung beliebiger HTTP-Aufrufe und keinen vollständigen Prompt-Injection-Schutz.
 
-### 62: Vieraugenregel, Aufruf-/Vorschaubindung, Audit
+### 63: Vieraugenregel, Aufruf-/Vorschaubindung, Audit
 
 Quellen: [ADR-172](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr172FourEyesApprovalPerConfiguration.rst), [ADR-184](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr184ApprovalBindsToTheStateItShowed.rst), [ADR-132](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr132ApprovalAuditAndTurnBinding.rst).
 
 Vieraugenregel pro Konfiguration, standardmäßig aus. Bei Aktivierung darf der auslösende Backend-Nutzer nicht selbst zustimmen, auch nicht als Administrator; Selbstablehnung bleibt möglich. Service Accounts sind nicht mit erfasst. Die Aufrufbindung gilt für den ganzen anstehenden Turn. Eine erfolgreich angezeigte Vorschau wird vor Ausführung erneut gebildet und verglichen; Änderung führt zu erneuter Freigabe mit aktueller Vorschau. Keine Bindung an eine fehlende oder bei Suspend fehlgeschlagene Vorschau, kein allgemeines optimistisches Sperren aller TYPO3-Daten. Vor schreibenden Turns muss das APPROVAL-Ereignis gespeichert werden; lesende Turns und Ablehnungen haben andere Audit-Ausfallregeln. Die Folie beschränkt ihre Zusage entsprechend auf Schreibfreigaben.
 
-### 63: Anwendungsspezifische Werkzeugregeln
+### 64: Anwendungsspezifische Werkzeugregeln
 
 Quelle: [ToolInvocationPolicy.rst](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/ToolInvocationPolicy.rst).
 
@@ -276,50 +310,56 @@ dessen Update-Deployment am 7. November 2026 erfolgreich abgeschlossen wurde.
 
 ## Bildnachweise
 
-Die Originalbilder wurden nicht verändert. Die Bildunterschriften und Alttexte
-beschreiben den sichtbaren Inhalt; Aufnahmedaten und Ausschnittangaben stehen
-hier getrennt davon. Die folgende Übersicht gilt für Vorlage und TMUC. Die
-Bildansicht öffnet jeweils die vollständige verwendete Bilddatei. Die älteren
-Aufnahmen belegen historische Anzeigen. Für die SEO-Aufnahme vom 7. November
-wurden neue Vorschläge in der laufenden Demo angefordert; die Schritte sind
-unten dokumentiert. Keine der Aufnahmen belegt allein den installierten
-Versionsstand oder die allgemeine Wirksamkeit einer Sicherheitsfunktion.
+Die verwendeten Bilder sind unveränderte Browseraufnahmen. Die acht
+Backend-Motive wurden am **9. November 2026 im echten hellen Farbschema** neu
+aufgenommen. Die beiden bereits hellen Frontendbilder bleiben erhalten.
+Bildunterschriften und Alttexte beschreiben den Inhalt für das Publikum;
+Aufnahmedaten und Grenzen stehen ausschließlich hier im Nachweis.
 
-| Folie | Bild / Original | Aufnahme | Darstellung auf der Folie |
+Auf der Folie wird ein proportionaler Ausschnitt gezeigt. Die Bildansicht
+öffnet die vollständige verwendete Bilddatei. Details zur Aufnahme und
+zusätzliche vollständige Browseransichten stehen im
+[Aufnahmenachweis vom 9. November](source/public/screens/light-captures-provenance-2026-11-09.md).
+Keine Aufnahme belegt allein den installierten nr-llm-Versionsstand oder die
+allgemeine Wirksamkeit einer Sicherheitsfunktion.
+
+| Folie | Verwendetes Bild | Aufnahme | Inhalt / Darstellung |
 |---|---|---|---|
-| 4 | [KI-Werkzeuge in der Symbolleiste des Texteditors](source/public/screens/cowriter-ckeditor-toolbar-2026-11-05.png) | 5.11.2026 | Vollständige Aufnahme |
-| 4 | [Drei deutsche KI-Vorschläge für den SEO-Titel](source/public/screens/cowriter-seo-vorschlaege-2026-11-07.png) | 7.11.2026, 11:31 MEZ | Browser-Elementaufnahme, vergrößerter Ausschnitt der Vorschlagsliste |
-| 5 | [Suchantwort mit einem Link zur verwendeten Website-Quelle](source/public/screens/04-ai-search-02-antwort-quellen.png) | 2.11.2026 | Vergrößerter Ausschnitt |
-| 6 | [Repurpose-Auftrag mit Ausgangsquelle, Podcast und Schaubild](source/public/screens/05-repurpose-job-3-detail.png) | 2.11.2026 | Vollständige Aufnahme |
-| 7 | [Chatverlauf mit einem Auftrag für einen Seitenentwurf und der Rückmeldung des Agenten](source/public/screens/agent-chat-2026-11-05.png) | 5.11.2026 | Vollständige Aufnahme |
-| 8 | [Landingpage-Assistent mit generierten Metadaten](source/public/screens/landingpage-backend-detail-2026-11-07.png) | 7.11.2026 | Browser-Elementaufnahme, vergrößerter Ausschnitt |
-| 8 | [Vorschau des neuen Demoentwurfs 10114](source/public/screens/landingpage-preview-detail-2026-11-07.png) | 7.11.2026 | Browser-Elementaufnahme, vergrößerter Ausschnitt |
-| 20 | [Kostenübersicht mit Anfragen, Tokenverbrauch und geschätzten Kosten](source/public/screens/17-nr-llm-07-analyse-kosten.png) | 2.11.2026 | Vergrößerter Ausschnitt |
-| 24 | [Freigabekarte für die geplante Seitenanlage durch den Agenten](source/public/screens/06-agent-03-schreiben-b-freigabekarte.png) | 2.11.2026 | Vergrößerter Ausschnitt |
-| 25 | [Chatantwort mit sichtbarem Verlauf der Modell- und Werkzeugaufrufe](source/public/screens/20-agent-02-lesen-c-aktivitaet.png) | 2.11.2026 | Vergrößerter Ausschnitt |
+| 4 | [KI-Werkzeuge im Texteditor](source/public/screens/cowriter-editor-light-2026-11-09.png) | 9.11.2026 | Echte helle Editoransicht, Inhaltselement 30 |
+| 4 | [Drei deutsche Vorschläge für den SEO-Titel](source/public/screens/cowriter-seo-light-2026-11-09.png) | 9.11.2026 | Neu angeforderte Vorschläge für Seite 9102; nichts übernommen |
+| 5 | [Suchantwort mit Website-Quelle](source/public/screens/04-ai-search-02-antwort-quellen.png) | 2.11.2026 | Bereits helle Frontendaufnahme, vergrößerter Ausschnitt |
+| 6 | [Repurpose-Auftrag mit Quelle und Podcast](source/public/screens/repurpose-light-2026-11-09.png) | 9.11.2026 | Bestehender Auftrag 3; keine neue Generierung oder Freigabe |
+| 7 | [Auftrag für einen Seitenentwurf und Rückmeldung des Agenten](source/public/screens/agent-chat-light-2026-11-09.png) | 9.11.2026 | Gespeicherter Verlauf aus Konversation 293 vom 2. November |
+| 8 | [Gespeicherte SEO-Felder des Entwurfs 10114](source/public/screens/landingpage-backend-light-2026-11-09.png) | 9.11.2026 | Bestehende Felder mit konkretem fiktivem Datum und Ort |
+| 8 | [Vorschau des Demoentwurfs 10114](source/public/screens/landingpage-preview-detail-2026-11-07.png) | 7.11.2026 | Bereits helle Frontendaufnahme desselben Entwurfs |
+| 21 | [Kosten, Anfragen und Tokenverbrauch](source/public/screens/analytics-light-2026-11-09.png) | 9.11.2026 | Anzeige für 11. Oktober bis 9. November; geschätzte Kosten |
+| 25 | [Freigabe einer SEO-Titeländerung](source/public/screens/approval-seo-light-2026-11-09.png) | 9.11.2026 | Vorhandene offene Karte aus Konversation 200; keine Freigabe ausgelöst |
+| 26 | [Modell- und Werkzeugaufrufe im KI-Chat](source/public/screens/tool-trace-light-2026-11-09.png) | 9.11.2026 | Gespeicherte Aktivität aus Konversation 292 vom 2. November |
 
-Beim Chatbild auf Folie 7 ist ein vorhandener Gesprächsverlauf abgebildet.
-Der Repurpose-Auftrag auf Folie 6 zeigt erzeugte Artefakte, deren fachliche
-Freigabe in der Aufnahme noch aussteht. Die Kosten auf Folie 20 sind eine
-historische Anzeige mit Schätzwerten.
+Der Repurpose-Auftrag zeigt vorhandene Artefakte, deren fachliche Freigabe in
+der Aufnahme noch aussteht. Die Kostenübersicht enthält Schätzwerte des Moduls;
+sie wurden nicht unabhängig nachgerechnet. Die Chatansichten sind neue
+Aufnahmen gespeicherter Vorgänge, keine neu ausgeführten Agentenaufgaben.
 
-Auf Folie 8 stehen Backend und Vorschau desselben neuen Generierungslaufs vom
-7. November 2026 nebeneinander (Entwurf UID 10114). Das ausdrücklich fiktive
-Briefing legt Donnerstag, 19. November 2026, 18:30–20:00 Uhr und „Demo-Labor
-Leipzig, Raum 3“ als erfundenen Veranstaltungsort fest. Die Seite bleibt verborgen.
-Die Bilder sind echte Browseraufnahmen. Details zum Ablauf, redaktionellen
-Korrekturen und vollständige Originale dokumentiert der
-[Aufnahmenachweis](source/public/screens/landingpage-provenance-2026-11-07.md).
-Die historische Aufnahme mit der unbelegten Frist bleibt ein gesondertes
-Qualitätsbeispiel; sie ist nicht die neue Demo auf Folie 8.
+Die frühere Freigabekarte zur Seitenanlage ist nach der bereits erteilten
+Freigabe nicht mehr als offene Karte abrufbar. Folie 25 verwendet deshalb eine
+echte noch offene Karte zur Änderung des SEO-Titels von Seite 9101. Die
+Bildunterschrift beschreibt allgemein die konkrete Seitenänderung; der Alttext
+benennt die SEO-Titeländerung. Es wurde keine neue Schreibaktion erzeugt und
+keine vorhandene Freigabe bestätigt.
 
-Die SEO-Aufnahme auf Folie 4 wurde am 7. November 2026 um 11:31:51–11:31:52
-MEZ im laufenden Demo-Backend erstellt. Sie zeigt die deutsche Seite
-„KI-Cowriter“ (UID 9102, Übersetzung von UID 103). Über die Glühbirnen an den
-SEO-Feldern wurden neue Vorschläge für Titel und Beschreibung angefordert.
-Die Folie konzentriert sich auf die drei Titelvorschläge; die
-[vollständige Browseraufnahme](source/public/screens/cowriter-seo-vorschlaege-original-2026-11-07.png)
-zeigt beide Listen. Es wurde kein Vorschlag übernommen und keine Seitenänderung
-gespeichert. Nach dem Schließen und erneuten Öffnen waren beide Felder weiterhin
-leer. Der Vortrag verlinkt deshalb nun direkt auf Seite 9102. Die sichtbaren
-Vorschläge belegen diesen UI-Ablauf, keine allgemeine Qualitätsgarantie.
+Auf Folie 8 gehören Backend und Vorschau weiterhin zum Entwurf **UID 10114**,
+der am 7. November erzeugt wurde. Die neue Backendaufnahme zeigt seine
+**gespeicherten Seiteneigenschaften**, nicht einen erneut ausgeführten
+Landingpage-Assistenten. Das ausdrücklich fiktive Briefing nennt Donnerstag,
+**19. November 2026, 18:30–20:00 Uhr**, und **„Demo-Labor Leipzig, Raum 3“**.
+Die Seite bleibt verborgen. Der
+[ursprüngliche Generierungsnachweis](source/public/screens/landingpage-provenance-2026-11-07.md)
+dokumentiert den Lauf und die damaligen redaktionellen Korrekturen.
+
+Für die SEO-Aufnahme auf Folie 4 wurden am 9. November im laufenden Backend
+drei neue deutsche Titelvorschläge für „KI-Cowriter“ (UID 9102) angefordert.
+Kein Vorschlag wurde übernommen und keine Seitenänderung gespeichert. Die
+sichtbare Auswahl belegt diesen Bedienablauf, keine allgemeine
+Qualitätsgarantie. Die früheren Aufnahmen vom 7. November bleiben als
+historisches Material erhalten und werden auf dieser Folie nicht mehr gezeigt.

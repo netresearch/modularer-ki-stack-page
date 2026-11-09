@@ -149,6 +149,25 @@ try {
     const trigger = (await page.evaluateHandle(({title, imageIndex}) => [...document.querySelectorAll('.slidev-layout h1')].find((heading) => heading.textContent === title && heading.checkVisibility()).closest('.slidev-layout').querySelectorAll('button.nr-original')[imageIndex], { title: titles[number - 1], imageIndex })).asElement();
     assert(trigger, `Slide ${number}: screenshot is not an in-page button`);
     const thumbnail = await trigger.evaluate((button) => ({ src: button.querySelector('img').src, alt: button.querySelector('img').alt }));
+    const framing = await trigger.evaluate((button) => {
+      const image = button.querySelector('img'), rect = image.getBoundingClientRect(), frame = button.getBoundingClientRect();
+      const fit = Math.min(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+      const width = image.naturalWidth * fit, height = image.naturalHeight * fit;
+      const [px, py] = getComputedStyle(image).objectPosition.split(' ').map(parseFloat);
+      const left = rect.left + (rect.width - width) * px / 100, top = rect.top + (rect.height - height) * py / 100;
+      const insetX = button.clientLeft * frame.width / button.offsetWidth;
+      const insetY = button.clientTop * frame.height / button.offsetHeight;
+      return { covers: left <= frame.left + insetX + 1 && top <= frame.top + insetY + 1
+          && left + width >= frame.right - insetX - 1 && top + height >= frame.bottom - insetY - 1,
+        proportional: Math.abs((rect.width / image.offsetWidth) - (rect.height / image.offsetHeight)) < .01,
+        clip: getComputedStyle(button).overflow, border: getComputedStyle(button).borderTopWidth, shadow: getComputedStyle(button).boxShadow };
+    });
+    assert(framing.covers, `Slide ${number}: screenshot has letterbox bars`);
+    assert(framing.proportional, `Slide ${number}: screenshot is distorted`);
+    assert.equal(framing.clip, 'hidden', 'Focused screenshots must stay inside their frame');
+    assert.equal(framing.border, '1px', 'Screenshot frames need one consistent fine border');
+    assert.notEqual(framing.shadow, 'none', 'Screenshot frames need a quiet shadow');
+
     const initialUrl = page.url(), initialPages = (await browser.pages()).length;
     const dialog = 'dialog.nr-image-viewer[open]';
     async function fillsAvailableSpace(view = page) {
@@ -185,11 +204,8 @@ try {
     }
     if (imageChecks === 0) {
       const point = await trigger.evaluate((button) => {
-        const image = button.querySelector('img'), rect = image.getBoundingClientRect();
-        const factor = Math.min(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
-        const width = image.naturalWidth * factor, height = image.naturalHeight * factor;
-        const position = getComputedStyle(image).objectPosition.split(' ').map(parseFloat);
-        return { x: rect.x + (rect.width - width) * position[0] / 100 + width / 2, y: rect.y + (rect.height - height) * position[1] / 100 + height / 2 };
+        const rect = button.getBoundingClientRect();
+        return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
       });
       await page.mouse.move(point.x, point.y);
       await page.waitForFunction(() => [...document.querySelectorAll('.nr-image-lens')].some((lens) => lens.checkVisibility()));

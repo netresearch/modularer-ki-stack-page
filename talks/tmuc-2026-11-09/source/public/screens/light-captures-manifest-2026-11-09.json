@@ -1,0 +1,183 @@
+{
+  "captureDate": "2026-11-09",
+  "source": "https://typo3-demo.netresearch.de/typo3/",
+  "method": "Real Chrome screenshots in the backend light color scheme; no pixel editing or fabricated UI.",
+  "motifs": [
+    {
+      "motif": "Editor",
+      "state": "Inhaltselement 30; Werkzeugleiste in schmaler echter Browseransicht.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "cowriter-editor-light-2026-11-09.png",
+          "sourceCapture": "editor-slide-detail.png",
+          "width": 1110,
+          "height": 508,
+          "sha256": "a3ad15d56e88da1426b4e4b57884ee098d1755c22228f3ea8bc84343777ca095"
+        },
+        {
+          "path": "cowriter-editor-light-original-2026-11-09.png",
+          "sourceCapture": "editor-slide-original.png",
+          "width": 1380,
+          "height": 1600,
+          "sha256": "4a84baa9883f87400adaceeae1d713e4f388cea0c95d3437830b9996ad14f0da"
+        }
+      ]
+    },
+    {
+      "motif": "SEO-Vorschläge",
+      "state": "Seite 9102; drei neu angeforderte deutsche Titelvorschläge, nichts übernommen oder gespeichert.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "cowriter-seo-light-2026-11-09.png",
+          "sourceCapture": "seo-detail.png",
+          "width": 1312,
+          "height": 560,
+          "sha256": "acb6dd9cc8db5d06fb237143e90fd18f255c003866a5971b8124f5653f401a29"
+        },
+        {
+          "path": "cowriter-seo-light-original-2026-11-09.png",
+          "sourceCapture": "seo-original.png",
+          "width": 3200,
+          "height": 2000,
+          "sha256": "56e025c420667089e96a97887daea592190c5bff611f77f4227997bcf39486a9"
+        }
+      ]
+    },
+    {
+      "motif": "Repurpose",
+      "state": "Bestehender Auftrag 3; Quelle, Formate und Podcast mit noch ausstehender fachlicher Freigabe.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "repurpose-light-2026-11-09.png",
+          "sourceCapture": "repurpose-detail.png",
+          "width": 2070,
+          "height": 1152,
+          "sha256": "79dd2ee98e1e335231e9a2abf34fccebf018d6a7d8cb5f2c10676dbc75a633a7"
+        },
+        {
+          "path": "repurpose-light-original-2026-11-09.png",
+          "sourceCapture": "repurpose-original.png",
+          "width": 3200,
+          "height": 2000,
+          "sha256": "c32b25a0eaa63060ecb6fddc19ff697f5c13e4482e9be6fa9d31fbe54d1c969b"
+        }
+      ]
+    },
+    {
+      "motif": "Seitenentwurf im Chat",
+      "state": "Konversation 293; gespeicherter Auftrag und Antworten vom 2. November, nichts neu ausgeführt.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "agent-chat-light-2026-11-09.png",
+          "sourceCapture": "chat-slide-detail.png",
+          "width": 1198,
+          "height": 484,
+          "sha256": "b27ba6a14062cfa6586ced3e8fd55f5da421cebcc3007cd75a2fb9ac2f08f4d2"
+        },
+        {
+          "path": "agent-chat-light-original-2026-11-09.png",
+          "sourceCapture": "chat-slide-original.png",
+          "width": 1720,
+          "height": 1400,
+          "sha256": "a28e7b347777b86a76505ce9a69b5b1088579d5c7eae8ddc0deb4588403cf227"
+        }
+      ]
+    },
+    {
+      "motif": "Landingpage-Backend",
+      "state": "Gespeicherte SEO-Felder von Seite 10114; Datum und Ort fiktiv, keine erneute Generierung.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "landingpage-backend-light-2026-11-09.png",
+          "sourceCapture": "landingpage-backend-slide-detail.png",
+          "width": 1064,
+          "height": 482,
+          "sha256": "13c32565b48a02ec0e03840b2b59a1e1f7eebcb906b326a5f1e9d8ac36110f06"
+        },
+        {
+          "path": "landingpage-backend-light-original-2026-11-09.png",
+          "sourceCapture": "landingpage-backend-slide-original.png",
+          "width": 1120,
+          "height": 1600,
+          "sha256": "6712ae11367bfd9db13b5f705d6fd7c2b4b282dc93c0ae515d16e723eb3bdf37"
+        }
+      ]
+    },
+    {
+      "motif": "Kostenanalyse",
+      "state": "30 Tage, 11. Oktober bis 9. November 2026; Schätzwerte des Moduls, nicht unabhängig nachgerechnet.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "analytics-light-2026-11-09.png",
+          "sourceCapture": "analytics-detail.png",
+          "width": 2688,
+          "height": 1110,
+          "sha256": "dfa391792c416edcf37cefe7485e3e2e0abd289951cbbfeb7712df6dbdbd0f61"
+        },
+        {
+          "path": "analytics-light-original-2026-11-09.png",
+          "sourceCapture": "analytics-original.png",
+          "width": 3200,
+          "height": 2400,
+          "sha256": "8142d30ca33616d1efb02ae56773b6acbb95d006bacf61fdad5600aec0f92649"
+        }
+      ]
+    },
+    {
+      "motif": "Freigabekarte",
+      "state": "Konversation 200; bestehende offene SEO-Titeländerung für Seite 9101, nicht genehmigt.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "approval-seo-light-2026-11-09.png",
+          "sourceCapture": "approval-detail-card.png",
+          "width": 2038,
+          "height": 514,
+          "sha256": "82133607e0d33f16b47e212729b96c44214925636bf8eb1b49d72d43a6c70e73"
+        },
+        {
+          "path": "approval-seo-light-original-2026-11-09.png",
+          "sourceCapture": "approval-original.png",
+          "width": 2560,
+          "height": 1800,
+          "sha256": "4a6e78981fd4bd20b8bacd784ab0a8f3181cce4c3aa3d9ad93e48e171d3ac51d"
+        }
+      ]
+    },
+    {
+      "motif": "Werkzeugverlauf",
+      "state": "Konversation 292; gespeicherte Antwort und sieben Aktivitätszeilen vom 2. November.",
+      "captured": "2026-11-09",
+      "colorScheme": "light",
+      "files": [
+        {
+          "path": "tool-trace-light-2026-11-09.png",
+          "sourceCapture": "tool-trace-slide-detail.png",
+          "width": 1198,
+          "height": 602,
+          "sha256": "0b587973bd6a4e011b06bda873e294442ec795fc75eba08b4d8f402f16275e6c"
+        },
+        {
+          "path": "tool-trace-light-original-2026-11-09.png",
+          "sourceCapture": "tool-trace-slide-original.png",
+          "width": 1720,
+          "height": 1400,
+          "sha256": "b32b0436f0d9a3283440d333a546cecc82190ff5a74e44b32d4b9c51945dd52d"
+        }
+      ]
+    }
+  ]
+}

@@ -58,9 +58,7 @@
 .nr .nr-editor-demos { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
 .nr-editor-demos figure { margin:0!important; min-width:0; }
 .nr .nr-editor-demos h2 { font-size:27px!important; margin-bottom:16px!important; }
-.nr .nr-editor-demos .nr-screenshot { height:var(--nr-pair-image-height,260px); object-position:left top; background:var(--nr-bg-alt); }
-.nr .nr-editor-demos .nr-focused-image { height:var(--nr-pair-image-height,260px); }
-.nr .nr-editor-demos .nr-focused-image .nr-screenshot { height:100%; object-position:center top; }
+.nr .nr-editor-demos .nr-original { height:var(--nr-pair-image-height,260px); }
 .nr-editor-demos figcaption { min-height:62px; }
 .nr-editor-demos .nr-action-links { margin-top:14px; }
 .nr .nr-ecosystem-grid { margin-top:24px; gap:42px; }
