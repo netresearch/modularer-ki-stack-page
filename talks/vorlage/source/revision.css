@@ -44,7 +44,9 @@
 .nr .nr-rule-example h2 { font-size:29px!important; }
 .nr .nr-rule-example blockquote { border:0; padding:0; margin:0 0 20px; font-size:31px; font-weight:600; line-height:1.35; color:var(--nr-primary-text); }
 .nr .nr-rule-example-slide .nr-takeaway { font-size:22px; }
-.nr-quality-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:30px; }
+.nr.nr-quality-slide h1 { margin-bottom:20px!important; }
+.nr .nr-quality-context { font-size:24px; line-height:1.3; color:var(--nr-text-secondary); opacity:1; }
+.nr-quality-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-top:18px; }
 .nr-quality-grid section { position:relative; background:var(--nr-bg-alt); border-top:3px solid var(--nr-primary); padding:20px; }
 .nr-quality-grid .nr-pictogram { position:absolute; top:20px; right:24px; width:40px; height:40px; }
 .nr .nr-quality-grid h2 { font-size:29px!important; margin-bottom:16px!important; }
@@ -55,6 +57,7 @@
 .nr-proof-caution strong { color:var(--nr-primary-text); }
 .nr .nr-quality-slide .nr-takeaway { font-size:22px; margin-top:16px!important; }
 .nr .nr-quality-slide .nr-limit { margin-top:12px!important; }
+.nr .nr-quality-slide .nr-controls .nr-detail-links { margin-top:4px; }
 .nr .nr-editor-demos { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
 .nr-editor-demos figure { margin:0!important; min-width:0; }
 .nr .nr-editor-demos h2 { font-size:27px!important; margin-bottom:16px!important; }

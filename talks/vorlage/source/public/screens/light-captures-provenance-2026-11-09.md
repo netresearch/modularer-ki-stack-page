@@ -30,7 +30,7 @@ vor. Die Folie zeigt aus Platzgründen Quelle und Podcastkarte.
   Es wurden weder neue Agentenaufgaben ausgeführt noch Freigaben bestätigt.
 - Die frühere Freigabekarte zur Seitenanlage in Konversation 293 ist nach der
   damaligen Genehmigung nicht mehr als offene Karte abrufbar. Stattdessen zeigt
-  Folie 25 eine echte offene SEO-Titeländerung aus Konversation 200. Sie wird
+  Folie 26 eine echte offene SEO-Titeländerung aus Konversation 200. Sie wird
   ausdrücklich nicht als Seitenanlage bezeichnet.
 - Die Backendaufnahme der Landingpage zeigt die gespeicherten Felder von
   Entwurf 10114. Die helle Vorschau vom 7. November gehört zum selben Entwurf.

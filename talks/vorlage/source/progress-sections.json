@@ -18,20 +18,20 @@
     "label": "Antworten",
     "title": "Antworten und Grenzen",
     "start": 13,
-    "end": 27
+    "end": 28
   },
   {
     "number": 4,
     "label": "Agenten",
     "title": "Agentenwege",
-    "start": 28,
-    "end": 30
+    "start": 29,
+    "end": 31
   },
   {
     "number": 5,
     "label": "Einordnung",
     "title": "Einordnung & Austausch",
-    "start": 31,
-    "end": 34
+    "start": 32,
+    "end": 35
   }
 ]

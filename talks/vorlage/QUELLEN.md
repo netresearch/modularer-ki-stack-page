@@ -48,12 +48,21 @@ Die kleinen Detailverweise im Hauptteil führen zu passenden bestehenden
 Reservefolien. Sie sind Bedienhilfen für den Vortrag und werden im PDF
 ausgeblendet; sie enthalten keine privaten Notizen.
 
-## Kontext: Anweisungen, Quellen und Werkzeuge
+## Vorgaben und Informationszugriff getrennt erklären
 
-Die am **9. November 2026** ergänzte Kontextübersicht verwendet denselben
-gepinnten nr-llm-Quellstand. Die fünf Einträge unterscheiden drei Aufgaben:
-Anweisungen beschreiben die Arbeitsweise, ausgewählte oder nachgeladene Quellen
-liefern Inhalt, Werkzeuge ermöglichen erlaubte Zugriffe.
+Die am **9. November 2026** überarbeiteten Übersichten verwenden denselben
+gepinnten nr-llm-Quellstand. Die Übersicht nach dem Beispiel zu gemeinsamen
+Vorgaben behandelt Arbeitsanweisungen. Die Übersicht nach dem Kontextbeispiel
+behandelt ausgewählte Inhalte und erlaubte Informationszugriffe. MCP wird hier
+ausdrücklich für lesende Abfragen eingesetzt; schreibende Aktionen gehören zum
+späteren Themenblock über Kontrolle und Verantwortung.
+
+- **Konfigurationen:** [Gemeinsame Vorgaben](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/Configurations.rst)
+  verbinden Modellwahl, System-Prompt und Generierungsparameter. Anwendungen
+  können dieselbe benannte Konfiguration verwenden.
+- **Tasks:** [Wiederverwendbare Einzelaufrufe](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/Tasks.rst)
+  verbinden eine Konfiguration mit einer Prompt-Vorlage und ihrer Eingabe.
+  Das sind keine mehrstufigen Agentenläufe.
 
 - **Prompt-Snippets:** [Wiederverwendbare Prompttexte](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/PromptSnippets.rst)
   werden beispielsweise über Tags in Konfigurationen eingebunden. Ein eigener
@@ -78,9 +87,18 @@ liefern Inhalt, Werkzeuge ermöglichen erlaubte Zugriffe.
   Abfragen als Beispiel; MCP ist weder selbst eine Wissensquelle noch eine
   automatische Berechtigung zum Zugriff auf externe Systeme.
 
-Die Detailverweise führen zu den vorhandenen Vertiefungen über Skills,
-Kontext und Wissen sowie MCP. Die neue Übersicht ergänzt die vier bisherigen
-Themenübersichten; sie eröffnet kein fünftes Sicherheitsfragenfeld.
+- **Lesende Werkzeuge:** Ein Agent kann freigeschaltete Werkzeuge zur Abfrage
+  verwenden. Das aufgezeichnete Chatbeispiel zeigt unter anderem `read_records`.
+  Die Folie verspricht keinen automatischen Zugriff auf alle Datensätze.
+
+Die Detailverweise führen zu vorhandenen Vertiefungen über Skills, Kontext,
+Wissenssuche, MCP und Werkzeugrechte. Beide Übersichten ergänzen die vier
+Sicherheitsfragenfelder. Die Themenzeilen im Antwort-Abschnitt benennen acht
+aufeinanderfolgende Themen: gemeinsame Basis, Entkopplung, Vorgaben,
+Informationen, Ergebnisprüfung, Aufwand/Kosten, Daten und Kontrolle.
+Die Qualitätsfolie führt ausdrücklich vom erzeugten Entwurf zur Prüfung von
+Format und Aussagen; der belegte Schema-Lauf und die zusätzliche Modellbewertung
+bleiben dabei klar getrennt.
 
 ## Formale und inhaltliche Prüfung
 
@@ -240,37 +258,37 @@ gehören in die aktive Vorlage und die daraus abgeleitete TMUC-Fassung.
 Die folgenden sechs Reservefolien ergänzen die Übersichten. Alle Belege wurden
 im oben genannten Quellstand geprüft.
 
-### 59: Begriffslisten
+### 60: Begriffslisten
 
 Quelle: [TermLists.rst](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Administration/TermLists.rst).
 
 Die zugeordnete Konfiguration bestimmt die Geltung; Fallback ändert diese ursprüngliche Zuordnung nicht. Ein Verstoß blockiert Ausgabe, Cache und betroffenen Werkzeugaufruf. „Rabatt*“ ist das dokumentierte Beispiel für das Sternsuffix. Synonyme, Schreibfehler und Umschreibungen werden nicht erkannt. Pflichtwörter gelten u. a. nicht für Antworten unter 30 Wörtern, JSON oder Agentenläufe. Agentenläufe prüfen Sperrbegriffe in Schreibargumenten; der Chattext bleibt frei. Ein importiertes MCP-Werkzeug zählt in diesem Mechanismus als schreibend, auch wenn es eine Suche anbietet. Optionaler Site-/Sprachbezug hat weitere dokumentierte Metadatenregeln. Bei noch fehlender Datenbanktabelle wird die Prüfung mit Warnung übergangen; andere Prüfungsfehler blockieren. Diese seltenen Betriebsausnahmen sind nicht als universelle Garantie auf der Folie verallgemeinert.
 
-### 60: Circuit Breaker und Fallback
+### 61: Circuit Breaker und Fallback
 
 Quellen: [ADR-063](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr063ProviderResilience.rst), [Voreinstellungen](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/ext_conf_template.txt), [gemeinsamer FailureClassifier](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Provider/Middleware/FailureClassifier.php), [FallbackMiddleware](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Provider/Middleware/FallbackMiddleware.php).
 
 `circuitBreaker.enabled=1`, Fehlergrenze 5, Pause 30 Sekunden. Verbindungsfehler, 429 und 5xx sind relevante Ausfallklassen; ein offener Circuit Breaker ist für Fallback geeignet. Anmelde- und Konfigurationsfehler rechtfertigen keinen Fallback. Der Breaker sitzt innerhalb der Fallback-Schleife. Die Probe nach der Pause ist cachebasiert, Fehlerzählung und Probezugang sind nicht atomar: parallele Fehler können den Zeitpunkt verschieben und mehrere Proben zulassen. Die Folie nennt daher Voreinstellungen und keine harte Verfügbarkeits- oder Zählgarantie. Die gesundheitsabhängige Umsortierung von Fallbacks ist gesondert optional und standardmäßig aus; sie wird nicht als automatische Voreinstellung behauptet.
 
-### 61: Geheimnismaskierung und nr-vault
+### 62: Geheimnismaskierung und nr-vault
 
 Quellen: [Vault-Einbindung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr030SpecializedServicesVaultMigration.rst), [SecretRedactionInputGuardrail](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionInputGuardrail.php), [SecretRedactionGuardrail](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Classes/Service/Guardrail/SecretRedactionGuardrail.php), [Grenzen der Maskierung](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr089GuardrailBoundaryCompleteness.rst), [Musterkatalog und Fehlerverhalten](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr123OneSecretShapeCatalogue.rst).
 
 Zugänge werden über Vault-Kennungen konfiguriert und für HTTP-Aufrufe eingebunden. Ein- und ausgehende Geheimnismaskierung erklären sich als verpflichtend; die Ausgabeseite erfasst Antwort und Thinking, ausdrücklich nicht Toolargumente. Embeddings sind ebenfalls ausgenommen. Die Maskierung erkennt Muster, keine beliebigen vertraulichen oder personenbezogenen Inhalte. Der Musterkatalog beschreibt die Textmaskierung als Best Effort und bei Regexfehlern als offen; die Folie behauptet keine lückenlose Verhinderung von Geheimnisabfluss. Vault-Speicherung und Textmaskierung sind verschiedene Schutzmechanismen.
 
-### 62: Externe Webseiten
+### 63: Externe Webseiten
 
 Quelle: [ADR-202](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr202APublicWebPageThroughAnAddressGuard.rst).
 
 `fetch_external_url` ist standardmäßig deaktiviert. Nach Aktivierung fordert jeder Aufruf grundsätzlich Zustimmung; nur eine ausdrücklich konfigurierte Ausnahme mit nicht leerer Allowlist hebt sie auf. Start-URL und jeder Redirect durchlaufen die Adressprüfung, eine Host-Allowlist hebt die Privatrangensperre nicht auf. Die normalen Verbindungen werden an geprüfte Adressen gebunden; die explizite Proxy-Ausnahme hat einen anderen Vertrauensbereich. Rückgabe: begrenzter Text, als nicht vertrauenswürdig gekennzeichnet; keine JavaScript-Ausführung, keine Formulare oder übertragenen Zugangsdaten. Eine zugelassene URL kann über Query-Parameter Informationen nach außen tragen. Öffentlich adressierte interne Dienste bleiben Betreiberaufgabe und brauchen gezielte Listenregeln. Die Folie verspricht keine allgemeine Absicherung beliebiger HTTP-Aufrufe und keinen vollständigen Prompt-Injection-Schutz.
 
-### 63: Vieraugenregel, Aufruf-/Vorschaubindung, Audit
+### 64: Vieraugenregel, Aufruf-/Vorschaubindung, Audit
 
 Quellen: [ADR-172](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr172FourEyesApprovalPerConfiguration.rst), [ADR-184](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr184ApprovalBindsToTheStateItShowed.rst), [ADR-132](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Adr/Adr132ApprovalAuditAndTurnBinding.rst).
 
 Vieraugenregel pro Konfiguration, standardmäßig aus. Bei Aktivierung darf der auslösende Backend-Nutzer nicht selbst zustimmen, auch nicht als Administrator; Selbstablehnung bleibt möglich. Service Accounts sind nicht mit erfasst. Die Aufrufbindung gilt für den ganzen anstehenden Turn. Eine erfolgreich angezeigte Vorschau wird vor Ausführung erneut gebildet und verglichen; Änderung führt zu erneuter Freigabe mit aktueller Vorschau. Keine Bindung an eine fehlende oder bei Suspend fehlgeschlagene Vorschau, kein allgemeines optimistisches Sperren aller TYPO3-Daten. Vor schreibenden Turns muss das APPROVAL-Ereignis gespeichert werden; lesende Turns und Ablehnungen haben andere Audit-Ausfallregeln. Die Folie beschränkt ihre Zusage entsprechend auf Schreibfreigaben.
 
-### 64: Anwendungsspezifische Werkzeugregeln
+### 65: Anwendungsspezifische Werkzeugregeln
 
 Quelle: [ToolInvocationPolicy.rst](https://github.com/netresearch/t3x-nr-llm/blob/5b6fca6de8d9593638486c0baca9424934bdc231/Documentation/Api/ToolInvocationPolicy.rst).
 
@@ -332,9 +350,9 @@ allgemeine Wirksamkeit einer Sicherheitsfunktion.
 | 7 | [Auftrag für einen Seitenentwurf und Rückmeldung des Agenten](source/public/screens/agent-chat-light-2026-11-09.png) | 9.11.2026 | Gespeicherter Verlauf aus Konversation 293 vom 2. November |
 | 8 | [Gespeicherte SEO-Felder des Entwurfs 10114](source/public/screens/landingpage-backend-light-2026-11-09.png) | 9.11.2026 | Bestehende Felder mit konkretem fiktivem Datum und Ort |
 | 8 | [Vorschau des Demoentwurfs 10114](source/public/screens/landingpage-preview-detail-2026-11-07.png) | 7.11.2026 | Bereits helle Frontendaufnahme desselben Entwurfs |
-| 21 | [Kosten, Anfragen und Tokenverbrauch](source/public/screens/analytics-light-2026-11-09.png) | 9.11.2026 | Anzeige für 11. Oktober bis 9. November; geschätzte Kosten |
-| 25 | [Freigabe einer SEO-Titeländerung](source/public/screens/approval-seo-light-2026-11-09.png) | 9.11.2026 | Vorhandene offene Karte aus Konversation 200; keine Freigabe ausgelöst |
-| 26 | [Modell- und Werkzeugaufrufe im KI-Chat](source/public/screens/tool-trace-light-2026-11-09.png) | 9.11.2026 | Gespeicherte Aktivität aus Konversation 292 vom 2. November |
+| 22 | [Kosten, Anfragen und Tokenverbrauch](source/public/screens/analytics-light-2026-11-09.png) | 9.11.2026 | Anzeige für 11. Oktober bis 9. November; geschätzte Kosten |
+| 26 | [Freigabe einer SEO-Titeländerung](source/public/screens/approval-seo-light-2026-11-09.png) | 9.11.2026 | Vorhandene offene Karte aus Konversation 200; keine Freigabe ausgelöst |
+| 27 | [Modell- und Werkzeugaufrufe im KI-Chat](source/public/screens/tool-trace-light-2026-11-09.png) | 9.11.2026 | Gespeicherte Aktivität aus Konversation 292 vom 2. November |
 
 Der Repurpose-Auftrag zeigt vorhandene Artefakte, deren fachliche Freigabe in
 der Aufnahme noch aussteht. Die Kostenübersicht enthält Schätzwerte des Moduls;
@@ -342,7 +360,7 @@ sie wurden nicht unabhängig nachgerechnet. Die Chatansichten sind neue
 Aufnahmen gespeicherter Vorgänge, keine neu ausgeführten Agentenaufgaben.
 
 Die frühere Freigabekarte zur Seitenanlage ist nach der bereits erteilten
-Freigabe nicht mehr als offene Karte abrufbar. Folie 25 verwendet deshalb eine
+Freigabe nicht mehr als offene Karte abrufbar. Folie 26 verwendet deshalb eine
 echte noch offene Karte zur Änderung des SEO-Titels von Seite 9101. Die
 Bildunterschrift beschreibt allgemein die konkrete Seitenänderung; der Alttext
 benennt die SEO-Titeländerung. Es wurde keine neue Schreibaktion erzeugt und
