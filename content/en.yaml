@@ -118,6 +118,10 @@ stack:
         takeaway_title: This integration boundary is open
         takeaway: 'Older examples such as rx-scheduled-social, t3socials and pb_social are not recommendations for TYPO3 13.4/14.3. Importing a feed does not provide outbound publication.'
         stack: []
+  screenshots:
+    heading: Screenshots from the TYPO3 backend (German interface)
+    cowriter: Review a shortened paragraph before inserting it with Cowriter
+    agent: Review the agent’s request to create a hidden draft page
   browser:
     title: Browser AI is an independent path
     text: 'nr-browser-ai answers questions about the current page directly on suitable devices running Chrome. It requires neither nr-llm, vault nor passkeys and has no central usage logs or budgets. An initial model download is needed; other visitors see the configured fallback.'
@@ -181,6 +185,7 @@ docs:
   impact: Open source usage data
   impact_href: https://netresearch.github.io/maint/
   tugle: "Talk: AI in TYPO3 · TUGLE, 3 November 2026 (German)"
+  mtug: Slides from the Munich TYPO3 meetup on 9 November 2026 (German)
 evidence:
   limits_heading: Limits and open work
   limits:
