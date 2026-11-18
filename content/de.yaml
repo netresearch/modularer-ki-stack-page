@@ -31,7 +31,7 @@ hero:
   title: KI in TYPO3 einführen. Mit Kontrolle über Modelle, Kosten und Zugriffe.
   lead: 'Verbinden Sie Sprachmodelle zentral, unterstützen Sie Ihre Redaktion und ergänzen Sie nur die Funktionen, die Sie brauchen. Zehn quelloffene Bausteine lassen sich passend zu Ihrem Anwendungsfall kombinieren. Die eigenständige Browser-KI beantwortet Fragen zur aufgerufenen Seite.'
   cta_business: Einführung gemeinsam planen
-  cta_example: Cowriter im TYPO3-Editor ansehen
+  cta_example: Cowriter-Rundgang im TYPO3-Editor ansehen
   cta_example_href: 'https://typo3-demo.netresearch.de/de/erweiterungen/cowriter'
   card_title: Was Sie für den Einstieg wissen müssen
   facts:
