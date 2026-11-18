@@ -41,6 +41,11 @@ hero:
       text: 'nr-llm with nr-vault for a shared provider connection. Passkeys and a backend agent are additional choices.'
     - title: Check maturity per module
       text: 'From stable tools to alpha: status, release and evidence are listed in the comparison.'
+  example:
+    title: Translation in practice
+    text: The City of Chemnitz uses TYPO3 and DeepL to translate website content into English and Czech. Netresearch describes the integration and how the editorial team handles changes to the source text.
+    label: See how Chemnitz translates its website
+    href: https://www.netresearch.de/en/typo3-agency/typo3-cms/automated-translation-of-typo3-websites/
 stack:
   heading: Which task do you want to address?
   lead: 'Select a task to see its components. These are functional groups; required technical dependencies are listed in the module table.'
