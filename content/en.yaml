@@ -43,7 +43,7 @@ hero:
       text: 'From stable tools to alpha: status, release and evidence are listed in the comparison.'
   example:
     title: Translation in practice
-    text: The City of Chemnitz uses TYPO3 and DeepL to translate website content into English and Czech. Netresearch describes the integration and how the editorial team handles changes to the source text.
+    text: For the City of Chemnitz website, Netresearch integrated the TYPO3 extension autotranslate with DeepL. Changes to the German source text are automatically translated into English and Czech.
     label: See how Chemnitz translates its website
     href: https://www.netresearch.de/en/typo3-agency/typo3-cms/automated-translation-of-typo3-websites/
 stack:

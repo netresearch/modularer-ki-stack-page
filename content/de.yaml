@@ -43,7 +43,7 @@ hero:
       text: 'Von stabilen Werkzeugen bis Alpha: Status, Release und Quellbeleg stehen im Vergleich.'
   example:
     title: Übersetzung im Einsatz
-    text: Auf dem Portal der Stadt Chemnitz werden Inhalte mit TYPO3 und DeepL ins Englische und Tschechische übersetzt. Netresearch beschreibt die Anbindung und wie die Redaktion Änderungen am Ausgangstext verarbeitet.
+    text: Für das Stadtportal Chemnitz hat Netresearch die TYPO3-Erweiterung autotranslate mit DeepL angebunden. Änderungen am deutschen Ausgangstext werden automatisch ins Englische und Tschechische übertragen.
     label: Übersetzungsprojekt der Stadt Chemnitz ansehen
     href: https://www.netresearch.de/typo3-cms/automatisierte-uebersetzung-von-typo3-webseiten/
 stack:
