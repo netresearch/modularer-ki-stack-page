@@ -31,8 +31,8 @@ hero:
   title: Introduce AI in TYPO3. Keep control of models, costs and access.
   lead: 'Connect language models centrally, support your editors and add the functions you need. Ten open-source components can be combined to suit your use case. The independent browser assistant answers questions about the current page.'
   cta_business: Plan the introduction together
-  cta_technical: Compare modules and requirements
-  cta_technical_href: '#reifegrad'
+  cta_example: View the Cowriter editor walkthrough
+  cta_example_href: 'https://typo3-demo.netresearch.de/extensions/cowriter'
   card_title: What to know before starting
   facts:
     - title: Work with your existing TYPO3
@@ -205,7 +205,7 @@ faq:
       a: 'It remains a separate integration project. Based on published package requirements, the earlier rx-scheduled-social, t3socials and pb_social examples are not recommendations for TYPO3 13.4/14.3. Verify maintenance, current channel APIs and approvals before choosing a solution.'
 cta:
   heading: Choose a suitable first step
-  lead: 'We work through your use case, existing TYPO3/PHP versions, permitted data flows and the scope of a controlled evaluation.'
+  lead: 'Which task takes up your editors’ time? Bring an example without confidential content and your TYPO3 version. Together we can agree which data the model may receive and how your team will judge a trial, for example by editing time and the corrections a draft needs.'
   business: Request a consultation
   technical: Open the documentation
   technical_href: '#dokumentation'
