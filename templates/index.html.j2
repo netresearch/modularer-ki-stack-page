@@ -18,6 +18,9 @@
     <aside class="nr-hero-aside" aria-labelledby="start-heading">
       <h2 id="start-heading">{{ c.hero.card_title }}</h2>
       <ul class="hero-facts">{% for fact in c.hero.facts %}<li><strong>{{ fact.title }}</strong><p>{{ fact.text }}</p></li>{% endfor %}</ul>
+      <h3>{{ c.hero.example.title }}</h3>
+      <p>{{ c.hero.example.text }}</p>
+      <a href="{{ c.hero.example.href }}">{{ c.hero.example.label }}</a>
     </aside>
   </div>
 </section>
