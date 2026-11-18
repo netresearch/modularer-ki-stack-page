@@ -118,6 +118,10 @@ stack:
         takeaway_title: Die Integrationsgrenze ist offen
         takeaway: 'Ältere Beispiele wie rx-scheduled-social, t3socials und pb_social sind keine Empfehlung für TYPO3 13.4/14.3. Ein Feed-Import ersetzt keine ausgehende Veröffentlichung.'
         stack: []
+  screenshots:
+    heading: Aufnahmen aus dem TYPO3-Backend
+    cowriter: Gekürzten Absatz vor dem Einfügen in Cowriter prüfen
+    agent: Freigabe für einen verborgenen Seitenentwurf im Agenten prüfen
   browser:
     title: Browser-KI ist ein eigenständiger Weg
     text: 'nr-browser-ai beantwortet Fragen zur aktuellen Seite direkt auf geeigneten Geräten mit Chrome. Es benötigt weder nr-llm noch Vault oder Passkeys und führt keine zentralen Nutzungsprotokolle oder Budgets. Ein initialer Modelldownload ist erforderlich; andere Besucher erhalten die konfigurierte Ersatzansicht.'
@@ -181,6 +185,7 @@ docs:
   impact: Messdaten zur Open-Source-Nutzung
   impact_href: https://netresearch.github.io/maint/de/
   tugle: "Vortrag: KI in TYPO3 · TUGLE, 3. November 2026"
+  mtug: Folien vom Münchner TYPO3-Treffen am 9. November 2026
 evidence:
   limits_heading: Grenzen und offene Aufgaben
   limits:
