@@ -193,7 +193,7 @@ faq:
     - q: Wo liegen API-Schlüssel?
       a: 'Beim lokalen Standardadapter speichert nr-vault verschlüsselte Secret-Werte und verschlüsselte Datenschlüssel in der Datenbank. Der Master-Key liegt außerhalb. Konsumierende Extensions verwenden Vault-Kennungen; es geht um die Vermeidung von Klartextschlüsseln, nicht um eine datenbankfreie Ablage.'
     - q: Gelten Budgets und Protokolle für jede KI-Nutzung?
-      a: 'Für die über nr-llm angebundenen serverseitigen Aufrufe stehen Nutzerbudgets und Nutzungsaufzeichnung bereit. Die Budgetprüfung nutzt den erfassten Verbrauch und bekannte Kostenschätzungen. Laufende Anfragen können das Limit überschreiten. Eigenständige SaaS-Werkzeuge werden separat abgerechnet. nr-browser-ai arbeitet lokal im Browser und führt bewusst keine zentrale Nutzungshistorie.'
+      a: 'Für die über nr-llm angebundenen serverseitigen Aufrufe stehen Nutzerbudgets und Nutzungsaufzeichnung bereit. Die Budgetprüfung nutzt den erfassten Verbrauch und bekannte Kostenschätzungen. Laufende Anfragen können das Limit überschreiten. Die Erfassung umfasst nur angebundene Aufrufe. nr-browser-ai arbeitet lokal im Browser und führt bewusst keine zentrale Nutzungshistorie.'
     - q: Kann ich sensible Daten intern verarbeiten?
       a: 'Mit passenden selbst gehosteten Modellen ist das möglich. Prüfen Sie den gesamten Datenfluss einschließlich Rückfallkonfiguration, Werkzeugen und Wissensquellen. OpenAI-Kompatibilität ist ein Schnittstellenmerkmal und keine Zusage über den Verarbeitungsort.'
     - q: Was ist mit Veröffentlichung in sozialen Netzwerken?

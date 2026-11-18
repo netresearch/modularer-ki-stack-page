@@ -193,7 +193,7 @@ faq:
     - q: Where are API keys stored?
       a: 'The local default adapter of nr-vault stores encrypted secret values and encrypted data keys in the database. The master key lives outside it. Consuming extensions use vault identifiers. The goal is to avoid plaintext keys, not database storage itself.'
     - q: Do budgets and logs cover every use of AI?
-      a: 'User budgets and usage recording are available for server-side calls routed through nr-llm. The budget check uses recorded usage and any known cost estimate. Requests already in progress can exceed the limit. Independent SaaS tools account for their own usage. nr-browser-ai runs locally in the browser and deliberately has no central usage history.'
+      a: 'User budgets and usage recording are available for server-side calls routed through nr-llm. The budget check uses recorded usage and any known cost estimate. Requests already in progress can exceed the limit. This accounting covers integrated calls only. nr-browser-ai runs locally in the browser and deliberately has no central usage history.'
     - q: Can sensitive data stay inside our environment?
       a: 'Suitable self-hosted models can support that. Review the complete data flow, including fallback configuration, tools and knowledge sources. OpenAI compatibility describes an interface, not a processing location.'
     - q: What about social network publication?
