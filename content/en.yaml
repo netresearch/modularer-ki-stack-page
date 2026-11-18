@@ -81,7 +81,7 @@ stack:
         audience: Development · Administration · Finance
         result: Shared provider integration, per-user budgets and analytics for calls routed through nr-llm.
         takeaway_title: The server-side path
-        takeaway: 'nr-llm requires nr-vault. The backend agent is optional. Built-in writing tools require approval. Remote MCP tools follow the approval setting of their server.'
+        takeaway: 'nr-llm requires nr-vault. The backend agent is optional. Built-in writing tools require approval. TYPO3 administrators set the approval requirement for remote MCP tools per server.'
         stack: [nr-llm, nr-mcp-agent]
     - number: '2'
       title: Create editorial content
@@ -139,7 +139,7 @@ maturity:
     - {id: nr-passkeys-be, role: Backend sign-in, boundary: 'Authenticates backend users; TYPO3 permissions still apply.'}
     - {id: nr-passkeys-fe, role: Frontend sign-in, boundary: 'Authenticates frontend users; the site controls data access.'}
     - {id: nr-llm, role: Shared model integration, boundary: 'Controls connected server-side calls; model answers can be wrong.'}
-    - {id: nr-mcp-agent, role: Backend assistant, boundary: 'Alpha for controlled evaluation. Built-in writing tools require approval. Remote MCP tools follow their server’s approval setting.'}
+    - {id: nr-mcp-agent, role: Backend assistant, boundary: 'Alpha for controlled evaluation. Built-in writing tools require approval. Remote MCP tools follow the approval requirement configured in TYPO3 for each server.'}
     - {id: nr-browser-ai, role: Questions about the current page, boundary: 'Supported desktop Chrome and model download; no central logs.'}
     - {id: cowriter, role: Writing in CKEditor, boundary: 'Editors review generated content before accepting and publishing it.'}
     - {id: nr-repurpose, role: Turning content into further formats, boundary: 'Alpha; requires TYPO3 14.3/PHP 8.3 and suitable model capabilities.'}

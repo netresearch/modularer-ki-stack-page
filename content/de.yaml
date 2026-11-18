@@ -81,7 +81,7 @@ stack:
         audience: Entwicklung · Administration · Controlling
         result: Gemeinsame Anbindung, nutzerbezogene Budgets und Auswertung für über nr-llm geführte Aufrufe.
         takeaway_title: Serverseitiger Pfad
-        takeaway: 'nr-llm benötigt nr-vault. Der Backend-Agent ist optional. Eingebaute Schreibwerkzeuge erfordern eine Freigabe. Für Werkzeuge externer MCP-Server wird die Freigabepflicht je Server eingestellt.'
+        takeaway: 'nr-llm benötigt nr-vault. Der Backend-Agent ist optional. Eingebaute Schreibwerkzeuge erfordern eine Freigabe. Für externe MCP-Werkzeuge legt die TYPO3-Administration die Freigabepflicht je Server fest.'
         stack: [nr-llm, nr-mcp-agent]
     - number: '2'
       title: Redaktionelle Inhalte erstellen
@@ -139,7 +139,7 @@ maturity:
     - {id: nr-passkeys-be, role: Backend-Anmeldung, boundary: 'Authentifiziert Backend-Nutzer; TYPO3-Rechte bleiben maßgeblich.'}
     - {id: nr-passkeys-fe, role: Frontend-Anmeldung, boundary: 'Authentifiziert Frontend-Nutzer; Datenzugriff folgt den Regeln der Seite.'}
     - {id: nr-llm, role: Zentrale Modellanbindung, boundary: 'Kontrolliert die angeschlossenen serverseitigen Aufrufe; Modellantworten können falsch sein.'}
-    - {id: nr-mcp-agent, role: Backend-Assistent, boundary: 'Alpha zur kontrollierten Evaluierung. Eingebaute Schreibwerkzeuge erfordern Freigabe. Für externe MCP-Werkzeuge gilt die Einstellung des Servers.'}
+    - {id: nr-mcp-agent, role: Backend-Assistent, boundary: 'Alpha zur kontrollierten Evaluierung. Eingebaute Schreibwerkzeuge erfordern Freigabe. Für externe MCP-Werkzeuge gilt die in TYPO3 je Server festgelegte Freigabepflicht.'}
     - {id: nr-browser-ai, role: Fragen zur aktuellen Seite, boundary: 'Geeigneter Desktop-Chrome und Modelldownload; keine zentrale Protokollierung.'}
     - {id: cowriter, role: Schreiben im CKEditor, boundary: 'Redaktion prüft generierte Inhalte vor Übernahme und Veröffentlichung.'}
     - {id: nr-repurpose, role: Inhalte in weitere Formate umwandeln, boundary: 'Alpha; TYPO3 14.3/PHP 8.3 und passende Modellfähigkeiten erforderlich.'}
