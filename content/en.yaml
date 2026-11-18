@@ -86,7 +86,7 @@ stack:
         audience: Development · Administration · Finance
         result: Shared provider integration, per-user budgets and analytics for calls routed through nr-llm.
         takeaway_title: The server-side path
-        takeaway: 'nr-llm requires nr-vault. The backend agent is optional. Writing agent tools require approval; the available tools and TYPO3 permissions still need configuration.'
+        takeaway: 'nr-llm requires nr-vault. The backend agent is optional. Built-in writing tools require approval. TYPO3 administrators set the approval requirement for remote MCP tools per server.'
         stack: [nr-llm, nr-mcp-agent]
     - number: '2'
       title: Create editorial content
@@ -144,7 +144,7 @@ maturity:
     - {id: nr-passkeys-be, role: Backend sign-in, boundary: 'Authenticates backend users; TYPO3 permissions still apply.'}
     - {id: nr-passkeys-fe, role: Frontend sign-in, boundary: 'Authenticates frontend users; the site controls data access.'}
     - {id: nr-llm, role: Shared model integration, boundary: 'Controls connected server-side calls; model answers can be wrong.'}
-    - {id: nr-mcp-agent, role: Backend assistant, boundary: 'Alpha for controlled evaluation; writing tools require approval.'}
+    - {id: nr-mcp-agent, role: Backend assistant, boundary: 'Alpha for controlled evaluation. Built-in writing tools require approval. Remote MCP tools follow the approval requirement configured in TYPO3 for each server.'}
     - {id: nr-browser-ai, role: Questions about the current page, boundary: 'Supported desktop Chrome and model download; no central logs.'}
     - {id: cowriter, role: Writing in CKEditor, boundary: 'Editors review generated content before accepting and publishing it.'}
     - {id: nr-repurpose, role: Turning content into further formats, boundary: 'Alpha; requires TYPO3 14.3/PHP 8.3 and suitable model capabilities.'}
@@ -155,7 +155,7 @@ operating:
   columns: {model: Operating model, data: Processing location, fit: Suitable for, tradeoff: Check before use}
   rows:
     - {model: External model provider, data: 'At the selected provider, in the contractually agreed region', fit: Wide choice of managed models, tradeoff: 'Contract, region, retention and data transfer'}
-    - {model: Azure OpenAI, data: In the selected Azure service and its configured region, fit: Teams with a suitable Azure agreement, tradeoff: 'Deployment, capabilities and data handling of the specific service'}
+    - {model: Azure OpenAI, data: 'Worldwide, within a data zone or within an Azure geography, depending on the deployment type', fit: Teams with a suitable Azure agreement, tradeoff: 'Deployment, capabilities and data handling of the specific service'}
     - {model: OpenAI-compatible API, data: 'Internal or external, depending on the endpoint', fit: Managed or self-hosted compatible services, tradeoff: 'Check operator, region and supported functions individually'}
     - {model: 'Self-hosted: Ollama / vLLM / LocalAI', data: In the infrastructure you configure for it, fit: Prompts should be processed internally, tradeoff: 'Check hardware, model maintenance, external fallbacks and tools'}
     - {model: Browser AI, data: On the visitor’s supported device, fit: Questions about publicly visible page content, tradeoff: 'Model download, browser coverage and fallback; no central audit trail'}
@@ -198,7 +198,7 @@ faq:
     - q: Where are API keys stored?
       a: 'The local default adapter of nr-vault stores encrypted secret values and encrypted data keys in the database. The master key lives outside it. Consuming extensions use vault identifiers. The goal is to avoid plaintext keys, not database storage itself.'
     - q: Do budgets and logs cover every use of AI?
-      a: 'User budgets and usage recording are available for server-side calls routed through nr-llm. They do not cover independent SaaS tools. nr-browser-ai runs locally in the browser and deliberately has no central usage history.'
+      a: 'User budgets and usage recording are available for server-side calls routed through nr-llm. The budget check uses recorded usage and any known cost estimate. Requests already in progress can exceed the limit. This accounting covers integrated calls only. nr-browser-ai runs locally in the browser and deliberately has no central usage history.'
     - q: Can sensitive data stay inside our environment?
       a: 'Suitable self-hosted models can support that. Review the complete data flow, including fallback configuration, tools and knowledge sources. OpenAI compatibility describes an interface, not a processing location.'
     - q: What about social network publication?

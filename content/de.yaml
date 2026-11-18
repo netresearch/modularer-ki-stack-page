@@ -86,7 +86,7 @@ stack:
         audience: Entwicklung · Administration · Controlling
         result: Gemeinsame Anbindung, nutzerbezogene Budgets und Auswertung für über nr-llm geführte Aufrufe.
         takeaway_title: Serverseitiger Pfad
-        takeaway: 'nr-llm benötigt nr-vault. Der Backend-Agent ist optional. Schreibende Agentenwerkzeuge sind freigabepflichtig; die konkrete Tool-Auswahl und TYPO3-Rechte bleiben zu konfigurieren.'
+        takeaway: 'nr-llm benötigt nr-vault. Der Backend-Agent ist optional. Eingebaute Schreibwerkzeuge erfordern eine Freigabe. Für externe MCP-Werkzeuge legt die TYPO3-Administration die Freigabepflicht je Server fest.'
         stack: [nr-llm, nr-mcp-agent]
     - number: '2'
       title: Redaktionelle Inhalte erstellen
@@ -144,7 +144,7 @@ maturity:
     - {id: nr-passkeys-be, role: Backend-Anmeldung, boundary: 'Authentifiziert Backend-Nutzer; TYPO3-Rechte bleiben maßgeblich.'}
     - {id: nr-passkeys-fe, role: Frontend-Anmeldung, boundary: 'Authentifiziert Frontend-Nutzer; Datenzugriff folgt den Regeln der Seite.'}
     - {id: nr-llm, role: Zentrale Modellanbindung, boundary: 'Kontrolliert die angeschlossenen serverseitigen Aufrufe; Modellantworten können falsch sein.'}
-    - {id: nr-mcp-agent, role: Backend-Assistent, boundary: 'Alpha zur kontrollierten Evaluierung; schreibende Werkzeuge benötigen Freigabe.'}
+    - {id: nr-mcp-agent, role: Backend-Assistent, boundary: 'Alpha zur kontrollierten Evaluierung. Eingebaute Schreibwerkzeuge erfordern Freigabe. Für externe MCP-Werkzeuge gilt die in TYPO3 je Server festgelegte Freigabepflicht.'}
     - {id: nr-browser-ai, role: Fragen zur aktuellen Seite, boundary: 'Geeigneter Desktop-Chrome und Modelldownload; keine zentrale Protokollierung.'}
     - {id: cowriter, role: Schreiben im CKEditor, boundary: 'Redaktion prüft generierte Inhalte vor Übernahme und Veröffentlichung.'}
     - {id: nr-repurpose, role: Inhalte in weitere Formate umwandeln, boundary: 'Alpha; TYPO3 14.3/PHP 8.3 und passende Modellfähigkeiten erforderlich.'}
@@ -155,7 +155,7 @@ operating:
   columns: {model: Betriebsmodell, data: Verarbeitungsort, fit: Geeignet für, tradeoff: Zu klären}
   rows:
     - {model: Externer Modellanbieter, data: 'Beim gewählten Anbieter, in dessen vertraglich vereinbarter Region', fit: Große Auswahl verwalteter Modelle, tradeoff: 'Vertrag, Region, Aufbewahrung und Übermittlung der Daten'}
-    - {model: Azure OpenAI, data: Im gewählten Azure-Dienst und dessen konfigurierter Region, fit: Teams mit passendem Azure-Vertrag, tradeoff: 'Deployment, Modellfähigkeiten und Datenverarbeitung des konkreten Dienstes'}
+    - {model: Azure OpenAI, data: 'Je nach Bereitstellungstyp weltweit, in einer Datenzone oder innerhalb einer Azure-Geografie', fit: Teams mit passendem Azure-Vertrag, tradeoff: 'Deployment, Modellfähigkeiten und Datenverarbeitung des konkreten Dienstes'}
     - {model: OpenAI-kompatible API, data: 'Je nach Endpunkt intern oder extern', fit: 'Verwaltete oder selbst gehostete kompatible Dienste', tradeoff: 'Betreiber, Region und unterstützte Funktionen einzeln prüfen'}
     - {model: 'Selbst gehostet: Ollama / vLLM / LocalAI', data: In Ihrer dafür konfigurierten Infrastruktur, fit: Prompts sollen intern verarbeitet werden, tradeoff: 'Hardware, Modellpflege sowie externe Rückfallpfade und Werkzeuge prüfen'}
     - {model: Browser-KI, data: Auf dem unterstützten Gerät des Besuchers, fit: Fragen zum öffentlich sichtbaren Seiteninhalt, tradeoff: 'Modelldownload, Browserabdeckung und Ersatzansicht; kein zentraler Audit-Trail'}
@@ -198,7 +198,7 @@ faq:
     - q: Wo liegen API-Schlüssel?
       a: 'Beim lokalen Standardadapter speichert nr-vault verschlüsselte Secret-Werte und verschlüsselte Datenschlüssel in der Datenbank. Der Master-Key liegt außerhalb. Konsumierende Extensions verwenden Vault-Kennungen; es geht um die Vermeidung von Klartextschlüsseln, nicht um eine datenbankfreie Ablage.'
     - q: Gelten Budgets und Protokolle für jede KI-Nutzung?
-      a: 'Für die über nr-llm angebundenen serverseitigen Aufrufe stehen Nutzerbudgets und Nutzungsaufzeichnung bereit. Diese erfassen keine unabhängigen SaaS-Werkzeuge. nr-browser-ai arbeitet lokal im Browser und führt bewusst keine zentrale Nutzungshistorie.'
+      a: 'Für die über nr-llm angebundenen serverseitigen Aufrufe stehen Nutzerbudgets und Nutzungsaufzeichnung bereit. Die Budgetprüfung nutzt den erfassten Verbrauch und bekannte Kostenschätzungen. Laufende Anfragen können das Limit überschreiten. Die Erfassung umfasst nur angebundene Aufrufe. nr-browser-ai arbeitet lokal im Browser und führt bewusst keine zentrale Nutzungshistorie.'
     - q: Kann ich sensible Daten intern verarbeiten?
       a: 'Mit passenden selbst gehosteten Modellen ist das möglich. Prüfen Sie den gesamten Datenfluss einschließlich Rückfallkonfiguration, Werkzeugen und Wissensquellen. OpenAI-Kompatibilität ist ein Schnittstellenmerkmal und keine Zusage über den Verarbeitungsort.'
     - q: Was ist mit Veröffentlichung in sozialen Netzwerken?
